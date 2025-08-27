@@ -1,0 +1,970 @@
+/* ===== FORMULÁRIOS PROFISSIONAIS ===== */
+
+/* Correção específica para selects nativos */
+select.form-select {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Garantir que o select não ultrapasse o container pai */
+.form-group select {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Ajuste para o container do formulário */
+.form-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    overflow: visible;
+    z-index: 101;
+    box-sizing: border-box;
+}
+
+.form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* Container principal dos formulários */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho do formulário */
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.form-subtitle {
+    color: #718096;
+    font-size: 16px;
+}
+
+/* Grupos de campos */
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    overflow: visible;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-label.required::after {
+    content: ' *';
+    color: #e53e3e;
+    font-weight: 700;
+}
+
+/* Campos de entrada */
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: #f7fafc;
+    color: #2d3748;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* Textarea */
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Select personalizado */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M7,10L12,15L17,10H7Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 50px;
+    appearance: none;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Firefox */
+.form-select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+/* Webkit browsers */
+.form-select::-webkit-select-placeholder {
+    color: #a0aec0;
+}
+
+/* IE */
+.form-select::-ms-expand {
+    display: none;
+}
+
+/* Garantir que o dropdown não ultrapasse o container */
+.form-select option {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+/* Container do select para controlar overflow */
+.form-select-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Dropdown personalizado para melhor controle */
+.form-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1002;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.form-select-dropdown.show {
+    display: block;
+}
+
+.form-select-option {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+.form-select-option:hover {
+    background: #f7fafc;
+}
+
+.form-select-option.selected {
+    background: #ebf8ff;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Checkbox e Radio personalizados */
+.form-checkbox,
+.form-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.form-checkbox input[type="checkbox"],
+.form-radio input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    accent-color: #667eea;
+}
+
+.form-checkbox-label,
+.form-radio-label {
+    color: #4a5568;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Botões do formulário */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+.form-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+}
+
+.form-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.form-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.form-btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.form-btn-secondary:hover {
+    background: #cbd5e0;
+    transform: translateY(-2px);
+}
+
+.form-btn-danger {
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+}
+
+.form-btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(229, 62, 62, 0.4);
+}
+
+/* Validação de campos */
+.form-input.error,
+.form-select.error,
+.form-textarea.error {
+    border-color: #e53e3e;
+    background: #fed7d7;
+}
+
+.form-input.success,
+.form-select.success,
+.form-textarea.success {
+    border-color: #38a169;
+    background: #c6f6d5;
+}
+
+.form-error {
+    color: #e53e3e;
+    font-size: 14px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-success {
+    color: #38a169;
+    font-size: 14px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Campos de busca */
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px 15px 50px;
+    border: 2px solid #e2e8f0;
+    border-radius: 25px;
+    font-size: 16px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    font-size: 18px;
+}
+
+/* Formulários inline */
+.form-inline {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.form-inline .form-group {
+    flex: 1;
+    margin-bottom: 0;
+    min-width: 0; /* Importante para flexbox */
+}
+
+.form-inline .form-select {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+    
+    .form-card {
+        padding: 30px 25px;
+        border-radius: 15px;
+    }
+    
+    .form-title {
+        font-size: 24px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-btn {
+        width: 100%;
+    }
+    
+    .form-inline {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .form-inline .form-group {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-card {
+        padding: 25px 20px;
+    }
+    
+    .form-title {
+        font-size: 22px;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+}
+
+/* Animações */
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-card {
+    animation: formSlideIn 0.6s ease-out;
+}
+
+/* Estados de loading */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.form-loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+} 
+
+/* ===== CORREÇÃO ROBUSTA PARA DROPDOWNS ===== */
+
+/* Forçar largura máxima em todos os selects */
+select,
+.form-select,
+.form-group select,
+.form-group .form-select {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* Container do form-group com overflow controlado */
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    overflow: visible;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Garantir que o form-card não corte nada */
+.form-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    overflow: visible !important;
+    z-index: 101;
+    box-sizing: border-box;
+}
+
+/* Container principal com overflow controlado */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    z-index: 100;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+/* Correção específica para selects nativos */
+select.form-select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+/* Garantir que o select não ultrapasse o container pai */
+.form-group select {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    width: 100% !important;
+}
+
+/* Select personalizado com controle rigoroso */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M7,10L12,15L17,10H7Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 50px;
+    appearance: none;
+    position: relative;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+/* Firefox */
+.form-select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+/* Webkit browsers */
+.form-select::-webkit-select-placeholder {
+    color: #a0aec0;
+}
+
+/* IE */
+.form-select::-ms-expand {
+    display: none;
+}
+
+/* Garantir que o dropdown não ultrapasse o container */
+.form-select option {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    box-sizing: border-box !important;
+}
+
+/* Container do select para controlar overflow */
+.form-select-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Dropdown personalizado para melhor controle */
+.form-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1002;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.form-select-dropdown.show {
+    display: block;
+}
+
+.form-select-option {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+.form-select-option:hover {
+    background: #f7fafc;
+}
+
+.form-select-option.selected {
+    background: #ebf8ff;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Ajuste para formulários inline */
+.form-inline {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.form-inline .form-group {
+    flex: 1;
+    margin-bottom: 0;
+    min-width: 0; /* Importante para flexbox */
+    max-width: 100%;
+}
+
+.form-inline .form-select {
+    min-width: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Garantir que todos os inputs respeitem a largura */
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Correção específica para modais */
+.modal .form-group {
+    overflow: visible !important;
+}
+
+.modal .form-select {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Forçar largura máxima em todos os elementos de formulário */
+.form-card *,
+.form-group *,
+.form-inline * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+} 
+
+/* ===== SOLUÇÃO DEFINITIVA COM ESPECIFICIDADE MÁXIMA ===== */
+
+/* ===== SELEÇÃO UNIVERSAL COM !IMPORTANT ===== */
+html body select,
+html body .form-select,
+html body .form-group select,
+html body .form-group .form-select,
+html body .modal select,
+html body .modal .form-select,
+html body .modal .form-group select,
+html body .modal .form-group .form-select,
+html body .form-card select,
+html body .form-card .form-select,
+html body .form-card .form-group select,
+html body .form-card .form-group .form-select,
+html body .modal .form-card select,
+html body .modal .form-card .form-select,
+html body .modal .form-card .form-group select,
+html body .modal .form-card .form-group .form-select {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: block !important;
+}
+
+/* ===== CONTAINERS COM ESPECIFICIDADE MÁXIMA ===== */
+html body .form-group,
+html body .modal .form-group,
+html body .form-card .form-group,
+html body .modal .form-card .form-group {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+}
+
+html body .form-card,
+html body .modal .form-card {
+    width: 100% !important;
+    max-width: 500px !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+}
+
+html body .form-container,
+html body .modal .form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+}
+
+/* ===== MODAIS COM ESPECIFICIDADE MÁXIMA ===== */
+html body .modal,
+html body .modal-overlay .modal {
+    width: 100% !important;
+    max-width: 600px !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+}
+
+html body .modal-body,
+html body .modal .modal-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+}
+
+/* ===== FORMULÁRIOS INLINE COM ESPECIFICIDADE MÁXIMA ===== */
+html body .form-inline,
+html body .modal .form-inline,
+html body .form-card .form-inline {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    gap: 15px !important;
+    align-items: flex-end !important;
+}
+
+html body .form-inline .form-group,
+html body .modal .form-inline .form-group,
+html body .form-card .form-inline .form-group {
+    flex: 1 !important;
+    width: auto !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    margin-bottom: 0 !important;
+}
+
+/* ===== INPUTS COM ESPECIFICIDADE MÁXIMA ===== */
+html body .form-input,
+html body .form-select,
+html body .form-textarea,
+html body .modal .form-input,
+html body .modal .form-select,
+html body .modal .form-textarea,
+html body .form-card .form-input,
+html body .form-card .form-select,
+html body .form-card .form-textarea,
+html body .modal .form-card .form-input,
+html body .modal .form-card .form-select,
+html body .modal .form-card .form-textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* ===== CORREÇÃO ESPECÍFICA PARA SELECTS ===== */
+html body select.form-select,
+html body .form-group select.form-select,
+html body .modal select.form-select,
+html body .modal .form-group select.form-select,
+html body .form-card select.form-select,
+html body .form-card .form-group select.form-select,
+html body .modal .form-card select.form-select,
+html body .modal .form-card .form-group select.form-select {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+    display: block !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M7,10L12,15L17,10H7Z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 15px center !important;
+    background-size: 20px !important;
+    padding-right: 50px !important;
+    appearance: none !important;
+    cursor: pointer !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* ===== CORREÇÃO PARA OPÇÕES DOS SELECTS ===== */
+html body select option,
+html body .form-select option,
+html body .form-group select option,
+html body .form-group .form-select option,
+html body .modal select option,
+html body .modal .form-select option,
+html body .modal .form-group select option,
+html body .modal .form-group .form-select option,
+html body .form-card select option,
+html body .form-card .form-select option,
+html body .form-card .form-group select option,
+html body .form-card .form-group .form-select option,
+html body .modal .form-card select option,
+html body .modal .form-card .form-select option,
+html body .modal .form-card .form-group select option,
+html body .modal .form-card .form-group .form-select option {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+}
+
+/* ===== CORREÇÃO PARA FOCUS E HOVER ===== */
+html body select:focus,
+html body .form-select:focus,
+html body .form-group select:focus,
+html body .form-group .form-select:focus,
+html body .modal select:focus,
+html body .modal .form-select:focus,
+html body .modal .form-group select:focus,
+html body .modal .form-group .form-select:focus,
+html body .form-card select:focus,
+html body .form-card .form-select:focus,
+html body .form-card .form-group select:focus,
+html body .form-card .form-group .form-select:focus,
+html body .modal .form-card select:focus,
+html body .modal .form-card .form-select:focus,
+html body .modal .form-card .form-group select:focus,
+html body .modal .form-card .form-group .form-select:focus {
+    outline: none !important;
+    border-color: #667eea !important;
+    background: white !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ===== CORREÇÃO PARA ESTADOS DE VALIDAÇÃO ===== */
+html body select.error,
+html body .form-select.error,
+html body .form-group select.error,
+html body .form-group .form-select.error,
+html body .modal select.error,
+html body .modal .form-select.error,
+html body .modal .form-group select.error,
+html body .modal .form-group .form-select.error,
+html body .form-card select.error,
+html body .form-card .form-select.error,
+html body .form-card .form-group select.error,
+html body .form-card .form-group .form-select.error,
+html body .modal .form-card select.error,
+html body .modal .form-card .form-select.error,
+html body .modal .form-card .form-group select.error,
+html body .modal .form-card .form-group .form-select.error {
+    border-color: #e53e3e !important;
+    background: #fed7d7 !important;
+}
+
+html body select.success,
+html body .form-select.success,
+html body .form-group select.success,
+html body .form-group .form-select.success,
+html body .modal select.success,
+html body .modal .form-select.success,
+html body .modal .form-group select.success,
+html body .modal .form-group .form-select.success,
+html body .form-card select.success,
+html body .form-card .form-select.success,
+html body .form-card .form-group select.success,
+html body .form-card .form-group .form-select.success,
+html body .modal .form-card select.success,
+html body .modal .form-card .form-select.success,
+html body .modal .form-card .form-group select.success,
+html body .modal .form-card .form-group .form-select.success {
+    border-color: #38a169 !important;
+    background: #c6f6d5 !important;
+}
+
+/* ===== CORREÇÃO PARA RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    html body .form-inline,
+    html body .modal .form-inline,
+    html body .form-card .form-inline {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+    
+    html body .form-inline .form-group,
+    html body .modal .form-inline .form-group,
+    html body .form-card .form-inline .form-group {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+    }
+    
+    html body .form-inline .form-select,
+    html body .modal .form-inline .form-select,
+    html body .form-card .form-inline .form-select {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    html body .form-card,
+    html body .modal .form-card {
+        padding: 25px 20px !important;
+        max-width: 100% !important;
+    }
+    
+    html body .form-input,
+    html body .form-select,
+    html body .form-textarea,
+    html body .modal .form-input,
+    html body .modal .form-select,
+    html body .modal .form-textarea,
+    html body .form-card .form-input,
+    html body .form-card .form-select,
+    html body .form-card .form-textarea,
+    html body .modal .form-card .form-input,
+    html body .modal .form-card .form-select,
+    html body .modal .form-card .form-textarea {
+        padding: 12px 15px !important;
+        font-size: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+} 

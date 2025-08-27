@@ -1,0 +1,1065 @@
+/* Componentes Reutilizáveis - Sistema de Vendas */
+
+/* Botões */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.btn-view {
+    background: var(--info-color);
+    color: white;
+}
+
+.btn-edit {
+    background: var(--warning-color);
+    color: white;
+}
+
+.btn-delete {
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-payment {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-convert {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Tabelas */
+.table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background: var(--background-light);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.data-table tbody tr:hover {
+    background: var(--background-light);
+}
+
+/* Badges de Status */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-ativo, .status-active {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.status-inativo, .status-inactive {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.status-pendente, .status-pending {
+    background: var(--warning-light);
+    color: var(--warning-color);
+}
+
+.status-pago, .status-paid {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.status-cancelado, .status-cancelled {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.status-aprovado, .status-approved {
+    background: var(--info-light);
+    color: var(--info-color);
+}
+
+.status-expirado, .status-expired {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+/* Badges de Estoque */
+.stock-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.stock-normal {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.stock-low {
+    background: var(--warning-light);
+    color: var(--warning-color);
+}
+
+/* Formulários */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Itens de Venda/Orçamento */
+.item-row {
+    display: grid;
+    grid-template-columns: 2fr 100px 120px 40px;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: var(--background-light);
+    border-radius: 4px;
+}
+
+.item-row select,
+.item-row input {
+    margin-bottom: 0;
+}
+
+.btn-remove-item {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Seção Total */
+.total-section {
+    background: var(--background-light);
+    padding: 16px;
+    border-radius: 4px;
+    text-align: right;
+    margin: 16px 0;
+}
+
+.total-section h3 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+/* Informações de Cliente/Produto */
+.cliente-info,
+.produto-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cliente-info strong,
+.produto-info strong {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.cliente-info small,
+.produto-info small {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+/* Valores de Preço */
+.price-value {
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+/* Estados de Carregamento */
+.loading-row {
+    text-align: center;
+    padding: 40px;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estados Vazios */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+
+.empty-icon {
+    font-size: 48px;
+    color: var(--border-color);
+    margin-bottom: 16px;
+}
+
+/* Paginação */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-page {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    background: white;
+    color: var(--text-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-page:hover {
+    background: var(--background-light);
+}
+
+.btn-page.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Detalhes de Venda/Orçamento */
+.venda-details,
+.orcamento-details,
+.produto-details {
+    max-width: 600px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-section {
+    margin-bottom: 24px;
+}
+
+.detail-section h4 {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.detail-item {
+    margin-bottom: 8px;
+}
+
+.detail-item strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Tabela de Itens */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.items-table th,
+.items-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.items-table th {
+    background: var(--background-light);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Formulário de Pagamento */
+.payment-form {
+    max-width: 400px;
+}
+
+.payment-info {
+    background: var(--background-light);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.payment-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Cores de Texto */
+.text-success {
+    color: var(--success-color);
+}
+
+.text-danger {
+    color: var(--danger-color);
+}
+
+.text-warning {
+    color: var(--warning-color);
+}
+
+.text-info {
+    color: var(--info-color);
+}
+
+/* Data de Validade */
+.validity-date.expired {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+/* Botões de Ação */
+.action-buttons {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+}
+
+/* === ESTILOS ESPECÍFICOS PARA RELATÓRIOS === */
+
+/* Filtros de Período */
+.period-filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.period-filters label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.period-filters input[type="date"] {
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.quick-filters {
+    display: flex;
+    gap: 8px;
+}
+
+/* Seção de Resumo */
+.summary-section {
+    margin-bottom: 32px;
+}
+
+.summary-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.stat-card.primary {
+    border-left: 4px solid var(--primary-color);
+}
+
+.stat-card.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.stat-card.info {
+    border-left: 4px solid var(--info-color);
+}
+
+.stat-card.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+}
+
+.stat-card.primary .stat-icon {
+    background: var(--primary-color);
+}
+
+.stat-card.success .stat-icon {
+    background: var(--success-color);
+}
+
+.stat-card.info .stat-icon {
+    background: var(--info-color);
+}
+
+.stat-card.warning .stat-icon {
+    background: var(--warning-color);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-content h3 {
+    margin: 0 0 4px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.stat-content p {
+    margin: 0 0 4px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
+.stat-change.positive {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.stat-change.negative {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+/* Seção de Gráficos */
+.charts-section {
+    margin-bottom: 32px;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h4 {
+    margin: 0 0 16px 0;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    height: 200px !important;
+    max-height: 200px;
+    display: block !important;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+/* Debug visual para canvas */
+.chart-card canvas:empty::before {
+    content: "Canvas vazio - Aguardando gráfico...";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Responsividade para gráficos */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-card canvas {
+        height: 150px !important;
+    }
+}
+
+.chart-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Placeholders de Gráficos */
+.chart-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    height: 120px;
+}
+
+.bar {
+    width: 24px;
+    background: var(--primary-color);
+    border-radius: 2px 2px 0 0;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding-bottom: 4px;
+    color: white;
+    font-size: 10px;
+}
+
+.chart-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.item-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.progress-bar {
+    flex: 2;
+    height: 8px;
+    background: var(--background-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.item-value {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.chart-pie {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.pie-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.pie-item.success {
+    background: var(--success-light);
+    color: var(--success-color);
+}
+
+.pie-item.warning {
+    background: var(--warning-light);
+    color: var(--warning-color);
+}
+
+.pie-item.danger {
+    background: var(--danger-light);
+    color: var(--danger-color);
+}
+
+.chart-info {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Seção de Relatórios */
+.reports-section h3 {
+    margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.report-card h4 {
+    margin: 0;
+    padding: 16px;
+    background: var(--background-light);
+    color: var(--text-color);
+    font-size: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-content {
+    padding: 16px;
+    min-height: 200px;
+}
+
+.report-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.report-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    background: var(--background-light);
+}
+
+.rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-info strong {
+    display: block;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.item-info small {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.item-value {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.item-value.danger {
+    color: var(--danger-color);
+}
+
+.item-value.warning {
+    color: var(--warning-color);
+}
+
+.no-data {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin: 40px 0;
+}
+
+.error-data {
+    text-align: center;
+    color: var(--danger-color);
+    margin: 40px 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .detail-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .period-filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .quick-filters {
+        flex-wrap: wrap;
+    }
+} 
+
+/* ===== BOTÕES DE PDF ===== */
+
+.btn-pdf {
+    background-color: var(--info-color);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+}
+
+.btn-pdf:hover {
+    background-color: var(--info-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-pdf:active {
+    transform: translateY(0);
+}
+
+/* ===== AÇÕES DE RELATÓRIOS ===== */
+
+.report-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.report-actions .btn {
+    flex: 1;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+/* ===== BOTÕES DE RELATÓRIO ===== */
+
+.btn-report {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-report:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-report:active {
+    transform: translateY(0);
+}
+
+.btn-report.pdf {
+    background-color: var(--success-color);
+}
+
+.btn-report.pdf:hover {
+    background-color: var(--success-dark);
+}
+
+/* ===== ESTADOS DE CARREGAMENTO PARA PDF ===== */
+
+.pdf-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.pdf-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+}
+
+.pdf-loading::before {
+    content: '📄';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    animation: pdf-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pdf-pulse {
+    0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* ===== RESPONSIVIDADE PARA PDF ===== */
+
+@media (max-width: 768px) {
+    .report-actions {
+        flex-direction: column;
+    }
+    
+    .btn-pdf {
+        min-width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .btn-report {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-pdf {
+        min-width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.625rem;
+    }
+    
+    .btn-report {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+} 

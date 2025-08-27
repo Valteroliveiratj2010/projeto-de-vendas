@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Debug Sidebar Mobile</title>
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --transition-normal: 250ms ease-in-out;
+            --color-primary: #2563EB;
+            --color-white: #FFFFFF;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        
+        .debug-panel {
+            background: #333;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .test-container {
+            position: relative;
+            height: 500px;
+            border: 2px dashed #ccc;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        /* ===== SIDEBAR BASE ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--color-white);
+            border-right: 1px solid #E2E8F0;
+            display: flex;
+            flex-direction: column;
+            transition: all var(--transition-normal);
+            position: fixed;
+            height: 100vh;
+            z-index: 999;
+            box-shadow: var(--shadow-sm);
+            /* Estado padrão para desktop */
+            transform: translateX(0);
+        }
+        
+        /* ===== RESPONSIVIDADE INLINE ===== */
+        /* Forçar responsividade com maior especificidade */
+        @media (max-width: 1024px) {
+            body .sidebar {
+                transform: translateX(-100%) !important;
+                transition: transform var(--transition-normal) !important;
+                position: fixed !important;
+                z-index: 999 !important;
+                height: 100vh !important;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1) !important;
+                width: var(--sidebar-width) !important;
+            }
+            
+            body .sidebar.open {
+                transform: translateX(0) !important;
+                transition: transform var(--transition-normal) !important;
+            }
+            
+            body .sidebar-toggle {
+                display: block !important;
+                position: fixed !important;
+                top: 20px !important;
+                left: 20px !important;
+                z-index: 1000 !important;
+                background: var(--color-primary) !important;
+                color: white !important;
+                border: none !important;
+                border-radius: 50% !important;
+                width: 50px !important;
+                height: 50px !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+                cursor: pointer !important;
+                transition: all 150ms ease-in-out !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body .sidebar {
+                width: 280px !important;
+                z-index: 999 !important;
+                transform: translateX(-100%) !important;
+            }
+            
+            body .sidebar.open {
+                transform: translateX(0) !important;
+                transition: transform var(--transition-normal) !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body .sidebar {
+                width: 100% !important;
+                max-width: 320px !important;
+                z-index: 999 !important;
+                transform: translateX(-100%) !important;
+            }
+            
+            body .sidebar.open {
+                transform: translateX(0) !important;
+                transition: transform var(--transition-normal) !important;
+            }
+        }
+        
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 150ms ease-in-out;
+            z-index: 1001;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+            pointer-events: none;
+        }
+        
+        .overlay.show {
+            display: block;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        
+        .css-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        .css-display h4 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+        }
+        
+        .css-display pre {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        .log-container {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-success { background: #28a745; }
+        .status-error { background: #dc3545; }
+        .status-warning { background: #ffc107; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Sidebar Mobile - Problema Identificado</h1>
+    
+    <div class="debug-panel">
+        <h3>📊 Status da Sidebar Mobile</h3>
+        <div id="status"></div>
+    </div>
+    
+    <div class="test-container">
+        <div class="sidebar" id="test-sidebar">
+            <button class="sidebar-toggle" id="test-toggle" onclick="toggleSidebar()">☰</button>
+            <h4>Sidebar de Teste</h4>
+            <p>Esta é uma simulação da sidebar do sistema principal</p>
+            <ul>
+                <li>Dashboard</li>
+                <li>Vendas</li>
+                <li>Produtos</li>
+                <li>Clientes</li>
+            </ul>
+        </div>
+        <div class="overlay" id="test-overlay"></div>
+    </div>
+    
+    <div class="test-buttons">
+        <button class="test-btn" onclick="testToggle()">🧪 Testar Toggle</button>
+        <button class="test-btn" onclick="testCSS()">🎨 Verificar CSS</button>
+        <button class="test-btn" onclick="testClasses()">🏷️ Verificar Classes</button>
+        <button class="test-btn" onclick="forceMobile()">📱 Forçar Mobile (768px)</button>
+        <button class="test-btn" onclick="forceDesktop()">🖥️ Forçar Desktop (1200px)</button>
+        <button class="test-btn" onclick="clearLog()">🗑️ Limpar Log</button>
+    </div>
+    
+    <div class="css-display">
+        <h4>🎯 CSS Aplicado</h4>
+        <pre id="css-info">Clique em "Verificar CSS" para ver os estilos</pre>
+    </div>
+    
+    <div class="log-container">
+        <h4>📝 Log de Eventos</h4>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        let logElement;
+        
+        // Função de log
+        function log(message, type = 'info') {
+            if (!logElement) {
+                logElement = document.getElementById('log');
+            }
+            
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            
+            let statusClass = '';
+            let statusSymbol = '';
+            
+            switch(type) {
+                case 'success':
+                    statusClass = 'status-success';
+                    statusSymbol = '✅';
+                    break;
+                case 'error':
+                    statusClass = 'status-error';
+                    statusSymbol = '❌';
+                    break;
+                case 'warning':
+                    statusClass = 'status-warning';
+                    statusSymbol = '⚠️';
+                    break;
+                default:
+                    statusSymbol = 'ℹ️';
+            }
+            
+            logEntry.innerHTML = `
+                <span class="status-indicator ${statusClass}"></span>
+                [${timestamp}] ${statusSymbol} ${message}
+            `;
+            logElement.appendChild(logEntry);
+            logElement.scrollTop = logElement.scrollHeight;
+            
+            console.log(message);
+        }
+        
+        // Atualizar status
+        function updateStatus() {
+            const statusDiv = document.getElementById('status');
+            const sidebar = document.getElementById('test-sidebar');
+            const toggle = document.getElementById('test-toggle');
+            
+            if (sidebar && toggle) {
+                const sidebarStyle = window.getComputedStyle(sidebar);
+                const toggleStyle = window.getComputedStyle(toggle);
+                const isOpen = sidebar.classList.contains('open');
+                const width = window.innerWidth;
+                
+                statusDiv.innerHTML = `
+                    <strong>📏 Largura da tela:</strong> ${width}px<br>
+                    <strong>📋 Sidebar:</strong><br>
+                    - Classes: ${sidebar.className}<br>
+                    - Estado: <span style="color: ${isOpen ? '#00ff00' : '#ff0000'}">${isOpen ? 'ABERTO' : 'FECHADO'}</span><br>
+                    - Transform: ${sidebarStyle.transform}<br>
+                    - Position: ${sidebarStyle.position}<br>
+                    - Z-Index: ${sidebarStyle.zIndex}<br>
+                    - Width: ${sidebarStyle.width}<br>
+                    <br>
+                    <strong>🎯 Toggle:</strong><br>
+                    - Display: ${toggleStyle.display}<br>
+                    - Position: ${toggleStyle.position}<br>
+                    - Z-Index: ${toggleStyle.zIndex}<br>
+                    <br>
+                    <strong>📱 Breakpoint:</strong> ${getBreakpoint(width)}
+                `;
+            }
+        }
+        
+        // Obter breakpoint atual
+        function getBreakpoint(width) {
+            if (width > 1024) return '🖥️ Desktop (>1024px)';
+            if (width > 768) return '💻 Tablet (768px-1024px)';
+            if (width > 480) return '📱 Mobile (480px-768px)';
+            return '📱 Mobile Pequeno (<480px)';
+        }
+        
+        // Toggle da sidebar (simulando o comportamento do sistema principal)
+        function toggleSidebar() {
+            log('🔄 Toggle clicado!', 'info');
+            
+            const sidebar = document.getElementById('test-sidebar');
+            const overlay = document.getElementById('test-overlay');
+            
+            if (sidebar) {
+                const isOpen = sidebar.classList.contains('open');
+                log(`📋 Estado atual: ${isOpen ? 'Aberto' : 'Fechado'}`, 'info');
+                
+                if (isOpen) {
+                    // Fechar sidebar
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('show');
+                    log('🔒 Sidebar fechada', 'success');
+                } else {
+                    // Abrir sidebar
+                    sidebar.classList.add('open');
+                    overlay.classList.add('show');
+                    log('🔓 Sidebar aberta', 'success');
+                }
+                
+                // Verificar estado após mudança
+                setTimeout(() => {
+                    const newState = sidebar.classList.contains('open');
+                    const computedStyle = window.getComputedStyle(sidebar);
+                    log(`📋 Estado após mudança: ${newState ? 'Aberto' : 'Fechado'}`, newState ? 'success' : 'warning');
+                    log(`🎯 Transform após mudança: ${computedStyle.transform}`, 'info');
+                    
+                    // Verificar se a mudança foi aplicada corretamente
+                    if (newState && computedStyle.transform.includes('0')) {
+                        log('✅ Sidebar aberta corretamente!', 'success');
+                    } else if (!newState && computedStyle.transform.includes('-100%')) {
+                        log('✅ Sidebar fechada corretamente!', 'success');
+                    } else {
+                        log('❌ PROBLEMA: CSS não foi aplicado corretamente!', 'error');
+                        log(`🎯 Transform esperado: ${newState ? 'translateX(0)' : 'translateX(-100%)'}`, 'warning');
+                        log(`🎯 Transform atual: ${computedStyle.transform}`, 'warning');
+                    }
+                    
+                    updateStatus();
+                }, 100);
+            }
+        }
+        
+        // Testar toggle
+        function testToggle() {
+            log('🧪 Testando toggle...', 'info');
+            toggleSidebar();
+        }
+        
+        // Testar CSS
+        function testCSS() {
+            log('🎨 Verificando CSS...', 'info');
+            
+            const sidebar = document.getElementById('test-sidebar');
+            const toggle = document.getElementById('test-toggle');
+            
+            if (sidebar && toggle) {
+                const sidebarStyle = window.getComputedStyle(sidebar);
+                const toggleStyle = window.getComputedStyle(toggle);
+                
+                const cssInfo = document.getElementById('css-info');
+                cssInfo.innerHTML = `
+<strong>🎯 Sidebar:</strong>
+- Transform: ${sidebarStyle.transform}
+- Position: ${sidebarStyle.position}
+- Z-Index: ${sidebarStyle.zIndex}
+- Width: ${sidebarStyle.width}
+- Display: ${sidebarStyle.display}
+- Transition: ${sidebarStyle.transition}
+
+<strong>🎯 Toggle:</strong>
+- Display: ${toggleStyle.display}
+- Position: ${toggleStyle.position}
+- Z-Index: ${toggleStyle.zIndex}
+- Top: ${toggleStyle.top}
+- Left: ${toggleStyle.left}
+
+<strong>📱 Media Queries:</strong>
+- max-width: 1024px: ${window.matchMedia('(max-width: 1024px)').matches ? '✅ Ativo' : '❌ Inativo'}
+- max-width: 768px: ${window.matchMedia('(max-width: 768px)').matches ? '✅ Ativo' : '❌ Inativo'}
+- max-width: 480px: ${window.matchMedia('(max-width: 480px)').matches ? '✅ Ativo' : '❌ Inativo'}
+                `;
+                
+                log(`🎯 CSS da Sidebar - Transform: ${sidebarStyle.transform}`, 'info');
+                log(`🎯 CSS do Toggle - Display: ${toggleStyle.display}`, 'info');
+                
+                // Verificar se o CSS está correto
+                if (sidebarStyle.transform.includes('-100%')) {
+                    log('✅ CSS inicial correto (sidebar fechada)', 'success');
+                } else {
+                    log('❌ CSS inicial incorreto', 'error');
+                }
+            }
+        }
+        
+        // Testar classes
+        function testClasses() {
+            log('🏷️ Verificando classes...', 'info');
+            
+            const sidebar = document.getElementById('test-sidebar');
+            if (sidebar) {
+                log(`📋 Classes da sidebar: ${sidebar.className}`, 'info');
+                log(`📋 Contém 'open': ${sidebar.classList.contains('open')}`, 'info');
+                log(`📋 Lista de classes: ${Array.from(sidebar.classList).join(', ')}`, 'info');
+                
+                // Verificar se as classes estão sendo aplicadas corretamente
+                if (sidebar.classList.contains('sidebar')) {
+                    log('✅ Classe base aplicada', 'success');
+                } else {
+                    log('❌ Classe base não aplicada', 'error');
+                }
+            }
+        }
+        
+        // Forçar modo mobile
+        function forceMobile() {
+            log('📱 Forçando modo mobile (768px)...', 'info');
+            
+            // Simular largura de tela mobile
+            Object.defineProperty(window, 'innerWidth', {
+                writable: true,
+                configurable: true,
+                value: 768
+            });
+            
+            window.dispatchEvent(new Event('resize'));
+            log('📱 Modo mobile simulado (768px)', 'info');
+            
+            // Verificar se a sidebar está oculta
+            setTimeout(() => {
+                const sidebar = document.getElementById('test-sidebar');
+                if (sidebar) {
+                    const computedStyle = window.getComputedStyle(sidebar);
+                    log(`🎯 Transform após resize: ${computedStyle.transform}`, 'info');
+                    
+                    if (computedStyle.transform.includes('-100%')) {
+                        log('✅ Sidebar oculta corretamente após resize', 'success');
+                    } else {
+                        log('❌ Sidebar não ocultada após resize', 'error');
+                    }
+                }
+                
+                updateStatus();
+            }, 100);
+        }
+        
+        // Forçar modo desktop
+        function forceDesktop() {
+            log('🖥️ Forçando modo desktop (1200px)...', 'info');
+            
+            // Simular largura de tela desktop
+            Object.defineProperty(window, 'innerWidth', {
+                writable: true,
+                configurable: true,
+                value: 1200
+            });
+            
+            window.dispatchEvent(new Event('resize'));
+            log('🖥️ Modo desktop simulado (1200px)', 'info');
+            
+            // Verificar se a sidebar está visível
+            setTimeout(() => {
+                const sidebar = document.getElementById('test-sidebar');
+                if (sidebar) {
+                    const computedStyle = window.getComputedStyle(sidebar);
+                    log(`🎯 Transform após resize: ${computedStyle.transform}`, 'info');
+                    
+                    if (computedStyle.transform.includes('0')) {
+                        log('✅ Sidebar visível corretamente após resize', 'success');
+                    } else {
+                        log('❌ Sidebar não visível após resize', 'error');
+                    }
+                }
+                
+                updateStatus();
+            }, 100);
+        }
+        
+        // Limpar log
+        function clearLog() {
+            if (logElement) {
+                logElement.innerHTML = '';
+                log('🗑️ Log limpo', 'info');
+            }
+        }
+        
+        // Event listeners
+        window.addEventListener('resize', () => {
+            log(`📱 Redimensionamento detectado: ${window.innerWidth}px`, 'info');
+            updateStatus();
+        });
+        
+        // Inicializar
+        log('🚀 Debug da sidebar mobile iniciado!', 'success');
+        log('🎯 Foco: Problema da sidebar não aparecer em mobile (≤769px)', 'warning');
+        updateStatus();
+        
+        // Verificar se há problemas com CSS
+        setTimeout(() => {
+            log('🔍 Verificando CSS inicial...', 'info');
+            testCSS();
+            testClasses();
+        }, 500);
+        
+        // Teste automático após 2 segundos
+        setTimeout(() => {
+            log('🧪 Iniciando teste automático...', 'info');
+            testToggle();
+        }, 2000);
+    </script>
+</body>
+</html> 

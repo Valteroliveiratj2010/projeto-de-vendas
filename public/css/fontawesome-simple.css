@@ -1,0 +1,64 @@
+/* Font Awesome Simple - Ícones Unicode Básicos */
+
+/* Ícones principais */
+.fa-home::before { content: "🏠"; }
+.fa-user::before { content: "👤"; }
+.fa-cog::before { content: "⚙️"; }
+.fa-chart-line::before { content: "📈"; }
+.fa-shopping-cart::before { content: "🛒"; }
+.fa-users::before { content: "👥"; }
+.fa-box::before { content: "📦"; }
+.fa-file-invoice::before { content: "📄"; }
+.fa-chart-bar::before { content: "📊"; }
+.fa-bars::before { content: "☰"; }
+.fa-dashboard::before { content: "📊"; }
+.fa-sign-out::before { content: "🚪"; }
+.fa-edit::before { content: "✏️"; }
+.fa-trash::before { content: "🗑️"; }
+.fa-plus::before { content: "➕"; }
+.fa-search::before { content: "🔍"; }
+.fa-calendar::before { content: "📅"; }
+.fa-phone::before { content: "📞"; }
+.fa-envelope::before { content: "✉️"; }
+.fa-map-marker::before { content: "📍"; }
+.fa-clock::before { content: "🕐"; }
+.fa-money-bill::before { content: "💰"; }
+.fa-star::before { content: "⭐"; }
+.fa-heart::before { content: "❤️"; }
+.fa-check::before { content: "✅"; }
+.fa-times::before { content: "❌"; }
+.fa-exclamation::before { content: "⚠️"; }
+.fa-info::before { content: "ℹ️"; }
+.fa-question::before { content: "❓"; }
+
+/* Classes de tamanho */
+.fa-1x { font-size: 1em; }
+.fa-2x { font-size: 2em; }
+.fa-3x { font-size: 3em; }
+.fa-4x { font-size: 4em; }
+.fa-5x { font-size: 5em; }
+
+/* Classes de alinhamento */
+.fa-fw { width: 1.25em; text-align: center; }
+.fa-pull-left { float: left; margin-right: 0.3em; }
+.fa-pull-right { float: right; margin-left: 0.3em; }
+
+/* Classes de rotação */
+.fa-rotate-90 { transform: rotate(90deg); }
+.fa-rotate-180 { transform: rotate(180deg); }
+.fa-rotate-270 { transform: rotate(270deg); }
+
+/* Classes de animação */
+.fa-spin { animation: fa-spin 2s linear infinite; }
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Classes de cor */
+.fa-inverse { color: #fff; }
+.fa-primary { color: #007bff; }
+.fa-success { color: #28a745; }
+.fa-warning { color: #ffc107; }
+.fa-danger { color: #dc3545; }
+.fa-info { color: #17a2b8; } 
