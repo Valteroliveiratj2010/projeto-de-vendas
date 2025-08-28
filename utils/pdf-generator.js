@@ -927,29 +927,40 @@ class PDFGenerator {
         try {
             const pageCount = this.doc.bufferedPageRange().count;
             
+            // Verificar se há páginas antes de tentar acessá-las
+            if (pageCount === 0) {
+                console.warn('⚠️ Nenhuma página encontrada para adicionar rodapé');
+                return;
+            }
+            
             // PDFKit usa índices baseados em 1, não 0
             for (let i = 1; i <= pageCount; i++) {
-                this.doc.switchToPage(i);
-                
-                const y = this.doc.page.height - 50;
-                
-                // Linha separadora
-                this.doc
-                    .moveTo(50, y)
-                    .lineTo(545, y)
-                    .strokeColor('#e5e7eb')
-                    .lineWidth(1)
-                    .stroke();
-                
-                this.doc.moveDown(0.5);
-                
-                // Informações do rodapé
-                this.doc
-                    .font(this.fonts.regular)
-                    .fontSize(8)
-                    .fillColor('#6b7280')
-                    .text('Sistema de Vendas - Gerado em ' + new Date().toLocaleString('pt-BR'), 50, y + 10, { width: 200 })
-                    .text(`Página ${i} de ${pageCount}`, 400, y + 10, { width: 145, align: 'right' });
+                try {
+                    this.doc.switchToPage(i);
+                    
+                    const y = this.doc.page.height - 50;
+                    
+                    // Linha separadora
+                    this.doc
+                        .moveTo(50, y)
+                        .lineTo(545, y)
+                        .strokeColor('#e5e7eb')
+                        .lineWidth(1)
+                        .stroke();
+                    
+                    this.doc.moveDown(0.5);
+                    
+                    // Informações do rodapé
+                    this.doc
+                        .font(this.fonts.regular)
+                        .fontSize(8)
+                        .fillColor('#6b7280')
+                        .text('Sistema de Vendas - Gerado em ' + new Date().toLocaleString('pt-BR'), 50, y + 10, { width: 200 })
+                        .text(`Página ${i} de ${pageCount}`, 400, y + 10, { width: 145, align: 'right' });
+                } catch (pageError) {
+                    console.warn(`⚠️ Erro ao adicionar rodapé na página ${i}:`, pageError);
+                    // Continuar com as próximas páginas
+                }
             }
             
         } catch (error) {

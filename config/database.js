@@ -8,9 +8,12 @@ const pool = new Pool({
   database: process.env.DB_NAME || 'sistema_vendas_6a8n',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'sua_senha_aqui',
-  ssl: {
-    rejectUnauthorized: false
-  },
+  // SSL só para produção (Render), não para desenvolvimento local
+  ...(process.env.NODE_ENV === 'production' && {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }),
   max: 20, // Máximo de conexões no pool
   idleTimeoutMillis: 30000, // Tempo limite para conexões ociosas
   connectionTimeoutMillis: 2000, // Tempo limite para estabelecer conexão
@@ -21,7 +24,8 @@ console.log('🔧 Configuração do banco:', {
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,
   database: process.env.DB_NAME || 'sistema_vendas_6a8n',
-  user: process.env.DB_USER || 'postgres'
+  user: process.env.DB_USER || 'postgres',
+  ssl: process.env.NODE_ENV === 'production' ? 'Sim (produção)' : 'Não (desenvolvimento)'
 });
 
 // Teste de conexão - FIXED VERSION

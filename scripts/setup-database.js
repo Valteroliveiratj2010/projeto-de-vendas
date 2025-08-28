@@ -57,7 +57,11 @@ CREATE TABLE IF NOT EXISTS pagamentos (
     id SERIAL PRIMARY KEY,
     venda_id INT NOT NULL REFERENCES vendas(id) ON DELETE CASCADE,
     valor_pago DECIMAL(10,2) NOT NULL,
+    forma_pagamento VARCHAR(50) DEFAULT 'Dinheiro',
+    observacoes TEXT,
     data_pagto TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     sync_status BOOLEAN DEFAULT true
 );
 
