@@ -5,7 +5,7 @@ require('dotenv').config();
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'sistema_vendas',
+  database: process.env.DB_NAME || 'sistema_vendas_zc4o',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'sua_senha_aqui',
   max: 20, // Máximo de conexões no pool
