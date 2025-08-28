@@ -85,7 +85,7 @@ nano .env  # Editar configurações
 # Configurações do Banco de Dados PostgreSQL
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=sistema_vendas
+DB_NAME=sistema_vendas_zc4o
 DB_USER=sistema_user
 DB_PASSWORD=sua_senha_segura
 

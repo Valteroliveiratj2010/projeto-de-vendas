@@ -38,7 +38,7 @@ fi
 # Configurações
 APP_NAME="sistema-vendas"
 APP_DIR="/home/$USER/$APP_NAME"
-DB_NAME="sistema_vendas"
+DB_NAME="sistema_vendas_zc4o"
 DB_USER="sistema_user"
 DB_PASSWORD="$(openssl rand -base64 32)"
 NODE_VERSION="18"

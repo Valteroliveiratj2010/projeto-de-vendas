@@ -76,7 +76,7 @@ cp env.example .env
 # Configurações do Banco de Dados PostgreSQL
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=sistema_vendas
+DB_NAME=sistema_vendas_zc4o
 DB_USER=postgres
 DB_PASSWORD=sua_senha_aqui
 
@@ -285,7 +285,7 @@ npm run dev
 NODE_ENV=production
 PORT=3000
 DB_HOST=seu_host_producao
-DB_NAME=sistema_vendas_prod
+DB_NAME=sistema_vendas_zc4o
 JWT_SECRET=chave_super_secreta_producao
 ```
 

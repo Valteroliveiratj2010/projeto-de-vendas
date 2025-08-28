@@ -5,7 +5,7 @@
 $ErrorActionPreference = "Stop"
 $APP_NAME = "sistema-vendas"
 $APP_DIR = "C:\$APP_NAME"
-$DB_NAME = "sistema_vendas"
+$DB_NAME = "sistema_vendas_zc4o"
 $DB_USER = "sistema_user"
 $DB_PASSWORD = -join ((33..126) | Get-Random -Count 32 | ForEach-Object {[char]$_})
 

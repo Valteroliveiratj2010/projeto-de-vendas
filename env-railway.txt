@@ -1,0 +1,25 @@
+# Configurações do Banco de Dados PostgreSQL (Railway)
+DB_HOST=postgres.railway.internal
+DB_PORT=5432
+DB_NAME=railway
+DB_USER=postgres
+DB_PASSWORD=qgRnYSwhYxUngKukMtkEZKdZUBJvroan
+
+# Configurações do Servidor
+PORT=3000
+NODE_ENV=production
+
+# Configurações JWT (use a que você já criou)
+JWT_SECRET=a1f69783cf27d2e4f3c6115ac263e9efbb43742d2ee8196d1fe2d5e5fb8f5b1116b2fa5ae278bdade8ac13d4e56007491ee4e198418451cff0fb64b07100094f
+JWT_EXPIRES_IN=24h
+
+# Configurações de Email
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=valteroliveiratj32@gmail.com
+EMAIL_PASS=guaguas00
+
+# Configurações WhatsApp (opcional)
+TWILIO_ACCOUNT_SID=seu_account_sid
+TWILIO_AUTH_TOKEN=seu_auth_token
+TWILIO_PHONE_NUMBER=seu_numero_whatsapp 
