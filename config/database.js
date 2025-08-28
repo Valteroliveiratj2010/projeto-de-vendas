@@ -8,6 +8,9 @@ const pool = new Pool({
   database: process.env.DB_NAME || 'sistema_vendas_6a8n',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'sua_senha_aqui',
+  ssl: {
+    rejectUnauthorized: false
+  },
   max: 20, // Máximo de conexões no pool
   idleTimeoutMillis: 30000, // Tempo limite para conexões ociosas
   connectionTimeoutMillis: 2000, // Tempo limite para estabelecer conexão
