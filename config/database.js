@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Configuração da conexão com o banco PostgreSQL
+// Configuração da conexão com o banco PostgreSQL - FIXED
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,
