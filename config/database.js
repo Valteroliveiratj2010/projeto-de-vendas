@@ -13,9 +13,17 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000, // Tempo limite para estabelecer conexão
 });
 
-// Teste de conexão
+// Log de configuração para debug
+console.log('🔧 Configuração do banco:', {
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'sistema_vendas_zc4o',
+  user: process.env.DB_USER || 'postgres'
+});
+
+// Teste de conexão - FIXED VERSION
 pool.on('connect', () => {
-  console.log('✅ Conectado ao banco PostgreSQL');
+  console.log('✅ Conectado ao banco PostgreSQL - FIXED');
 });
 
 pool.on('error', (err) => {
