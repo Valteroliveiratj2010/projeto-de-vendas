@@ -23,6 +23,19 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- CSS -->
+    <!-- Responsividade PRIMEIRO para não sobrescrever estilos específicos -->
+    <link rel="stylesheet" href="/css/responsive.css" />
+    
+    <!-- Responsividade Melhorada para todas as telas -->
+    <link rel="stylesheet" href="/css/responsive-enhanced.css" />
+    
+    <!-- Menu Hambúrguer Elegante e Profissional -->
+    <link rel="stylesheet" href="/css/hamburger-menu-enhanced.css" />
+    
+    <!-- Overlay Elegante da Sidebar -->
+    <link rel="stylesheet" href="/css/sidebar-overlay.css" />
+    
+    <!-- Estilos principais -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/components.css">
     <link rel="stylesheet" href="/css/ui.css">
@@ -35,8 +48,7 @@
     <!-- Ícones Profissionais -->
     <link rel="stylesheet" href="/css/icons-professional.css" />
     
-    <!-- Responsividade -->
-    <link rel="stylesheet" href="/css/responsive.css" />
+    <!-- Action Buttons por último -->
     <link rel="stylesheet" href="/css/action-buttons.css" />
     
     <title>Sistema de Vendas - Página Principal</title>
@@ -141,13 +153,18 @@
             </div>
         </div>
         
+        <!-- NOTIFICAÇÃO DE ESTOQUE BAIXO -->
+        <div class="estoque-notification" id="estoque-notification" style="display: none;">
+            <!-- Notificação será carregada dinamicamente -->
+        </div>
+
         <!-- Conteúdo Principal -->
         <div class="main-content">
             <!-- Header Superior -->
             <div class="top-header">
                 <div class="header-left">
-                    <button id="sidebar-toggle" class="sidebar-toggle">
-                        <i class="fas fa-bars"></i>
+                    <button id="sidebar-toggle" class="sidebar-toggle" title="Abrir/Fechar Menu" aria-label="Abrir ou fechar menu de navegação" aria-expanded="false">
+                        <span class="hamburger-line"></span>
                     </button>
                     <h1>Sistema de Vendas</h1>
                 </div>
@@ -177,7 +194,7 @@
             <!-- Conteúdo das Páginas -->
             <div class="page-container">
                 <!-- Dashboard Page -->
-                <div id="dashboard-page" class="page active">
+                <div id="dashboard-page" class="dashboard-page page active">
                     <div class="dashboard-grid">
                         <!-- Cards de Estatísticas - LAYOUT DA IMAGEM -->
                 <div class="dashboard-header">
@@ -186,6 +203,11 @@
                         <i class="fas fa-sync-alt"></i>
                         Atualizar Dados
                     </button>
+                </div>
+                
+                <!-- ALERTAS DE ESTOQUE BAIXO -->
+                <div class="estoque-alerts" id="estoque-alerts">
+                    <!-- Alerta será carregado dinamicamente -->
                 </div>
                 
                 <div class="stats-grid">
@@ -317,10 +339,8 @@
                         </button>
                     </div>
                 </div>
-
-
-                    </div>
-                </div>
+            </div>
+        </div>
                 
                 <!-- Páginas do Sistema -->
                 <div id="clientes-page" class="page">

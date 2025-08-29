@@ -489,6 +489,8 @@ body {
   transition: margin-left var(--transition-normal);
   min-height: 100vh;
   background: var(--color-gray-50);
+  /* ✅ ESPAÇO PARA NOTIFICAÇÃO FIXA */
+  padding-top: 60px !important;
 }
 
 .sidebar.collapsed + .main-content {
@@ -625,21 +627,53 @@ body {
 }
 
 /* ===== DASHBOARD ===== */
-.dashboard-grid {
+#dashboard-page .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--spacing-6);
   margin-bottom: var(--spacing-8);
 }
 
-.stats-grid {
+/* Dashboard header com espaçamento - APENAS para o dashboard */
+#dashboard-page .dashboard-header {
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+/* Stats grid com espaçamento - APENAS para o dashboard */
+#dashboard-page .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--spacing-4);
   grid-column: 1 / -1;
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
 }
 
-.stat-card {
+/* Financial summary com espaçamento - APENAS para o dashboard */
+#dashboard-page .financial-summary {
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+/* Recent activity com espaçamento - APENAS para o dashboard */
+#dashboard-page .recent-activity {
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+/* Quick actions com espaçamento - APENAS para o dashboard */
+#dashboard-page .quick-actions {
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+/* Stat cards - APENAS para o dashboard */
+#dashboard-page .stat-card {
   background: var(--color-white);
   padding: var(--spacing-6);
   border-radius: var(--border-radius-lg);
@@ -650,12 +684,12 @@ body {
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.stat-card:hover {
+#dashboard-page .stat-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
-.stat-icon {
+#dashboard-page .stat-icon {
   width: 60px;
   height: 60px;
   border-radius: var(--border-radius-lg);
@@ -666,32 +700,27 @@ body {
   color: var(--color-white);
 }
 
-.stat-card:nth-child(1) .stat-icon { background: var(--color-primary); }
-.stat-card:nth-child(2) .stat-icon { background: var(--color-secondary); }
-.stat-card:nth-child(3) .stat-icon { background: var(--color-accent); }
-.stat-card:nth-child(4) .stat-icon { background: var(--color-info); }
+#dashboard-page .stat-card:nth-child(1) .stat-icon { background: var(--color-primary); }
+#dashboard-page .stat-card:nth-child(2) .stat-icon { background: var(--color-secondary); }
+#dashboard-page .stat-card:nth-child(3) .stat-icon { background: var(--color-accent); }
+#dashboard-page .stat-card:nth-child(4) .stat-icon { background: var(--color-info); }
 
-.stat-content h3 {
+#dashboard-page .stat-content h3 {
   font-size: var(--font-size-3xl);
   font-weight: 700;
   color: var(--color-gray-900);
   margin-bottom: var(--spacing-1);
 }
 
-.stat-content p {
+#dashboard-page .stat-content p {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
 }
 
-.financial-summary,
-.recent-activity,
-.quick-actions {
-  grid-column: span 1;
-}
-
-.summary-card,
-.activity-card,
-.actions-card {
+/* Cards do dashboard - APENAS para o dashboard */
+#dashboard-page .summary-card,
+#dashboard-page .activity-card,
+#dashboard-page .actions-card {
   background: var(--color-white);
   padding: var(--spacing-6);
   border-radius: var(--border-radius-lg);
@@ -699,22 +728,22 @@ body {
   height: 100%;
 }
 
-.summary-card h3,
-.activity-card h3,
-.actions-card h3 {
+#dashboard-page .summary-card h3,
+#dashboard-page .activity-card h3,
+#dashboard-page .actions-card h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-gray-900);
   margin-bottom: var(--spacing-4);
 }
 
-.summary-grid {
+#dashboard-page .summary-grid {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
 }
 
-.summary-item {
+#dashboard-page .summary-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -722,35 +751,35 @@ body {
   border-bottom: 1px solid var(--color-gray-100);
 }
 
-.summary-item:last-child {
+#dashboard-page .summary-item:last-child {
   border-bottom: none;
 }
 
-.summary-item .label {
+#dashboard-page .summary-item .label {
   color: var(--color-gray-600);
   font-size: var(--font-size-sm);
 }
 
-.summary-item .value {
+#dashboard-page .summary-item .value {
   font-weight: 600;
   font-size: var(--font-size-base);
 }
 
-.summary-item .value.success {
+#dashboard-page .summary-item .value.success {
   color: var(--color-success);
 }
 
-.summary-item .value.danger {
+#dashboard-page .summary-item .value.danger {
   color: var(--color-danger);
 }
 
-.activity-list {
+#dashboard-page .activity-list {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
 }
 
-.activity-item {
+#dashboard-page .activity-item {
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-3);
@@ -758,11 +787,11 @@ body {
   border-bottom: 1px solid var(--color-gray-100);
 }
 
-.activity-item:last-child {
+#dashboard-page .activity-item:last-child {
   border-bottom: none;
 }
 
-.activity-icon {
+#dashboard-page .activity-icon {
   width: 32px;
   height: 32px;
   background: var(--color-gray-100);
@@ -775,28 +804,28 @@ body {
   flex-shrink: 0;
 }
 
-.activity-content {
+#dashboard-page .activity-content {
   flex: 1;
 }
 
-.activity-content p {
+#dashboard-page .activity-content p {
   color: var(--color-gray-800);
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-1);
 }
 
-.activity-time {
+#dashboard-page .activity-time {
   font-size: var(--font-size-xs);
   color: var(--color-gray-500);
 }
 
-.actions-grid {
+#dashboard-page .actions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: var(--spacing-3);
 }
 
-.action-btn {
+#dashboard-page .action-btn {
   background: var(--color-gray-50);
   border: 1px solid var(--color-gray-200);
   padding: var(--spacing-4);
@@ -810,19 +839,19 @@ body {
   text-align: center;
 }
 
-.action-btn:hover {
+#dashboard-page .action-btn:hover {
   background: var(--color-white);
   border-color: var(--color-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
-.action-btn i {
+#dashboard-page .action-btn i {
   font-size: var(--font-size-xl);
   color: var(--color-primary);
 }
 
-.action-btn span {
+#dashboard-page .action-btn span {
   font-size: var(--font-size-sm);
   font-weight: 500;
   color: var(--color-gray-700);
@@ -837,31 +866,29 @@ body {
     width: 100%;
   }
   
-  .dashboard-grid {
+  /* Dashboard mantém suas margens internas */
+  #dashboard-page .dashboard-header,
+  #dashboard-page .stats-grid,
+  #dashboard-page .financial-summary,
+  #dashboard-page .recent-activity,
+  #dashboard-page .quick-actions,
+  #dashboard-page .estoque-alerts {
+    margin-left: var(--spacing-4) !important;
+    margin-right: var(--spacing-4) !important;
+  }
+  
+  #dashboard-page .dashboard-grid {
     grid-template-columns: 1fr;
   }
   
-  .stats-grid {
+  #dashboard-page .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-  
-  /* Overlay para mobile */
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    backdrop-filter: blur(2px);
-    pointer-events: none;
   }
 }
 
 /* Breakpoint Mobile (≤768px) */
 @media (max-width: 768px) {
-  .stats-grid {
+  #dashboard-page .stats-grid {
     grid-template-columns: 1fr;
   }
   
@@ -884,11 +911,11 @@ body {
 
 /* Breakpoint Mobile Pequeno (≤480px) */
 @media (max-width: 480px) {
-  .actions-grid {
+  #dashboard-page .actions-grid {
     grid-template-columns: 1fr;
   }
   
-  .stat-card {
+  #dashboard-page .stat-card {
     flex-direction: column;
     text-align: center;
   }
@@ -1002,4 +1029,815 @@ body {
   html body div#sidebar.sidebar.open {
     transform: translateX(0) !important;
   }
+} 
+
+/* ===== ALERTAS DE ESTOQUE - TOOLTIPS VISUAIS ===== */
+#dashboard-page .estoque-alerts {
+  margin-left: var(--spacing-6);
+  margin-right: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.estoque-alert {
+  position: relative;
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+  box-shadow: var(--shadow);
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+/* Triângulo de alerta no topo */
+.estoque-alert::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--color-gray-300);
+}
+
+.estoque-alert:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Alerta CRÍTICO - Vermelho */
+.estoque-alert.critical {
+  border: 2px solid var(--color-danger);
+  background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+}
+
+.estoque-alert.critical::before {
+  background: var(--color-danger);
+}
+
+.estoque-alert.critical .estoque-alert-icon {
+  background: var(--color-danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
+/* Alerta de AVISO - Amarelo */
+.estoque-alert.warning {
+  border: 2px solid var(--color-warning);
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.estoque-alert.warning::before {
+  background: var(--color-warning);
+}
+
+.estoque-alert.warning .estoque-alert-icon {
+  background: var(--color-warning);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+/* Alerta de SUCESSO - Verde */
+.estoque-alert.success {
+  border: 2px solid var(--color-success);
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+.estoque-alert.success::before {
+  background: var(--color-success);
+}
+
+.estoque-alert.success .estoque-alert-icon {
+  background: var(--color-success);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+/* Alerta de ERRO - Vermelho escuro */
+.estoque-alert.error {
+  border: 2px solid var(--color-danger);
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+}
+
+.estoque-alert.error::before {
+  background: var(--color-danger);
+}
+
+.estoque-alert.error .estoque-alert-icon {
+  background: var(--color-danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
+.estoque-alert-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+}
+
+.estoque-alert-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-white);
+  transition: all var(--transition-fast);
+}
+
+.estoque-alert-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+.estoque-alert-count {
+  background: var(--color-white);
+  color: var(--color-gray-900);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin-left: auto;
+  border: 1px solid var(--color-gray-200);
+}
+
+.estoque-alert-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-3);
+}
+
+.estoque-alert-item {
+  background: var(--color-white);
+  padding: var(--spacing-3);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  transition: all var(--transition-fast);
+}
+
+.estoque-alert-item:hover {
+  transform: translateX(4px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.estoque-alert-item-name {
+  font-weight: 500;
+  color: var(--color-gray-800);
+  flex: 1;
+}
+
+.estoque-alert-item-stock {
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Estoque crítico - Vermelho */
+.estoque-alert-item-stock.danger {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
+
+/* Estoque baixo - Amarelo */
+.estoque-alert-item-stock.warning {
+  background: var(--color-warning);
+  color: var(--color-gray-900);
+}
+
+.estoque-alert-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-4);
+  padding-top: var(--spacing-3);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.estoque-alert-btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.estoque-alert-btn.primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.estoque-alert-btn.primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.estoque-alert-btn.secondary {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  border: 1px solid var(--color-gray-300);
+}
+
+.estoque-alert-btn.secondary:hover {
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-400);
+} 
+
+/* ===== NOTIFICAÇÃO DE ESTOQUE NO TOPO - TOOLTIPS VISUAIS ===== */
+.estoque-notification {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+  color: var(--color-white);
+  padding: var(--spacing-3) var(--spacing-6);
+  text-align: center;
+  position: fixed !important; /* ✅ FIXED para ficar no topo da tela */
+  z-index: 100 !important; /* ✅ REDUZIDO - não deve cobrir a sidebar */
+  box-shadow: var(--shadow);
+  animation: slideDown 0.3s ease-out;
+  cursor: help;
+  /* ✅ POSICIONAMENTO CORRETO - NO TOPO DA TELA, À DIREITA DA SIDEBAR */
+  top: 0 !important;
+  left: var(--sidebar-width) !important; /* ✅ POSICIONADO À DIREITA DA SIDEBAR */
+  right: 0 !important;
+  bottom: auto !important;
+  /* ✅ LARGURA CORRETA */
+  width: calc(100% - var(--sidebar-width)) !important;
+  height: auto !important;
+  /* ✅ NÃO DEVE SER UM OVERLAY */
+  display: block !important;
+  overflow: visible !important;
+  /* ✅ GARANTIR POSICIONAMENTO CORRETO */
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.estoque-notification.warning {
+  background: linear-gradient(90deg, #d97706 0%, #f59e0b 100%);
+}
+
+.estoque-notification.critical {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+  animation: slideDown 0.3s ease-out, criticalPulse 2s infinite;
+}
+
+/* ✅ CORRIGIR ANIMAÇÃO PARA NÃO CAUSAR PROBLEMAS DE POSICIONAMENTO */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* ✅ REDUZIDO - não sai da tela */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* ✅ POSIÇÃO NORMAL */
+  }
+}
+
+/* ✅ ESTILOS DA NOTIFICAÇÃO DE ESTOQUE */
+.estoque-notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.estoque-notification-icon {
+  font-size: 20px;
+  animation: pulse 2s infinite;
+}
+
+.estoque-notification.critical .estoque-notification-icon {
+  animation: criticalPulse 1.5s infinite;
+}
+
+.estoque-notification-text {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.estoque-notification-count {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.estoque-notification-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.estoque-notification-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+/* ✅ ANIMAÇÕES ADICIONAIS */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes criticalPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+} 
+
+/* ===== DASHBOARD - CSS FORTE E ESPECÍFICO ===== */
+/* Usar seletores com máxima especificidade para quebrar qualquer conflito */
+
+/* Dashboard Grid - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .dashboard-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-8) !important;
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+}
+
+/* Dashboard Header - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .dashboard-header {
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-6) !important;
+}
+
+/* Stats Grid - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+  gap: var(--spacing-4) !important;
+  grid-column: 1 / -1 !important;
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+}
+
+/* Financial Summary - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .financial-summary {
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-6) !important;
+}
+
+/* Recent Activity - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .recent-activity {
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-6) !important;
+}
+
+/* Quick Actions - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .quick-actions {
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-6) !important;
+}
+
+/* Estoque Alerts - FORÇAR MARGENS */
+html body div#dashboard-page.dashboard-page.page.active .estoque-alerts {
+  margin-left: var(--spacing-6) !important;
+  margin-right: var(--spacing-6) !important;
+  margin-bottom: var(--spacing-6) !important;
+} 
+
+/* ===== TOOLTIPS PERSONALIZADOS ===== */
+[title] {
+  position: relative;
+  cursor: help;
+}
+
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: pre-line;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS - não deve interferir com botões */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  margin-bottom: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  max-width: 350px;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-align: left;
+}
+
+[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.95);
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS - não deve interferir com botões */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+  margin-bottom: 2px;
+}
+
+/* Tooltips específicos para alertas de estoque - CORRIGIDOS */
+.estoque-alert[title]:hover::after {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais vermelho */
+  color: white;
+  font-weight: 600;
+  max-width: 400px;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.6;
+  font-size: 13px;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert[title]:hover::before {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais vermelho */
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert.warning[title]:hover::after {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais amarelo */
+  color: white;
+  font-weight: 600;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert.warning[title]:hover::before {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais amarelo */
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-item[title]:hover::after {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais azul */
+  color: white;
+  font-size: 11px;
+  max-width: 300px;
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.4;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-item[title]:hover::before {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais azul */
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+/* Tooltips para botões de ação - CORRIGIDOS */
+.estoque-alert-btn[title]:hover::after {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais verde */
+  color: white;
+  font-size: 11px;
+  white-space: normal;
+  text-align: center;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-btn[title]:hover::before {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais verde */
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+/* Delay para tooltips */
+[title] {
+  transition: none;
+}
+
+[title]:hover::after,
+[title]:hover::before {
+  animation: tooltipFadeIn 0.3s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+} 
+
+/* Melhorar posicionamento para elementos próximos às bordas */
+.estoque-alert[title]:hover::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.estoque-alert-item[title]:hover::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Tooltips para elementos na lateral direita */
+.estoque-alert-item:nth-child(even)[title]:hover::after {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.estoque-alert-item:nth-child(even)[title]:hover::before {
+  left: auto;
+  right: 20px;
+  transform: translateX(0);
+} 
+
+/* ===== TOOLTIPS PERSONALIZADOS JAVASCRIPT ===== */
+.custom-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: pre-line;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS - não deve interferir com botões */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+  max-width: 350px;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transform: translateX(-50%);
+}
+
+.custom-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.95);
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+/* Tooltips específicos para alertas de estoque - CORRIGIDOS */
+.estoque-alert .custom-tooltip {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais vermelho */
+  color: white;
+  font-weight: 600;
+  max-width: 400px;
+  white-space: pre-line;
+  text-align: center;
+  line-height: 1.6;
+  font-size: 13px;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert .custom-tooltip::after {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais vermelho */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert.warning .custom-tooltip {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais amarelo */
+  color: white;
+  font-weight: 600;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert.warning .custom-tooltip::after {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais amarelo */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-item .custom-tooltip {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais azul */
+  color: white;
+  font-size: 11px;
+  max-width: 300px;
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.4;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-item .custom-tooltip::after {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais azul */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-btn .custom-tooltip {
+  background: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais verde */
+  color: white;
+  font-size: 11px;
+  white-space: normal;
+  text-align: center;
+  z-index: 50; /* ✅ REDUZIDO AINDA MAIS */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+.estoque-alert-btn .custom-tooltip::after {
+  border-top-color: rgba(0, 0, 0, 0.95); /* ✅ MUDADO - não mais verde */
+  pointer-events: none; /* ✅ GARANTIR que não bloqueie cliques */
+}
+
+/* Animações para tooltips personalizados */
+.custom-tooltip {
+  animation: customTooltipFadeIn 0.3s ease-out;
+}
+
+@keyframes customTooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+} 
+
+/* ===== OVERLAY ELEGANTE DA SIDEBAR ===== */
+/* O overlay agora é gerenciado pelo arquivo sidebar-overlay.css */
+/* Estas regras são apenas para compatibilidade e fallback */
+
+/* ===== FORÇAR SIDEBAR SEMPRE VISÍVEL NO DESKTOP ===== */
+@media (min-width: 1025px) {
+  #sidebar,
+  .sidebar {
+    transform: translateX(0) !important;
+    position: fixed !important;
+    left: 0 !important;
+    width: var(--sidebar-width) !important;
+    z-index: 999 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* ✅ NO DESKTOP, NÃO MOSTRAR OVERLAY */
+  #sidebar-overlay,
+  .sidebar-overlay {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+} 
+
+/* ===== SOLUÇÃO DEFINITIVA - NOTIFICAÇÃO DE ESTOQUE ===== */
+/* REMOVER TODAS AS REGRAS ANTERIORES E IMPLEMENTAR SOLUÇÃO SIMPLES */
+
+.estoque-notification {
+  /* ✅ POSICIONAMENTO SIMPLES E DIRETO */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 60px !important;
+  
+  /* ✅ ESTILOS BÁSICOS */
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%) !important;
+  color: white !important;
+  padding: 15px 20px !important;
+  text-align: center !important;
+  
+  /* ✅ Z-INDEX ALTO PARA FICAR SOBRE TUDO, MAS ABAIXO DO MENU HAMBÚRGUER */
+  z-index: 999 !important; /* ✅ ABAIXO DO MENU HAMBÚRGUER (1001) */
+  
+  /* ✅ DISPLAY E OVERFLOW */
+  display: block !important;
+  overflow: hidden !important;
+  
+  /* ✅ ANIMAÇÃO SIMPLES */
+  animation: slideDownSimple 0.3s ease-out !important;
+  
+  /* ✅ GARANTIR QUE NÃO INTERFIRA COM O MENU HAMBÚRGUER */
+  pointer-events: auto !important;
+}
+
+/* ✅ ANIMAÇÃO SIMPLES E EFICAZ */
+@keyframes slideDownSimple {
+  from {
+    transform: translateY(-100%) !important;
+  }
+  to {
+    transform: translateY(0) !important;
+  }
+}
+
+/* ✅ REGRAS RESPONSIVAS SIMPLES */
+@media (max-width: 1024px) {
+  .estoque-notification {
+    left: 0 !important;
+    width: 100% !important;
+    /* ✅ GARANTIR ESPAÇO PARA O MENU HAMBÚRGUER */
+    padding-right: 80px !important; /* Espaço para o menu hambúrguer */
+  }
+}
+
+@media (max-width: 768px) {
+  .estoque-notification {
+    left: 0 !important;
+    width: 100% !important;
+    padding: 10px 15px !important;
+    /* ✅ GARANTIR ESPAÇO PARA O MENU HAMBÚRGUER */
+    padding-right: 70px !important; /* Espaço para o menu hambúrguer */
+  }
+}
+
+@media (max-width: 480px) {
+  .estoque-notification {
+    left: 0 !important;
+    width: 100% !important;
+    padding: 8px 12px !important;
+    /* ✅ GARANTIR ESPAÇO PARA O MENU HAMBÚRGUER */
+    padding-right: 60px !important; /* Espaço para o menu hambúrguer */
+  }
+}
+
+@media (max-width: 320px) {
+  .estoque-notification {
+    left: 0 !important;
+    width: 100% !important;
+    padding: 6px 10px !important;
+    /* ✅ GARANTIR ESPAÇO PARA O MENU HAMBÚRGUER */
+    padding-right: 50px !important; /* Espaço para o menu hambúrguer */
+  }
+} 
+
+/* ✅ GARANTIR QUE OS BOTÕES SEJAM CLICÁVEIS - PRIORIDADE SOBRE TOOLTIPS */
+.estoque-alert-btn {
+  position: relative;
+  z-index: 100 !important; /* ✅ PRIORIDADE ALTA - deve estar acima dos tooltips */
+  pointer-events: auto !important; /* ✅ GARANTIR que seja clicável */
+}
+
+.estoque-alert-btn:hover {
+  z-index: 101 !important; /* ✅ AINDA MAIS ALTO no hover */
+}
+
+.estoque-alert-btn:active {
+  z-index: 102 !important; /* ✅ MÁXIMA PRIORIDADE quando clicado */
+}
+
+/* ✅ GARANTIR QUE OS TOOLTIPS NÃO INTERFI RAM COM OS BOTÕES */
+.estoque-alert-btn[title]:hover::after,
+.estoque-alert-btn[title]:hover::before {
+  z-index: 49 !important; /* ✅ SEMPRE ABAIXO dos botões */
+  pointer-events: none !important; /* ✅ NUNCA deve bloquear cliques */
+}
+
+/* ✅ GARANTIR QUE OS TOOLTIPS PERSONALIZADOS NÃO INTERFI RAM */
+.estoque-alert-btn .custom-tooltip {
+  z-index: 49 !important; /* ✅ SEMPRE ABAIXO dos botões */
+  pointer-events: none !important; /* ✅ NUNCA deve bloquear cliques */
+}
+
+.estoque-alert-btn .custom-tooltip::after {
+  z-index: 48 !important; /* ✅ AINDA MAIS BAIXO */
+  pointer-events: none !important; /* ✅ NUNCA deve bloquear cliques */
 } 

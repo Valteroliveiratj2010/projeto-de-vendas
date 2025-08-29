@@ -19,48 +19,30 @@ class SistemaVendas {
         try {
             console.log('🚀 Inicializando Sistema de Vendas...');
             
-            // Aguardar sistema de autenticação estar pronto
-            await this.waitForAuthSystem();
-            
-            // Verificar se o usuário está autenticado
-            if (!this.checkUserAuthentication()) {
-                console.log('🚫 Usuário não autenticado, redirecionando para login...');
-                window.location.replace('/login');
-                return;
-            }
+            // Verificar autenticação inicial
+            this.checkInitialAuth();
             
             // Configurar roteamento
             this.setupRouting();
             
-            // Configurar eventos
+            // Configurar event listeners
             this.setupEventListeners();
             
-            // Inicializar responsividade
+            // Configurar responsividade
             this.handleResize();
             
-            // Forçar responsividade inicial
-            this.forceResponsiveness();
-            
-            // Carregar página inicial
-            await this.loadPage(this.currentPage);
-            
-            // Esconder tela de loading
-            this.hideLoadingScreen();
-            
-            // Marcar como inicializado
-            this.isInitialized = true;
-            
-            // Forçar carregamento dos dados do dashboard após inicialização
-            console.log('🎯 Forçando carregamento dos dados do dashboard...');
+            // ✅ VERIFICAR E INICIALIZAR PÁGINAS
             setTimeout(() => {
-                this.loadDashboardData();
+                this.checkAndInitializePages();
             }, 1000);
             
-            console.log('✅ Sistema inicializado com sucesso!');
+            // Ocultar tela de carregamento
+            this.hideLoadingScreen();
+            
+            console.log('✅ Sistema de Vendas inicializado com sucesso!');
             
         } catch (error) {
-            console.error('❌ Erro ao inicializar sistema:', error);
-            this.hideLoadingScreen();
+            console.error('❌ Erro ao inicializar Sistema de Vendas:', error);
         }
     }
     
@@ -79,16 +61,39 @@ class SistemaVendas {
     
     checkUserAuthentication() {
         try {
-            const token = localStorage.getItem('authToken');
+            // ✅ VERIFICAR TOKEN NA URL PRIMEIRO (para rotas protegidas)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlToken = urlParams.get('token');
+            
+            // ✅ VERIFICAR TOKEN NO LOCALSTORAGE
+            const localStorageToken = localStorage.getItem('authToken');
             const userData = localStorage.getItem('userData');
             
-            if (token && userData) {
-                console.log('✅ Usuário autenticado');
+            // ✅ VERIFICAR SE HÁ TOKEN VÁLIDO NA URL (PRIORIDADE MÁXIMA)
+            if (urlToken && urlToken.trim() !== '') {
+                console.log('✅ Token encontrado na URL');
+                // Salvar token da URL no localStorage se não existir
+                if (!localStorageToken) {
+                    localStorage.setItem('authToken', urlToken);
+                    console.log('✅ Token da URL salvo no localStorage');
+                }
                 return true;
-            } else {
-                console.log('❌ Usuário não autenticado');
+            }
+            
+            // ✅ SE NÃO HÁ TOKEN NA URL, VERIFICAR SE ESTAMOS EM ROTA PROTEGIDA
+            if (this.isOnProtectedRoute()) {
+                console.log('🚫 Rota protegida sem token na URL, acesso negado');
                 return false;
             }
+            
+            // ✅ SE NÃO ESTAMOS EM ROTA PROTEGIDA, VERIFICAR LOCALSTORAGE
+            if (localStorageToken && userData) {
+                console.log('✅ Usuário autenticado via localStorage');
+                return true;
+            }
+            
+            console.log('❌ Usuário não autenticado');
+            return false;
         } catch (error) {
             console.error('❌ Erro ao verificar autenticação:', error);
             return false;
@@ -96,46 +101,362 @@ class SistemaVendas {
     }
     
     checkInitialAuth() {
-        // Verificar autenticação imediatamente no construtor
+        // ✅ VERIFICAR AUTENTICAÇÃO IMEDIATAMENTE NO CONSTRUTOR
         setTimeout(() => {
-            if (!this.checkUserAuthentication()) {
-                console.log('🚫 Usuário não autenticado no construtor, redirecionando...');
-                window.location.replace('/login');
-                return; // Parar execução
+            // ✅ SEMPRE VERIFICAR SE ESTAMOS EM ROTA PROTEGIDA
+            if (this.isOnProtectedRoute()) {
+                if (!this.checkUserAuthentication()) {
+                    console.log('🚫 Usuário não autenticado em rota protegida, redirecionando para login...');
+                    // ✅ REDIRECIONAR PARA LOGIN COM MENSAGEM DE SEGURANÇA
+                    window.location.replace('/login?message=security_required');
+                    return; // Parar execução
+                }
+            } else {
+                // ✅ SE NÃO ESTAMOS EM ROTA PROTEGIDA, VERIFICAR AUTENTICAÇÃO NORMAL
+                if (!this.checkUserAuthentication()) {
+                    console.log('🚫 Usuário não autenticado, redirecionando para login...');
+                    // ✅ REDIRECIONAR PARA LOGIN COM MENSAGEM DE SEGURANÇA
+                    window.location.replace('/login?message=authentication_required');
+                    return; // Parar execução
+                }
             }
         }, 100);
     }
     
-    createSidebarOverlay() {
-        // Remover overlay existente se houver
-        this.removeSidebarOverlay();
+    // MUTATION OBSERVER - REMOVER OVERLAY ASSIM QUE FOR CRIADO
+    setupOverlayObserver() {
+        console.log('👁️ CONFIGURANDO OBSERVADOR PARA REMOVER OVERLAY AUTOMATICAMENTE');
         
-        const overlay = document.createElement('div');
-        overlay.id = 'sidebar-overlay';
-        overlay.className = 'sidebar-overlay';
+        // Criar observer que monitora mudanças no DOM
+        this.overlayObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            // Verificar se o nó adicionado é um overlay
+                            if (node.id === 'sidebar-overlay' || 
+                                node.className && node.className.includes('sidebar-overlay')) {
+                                console.log('🚨 OVERLAY DETECTADO PELO OBSERVADOR!');
+                                console.log('🚨 Removendo imediatamente...');
+                                node.remove();
+                            }
+                            
+                            // Verificar se há overlays dentro do nó adicionado
+                            const overlaysInside = node.querySelectorAll('#sidebar-overlay, .sidebar-overlay');
+                            if (overlaysInside.length > 0) {
+                                console.log(`🚨 ${overlaysInside.length} OVERLAYS DETECTADOS DENTRO DO NÓ!`);
+                                overlaysInside.forEach(overlay => {
+                                    console.log('🚨 Removendo overlay interno...');
+                                    overlay.remove();
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
         
-        // Garantir que o overlay funcione corretamente
-        overlay.style.pointerEvents = 'auto';
+        // Iniciar observação
+        this.overlayObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
         
-        document.body.appendChild(overlay);
+        console.log('👁️ Observador configurado e ativo');
+    }
+    
+    // Parar observador
+    stopOverlayObserver() {
+        if (this.overlayObserver) {
+            this.overlayObserver.disconnect();
+            this.overlayObserver = null;
+            console.log('👁️ Observador parado');
+        }
+    }
+    
+    // REMOÇÃO CONTÍNUA DO OVERLAY - INTERVALO
+    startContinuousOverlayRemoval() {
+        console.log('🔄 INICIANDO REMOÇÃO CONTÍNUA DO OVERLAY');
         
-        // Adicionar evento de clique para fechar sidebar
-        overlay.addEventListener('click', () => {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar && sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-                this.removeSidebarOverlay();
+        // Remover imediatamente
+        this.forceRemoveOverlayAggressive();
+        
+        // Configurar intervalo para remover a cada 100ms
+        this.overlayRemovalInterval = setInterval(() => {
+            const overlays = document.querySelectorAll('#sidebar-overlay, .sidebar-overlay, [id*="sidebar-overlay"], [class*="sidebar-overlay"]');
+            if (overlays.length > 0) {
+                console.log(`🔄 Removendo ${overlays.length} overlays encontrados...`);
+                overlays.forEach(overlay => {
+                    overlay.remove();
+                });
+            }
+        }, 100);
+        
+        console.log('🔄 Remoção contínua do overlay iniciada');
+    }
+    
+    // Parar remoção contínua
+    stopContinuousOverlayRemoval() {
+        if (this.overlayRemovalInterval) {
+            clearInterval(this.overlayRemovalInterval);
+            this.overlayRemovalInterval = null;
+            console.log('🔄 Remoção contínua do overlay parada');
+        }
+    }
+    
+    // REMOÇÃO FORÇADA DO OVERLAY - ABORDAGEM AGRESSIVA
+    forceRemoveOverlayAggressive() {
+        console.log('🚨 REMOÇÃO FORÇADA DO OVERLAY INICIADA');
+        
+        // Método 1: Remover por ID
+        const overlayById = document.getElementById('sidebar-overlay');
+        if (overlayById) {
+            console.log('🚨 Overlay encontrado por ID, removendo...');
+            overlayById.remove();
+        }
+        
+        // Método 2: Remover por classe
+        const overlaysByClass = document.querySelectorAll('.sidebar-overlay');
+        if (overlaysByClass.length > 0) {
+            console.log(`🚨 ${overlaysByClass.length} overlays encontrados por classe, removendo...`);
+            overlaysByClass.forEach(overlay => overlay.remove());
+        }
+        
+        // Método 3: Remover por seletor genérico
+        const overlaysGeneric = document.querySelectorAll('[id*="sidebar-overlay"], [class*="sidebar-overlay"]');
+        if (overlaysGeneric.length > 0) {
+            console.log(`🚨 ${overlaysGeneric.length} overlays encontrados por seletor genérico, removendo...`);
+            overlaysGeneric.forEach(overlay => overlay.remove());
+        }
+        
+        // Método 4: Forçar CSS inline
+        const allOverlays = document.querySelectorAll('div');
+        allOverlays.forEach(div => {
+            if (div.id && div.id.includes('sidebar-overlay') || 
+                div.className && div.className.includes('sidebar-overlay')) {
+                console.log('🚨 Overlay encontrado por busca genérica, removendo...');
+                div.style.display = 'none';
+                div.style.visibility = 'hidden';
+                div.style.opacity = '0';
+                div.style.position = 'absolute';
+                div.style.top = '-9999px';
+                div.style.left = '-9999px';
+                div.style.width = '0';
+                div.style.height = '0';
+                div.style.background = 'transparent';
+                div.style.zIndex = '-9999';
+                div.style.pointerEvents = 'none';
             }
         });
         
-        console.log('✅ Overlay da sidebar criado');
+        // Método 5: Verificar se ainda existe
+        setTimeout(() => {
+            const remainingOverlays = document.querySelectorAll('#sidebar-overlay, .sidebar-overlay, [id*="sidebar-overlay"], [class*="sidebar-overlay"]');
+            if (remainingOverlays.length === 0) {
+                console.log('✅ TODOS OS OVERLAYS FORAM REMOVIDOS COM SUCESSO!');
+            } else {
+                console.log(`❌ Ainda existem ${remainingOverlays.length} overlays!`);
+                remainingOverlays.forEach(overlay => {
+                    console.log('❌ Overlay restante:', overlay);
+                    overlay.remove();
+                });
+            }
+        }, 100);
+        
+        console.log('🚨 REMOÇÃO FORÇADA DO OVERLAY CONCLUÍDA');
+    }
+    
+    // Verificar estado atual do overlay
+    checkOverlayStatus() {
+        console.log('🔍 === VERIFICAÇÃO DO OVERLAY ===');
+        console.log('🔍 window.innerWidth:', window.innerWidth);
+        console.log('🔍 É desktop?', window.innerWidth > 1024);
+        
+        const overlay = document.getElementById('sidebar-overlay');
+        console.log('🔍 Overlay no DOM:', overlay);
+        
+        if (overlay) {
+            console.log('🔍 Overlay encontrado:');
+            console.log('  - ID:', overlay.id);
+            console.log('  - Classes:', overlay.className);
+            console.log('  - Display:', overlay.style.display);
+            console.log('  - Background:', overlay.style.background);
+            console.log('  - Z-index:', overlay.style.zIndex);
+            console.log('  - Position:', overlay.style.position);
+        }
+        
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            console.log('🔍 Sidebar:');
+            console.log('  - Classes:', sidebar.className);
+            console.log('  - Transform:', sidebar.style.transform);
+            console.log('  - Display:', sidebar.style.display);
+        }
+        
+        console.log('🔍 === FIM DA VERIFICAÇÃO ===');
+    }
+    
+    // Forçar remoção do overlay no desktop
+    forceRemoveOverlayOnDesktop() {
+        console.log('🔄 forceRemoveOverlayOnDesktop chamado');
+        console.log('🔄 window.innerWidth:', window.innerWidth);
+        console.log('🔄 É desktop?', window.innerWidth > 1024);
+        
+        if (window.innerWidth > 1024) {
+            console.log('🖥️ Forçando remoção do overlay no desktop');
+            
+            // Verificar se há overlay existente
+            const existingOverlay = document.getElementById('sidebar-overlay');
+            console.log('🔄 Overlay existente:', existingOverlay);
+            
+            this.removeSidebarOverlay();
+            
+            // Também remover classe 'open' da sidebar
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                console.log('🔄 Removendo classe open da sidebar');
+                sidebar.classList.remove('open');
+            }
+            
+            // Verificar novamente se o overlay foi removido
+            const overlayAfter = document.getElementById('sidebar-overlay');
+            console.log('🔄 Overlay após remoção:', overlayAfter);
+        } else {
+            console.log('📱 Não é desktop, não forçando remoção do overlay');
+        }
+    }
+    
+    createSidebarOverlay() {
+        console.log('🔄 Criando overlay discreto para sidebar...');
+        
+        // NUNCA criar overlay no desktop (> 1024px)
+        if (window.innerWidth > 1024) {
+            console.log('🖥️ Desktop detectado, NUNCA criando overlay');
+            // Remover overlay existente se houver
+            this.removeSidebarOverlay();
+            return;
+        }
+        
+        console.log('📱 Mobile/Tablet detectado, criando overlay discreto');
+        
+        // Remover overlay existente se houver
+        this.removeSidebarOverlay();
+        
+        // ✅ CRIAR OVERLAY DISCRETO
+        const overlay = document.createElement('div');
+        overlay.id = 'sidebar-overlay';
+        overlay.className = 'sidebar-overlay';
+        overlay.setAttribute('aria-label', 'Fechar menu de navegação');
+        overlay.setAttribute('role', 'button');
+        overlay.setAttribute('tabindex', '0');
+        
+        // ✅ VERIFICAR SE HÁ NOTIFICAÇÃO DE ESTOQUE
+        const estoqueNotification = document.querySelector('.estoque-notification');
+        if (estoqueNotification && window.getComputedStyle(estoqueNotification).display !== 'none') {
+            overlay.classList.add('has-notification');
+            console.log('✅ Overlay ajustado para notificação de estoque');
+        }
+        
+        // ✅ ADICIONAR CONTEÚDO VISUAL DISCRETO
+        overlay.innerHTML = `
+            <div class="overlay-content">
+                <div class="overlay-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                <div class="overlay-text">Fechar</div>
+            </div>
+        `;
+        
+        console.log('🔄 Overlay discreto criado:', overlay);
+        document.body.appendChild(overlay);
+        
+        // ✅ ADICIONAR EVENTOS DE INTERAÇÃO
+        const closeSidebar = () => {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            
+            if (sidebar && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                if (sidebarToggle) {
+                    sidebarToggle.classList.remove('active');
+                    sidebarToggle.setAttribute('aria-expanded', 'false');
+                }
+                this.removeSidebarOverlay();
+                console.log('✅ Sidebar fechada via overlay');
+            }
+        };
+        
+        // ✅ CLIQUE NO OVERLAY
+        overlay.addEventListener('click', closeSidebar);
+        
+        // ✅ TECLA ENTER/ESPAÇO (acessibilidade)
+        overlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                closeSidebar();
+            }
+        });
+        
+        // ✅ ESCAPE KEY (fechar com ESC)
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar && sidebar.classList.contains('open')) {
+                    closeSidebar();
+                }
+            }
+        };
+        
+        // ✅ ADICIONAR LISTENER PARA ESCAPE
+        document.addEventListener('keydown', escapeHandler);
+        
+        // ✅ ARMAZENAR REFERÊNCIA PARA REMOÇÃO POSTERIOR
+        overlay._escapeHandler = escapeHandler;
+        
+        // ✅ ANIMAÇÃO DE ENTRADA DISCRETA
+        setTimeout(() => {
+            overlay.classList.add('visible');
+        }, 10);
+        
+        console.log('✅ Overlay discreto da sidebar criado (mobile/tablet)');
     }
     
     removeSidebarOverlay() {
+        console.log('🔄 removeSidebarOverlay chamado');
         const overlay = document.getElementById('sidebar-overlay');
+        console.log('🔄 Overlay encontrado:', overlay);
+        
         if (overlay) {
-            overlay.remove();
-            console.log('✅ Overlay da sidebar removido');
+            console.log('🔄 Removendo overlay com animação...');
+            
+            // ✅ REMOVER LISTENER DE ESCAPE
+            if (overlay._escapeHandler) {
+                document.removeEventListener('keydown', overlay._escapeHandler);
+                console.log('✅ Listener de escape removido');
+            }
+            
+            // ✅ ANIMAÇÃO DE SAÍDA ELEGANTE
+            overlay.classList.remove('visible');
+            overlay.classList.add('fade-out');
+            
+            // ✅ AGUARDAR ANIMAÇÃO TERMINAR ANTES DE REMOVER
+            setTimeout(() => {
+                if (overlay && overlay.parentNode) {
+                    overlay.remove();
+                    console.log('✅ Overlay da sidebar removido com sucesso');
+                }
+            }, 300); // Tempo da animação CSS
+            
+            // Verificar se foi removido
+            setTimeout(() => {
+                const overlayAfter = document.getElementById('sidebar-overlay');
+                console.log('🔄 Overlay após remoção:', overlayAfter);
+            }, 350);
+        } else {
+            console.log('ℹ️ Nenhum overlay encontrado para remover');
         }
     }
     
@@ -147,16 +468,57 @@ class SistemaVendas {
         if (sidebarToggle && sidebar) {
             sidebarToggle.addEventListener('click', () => {
                 console.log('🔄 Toggle da sidebar clicado');
+                
+                // ✅ ATUALIZAR ESTADO DO BOTÃO
+                const isOpen = sidebar.classList.contains('open');
                 sidebar.classList.toggle('open');
                 
-                // Gerenciar overlay baseado no estado
+                // ✅ ATUALIZAR ATRIBUTOS DE ACESSIBILIDADE
+                sidebarToggle.setAttribute('aria-expanded', !isOpen);
+                
+                // ✅ ADICIONAR/REMOVER CLASSE DE ESTADO
                 if (sidebar.classList.contains('open')) {
-                    this.createSidebarOverlay();
-                    console.log('✅ Sidebar aberta');
+                    sidebarToggle.classList.add('active');
+                    console.log('✅ Sidebar aberta - botão ativo');
                 } else {
-                    this.removeSidebarOverlay();
-                    console.log('❌ Sidebar fechada');
+                    sidebarToggle.classList.remove('active');
+                    console.log('❌ Sidebar fechada - botão inativo');
                 }
+                
+                // Gerenciar overlay apenas no mobile/tablet
+                if (window.innerWidth <= 1024) {
+                    if (sidebar.classList.contains('open')) {
+                        this.createSidebarOverlay();
+                        console.log('✅ Sidebar aberta (mobile/tablet)');
+                    } else {
+                        this.removeSidebarOverlay();
+                        console.log('❌ Sidebar fechada (mobile/tablet)');
+                    }
+                } else {
+                    console.log('🖥️ Desktop: sidebar sempre visível, sem overlay');
+                }
+            });
+            
+            // ✅ ADICIONAR ESTADOS DE HOVER E FOCUS
+            sidebarToggle.addEventListener('mouseenter', () => {
+                if (!sidebar.classList.contains('open')) {
+                    sidebarToggle.classList.add('hover');
+                }
+            });
+            
+            sidebarToggle.addEventListener('mouseleave', () => {
+                sidebarToggle.classList.remove('hover');
+            });
+            
+            // ✅ ADICIONAR ESTADO DE LOADING (opcional)
+            sidebarToggle.addEventListener('mousedown', () => {
+                sidebarToggle.classList.add('pressed');
+            });
+            
+            sidebarToggle.addEventListener('mouseup', () => {
+                setTimeout(() => {
+                    sidebarToggle.classList.remove('pressed');
+                }, 150);
             });
         }
         
@@ -175,6 +537,8 @@ class SistemaVendas {
                 
                 // Fechar sidebar para outros cliques
                 sidebar.classList.remove('open');
+                sidebarToggle.classList.remove('active');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
                 this.removeSidebarOverlay();
             }
         });
@@ -192,6 +556,8 @@ class SistemaVendas {
                     const sidebar = document.getElementById('sidebar');
                     if (sidebar && sidebar.classList.contains('open')) {
                         sidebar.classList.remove('open');
+                        sidebarToggle.classList.remove('active');
+                        sidebarToggle.setAttribute('aria-expanded', 'false');
                         this.removeSidebarOverlay();
                     }
                 }
@@ -212,6 +578,7 @@ class SistemaVendas {
         // Listener para mudanças de tamanho de tela
         window.addEventListener('resize', () => {
             this.handleResize();
+            this.forceRemoveOverlayOnDesktop(); // Chamar forçar remoção no redimensionamento
         });
     }
     
@@ -221,24 +588,36 @@ class SistemaVendas {
         
         if (sidebar && sidebarToggle) {
             const width = window.innerWidth;
-            
             console.log(`🔄 Redimensionamento detectado: ${width}px`);
             
             if (width > 1024) {
-                // Desktop: sidebar sempre visível, remover overlay
-                sidebar.classList.remove('open');
-                this.removeSidebarOverlay();
+                // Desktop: sidebar sempre visível
                 console.log('🖥️ Modo Desktop: Sidebar sempre visível');
-            } else if (width <= 1024) {
-                // Tablet e Mobile: sidebar oculta por padrão, toggle visível
                 sidebar.classList.remove('open');
+                sidebarToggle.classList.remove('active');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
+                sidebar.style.transform = 'translateX(0)';
+                
+                // ✅ OCULTAR BOTÃO NO DESKTOP
+                sidebarToggle.style.display = 'none';
+                
+                // Remover overlay se existir
                 this.removeSidebarOverlay();
-                console.log('📱 Modo Mobile/Tablet: Sidebar oculta, toggle visível');
+                
+            } else {
+                // Mobile/Tablet: sidebar oculta por padrão
+                console.log('📱 Modo Mobile/Tablet: Sidebar oculta por padrão');
+                sidebar.classList.remove('open');
+                sidebarToggle.classList.remove('active');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
+                sidebar.style.transform = 'translateX(-100%)';
+                
+                // ✅ MOSTRAR BOTÃO NO MOBILE/TABLET
+                sidebarToggle.style.display = 'block';
+                
+                // Remover overlay se existir
+                this.removeSidebarOverlay();
             }
-            
-            // Log adicional para debug
-            const computedStyle = window.getComputedStyle(sidebar);
-            console.log(`🎯 CSS aplicado - Transform: ${computedStyle.transform}, Display: ${computedStyle.display}`);
         }
     }
     
@@ -247,34 +626,64 @@ class SistemaVendas {
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.slice(1) || 'dashboard';
             
-            // Verificar autenticação antes de navegar
+            // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE NAVEGAR
             if (!this.checkUserAuthentication()) {
                 console.log('🚫 Usuário não autenticado, redirecionando para login...');
-                window.location.replace('/login');
+                window.location.replace('/login?message=session_expired');
                 return;
             }
             
+            console.log('🔄 Hash mudou para:', hash);
             this.navigateToPage(hash);
         });
 
-        // Roteamento inicial
-        const hash = window.location.hash.slice(1) || 'dashboard';
-        this.navigateToPage(hash);
+        // ✅ ROTEAMENTO INICIAL - VERIFICAR AUTENTICAÇÃO PRIMEIRO
+        const hash = window.location.hash.slice(1);
+        let initialPage = hash || 'dashboard';
+        
+        // ✅ SEMPRE VERIFICAR AUTENTICAÇÃO ANTES DE INICIAR
+        if (!this.checkUserAuthentication()) {
+            console.log('🚫 Usuário não autenticado no roteamento inicial, redirecionando para login...');
+            // ✅ SEMPRE INCLUIR MENSAGEM DE SEGURANÇA
+            const message = this.isOnProtectedRoute() ? 'security_required' : 'authentication_required';
+            window.location.replace(`/login?message=${message}`);
+            return;
+        }
+        
+        // ✅ PERMITIR QUE O HASH DEFINA A PÁGINA INICIAL (APÓS AUTENTICAÇÃO)
+        console.log('🔄 Roteamento inicial para:', initialPage);
+        window.currentPage = initialPage; // Definir para uso global
+        this.navigateToPage(initialPage);
     }
     
     async navigateToPage(page) {
         try {
-            // Verificar autenticação antes de navegar
+            console.log('🔄 navigateToPage chamado com:', page);
+            console.log('🔄 window.currentPage antes:', window.currentPage);
+            console.log('🔄 this.currentPage antes:', this.currentPage);
+            
+            // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE NAVEGAR
             if (!this.checkUserAuthentication()) {
                 console.log('🚫 Usuário não autenticado, redirecionando para login...');
-                window.location.replace('/login');
+                // ✅ SEMPRE INCLUIR MENSAGEM DE SEGURANÇA
+                const message = this.isOnProtectedRoute() ? 'security_required' : 'navigation_blocked';
+                window.location.replace(`/login?message=${message}`);
                 return;
             }
             
-            this.updateActiveNavigation(page);
-            await this.loadPage(page);
-            window.location.hash = page;
+            // ✅ PERMITIR NAVEGAÇÃO NORMAL - REMOVER FORÇAMENTO DO DASHBOARD
+            console.log('🔄 Navegando para página:', page);
+            window.currentPage = page; // Definir para uso global
             this.currentPage = page;
+            
+            console.log('🔄 window.currentPage depois:', window.currentPage);
+            console.log('🔄 this.currentPage depois:', this.currentPage);
+            
+            // ✅ ATUALIZAR HASH PRIMEIRO PARA EVITAR RECURSÃO
+            window.location.hash = `#${page}`;
+            
+            // ✅ CARREGAR PÁGINA
+            await this.loadPage(page);
             
         } catch (error) {
             console.error('❌ Erro ao navegar para página:', error);
@@ -294,91 +703,90 @@ class SistemaVendas {
         }
     }
     
-    async loadPage(page) {
+    async loadPage(pageName) {
         try {
-            console.log(`🔄 Carregando página: ${page}`);
+            console.log(`🔄 loadPage chamado com: ${pageName}`);
+            console.log(`🔄 window.currentPage antes: ${window.currentPage}`);
             
-            // Verificar autenticação antes de carregar página
+            // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE CARREGAR PÁGINA
             if (!this.checkUserAuthentication()) {
                 console.log('🚫 Usuário não autenticado, redirecionando para login...');
-                window.location.replace('/login');
+                // ✅ SEMPRE INCLUIR MENSAGEM DE SEGURANÇA
+                const message = this.isOnProtectedRoute() ? 'security_required' : 'page_access_denied';
+                window.location.replace(`/login?message=${message}`);
                 return;
             }
             
-            // Ocultar todas as páginas
+            // ✅ OCULTAR TODAS AS PÁGINAS PRIMEIRO
             const allPages = document.querySelectorAll('.page');
-            console.log(`🔍 Páginas encontradas:`, allPages.length);
-            
-            allPages.forEach(p => {
-                p.classList.remove('active');
-                console.log(`🔍 Ocultando página: ${p.id}`);
+            console.log(`🔍 Encontradas ${allPages.length} páginas para ocultar`);
+            allPages.forEach(page => {
+                page.classList.remove('active');
+                console.log(`🔍 Ocultando página: ${page.id}`);
             });
             
-            // Mostrar página solicitada
-            const targetPage = document.getElementById(`${page}-page`);
+            // ✅ MOSTRAR APENAS A PÁGINA SOLICITADA
+            const targetPage = document.getElementById(`${pageName}-page`);
             if (targetPage) {
                 targetPage.classList.add('active');
-                console.log(`✅ Página ${page} ativada com sucesso`);
+                console.log(`✅ Página ${pageName} ativada com sucesso`);
                 
-                // Carregar dados específicos da página
-                await this.loadPageData(page);
+                // ✅ DISPARAR EVENTO DE ATIVAÇÃO DA PÁGINA
+                const eventName = `${pageName}-page-activated`;
+                console.log(`🔔 Disparando evento ${eventName}...`);
+                window.dispatchEvent(new CustomEvent(eventName));
+                
+                // ✅ ATUALIZAR NAVEGAÇÃO E CARREGAR DADOS
+                console.log('🔄 Navegando para página:', pageName);
+                window.currentPage = pageName; // Definir para uso global
+                this.currentPage = pageName;
+                
+                console.log('🔄 window.currentPage depois:', window.currentPage);
+                console.log('🔄 this.currentPage depois:', this.currentPage);
+                
+                this.updateActiveNavigation(pageName);
+                await this.loadPageData(pageName);
                 
             } else {
-                console.warn(`⚠️ Página ${page}-page não encontrada`);
+                console.warn(`⚠️ Página ${pageName}-page não encontrada`);
                 console.log(`🔍 Páginas disponíveis:`, Array.from(allPages).map(p => p.id));
                 
-                // Tentar encontrar página alternativa
-                const alternativePage = document.querySelector(`[data-page="${page}"]`);
-                if (alternativePage) {
-                    console.log(`🔄 Tentando página alternativa:`, alternativePage);
-                    alternativePage.classList.add('active');
-                } else {
-                    console.error(`❌ Nenhuma página encontrada para: ${page}`);
-                }
+                // ✅ REDIRECIONAR PARA DASHBOARD SE PÁGINA NÃO ENCONTRADA
+                console.log(`🔄 Redirecionando para dashboard...`);
+                this.navigateToPage('dashboard');
+                return;
             }
             
         } catch (error) {
-            console.error(`❌ Erro ao carregar página ${page}:`, error);
+            console.error('❌ Erro ao navegar para página:', error);
         }
     }
     
-    async loadPageData(page) {
-        console.log(`📊 Carregando dados para a página: ${page}`);
+    async loadPageData(pageName) {
+        console.log(`📊 Carregando dados para a página: ${pageName}`);
         
-        switch (page) {
-            case 'dashboard':
-                console.log('🏠 Carregando dados do dashboard...');
-                await this.loadDashboardData();
-                break;
-            case 'clientes':
-                if (window.ClientesPage) {
-                    const clientesPage = new window.ClientesPage();
-                    await clientesPage.init();
-                }
-                break;
-            case 'produtos':
-                if (window.ProdutosPage) {
-                    const produtosPage = new window.ProdutosPage();
-                    await produtosPage.init();
-                }
-                break;
-            case 'vendas':
-                if (window.VendasPage) {
-                    const vendasPage = new window.VendasPage();
-                    await vendasPage.init();
-                }
-                break;
-            case 'orcamentos':
-                if (window.OrcamentosPage) {
-                    const orcamentosPage = new window.OrcamentosPage();
-                    await orcamentosPage.init();
-                }
-                break;
-            case 'relatorios':
-                await this.loadRelatoriosData();
-                break;
-            default:
-                console.log(`⚠️ Página não reconhecida: ${page}`);
+        try {
+            switch (pageName) {
+                case 'dashboard':
+                    console.log('🏠 Carregando dados do dashboard...');
+                    await this.loadDashboardData();
+                    break;
+                case 'clientes':
+                case 'produtos':
+                case 'vendas':
+                case 'orcamentos':
+                    console.log(`🔄 Inicializando página: ${pageName}...`);
+                    await this.initializePage(pageName);
+                    break;
+                case 'relatorios':
+                    console.log('📊 Carregando dados de relatórios...');
+                    await this.loadRelatoriosData();
+                    break;
+                default:
+                    console.log(`⚠️ Página não reconhecida: ${pageName}`);
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao carregar dados da página ${pageName}:`, error);
         }
     }
     
@@ -523,6 +931,29 @@ class SistemaVendas {
                 
                 // Atualizar atividade recente
                 this.updateRecentActivity(estatisticas);
+                
+                // Carregar alertas de estoque baixo
+                if (window.dashboardPage && window.dashboardPage.loadEstoqueAlerts) {
+                    console.log('🔍 Carregando alertas de estoque via dashboardPage...');
+                    console.log('🔍 dashboardPage:', window.dashboardPage);
+                    console.log('🔍 loadEstoqueAlerts disponível:', typeof window.dashboardPage.loadEstoqueAlerts);
+                    await window.dashboardPage.loadEstoqueAlerts();
+                } else {
+                    console.log('⚠️ dashboardPage não disponível para alertas de estoque');
+                    console.log('🔍 dashboardPage:', window.dashboardPage);
+                    console.log('🔍 Tentando aguardar inicialização...');
+                    
+                    // Aguardar um pouco e tentar novamente
+                    setTimeout(async () => {
+                        if (window.dashboardPage && window.dashboardPage.loadEstoqueAlerts) {
+                            console.log('✅ dashboardPage disponível após delay, carregando alertas...');
+                            await window.dashboardPage.loadEstoqueAlerts();
+                        } else {
+                            console.log('❌ dashboardPage ainda não disponível após delay');
+                            console.log('🔍 dashboardPage:', window.dashboardPage);
+                        }
+                    }, 1000);
+                }
                 
                 // Esconder loading
                 this.hideDashboardLoading();
@@ -896,25 +1327,143 @@ class SistemaVendas {
     }
     
     forceResponsiveness() {
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const width = window.innerWidth;
+        console.log(`🔧 Forçando responsividade - Largura: ${width}px`);
         
-        if (sidebar && sidebarToggle) {
-            const width = window.innerWidth;
-            console.log(`🔧 Forçando responsividade - Largura: ${width}px`);
+        if (width > 1024) {
+            console.log('🖥️ Responsividade forçada: Desktop');
+            // Forçar modo desktop
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
             
-            if (width > 1024) {
-                // Desktop: forçar sidebar visível
+            if (sidebar) {
+                sidebar.classList.remove('open');
                 sidebar.style.transform = 'translateX(0)';
+            }
+            
+            if (sidebarToggle) {
                 sidebarToggle.style.display = 'none';
-                console.log('🖥️ Responsividade forçada: Desktop');
-            } else {
-                // Mobile/Tablet: forçar sidebar oculta
+            }
+            
+            // Remover overlay se existir
+            this.removeSidebarOverlay();
+            
+        } else {
+            console.log('📱 Responsividade forçada: Mobile/Tablet');
+            // Forçar modo mobile
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            
+            if (sidebar) {
+                sidebar.classList.remove('open');
                 sidebar.style.transform = 'translateX(-100%)';
+            }
+            
+            if (sidebarToggle) {
                 sidebarToggle.style.display = 'block';
-                console.log('📱 Responsividade forçada: Mobile/Tablet');
             }
         }
+    }
+
+    // Navegar para uma página específica
+    navigateTo(page) {
+        try {
+            console.log(`🔄 Navegando para: ${page}`);
+            
+            // Verificar autenticação
+            if (!this.checkUserAuthentication()) {
+                console.log('🚫 Usuário não autenticado, redirecionando para login...');
+                window.location.replace('/login');
+                return;
+            }
+            
+            // Atualizar hash da URL
+            window.location.hash = `#${page}`;
+            
+            // Carregar página
+            this.loadPage(page);
+            
+        } catch (error) {
+            console.error(`❌ Erro ao navegar para ${page}:`, error);
+        }
+    }
+
+    // ✅ VERIFICAR E INICIALIZAR PÁGINAS
+    checkAndInitializePages() {
+        console.log('🔍 Verificando páginas disponíveis...');
+        
+        const pages = ['clientes', 'produtos', 'vendas', 'orcamentos', 'relatorios'];
+        pages.forEach(pageName => {
+            const pageClass = window[`${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Page`];
+            if (pageClass) {
+                console.log(`✅ ${pageName}: ${pageClass.name} encontrada`);
+            } else {
+                console.warn(`⚠️ ${pageName}: Classe não encontrada`);
+            }
+        });
+        
+        console.log('🔍 Verificação de páginas concluída');
+    }
+
+    // ✅ INICIALIZAR PÁGINA ESPECÍFICA
+    async initializePage(pageName) {
+        try {
+            console.log(`🚀 Inicializando página: ${pageName}`);
+            
+            const pageClass = window[`${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Page`];
+            if (pageClass) {
+                console.log(`✅ Classe ${pageClass.name} encontrada, criando instância...`);
+                const pageInstance = new pageClass();
+                
+                if (pageInstance.init && typeof pageInstance.init === 'function') {
+                    console.log(`✅ Inicializando ${pageName}...`);
+                    await pageInstance.init();
+                    console.log(`✅ ${pageName} inicializada com sucesso!`);
+                } else {
+                    console.warn(`⚠️ Método init não encontrado em ${pageName}`);
+                }
+            } else {
+                console.warn(`⚠️ Classe para ${pageName} não encontrada`);
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao inicializar ${pageName}:`, error);
+        }
+    }
+
+    // ✅ FUNÇÃO DE LOGOUT PARA SEGURANÇA
+    logout() {
+        try {
+            console.log('🚪 Logout iniciado...');
+            
+            // ✅ LIMPAR DADOS DE AUTENTICAÇÃO
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            
+            // ✅ LIMPAR VARIÁVEIS DE ESTADO
+            this.currentPage = null;
+            window.currentPage = null;
+            
+            console.log('✅ Dados de autenticação limpos');
+            
+            // ✅ REDIRECIONAR PARA LOGIN
+            window.location.replace('/login?message=logout_success');
+            
+        } catch (error) {
+            console.error('❌ Erro durante logout:', error);
+            // ✅ FORÇAR REDIRECIONAMENTO MESMO COM ERRO
+            window.location.replace('/login?message=logout_error');
+        }
+    }
+    
+    // ✅ VERIFICAR SE O USUÁRIO ESTÁ NA PÁGINA DE LOGIN
+    isOnLoginPage() {
+        return window.location.pathname === '/login';
+    }
+    
+    // ✅ VERIFICAR SE O USUÁRIO ESTÁ EM ROTA PROTEGIDA
+    isOnProtectedRoute() {
+        return window.location.pathname === '/dashboard' || 
+               window.location.pathname === '/system';
     }
 }
 

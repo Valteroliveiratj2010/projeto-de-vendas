@@ -317,14 +317,19 @@ router.put('/:id/estoque', async (req, res) => {
 // GET /api/produtos/estoque/baixo - Produtos com estoque baixo
 router.get('/estoque/baixo', async (req, res) => {
   try {
-    const { limite = 10 } = req.query;
+    const { limite = 5 } = req.query;
     
+    // Buscar produtos com estoque baixo (≤ 5) ou sem estoque (= 0)
     const result = await query(
-      `SELECT * FROM produtos 
-       WHERE estoque <= $1 
-       ORDER BY estoque ASC`,
+      `SELECT id, nome, estoque, preco, descricao, created_at, updated_at 
+       FROM produtos 
+       WHERE estoque <= 5 
+       ORDER BY estoque ASC, nome ASC
+       LIMIT $1`,
       [parseInt(limite)]
     );
+    
+    console.log(`📦 Produtos com estoque baixo encontrados: ${result.rows.length}`);
     
     res.json({ 
       success: true, 

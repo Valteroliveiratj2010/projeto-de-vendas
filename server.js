@@ -79,14 +79,52 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Middleware de logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
+
+// ✅ MIDDLEWARE DE SEGURANÇA - DEVE VIR ANTES DOS ARQUIVOS ESTÁTICOS
+app.use((req, res, next) => {
+    // Permitir acesso a arquivos estáticos e API
+    if (req.path.startsWith('/api/') || 
+        req.path.startsWith('/css/') || 
+        req.path.startsWith('/js/') || 
+        req.path.startsWith('/webfonts/') ||
+        req.path.includes('.') ||
+        req.path === '/login' ||
+        req.path === '/favicon.ico' ||
+        req.path === '/manifest.json' ||
+        req.path === '/browserconfig.xml') {
+        return next();
+    }
+    
+    // ✅ PERMITIR ACESSO A ROTAS PROTEGIDAS SE HOUVER TOKEN
+    if (req.path === '/dashboard' || req.path === '/system') {
+        const authToken = req.headers.authorization || req.query.token;
+        if (authToken && authToken.trim() !== '') {
+            console.log('✅ Acesso autorizado a rota protegida:', req.path);
+            return next();
+        } else {
+            console.log('🚫 Tentativa de acesso a rota protegida sem token:', req.path);
+            console.log('🎯 Servindo página de login...');
+            // ✅ SERVIR DIRETAMENTE A PÁGINA DE LOGIN EM VEZ DE REDIRECIONAR
+            return res.sendFile(path.join(__dirname, 'public', 'login.html'));
+        }
+    }
+    
+    // ✅ BLOQUEAR ACESSO DIRETO AO SISTEMA - SERVIR LOGIN DIRETAMENTE
+    console.log('🚫 ACESSO BLOQUEADO ao sistema!');
+    console.log('📍 URL solicitada:', req.originalUrl);
+    console.log('🎯 Servindo página de login por motivos de segurança...');
+    
+    // ✅ SERVIR DIRETAMENTE A PÁGINA DE LOGIN EM VEZ DE REDIRECIONAR
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas da API
 app.use('/api/clientes', clientesRoutes);
@@ -135,35 +173,48 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+// ✅ ROTAS PROTEGADAS - AGORA GERENCIADAS PELO MIDDLEWARE DE SEGURANÇA
+app.get('/dashboard', (req, res) => {
+    // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
+    console.log('✅ Servindo dashboard para usuário autenticado');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/system', (req, res) => {
+    // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
+    console.log('✅ Servindo sistema para usuário autenticado');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // ELIMINAR COMPLETAMENTE O ACESSO AO DASHBOARD
 app.all('/dashboard*', (req, res) => {
     console.log('🚫 ACESSO BLOQUEADO ao dashboard!');
     console.log('📍 URL solicitada:', req.originalUrl);
-    console.log('🎯 FORÇANDO redirecionamento para página principal...');
+    console.log('🎯 FORÇANDO redirecionamento para login...');
     
-    // Redirecionamento FORÇADO com status 301 (permanente)
-    res.status(301).redirect('/');
+    // Redirecionamento FORÇADO para login
+    res.status(302).redirect('/login');
 });
 
-// Rota para página inicial (index)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Rota para página inicial (index) - AGORA BLOQUEADA
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
-// Rota para página de teste básico
-app.get('/test-basic', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test-basic.html'));
-});
+// Rota para página de teste básico - AGORA BLOQUEADA
+// app.get('/test-basic', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'test-basic.html'));
+// });
 
-// Rota para página de teste debug do sistema simples
-app.get('/test-debug-simple', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test-debug-simple.html'));
-});
+// Rota para página de teste debug do sistema simples - AGORA BLOQUEADA
+// app.get('/test-debug-simple', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'test-debug-simple.html'));
+// });
 
-// Rota catch-all para o frontend (SPA)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Rota catch-all para o frontend (SPA) - AGORA BLOQUEADA
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 // Middleware de tratamento de erros
 app.use((err, req, res, next) => {

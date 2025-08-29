@@ -110,6 +110,39 @@
             color: white;
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
+        
+        /* ✅ ESTILOS PARA MENSAGENS DE SEGURANÇA */
+        .security-message {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            text-align: left;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .security-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+        
+        .security-text h4 {
+            margin: 0 0 8px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .security-text p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
 
         .form-group {
             margin-bottom: 20px;
@@ -281,17 +314,26 @@
             <p>Faça login para continuar</p>
         </div>
         
-        <div id="status-message" class="status-message"></div>
+        <div class="status-message" id="status-message"></div>
         
-        <form id="login-form">
+        <!-- ✅ MENSAGENS DE SEGURANÇA -->
+        <div id="security-message" class="security-message" style="display: none;">
+            <div class="security-icon">🔒</div>
+            <div class="security-text">
+                <h4>Segurança do Sistema</h4>
+                <p>Por motivos de segurança, o acesso direto ao sistema foi bloqueado. Faça login para continuar.</p>
+            </div>
+        </div>
+        
+        <form id="login-form" class="login-form">
             <div class="form-group">
                 <label for="email">📧 Email</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required autocomplete="off">
             </div>
             
             <div class="form-group">
                 <label for="password">🔒 Senha</label>
-                <input type="password" id="password" name="password" placeholder="Sua senha" required>
+                <input type="password" id="password" name="password" placeholder="Sua senha" required autocomplete="new-password">
             </div>
             
             <button type="submit" class="login-btn" id="login-btn">
@@ -327,17 +369,201 @@
             }, 5000);
         }
         
+        // ✅ FORÇAR LIMPEZA COMPLETA DE DADOS SALVOS
+        function forceClearAllData() {
+            console.log('🚫 Forçando limpeza completa de todos os dados...');
+            
+            // ✅ LIMPAR DADOS PERSISTENTES DO NAVEGADOR
+            clearPersistentData();
+            
+            // ✅ LIMPAR CAMPOS DO FORMULÁRIO
+            const emailField = document.getElementById('email');
+            const passwordField = document.getElementById('password');
+            
+            if (emailField) emailField.value = '';
+            if (passwordField) passwordField.value = '';
+            
+            // ✅ DESABILITAR AUTOCOMPLETE COMPLETAMENTE
+            if (emailField) emailField.setAttribute('autocomplete', 'off');
+            if (passwordField) passwordField.setAttribute('autocomplete', 'new-password');
+            
+            // ✅ REMOVER ATRIBUTOS QUE PODEM CAUSAR AUTO-PREENCHIMENTO
+            if (emailField) emailField.removeAttribute('data-saved');
+            if (passwordField) passwordField.removeAttribute('data-saved');
+            
+            // ✅ FORÇAR LIMPEZA ADICIONAL
+            if (emailField) emailField.blur();
+            if (passwordField) passwordField.blur();
+            
+            console.log('✅ Limpeza completa forçada executada');
+        }
+        
         // Verificar se já está logado
         function checkAlreadyLoggedIn() {
+            console.log('🔐 Verificando status de login...');
+            
+            // ✅ SEMPRE FORÇAR LIMPEZA INICIAL POR SEGURANÇA
+            forceClearAllData();
+            
+            // ✅ VERIFICAR SE HÁ MENSAGEM DE SEGURANÇA NA URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            
+            // ✅ SE HÁ MENSAGEM DE SEGURANÇA, EXIBIR E BLOQUEAR AUTO-LOGIN
+            if (message && (message === 'security_required' || 
+                           message === 'session_expired' || 
+                           message === 'authentication_required' || 
+                           message === 'navigation_blocked' || 
+                           message === 'page_access_denied')) {
+                
+                console.log('🚫 Mensagem de segurança detectada, bloqueando auto-login...');
+                
+                // ✅ EXIBIR MENSAGEM DE SEGURANÇA
+                checkSecurityMessages();
+                
+                // ✅ BLOQUEAR QUALQUER TENTATIVA DE AUTO-LOGIN
+                return false;
+            }
+            
+            // ✅ VERIFICAR SE HÁ DADOS VÁLIDOS APÓS LIMPEZA
             const token = localStorage.getItem('authToken');
             const userData = localStorage.getItem('userData');
             
-            if (token && userData) {
-                showStatus('✅ Usuário já logado, redirecionando...', 'success');
+            // ✅ SE NÃO HÁ DADOS OU SÃO INVÁLIDOS, MANTER NA PÁGINA DE LOGIN
+            if (!token || !userData) {
+                console.log('🔐 Nenhum dado de autenticação válido encontrado');
+                return false;
+            }
+            
+            // ✅ SE HÁ DADOS VÁLIDOS E NÃO HÁ MENSAGEM DE SEGURANÇA
+            if (token && userData && !message) {
+                console.log('✅ Dados válidos encontrados, redirecionando...');
                 
-                setTimeout(() => {
-                    window.location.replace('/');
-                }, 1000);
+                // ✅ VERIFICAR SE O TOKEN É VÁLIDO ANTES DE REDIRECIONAR
+                try {
+                    // ✅ VALIDAR FORMATO BÁSICO DO TOKEN
+                    if (typeof token === 'string' && token.length > 10) {
+                        showStatus('✅ Usuário autenticado, redirecionando...', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.replace(`/system?token=${token}`);
+                        }, 1000);
+                        return true;
+                    } else {
+                        console.log('🚫 Token inválido, limpando dados...');
+                        forceClearAllData();
+                        return false;
+                    }
+                } catch (error) {
+                    console.log('🚫 Erro ao validar token, limpando dados...', error);
+                    forceClearAllData();
+                    return false;
+                }
+            }
+            
+            // ✅ PADRÃO: MANTER NA PÁGINA DE LOGIN
+            console.log('🔐 Mantendo usuário na página de login');
+            return false;
+        }
+        
+        // ✅ LIMPAR DADOS PERSISTENTES DO NAVEGADOR
+        function clearPersistentData() {
+            console.log('🚫 Limpando dados persistentes do navegador...');
+            
+            // ✅ LIMPAR INDEXEDDB SE EXISTIR
+            if ('indexedDB' in window) {
+                indexedDB.databases().then(databases => {
+                    databases.forEach(db => {
+                        if (db.name.includes('auth') || db.name.includes('user')) {
+                            indexedDB.deleteDatabase(db.name);
+                            console.log(`🗑️ IndexedDB removido: ${db.name}`);
+                        }
+                    });
+                }).catch(err => console.log('IndexedDB não disponível'));
+            }
+            
+            // ✅ LIMPAR COOKIES RELACIONADOS À AUTENTICAÇÃO
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            
+            // ✅ LIMPAR WEB STORAGE
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            console.log('✅ Dados persistentes limpos');
+        }
+        
+        // ✅ INICIALIZAÇÃO FORÇADA DE SEGURANÇA
+        function forceSecurityInitialization() {
+            console.log('🔒 Inicializando segurança forçada...');
+            
+            // ✅ SEMPRE LIMPAR DADOS NO CARREGAMENTO
+            forceClearAllData();
+            
+            // ✅ DESABILITAR AUTOCOMPLETE GLOBALMENTE
+            const allInputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+            allInputs.forEach(input => {
+                input.setAttribute('autocomplete', 'off');
+                input.setAttribute('data-autocomplete', 'disabled');
+            });
+            
+            // ✅ BLOQUEAR RESTAURAÇÃO AUTOMÁTICA DE DADOS
+            window.addEventListener('focus', () => {
+                console.log('🔒 Janela focada, verificando segurança...');
+                forceClearAllData();
+            });
+            
+            console.log('✅ Segurança forçada inicializada');
+        }
+        
+        // ✅ VERIFICAR MENSAGENS DE SEGURANÇA NA URL
+        function checkSecurityMessages() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            
+            if (message) {
+                const securityMessage = document.getElementById('security-message');
+                
+                switch (message) {
+                    case 'security_required':
+                        securityMessage.querySelector('.security-text h4').textContent = '🔒 Acesso Bloqueado';
+                        securityMessage.querySelector('.security-text p').textContent = 'Por motivos de segurança, o acesso direto ao sistema foi bloqueado. Faça login para continuar.';
+                        securityMessage.style.display = 'flex';
+                        break;
+                        
+                    case 'session_expired':
+                        securityMessage.querySelector('.security-text h4').textContent = '⏰ Sessão Expirada';
+                        securityMessage.querySelector('.security-text p').textContent = 'Sua sessão expirou por segurança. Faça login novamente para continuar.';
+                        securityMessage.style.display = 'flex';
+                        break;
+                        
+                    case 'authentication_required':
+                        securityMessage.querySelector('.security-text h4').textContent = '🔐 Autenticação Necessária';
+                        securityMessage.querySelector('.security-text p').textContent = 'É necessário fazer login para acessar o sistema.';
+                        securityMessage.style.display = 'flex';
+                        break;
+                        
+                    case 'navigation_blocked':
+                        securityMessage.querySelector('.security-text h4').textContent = '🚫 Navegação Bloqueada';
+                        securityMessage.querySelector('.security-text p').textContent = 'A navegação foi bloqueada por motivos de segurança. Faça login para continuar.';
+                        securityMessage.style.display = 'flex';
+                        break;
+                        
+                    case 'page_access_denied':
+                        securityMessage.querySelector('.security-text h4').textContent = '🚫 Acesso Negado';
+                        securityMessage.querySelector('.security-text p').textContent = 'Acesso à página negado por motivos de segurança. Faça login para continuar.';
+                        securityMessage.style.display = 'flex';
+                        break;
+                        
+                    case 'logout_success':
+                        showStatus('✅ Logout realizado com sucesso!', 'success');
+                        break;
+                        
+                    case 'logout_error':
+                        showStatus('⚠️ Erro durante logout, mas você foi desconectado', 'error');
+                        break;
+                }
             }
         }
         
@@ -381,9 +607,10 @@
                     
                     showStatus('✅ Login realizado com sucesso!', 'success');
                     
-                    // Redirecionar para página principal
+                    // ✅ REDIRECIONAR PARA ROTA PROTEGIDA DO SISTEMA
                     setTimeout(() => {
-                        window.location.replace('/');
+                        // Redirecionar para rota protegida com token
+                        window.location.replace(`/system?token=${data.data.token}`);
                     }, 1000);
                     
                 } else {
@@ -417,8 +644,16 @@
         
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ DOM carregado, verificando login...');
+            console.log('✅ DOM carregado, inicializando segurança...');
+            
+            // ✅ FORÇAR INICIALIZAÇÃO DE SEGURANÇA PRIMEIRO
+            forceSecurityInitialization();
+            
+            // ✅ VERIFICAR LOGIN E MENSAGENS DE SEGURANÇA
             checkAlreadyLoggedIn();
+            checkSecurityMessages();
+            
+            console.log('✅ Inicialização de segurança concluída');
         });
         
         // Verificar se o sistema está funcionando
