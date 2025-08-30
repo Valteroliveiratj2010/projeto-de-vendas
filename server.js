@@ -100,6 +100,19 @@ app.use((req, res, next) => {
         return next();
     }
     
+    // ✅ VERIFICAR AUTENTICAÇÃO PARA PÁGINA PRINCIPAL
+    if (req.path === '/') {
+        const authToken = req.headers.authorization || req.query.token || req.cookies?.authToken;
+        
+        if (authToken && authToken.trim() !== '') {
+            console.log('✅ Usuário autenticado, acesso à página principal permitido');
+            return next();
+        } else {
+            console.log('🔐 Usuário não autenticado, redirecionando para login');
+            return res.redirect('/login?message=authentication_required');
+        }
+    }
+    
     // ✅ PERMITIR ACESSO A ROTAS PROTEGIDAS SE HOUVER TOKEN
     if (req.path === '/dashboard' || req.path === '/system') {
         const authToken = req.headers.authorization || req.query.token;
@@ -114,13 +127,9 @@ app.use((req, res, next) => {
         }
     }
     
-    // ✅ BLOQUEAR ACESSO DIRETO AO SISTEMA - SERVIR LOGIN DIRETAMENTE
-    console.log('🚫 ACESSO BLOQUEADO ao sistema!');
-    console.log('📍 URL solicitada:', req.originalUrl);
-    console.log('🎯 Servindo página de login por motivos de segurança...');
-    
-    // ✅ SERVIR DIRETAMENTE A PÁGINA DE LOGIN EM VEZ DE REDIRECIONAR
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    // ✅ PERMITIR ACESSO A OUTRAS ROTAS (arquivos estáticos, etc.)
+    console.log('✅ Acesso permitido a:', req.originalUrl);
+    return next();
 });
 
 // Servir arquivos estáticos
@@ -173,6 +182,16 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+// Endpoint de health check
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Sistema funcionando normalmente',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
 // ✅ ROTAS PROTEGADAS - AGORA GERENCIADAS PELO MIDDLEWARE DE SEGURANÇA
 app.get('/dashboard', (req, res) => {
     // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
@@ -183,6 +202,19 @@ app.get('/dashboard', (req, res) => {
 app.get('/system', (req, res) => {
     // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
     console.log('✅ Servindo sistema para usuário autenticado');
+    
+    // Verificar se há token na query string para compatibilidade
+    const token = req.query.token;
+    if (token) {
+        console.log('🔑 Token recebido via query string, configurando cookie de sessão');
+        // Configurar cookie de sessão para compatibilidade
+        res.cookie('sessionToken', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 24 * 60 * 60 * 1000 // 24 horas
+        });
+    }
+    
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -196,10 +228,11 @@ app.all('/dashboard*', (req, res) => {
     res.status(302).redirect('/login');
 });
 
-// Rota para página inicial (index) - AGORA BLOQUEADA
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
+// Rota para página inicial (index) - PERMITIDA
+app.get('/', (req, res) => {
+    console.log('🏠 Servindo página inicial');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Rota para página de teste básico - AGORA BLOQUEADA
 // app.get('/test-basic', (req, res) => {

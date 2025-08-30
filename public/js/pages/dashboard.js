@@ -12,10 +12,46 @@ class DashboardPage {
 
     async init() {
         try {
+            // ✅ MARCAR COMO INICIALIZANDO
+            this._initializing = true;
             console.log('🚀 Inicializando DashboardPage...');
             
-            // Carregar dados iniciais
-            await this.loadDashboardData();
+            // ❌ REMOVIDO: Chamada de cleanup() durante init() - causa erro!
+            // O cleanup deve ser chamado APENAS quando a instância for destruída
+            
+            // ✅ RESETAR ESTADO INTERNO
+            this.lastPaymentIds = new Set();
+            this.estoqueMonitoringInterval = null;
+            this.dashboardStatsInterval = null;
+            this.estoqueInterval = null;
+            this.paymentPollingInterval = null;
+            this.hasError = false;
+            this.initializationTime = Date.now();
+            
+            // ✅ RESETAR ESTADO DE PAGINAÇÃO
+            this.paginationState = {
+                currentLimit: this.constructor.PAGINATION_CONFIG.INITIAL_LIMIT,
+                totalActivities: 0,
+                isExpanded: false,
+                isLoading: false
+            };
+            
+            console.log('🔄 Estado interno resetado');
+            
+            // ✅ CARREGAR DADOS SEQUENCIALMENTE (EVITAR CONCORRÊNCIA)
+            console.log('📊 Carregando dados sequencialmente...');
+            
+            // 1. Primeiro: Atividades recentes
+            await this.loadRecentActivities();
+            console.log('✅ Atividades carregadas');
+            
+            // 2. Segundo: Estatísticas do dashboard
+            await this.loadDashboardStats();
+            console.log('✅ Estatísticas carregadas');
+            
+            // 3. Terceiro: Alertas de estoque
+            await this.loadEstoqueAlerts();
+            console.log('✅ Alertas de estoque carregados');
             
             // Configurar listeners de atualização
             this.setupUpdateListeners();
@@ -23,20 +59,65 @@ class DashboardPage {
             // ✅ INICIAR MONITORAMENTO AUTOMÁTICO DO ESTOQUE
             this.startEstoqueMonitoring();
             
+            // ✅ MARCAR COMO INICIALIZADA
+            this._initialized = true;
+            this._initializing = false;
+            
             console.log('✅ DashboardPage inicializada com sucesso!');
             
         } catch (error) {
             console.error('❌ Erro ao inicializar DashboardPage:', error);
+            this.hasError = true;
+            this._initializing = false;
+            throw error;
         }
     }
+    
+    // ✅ VERIFICAR SE ESTÁ INICIALIZADA
+    isInitialized() {
+        return this._initialized === true && !this.hasError;
+    }
+    
+    // ✅ VERIFICAR SE ESTÁ ATIVA
+    isActive() {
+        return this.isInitialized() && 
+               (Date.now() - this.initializationTime) < (30 * 60 * 1000); // 30 minutos
+    }
 
-    async loadDashboardData() {
+    async loadDashboardStats() {
         try {
+            // ✅ VERIFICAR SE JÁ ESTÁ CARREGANDO
+            if (this.constructor.loadDebounceTimers.get('loadDashboardStats')) {
+                console.log('⚠️ Carregamento de estatísticas já em andamento, aguardando...');
+                return;
+            }
+            
+            // ✅ ATIVAR DEBOUNCE
+            const debounceTimer = setTimeout(() => {
+                this.constructor.loadDebounceTimers.delete('loadDashboardStats');
+            }, 1000);
+            this.constructor.loadDebounceTimers.set('loadDashboardStats', debounceTimer);
+            
+            console.log('📊 Carregando estatísticas do dashboard...');
+            
             // Carregar estatísticas
             const stats = await window.api.get('/api/relatorios/dashboard');
             if (stats.data && stats.data.success) {
                 this.updateDashboardStats(stats.data.data);
+                console.log('✅ Estatísticas carregadas com sucesso');
             }
+        } catch (error) {
+            console.error('❌ Erro ao carregar estatísticas do dashboard:', error);
+        } finally {
+            // ✅ SEMPRE LIMPAR DEBOUNCE
+            this.constructor.loadDebounceTimers.delete('loadDashboardStats');
+        }
+    }
+    
+    async loadDashboardData() {
+        try {
+            // Carregar estatísticas
+            await this.loadDashboardStats();
             
             // Carregar alertas de estoque baixo
             await this.loadEstoqueAlerts();
@@ -82,18 +163,74 @@ class DashboardPage {
         if (valorTotalDevido) valorTotalDevido.textContent = this.formatCurrency(estatisticas.valor_total_devido || 0);
     }
 
+    // ✅ SISTEMA DE DEBOUNCE PARA EVITAR CHAMADAS SIMULTÂNEAS
+    static loadDebounceTimers = new Map();
+    
+    // ✅ CONFIGURAÇÕES DE PAGINAÇÃO
+    static PAGINATION_CONFIG = {
+        INITIAL_LIMIT: 5,        // Primeira carga: 5 itens
+        LOAD_MORE_LIMIT: 5,      // Carregar mais: 5 itens
+        MAX_VISIBLE: 20,         // Máximo visível antes de scroll
+        AUTO_COLLAPSE: true      // Recolher automaticamente após navegação
+    };
+    
+    // ✅ ESTADO DE PAGINAÇÃO
+    paginationState = {
+        currentLimit: 5,
+        totalActivities: 0,
+        isExpanded: false,
+        isLoading: false
+    };
+    
     async loadRecentActivities() {
         try {
+            // ✅ VERIFICAR SE JÁ ESTÁ CARREGANDO
+            if (this.constructor.loadDebounceTimers.get('loadRecentActivities')) {
+                console.log('⚠️ Carregamento de atividades já em andamento, aguardando...');
+                return;
+            }
+            
+            // ✅ ATIVAR DEBOUNCE
+            const debounceTimer = setTimeout(() => {
+                this.constructor.loadDebounceTimers.delete('loadRecentActivities');
+            }, 1000);
+            this.constructor.loadDebounceTimers.set('loadRecentActivities', debounceTimer);
+            
+            console.log('🔍 Iniciando carregamento de atividades recentes...');
+            
             const activityList = document.getElementById('activity-list');
-            if (!activityList) return;
+            if (!activityList) {
+                console.error('❌ Container activity-list não encontrado!');
+                return;
+            }
+            
+            console.log('✅ Container activity-list encontrado:', activityList);
+            
+            // ✅ MOSTRAR LOADING IMEDIATAMENTE
+            activityList.innerHTML = `
+                <div class="activity-item loading">
+                    <div class="activity-icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>Carregando atividades...</p>
+                        <span class="activity-time">Agora</span>
+                    </div>
+                </div>
+            `;
+            
+            console.log('🔄 Buscando atividades recentes...');
             
             // Buscar atividades recentes
             const activities = await this.getRecentActivities();
             
-            // Limpar lista atual
+            console.log('📊 Atividades encontradas:', activities);
+            
+            // ✅ LIMPAR E ADICIONAR ATIVIDADES IMEDIATAMENTE
             activityList.innerHTML = '';
             
             if (activities.length === 0) {
+                console.log('ℹ️ Nenhuma atividade encontrada');
                 activityList.innerHTML = `
                     <div class="activity-item">
                         <div class="activity-icon">
@@ -108,20 +245,229 @@ class DashboardPage {
                 return;
             }
             
-            // Adicionar atividades
-            activities.forEach(activity => {
+            console.log(`🎯 Adicionando ${activities.length} atividades...`);
+            
+            // ✅ ADICIONAR ATIVIDADES COM ANIMAÇÃO
+            activities.forEach((activity, index) => {
+                console.log(`➕ Criando elemento para atividade ${index + 1}:`, activity);
+                
                 const activityElement = this.createActivityElement(activity);
-                activityList.appendChild(activityElement);
+                
+                // Adicionar classe para animação
+                if (activity.type === 'pagamento') {
+                    activityElement.classList.add('new');
+                    console.log(`💰 Pagamento detectado: ${activity.text}`);
+                }
+                
+                // Adicionar com pequeno delay para animação
+                setTimeout(() => {
+                    activityList.appendChild(activityElement);
+                    console.log(`✅ Atividade ${index + 1} adicionada ao DOM`);
+                }, index * 50); // 50ms entre cada atividade
             });
+            
+            // ✅ ADICIONAR CONTROLES DE PAGINAÇÃO
+            this.addPaginationControls(activityList);
+            
+            console.log(`✅ ${activities.length} atividades carregadas com sucesso`);
             
         } catch (error) {
             console.error('❌ Erro ao carregar atividades:', error);
+            
+            // ✅ MOSTRAR MENSAGEM DE ERRO AMIGÁVEL
+            const activityList = document.getElementById('activity-list');
+            if (activityList) {
+                activityList.innerHTML = `
+                    <div class="activity-item error">
+                        <div class="activity-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Erro ao carregar atividades</p>
+                            <span class="activity-time">Tente novamente</span>
+                        </div>
+                    </div>
+                `;
+            }
+        } finally {
+            // ✅ SEMPRE LIMPAR DEBOUNCE
+            this.constructor.loadDebounceTimers.delete('loadRecentActivities');
+        }
+    }
+    
+    // ✅ ADICIONAR CONTROLES DE PAGINAÇÃO
+    addPaginationControls(activityList) {
+        try {
+            // Remover controles existentes
+            const existingControls = activityList.querySelector('.pagination-controls');
+            if (existingControls) {
+                existingControls.remove();
+            }
+            
+            // Criar controles de paginação
+            const controlsContainer = document.createElement('div');
+            controlsContainer.className = 'pagination-controls';
+            
+            const totalActivities = this.paginationState.totalActivities;
+            const currentLimit = this.paginationState.currentLimit;
+            const hasMore = totalActivities > currentLimit;
+            
+            if (hasMore) {
+                // Botão "Ver Mais"
+                const loadMoreBtn = document.createElement('button');
+                loadMoreBtn.className = 'pagination-btn load-more-btn';
+                loadMoreBtn.innerHTML = `
+                    <i class="fas fa-plus"></i>
+                    Ver Mais (${Math.min(this.constructor.PAGINATION_CONFIG.LOAD_MORE_LIMIT, totalActivities - currentLimit)})
+                `;
+                loadMoreBtn.onclick = () => this.loadMoreActivities();
+                
+                // Botão "Ver Todos"
+                const expandAllBtn = document.createElement('button');
+                expandAllBtn.className = 'pagination-btn expand-all-btn';
+                expandAllBtn.innerHTML = `
+                    <i class="fas fa-expand-alt"></i>
+                    Ver Todos (${totalActivities})
+                `;
+                expandAllBtn.onclick = () => this.expandAllActivities();
+                
+                controlsContainer.appendChild(loadMoreBtn);
+                controlsContainer.appendChild(expandAllBtn);
+                
+            } else if (totalActivities > this.constructor.PAGINATION_CONFIG.INITIAL_LIMIT) {
+                // Botão "Recolher" quando expandido
+                const collapseBtn = document.createElement('button');
+                collapseBtn.className = 'pagination-btn collapse-btn';
+                collapseBtn.innerHTML = `
+                    <i class="fas fa-compress-alt"></i>
+                    Recolher
+                `;
+                collapseBtn.onclick = () => this.collapseActivities();
+                
+                controlsContainer.appendChild(collapseBtn);
+            }
+            
+            // Adicionar controles ao final da lista
+            if (controlsContainer.children.length > 0) {
+                activityList.appendChild(controlsContainer);
+                console.log('✅ Controles de paginação adicionados');
+            }
+            
+        } catch (error) {
+            console.error('❌ Erro ao adicionar controles de paginação:', error);
+        }
+    }
+    
+    // ✅ CARREGAR MAIS ATIVIDADES
+    async loadMoreActivities() {
+        try {
+            if (this.paginationState.isLoading) {
+                console.log('⚠️ Já está carregando mais atividades...');
+                return;
+            }
+            
+            this.paginationState.isLoading = true;
+            console.log('🔄 Carregando mais atividades...');
+            
+            // Calcular novo limite
+            const newLimit = Math.min(
+                this.paginationState.currentLimit + this.constructor.PAGINATION_CONFIG.LOAD_MORE_LIMIT,
+                this.paginationState.totalActivities
+            );
+            
+            // Buscar atividades com novo limite
+            const activities = await this.getRecentActivities(newLimit);
+            
+            // Atualizar estado
+            this.paginationState.currentLimit = newLimit;
+            
+            // Recarregar lista completa
+            await this.loadRecentActivities();
+            
+            console.log(`✅ ${newLimit} atividades carregadas`);
+            
+        } catch (error) {
+            console.error('❌ Erro ao carregar mais atividades:', error);
+        } finally {
+            this.paginationState.isLoading = false;
+        }
+    }
+    
+    // ✅ EXPANDIR TODAS AS ATIVIDADES
+    async expandAllActivities() {
+        try {
+            if (this.paginationState.isLoading) {
+                console.log('⚠️ Já está carregando...');
+                return;
+            }
+            
+            this.paginationState.isLoading = true;
+            console.log('🔄 Expandindo todas as atividades...');
+            
+            // Expandir para mostrar todas
+            const activities = await this.getRecentActivities(this.paginationState.totalActivities);
+            
+            // Atualizar estado
+            this.paginationState.currentLimit = this.paginationState.totalActivities;
+            this.paginationState.isExpanded = true;
+            
+            // Recarregar lista completa
+            await this.loadRecentActivities();
+            
+            console.log(`✅ Todas as ${this.paginationState.totalActivities} atividades expandidas`);
+            
+        } catch (error) {
+            console.error('❌ Erro ao expandir atividades:', error);
+        } finally {
+            this.paginationState.isLoading = false;
+        }
+    }
+    
+    // ✅ RECOLHER ATIVIDADES
+    async collapseActivities() {
+        try {
+            if (this.paginationState.isLoading) {
+                console.log('⚠️ Já está carregando...');
+                return;
+            }
+            
+            this.paginationState.isLoading = true;
+            console.log('🔄 Recolhendo atividades...');
+            
+            // Voltar ao limite inicial
+            const activities = await this.getRecentActivities(this.constructor.PAGINATION_CONFIG.INITIAL_LIMIT);
+            
+            // Atualizar estado
+            this.paginationState.currentLimit = this.constructor.PAGINATION_CONFIG.INITIAL_LIMIT;
+            this.paginationState.isExpanded = false;
+            
+            // Recarregar lista completa
+            await this.loadRecentActivities();
+            
+            console.log(`✅ Atividades recolhidas para ${this.constructor.PAGINATION_CONFIG.INITIAL_LIMIT} itens`);
+            
+        } catch (error) {
+            console.error('❌ Erro ao recolher atividades:', error);
+        } finally {
+            this.paginationState.isLoading = false;
         }
     }
 
     // Carregar alertas de estoque baixo
     async loadEstoqueAlerts() {
         try {
+            // ✅ VERIFICAR SE JÁ ESTÁ CARREGANDO
+            if (this.constructor.loadDebounceTimers.get('loadEstoqueAlerts')) {
+                console.log('⚠️ Carregamento de alertas de estoque já em andamento, aguardando...');
+                return;
+            }
+            
+            // ✅ ATIVAR DEBOUNCE
+            const debounceTimer = setTimeout(() => {
+                this.constructor.loadDebounceTimers.delete('loadEstoqueAlerts');
+            }, 1000);
+            this.constructor.loadDebounceTimers.set('loadEstoqueAlerts', debounceTimer);
+            
             console.log('🔍 Carregando alertas de estoque...');
             const estoqueAlertsContainer = document.getElementById('estoque-alerts');
             if (!estoqueAlertsContainer) {
@@ -238,6 +584,9 @@ class DashboardPage {
                     </div>
                 `;
             }
+        } finally {
+            // ✅ SEMPRE LIMPAR DEBOUNCE
+            this.constructor.loadDebounceTimers.delete('loadEstoqueAlerts');
         }
     }
 
@@ -512,42 +861,92 @@ class DashboardPage {
         }
     }
 
-    async getRecentActivities() {
+    async getRecentActivities(limit = null) {
         try {
-            // Buscar vendas recentes
-            const vendas = await window.api.get('/api/vendas?limit=5');
+            const requestLimit = limit || this.paginationState.currentLimit;
+            console.log(`🔍 Iniciando busca por atividades recentes (limite: ${requestLimit})...`);
+            
             const activities = [];
             
-            if (vendas.data && vendas.data.success && vendas.data.data.length > 0) {
-                vendas.data.data.forEach(venda => {
-                    activities.push({
-                        type: 'venda',
-                        icon: 'fas fa-shopping-cart',
-                        text: `Nova venda para ${venda.cliente_nome || 'Cliente'}`,
-                        time: this.formatTimeAgo(venda.created_at),
-                        value: this.formatCurrency(venda.total)
+            // ✅ BUSCAR PAGAMENTOS PRIMEIRO (PRIORIDADE ALTA)
+            try {
+                console.log('💰 Buscando pagamentos...');
+                const pagamentos = await window.api.get(`/api/pagamentos?limit=${requestLimit + 5}`); // +5 para compensar vendas
+                console.log('📡 Resposta da API de pagamentos:', pagamentos);
+                
+                if (pagamentos.data && pagamentos.data.success && pagamentos.data.data.length > 0) {
+                    console.log(`✅ ${pagamentos.data.data.length} pagamentos encontrados`);
+                    
+                    pagamentos.data.data.forEach((pagamento, index) => {
+                        const activity = {
+                            type: 'pagamento',
+                            icon: 'fas fa-check-circle',
+                            text: `Pagamento recebido de ${pagamento.cliente_nome || 'Cliente'}`,
+                            time: this.formatTimeAgo(pagamento.data_pagto),
+                            value: this.formatCurrency(pagamento.valor_pago),
+                            formaPagamento: pagamento.forma_pagamento || 'Não informado',
+                            status: 'confirmado'
+                        };
+                        
+                        activities.push(activity);
+                        console.log(`💰 Pagamento ${index + 1}:`, activity);
                     });
-                });
+                } else {
+                    console.log('ℹ️ Nenhum pagamento encontrado ou resposta inválida');
+                }
+            } catch (error) {
+                console.warn('⚠️ Erro ao buscar pagamentos:', error);
             }
             
-            // Buscar pagamentos recentes
-            const pagamentos = await window.api.get('/api/pagamentos?limit=5');
-            if (pagamentos.data && pagamentos.data.success && pagamentos.data.data.length > 0) {
-                pagamentos.data.data.forEach(pagamento => {
-                    activities.push({
-                        type: 'pagamento',
-                        icon: 'fas fa-credit-card',
-                        text: `Pagamento recebido de ${pagamento.cliente_nome || 'Cliente'}`,
-                        time: this.formatTimeAgo(pagamento.data_pagto),
-                        value: this.formatCurrency(pagamento.valor_pago)
+            // Buscar vendas recentes (prioridade menor)
+            try {
+                console.log('🛒 Buscando vendas...');
+                const vendas = await window.api.get('/api/vendas?limit=5');
+                console.log('📡 Resposta da API de vendas:', vendas);
+                
+                if (vendas.data && vendas.data.success && vendas.data.data.length > 0) {
+                    console.log(`✅ ${vendas.data.data.length} vendas encontradas`);
+                    
+                    vendas.data.data.forEach((venda, index) => {
+                        const activity = {
+                            type: 'venda',
+                            icon: 'fas fa-shopping-cart',
+                            text: `Nova venda para ${venda.cliente_nome || 'Cliente'}`,
+                            time: this.formatTimeAgo(venda.created_at),
+                            value: this.formatCurrency(venda.total)
+                        };
+                        
+                        activities.push(activity);
+                        console.log(`🛒 Venda ${index + 1}:`, activity);
                     });
-                });
+                } else {
+                    console.log('ℹ️ Nenhuma venda encontrada ou resposta inválida');
+                }
+            } catch (error) {
+                console.warn('⚠️ Erro ao buscar vendas:', error);
             }
             
-            // Ordenar por data e retornar os 10 mais recentes
-            return activities
-                .sort((a, b) => new Date(b.time) - new Date(a.time))
-                .slice(0, 10);
+            console.log(`📊 Total de atividades coletadas: ${activities.length}`);
+            
+            // ✅ ORDENAR ATIVIDADES (PAGAMENTOS PRIMEIRO)
+            const sortedActivities = activities
+                .sort((a, b) => {
+                    // Priorizar pagamentos
+                    if (a.type === 'pagamento' && b.type !== 'pagamento') return -1;
+                    if (a.type !== 'pagamento' && b.type === 'pagamento') return 1;
+                    
+                    // Depois ordenar por data
+                    return new Date(b.time) - new Date(a.time);
+                });
+            
+            // ✅ ATUALIZAR ESTADO DE PAGINAÇÃO
+            this.paginationState.totalActivities = sortedActivities.length;
+            
+            // ✅ APLICAR LIMITE DE PAGINAÇÃO
+            const limitedActivities = sortedActivities.slice(0, requestLimit);
+            
+            console.log(`🎯 Total de atividades: ${sortedActivities.length}, Limitadas: ${limitedActivities.length}`);
+            return limitedActivities;
                 
         } catch (error) {
             console.error('❌ Erro ao buscar atividades:', error);
@@ -557,16 +956,50 @@ class DashboardPage {
 
     createActivityElement(activity) {
         const div = document.createElement('div');
-        div.className = 'activity-item';
-        div.innerHTML = `
-            <div class="activity-icon">
-                <i class="${activity.icon}"></i>
-            </div>
-            <div class="activity-content">
-                <p>${activity.text}</p>
-                <span class="activity-time">${activity.time}</span>
-            </div>
-        `;
+        div.className = `activity-item ${activity.type || ''}`;
+        
+        // Se for um pagamento, criar layout especializado
+        if (activity.type === 'pagamento') {
+            const formaPagamento = activity.formaPagamento || 'Não informado';
+            const formaIcon = this.getPaymentMethodIcon(formaPagamento);
+            const formaLabel = this.formatPaymentMethod(formaPagamento);
+            const formaClass = this.getPaymentMethodCSSClass(formaPagamento);
+            
+            // Adicionar classe CSS específica da forma de pagamento
+            div.className = `activity-item ${activity.type} ${formaClass}`;
+            
+            div.innerHTML = `
+                <div class="activity-icon payment-confirmed">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-header">
+                        <span class="activity-status">✅ PAGO</span>
+                        <span class="activity-value">${activity.value}</span>
+                    </div>
+                    <p class="activity-text">${activity.text}</p>
+                    <div class="activity-details">
+                        <span class="payment-method">
+                            <i class="${formaIcon}"></i>
+                            ${formaLabel}
+                        </span>
+                        <span class="activity-time">${activity.time}</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Layout padrão para outras atividades
+            div.innerHTML = `
+                <div class="activity-icon">
+                    <i class="${activity.icon}"></i>
+                </div>
+                <div class="activity-content">
+                    <p>${activity.text}</p>
+                    <span class="activity-time">${activity.time}</span>
+                </div>
+            `;
+        }
+        
         return div;
     }
 
@@ -595,17 +1028,71 @@ class DashboardPage {
      * Escuta eventos de mudanças em outras páginas
      */
     setupUpdateListeners() {
-        // Atualizar dashboard a cada 30 segundos
-        setInterval(() => {
-            this.loadDashboardData();
+        // ✅ VERIFICAR SE ESTAMOS NA PÁGINA DASHBOARD ANTES DE CONFIGURAR INTERVALOS
+        if (!this.isOnDashboardPage()) {
+            console.log('⚠️ Não estamos na página dashboard, pulando configuração de intervalos');
+            return;
+        }
+        
+        // ✅ ATUALIZAR APENAS ESTATÍSTICAS (SEM RECARREGAR ATIVIDADES)
+        this.dashboardStatsInterval = setInterval(() => {
+            // ✅ VERIFICAR SE AINDA ESTAMOS NA PÁGINA DASHBOARD
+            if (!this.isOnDashboardPage()) {
+                this.stopAllIntervals();
+                return;
+            }
+            this.loadDashboardStats();
         }, 30000);
         
-        // Atualizar alertas de estoque a cada 60 segundos
-        setInterval(() => {
+        // ✅ ATUALIZAR ALERTAS DE ESTOQUE A CADA 2 MINUTOS (REDUZIDO)
+        this.estoqueInterval = setInterval(() => {
+            // ✅ VERIFICAR SE AINDA ESTAMOS NA PÁGINA DASHBOARD
+            if (!this.isOnDashboardPage()) {
+                this.stopAllIntervals();
+                return;
+            }
             this.loadEstoqueAlerts();
-        }, 60000);
+        }, 120000); // 2 minutos
         
-        console.log('🔄 Listeners de atualização automática configurados');
+        // Configurar sistema de notificações de pagamento
+        this.setupPaymentNotifications();
+        
+        console.log('🔄 Listeners de atualização automática configurados (OTIMIZADOS)');
+    }
+    
+    /**
+     * ✅ VERIFICAR SE ESTAMOS NA PÁGINA DASHBOARD
+     */
+    isOnDashboardPage() {
+        return window.location.hash === '#dashboard' || 
+               window.location.hash === '' ||
+               document.getElementById('dashboard-page')?.style.display !== 'none';
+    }
+    
+    /**
+     * 🛑 PARAR TODOS OS INTERVALOS
+     */
+    stopAllIntervals() {
+        if (this.dashboardStatsInterval) {
+            clearInterval(this.dashboardStatsInterval);
+            this.dashboardStatsInterval = null;
+            console.log('🛑 Intervalo de estatísticas parado');
+        }
+        
+        if (this.estoqueInterval) {
+            clearInterval(this.estoqueInterval);
+            this.estoqueInterval = null;
+            console.log('🛑 Intervalo de estoque parado');
+        }
+        
+        if (this.paymentPollingInterval) {
+            clearInterval(this.paymentPollingInterval);
+            this.paymentPollingInterval = null;
+            console.log('🛑 Intervalo de pagamentos parado');
+        }
+        
+        this.stopEstoqueMonitoring();
+        console.log('🛑 Todos os intervalos parados');
     }
     
     /**
@@ -625,6 +1112,340 @@ class DashboardPage {
         } else {
             alert(`${title}: ${message}`);
         }
+    }
+    
+    /**
+     * 🎨 Obter ícone para forma de pagamento
+     */
+    getPaymentMethodIcon(formaPagamento) {
+        if (!formaPagamento) return 'fas fa-money-bill-wave';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'fas fa-money-bill-wave';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'fas fa-credit-card';
+        } else if (forma.includes('pix')) {
+            return 'fas fa-qrcode';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'fas fa-university';
+        } else if (forma.includes('boleto')) {
+            return 'fas fa-file-invoice';
+        } else if (forma.includes('cheque')) {
+            return 'fas fa-money-check';
+        }
+        
+        return 'fas fa-money-bill-wave';
+    }
+    
+    /**
+     * 📝 Formatar forma de pagamento para exibição
+     */
+    formatPaymentMethod(formaPagamento) {
+        if (!formaPagamento) return 'Não informado';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'Dinheiro';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'Cartão';
+        } else if (forma.includes('pix')) {
+            return 'PIX';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'Transferência';
+        } else if (forma.includes('boleto')) {
+            return 'Boleto';
+        } else if (forma.includes('cheque')) {
+            return 'Cheque';
+        }
+        
+        return formaPagamento;
+    }
+    
+    /**
+     * 🎨 Obter classe CSS para forma de pagamento
+     */
+    getPaymentMethodCSSClass(formaPagamento) {
+        if (!formaPagamento) return 'dinheiro';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'dinheiro';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'cartao';
+        } else if (forma.includes('pix')) {
+            return 'pix';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'transferencia';
+        } else if (forma.includes('boleto')) {
+            return 'boleto';
+        } else if (forma.includes('cheque')) {
+            return 'cheque';
+        }
+        
+        return 'dinheiro';
+    }
+    
+    /**
+     * 💰 SISTEMA DE NOTIFICAÇÕES DE PAGAMENTO
+     * Mostra notificações toast quando pagamentos são recebidos
+     */
+    setupPaymentNotifications() {
+        console.log('💰 Configurando sistema de notificações de pagamento...');
+        
+        // Verificar se há Socket.IO disponível
+        if (window.io) {
+            this.setupSocketIOPayments();
+        } else {
+            // Fallback: verificar pagamentos a cada 10 segundos
+            this.setupPollingPayments();
+        }
+        
+        // Monitorar pagamentos existentes para detectar novos
+        this.lastPaymentCheck = Date.now();
+        this.lastPaymentIds = new Set();
+        
+        console.log('✅ Sistema de notificações de pagamento configurado');
+    }
+    
+    /**
+     * 🔌 Configurar notificações via Socket.IO
+     */
+    setupSocketIOPayments() {
+        try {
+            const socket = window.io();
+            
+            socket.on('pagamento_recebido', (data) => {
+                console.log('💰 Pagamento recebido via Socket.IO:', data);
+                this.showPaymentNotification(data);
+            });
+            
+            socket.on('pagamento_atualizado', (data) => {
+                console.log('💰 Pagamento atualizado via Socket.IO:', data);
+                this.showPaymentNotification(data, 'atualizado');
+            });
+            
+            console.log('✅ Socket.IO configurado para notificações de pagamento');
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao configurar Socket.IO, usando polling:', error);
+            this.setupPollingPayments();
+        }
+    }
+    
+    /**
+     * 🔄 Configurar notificações via polling
+     */
+    setupPollingPayments() {
+        // ✅ VERIFICAR PAGAMENTOS A CADA 30 SEGUNDOS (REDUZIDO)
+        this.paymentPollingInterval = setInterval(async () => {
+            await this.checkNewPayments();
+        }, 30000); // 30 segundos
+        
+        console.log('✅ Polling configurado para notificações de pagamento (OTIMIZADO)');
+    }
+    
+    /**
+     * 🔍 Verificar novos pagamentos
+     */
+    async checkNewPayments() {
+        try {
+            const response = await window.api.get('/api/pagamentos?limit=10');
+            
+            if (response && response.data && response.data.success && response.data.data) {
+                const pagamentos = response.data.data;
+                
+                pagamentos.forEach(pagamento => {
+                    const paymentId = pagamento.id;
+                    const paymentTime = new Date(pagamento.data_pagto || pagamento.created_at);
+                    
+                    // Verificar se é um pagamento novo (últimos 30 segundos)
+                    const isNew = (Date.now() - paymentTime.getTime()) < 30000;
+                    const isNewId = !this.lastPaymentIds.has(paymentId);
+                    
+                    if (isNew && isNewId) {
+                        console.log('💰 Novo pagamento detectado:', pagamento);
+                        this.showPaymentNotification(pagamento);
+                        this.lastPaymentIds.add(paymentId);
+                    }
+                });
+                
+                // Limpar IDs antigos (mais de 1 hora)
+                const oneHourAgo = Date.now() - (60 * 60 * 1000);
+                this.lastPaymentIds.forEach(id => {
+                    if (id < oneHourAgo) {
+                        this.lastPaymentIds.delete(id);
+                    }
+                });
+            }
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao verificar novos pagamentos:', error);
+        }
+    }
+    
+    /**
+     * 🎉 Mostrar notificação de pagamento
+     */
+    showPaymentNotification(pagamento, tipo = 'recebido') {
+        try {
+            // Usar a função especializada do UI
+            if (window.UI && window.UI.showPaymentNotification) {
+                window.UI.showPaymentNotification(pagamento, tipo);
+            } else {
+                // Fallback para toast simples
+                const cliente = pagamento.cliente_nome || 'Cliente';
+                const valor = this.formatCurrency(pagamento.valor_pago);
+                const forma = window.UI && window.UI.formatPaymentMethod ? 
+                    window.UI.formatPaymentMethod(pagamento.forma_pagamento) : 
+                    (pagamento.forma_pagamento || 'Não informado');
+                
+                const message = tipo === 'recebido' 
+                    ? `Pagamento recebido de ${cliente}`
+                    : `Pagamento atualizado de ${cliente}`;
+                
+                const details = `${valor} via ${forma}`;
+                
+                if (window.UI && window.UI.showSuccess) {
+                    window.UI.showSuccess(`${message}<br><small>${details}</small>`, 8000);
+                } else {
+                    alert(`${message}\n${details}`);
+                }
+            }
+            
+            // ✅ ATUALIZAR APENAS ATIVIDADES (SEM RECARREGAR TODO O DASHBOARD)
+            this.updateActivitiesOnly();
+            
+            console.log('✅ Notificação de pagamento exibida:', { 
+                cliente: pagamento.cliente_nome, 
+                valor: pagamento.valor_pago, 
+                forma: pagamento.forma_pagamento 
+            });
+            
+        } catch (error) {
+            console.error('❌ Erro ao mostrar notificação de pagamento:', error);
+        }
+    }
+    
+    /**
+     * ✅ ATUALIZAR APENAS ATIVIDADES (SEM TREMOR)
+     * Atualiza as atividades de forma suave sem recarregar todo o dashboard
+     */
+    async updateActivitiesOnly() {
+        try {
+            // Buscar apenas atividades recentes
+            const activities = await this.getRecentActivities();
+            
+            const activityList = document.getElementById('activity-list');
+            if (!activityList) return;
+            
+            // ✅ ATUALIZAR APENAS SE HOUVE MUDANÇAS
+            const currentActivities = activityList.querySelectorAll('.activity-item');
+            const currentCount = currentActivities.length;
+            
+            if (activities.length === currentCount) {
+                // Mesmo número de atividades, não atualizar
+                return;
+            }
+            
+            // ✅ ATUALIZAÇÃO SUAVE - ADICIONAR NOVAS ATIVIDADES
+            if (activities.length > currentCount) {
+                const newActivities = activities.slice(0, activities.length - currentCount);
+                
+                newActivities.forEach((activity, index) => {
+                    const activityElement = this.createActivityElement(activity);
+                    activityElement.classList.add('new');
+                    
+                    // Adicionar com delay para animação suave
+                    setTimeout(() => {
+                        activityList.insertBefore(activityElement, activityList.firstChild);
+                    }, index * 100); // 100ms entre cada nova atividade
+                });
+                
+                console.log(`✅ ${newActivities.length} novas atividades adicionadas suavemente`);
+            }
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao atualizar atividades:', error);
+        }
+    }
+    
+    /**
+     * 🎨 Obter ícone para forma de pagamento
+     */
+    getPaymentIcon(formaPagamento) {
+        if (!formaPagamento) return 'fas fa-money-bill-wave';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'fas fa-money-bill-wave';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'fas fa-credit-card';
+        } else if (forma.includes('pix')) {
+            return 'fas fa-qrcode';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'fas fa-university';
+        } else if (forma.includes('boleto')) {
+            return 'fas fa-file-invoice';
+        } else if (forma.includes('cheque')) {
+            return 'fas fa-money-check';
+        }
+        
+        return 'fas fa-money-bill-wave';
+    }
+    
+    /**
+     * 🌈 Obter cor para forma de pagamento
+     */
+    getPaymentColor(formaPagamento) {
+        if (!formaPagamento) return '#10b981';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return '#10b981'; // Verde
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return '#3b82f6'; // Azul
+        } else if (forma.includes('pix')) {
+            return '#8b5cf6'; // Roxo
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return '#f59e0b'; // Amarelo
+        } else if (forma.includes('boleto')) {
+            return '#ef4444'; // Vermelho
+        } else if (forma.includes('cheque')) {
+            return '#06b6d4'; // Ciano
+        }
+        
+        return '#10b981'; // Verde padrão
+    }
+    
+    /**
+     * 📝 Formatar forma de pagamento para exibição
+     */
+    formatPaymentMethod(formaPagamento) {
+        if (!formaPagamento) return 'Não informado';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'Dinheiro';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'Cartão';
+        } else if (forma.includes('pix')) {
+            return 'PIX';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'Transferência';
+        } else if (forma.includes('boleto')) {
+            return 'Boleto';
+        } else if (forma.includes('cheque')) {
+            return 'Cheque';
+        }
+        
+        return formaPagamento;
     }
 
     // ✅ VERIFICAR AUTOMATICAMENTE O STATUS DO ESTOQUE
@@ -681,22 +1502,16 @@ class DashboardPage {
         console.log('🔍 Fazendo verificação inicial agressiva...');
         this.forceCheckNotificationState();
         
-        // Verificar a cada 5 minutos (300.000 ms)
+        // ✅ VERIFICAR A CADA 10 MINUTOS (REDUZIDO)
         this.estoqueMonitoringInterval = setInterval(() => {
             this.checkEstoqueStatus();
-        }, 5 * 60 * 1000);
+        }, 10 * 60 * 1000); // 10 minutos
         
-        // ✅ VERIFICAÇÃO IMEDIATA APÓS INICIALIZAÇÃO
+        // ✅ VERIFICAÇÃO ÚNICA APÓS INICIALIZAÇÃO
         setTimeout(() => {
-            console.log('🔍 Verificação imediata após inicialização...');
+            console.log('🔍 Verificação única após inicialização...');
             this.checkEstoqueStatus();
-        }, 1000);
-        
-        // ✅ VERIFICAÇÃO ADICIONAL APÓS 5 SEGUNDOS
-        setTimeout(() => {
-            console.log('🔍 Verificação adicional após 5 segundos...');
-            this.checkEstoqueStatus();
-        }, 5000);
+        }, 3000); // 3 segundos
         
         console.log('✅ Monitoramento automático do estoque iniciado');
     }
@@ -710,17 +1525,71 @@ class DashboardPage {
         }
     }
 
-    // ✅ CLEANUP - PARAR MONITORAMENTO E LIMPAR RECURSOS
-    cleanup() {
+    // ✅ CLEANUP - PARAR TODOS OS INTERVALOS E LIMPAR RECURSOS
+    async cleanup() {
         console.log('🧹 Fazendo cleanup da DashboardPage...');
         
-        // Parar monitoramento automático
-        this.stopEstoqueMonitoring();
-        
-        // Remover event listeners se necessário
-        // (implementar conforme necessário)
-        
-        console.log('✅ Cleanup da DashboardPage concluído');
+        try {
+            // ✅ PARAR TODOS OS INTERVALOS USANDO O MÉTODO UNIFICADO
+            this.stopAllIntervals();
+            
+            // ✅ LIMPAR ESTADO INTERNO (VERIFICANDO SE EXISTE)
+            this._initialized = false;
+            this.hasError = false;
+            this.initializationTime = null;
+            
+            // ✅ VERIFICAR SE lastPaymentIds EXISTE ANTES DE LIMPAR
+            if (this.lastPaymentIds && typeof this.lastPaymentIds.clear === 'function') {
+                this.lastPaymentIds.clear();
+                console.log('✅ lastPaymentIds limpo');
+            } else {
+                console.log('⚠️ lastPaymentIds não existe ou não é um Set válido');
+            }
+            
+            // ✅ LIMPAR ELEMENTOS DO DOM SE NECESSÁRIO
+            this.clearDashboardElements();
+            
+            console.log('✅ Cleanup da DashboardPage concluído - todos os intervalos parados e estado limpo');
+            
+        } catch (error) {
+            console.error('❌ Erro durante cleanup:', error);
+        }
+    }
+    
+    // ✅ LIMPAR ELEMENTOS DO DOM PARA EVITAR DUPLICAÇÃO
+    clearDashboardElements() {
+        try {
+            console.log('🧹 Limpando elementos do DOM...');
+            
+            // Limpar lista de atividades
+            const activityList = document.getElementById('activity-list');
+            if (activityList) {
+                activityList.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p>Carregando atividades...</p>
+                            <span class="activity-time">Agora</span>
+                        </div>
+                    </div>
+                `;
+                console.log('✅ Lista de atividades limpa');
+            }
+            
+            // Limpar notificações de estoque
+            const estoqueNotification = document.getElementById('estoque-notification');
+            if (estoqueNotification) {
+                estoqueNotification.style.display = 'none';
+                console.log('✅ Notificação de estoque ocultada');
+            }
+            
+            console.log('✅ Elementos do DOM limpos');
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao limpar elementos do DOM:', error);
+        }
     }
 
     // ✅ VERIFICAÇÃO FORÇADA DO ESTADO DA NOTIFICAÇÃO

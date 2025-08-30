@@ -131,7 +131,7 @@
     left: 0 !important;
     width: var(--sidebar-width) !important;
     z-index: 999 !important;
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
   
   .sidebar.open {
@@ -208,7 +208,7 @@
     left: 0 !important;
     width: var(--sidebar-width) !important;
     z-index: 999 !important;
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
   
   .sidebar.open {
@@ -277,6 +277,12 @@
     margin-left: var(--spacing-4) !important;
     margin-right: var(--spacing-4) !important;
   }
+  
+  /* Centralizar título das ações rápidas em tablet */
+  #dashboard-page .quick-actions h3 {
+    text-align: center !important;
+    margin-bottom: var(--spacing-4) !important;
+  }
 }
 
 /* ===== MOBILE GRANDE (481px - 767px) ===== */
@@ -297,7 +303,7 @@
     width: 100% !important;
     max-width: 320px !important;
     z-index: 999 !important;
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
   
   .sidebar.open {
@@ -367,6 +373,12 @@
   #dashboard-page .estoque-alerts {
     margin-left: var(--spacing-3) !important;
     margin-right: var(--spacing-3) !important;
+  }
+  
+  /* Centralizar título das ações rápidas em mobile grande */
+  #dashboard-page .quick-actions h3 {
+    text-align: center !important;
+    margin-bottom: var(--spacing-4) !important;
   }
 }
 
@@ -440,6 +452,12 @@
   .modal-body {
     padding: var(--spacing-3) !important;
   }
+  
+  /* Centralizar título das ações rápidas em mobile pequeno */
+  #dashboard-page .quick-actions h3 {
+    text-align: center !important;
+    margin-bottom: var(--spacing-3) !important;
+  }
 }
 
 /* ===== MOBILE PEQUENO (< 320px) ===== */
@@ -511,6 +529,12 @@
   
   .modal-body {
     padding: var(--spacing-2) !important;
+  }
+  
+  /* Centralizar título das ações rápidas em mobile muito pequeno */
+  #dashboard-page .quick-actions h3 {
+    text-align: center !important;
+    margin-bottom: var(--spacing-2) !important;
   }
 }
 

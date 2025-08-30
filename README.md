@@ -155,10 +155,12 @@ npm run check      # Verifica estrutura do banco
 projeto-de-vendas/
 ├── config/           # Configurações
 ├── data/            # Dados do banco
+├── docs/            # 📚 Documentação técnica
 ├── middleware/      # Middlewares
 ├── public/          # Arquivos públicos
 │   ├── css/        # Estilos
 │   ├── js/         # JavaScript
+│   ├── test-files/ # 🧪 Arquivos de teste (dev only)
 │   └── html/       # Páginas HTML
 ├── routes/          # Rotas da API
 ├── scripts/         # Scripts de configuração
@@ -166,6 +168,12 @@ projeto-de-vendas/
 ├── server.js        # Servidor principal
 └── package.json     # Dependências
 ```
+
+## 📚 **Documentação**
+
+- **📖 [Documentação Técnica](./docs/README.md)** - Guia completo de desenvolvimento
+- **🚀 [Instalação](./docs/INSTALACAO.md)** - Como instalar e configurar
+- **☁️ [Deploy](./docs/DEPLOY.md)** - Como fazer deploy em produção
 
 ## 🌐 API Endpoints
 

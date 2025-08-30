@@ -260,7 +260,7 @@ body {
 @media (max-width: 1024px) {
   html body .sidebar {
     transform: translateX(-100%) !important;
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
     position: fixed !important;
     z-index: 999 !important;
     height: 100vh !important;
@@ -271,7 +271,7 @@ body {
   html body .sidebar.open {
     transform: translateX(0) !important;
     /* Garantir que a classe open tenha prioridade máxima */
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
   
   html body .sidebar-toggle {
@@ -302,7 +302,7 @@ body {
   html body .sidebar.open {
     transform: translateX(0) !important;
     /* Garantir que a classe open tenha prioridade máxima */
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
 }
 
@@ -317,7 +317,7 @@ body {
   html body .sidebar.open {
     transform: translateX(0) !important;
     /* Garantir que a classe open tenha prioridade máxima */
-    transition: transform var(--transition-normal) !important;
+    transition: transform 0.2s ease-out !important;
   }
 }
 
@@ -529,7 +529,7 @@ body {
 
 /* ===== PAGE CONTENT ===== */
 .page-content {
-  padding: var(--spacing-6);
+  padding: 0; /* Removido padding geral para aplicar margens específicas */
 }
 
 .page {
@@ -626,6 +626,9 @@ body {
   margin-bottom: var(--spacing-6);
 }
 
+/* ===== PADRÃO DE MARGENS PARA TODAS AS PÁGINAS ===== */
+/* As margens são controladas pelo arquivo page-margins.css */
+
 /* ===== DASHBOARD ===== */
 #dashboard-page .dashboard-grid {
   display: grid;
@@ -634,42 +637,33 @@ body {
   margin-bottom: var(--spacing-8);
 }
 
-/* Dashboard header com espaçamento - APENAS para o dashboard */
-#dashboard-page .dashboard-header {
-  margin-left: var(--spacing-6);
-  margin-right: var(--spacing-6);
-  margin-bottom: var(--spacing-6);
-}
-
 /* Stats grid com espaçamento - APENAS para o dashboard */
 #dashboard-page .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--spacing-4);
   grid-column: 1 / -1;
-  margin-left: var(--spacing-6);
-  margin-right: var(--spacing-6);
 }
 
-/* Financial summary com espaçamento - APENAS para o dashboard */
-#dashboard-page .financial-summary {
-  margin-left: var(--spacing-6);
-  margin-right: var(--spacing-6);
+/* Chart row para relatórios */
+#relatorios-page .chart-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-6);
   margin-bottom: var(--spacing-6);
 }
 
-/* Recent activity com espaçamento - APENAS para o dashboard */
-#dashboard-page .recent-activity {
-  margin-left: var(--spacing-6);
-  margin-right: var(--spacing-6);
-  margin-bottom: var(--spacing-6);
+#relatorios-page .chart-card {
+  background: var(--color-white);
+  padding: var(--spacing-6);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
 }
 
-/* Quick actions com espaçamento - APENAS para o dashboard */
-#dashboard-page .quick-actions {
-  margin-left: var(--spacing-6);
-  margin-right: var(--spacing-6);
-  margin-bottom: var(--spacing-6);
+#relatorios-page .chart-card h3 {
+  margin: 0 0 var(--spacing-4) 0;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-lg);
 }
 
 /* Stat cards - APENAS para o dashboard */
@@ -1378,59 +1372,7 @@ body {
 /* Usar seletores com máxima especificidade para quebrar qualquer conflito */
 
 /* Dashboard Grid - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .dashboard-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-  gap: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-8) !important;
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-}
-
-/* Dashboard Header - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .dashboard-header {
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-6) !important;
-}
-
-/* Stats Grid - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .stats-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-  gap: var(--spacing-4) !important;
-  grid-column: 1 / -1 !important;
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-}
-
-/* Financial Summary - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .financial-summary {
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-6) !important;
-}
-
-/* Recent Activity - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .recent-activity {
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-6) !important;
-}
-
-/* Quick Actions - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .quick-actions {
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-6) !important;
-}
-
-/* Estoque Alerts - FORÇAR MARGENS */
-html body div#dashboard-page.dashboard-page.page.active .estoque-alerts {
-  margin-left: var(--spacing-6) !important;
-  margin-right: var(--spacing-6) !important;
-  margin-bottom: var(--spacing-6) !important;
-} 
+/* As margens do dashboard são controladas pelo arquivo page-margins.css */ 
 
 /* ===== TOOLTIPS PERSONALIZADOS ===== */
 [title] {

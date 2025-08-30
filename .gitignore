@@ -150,4 +150,14 @@ Thumbs.db
 data/*.json
 !data/users.json.example
 !data/vapid-keys.json.example 
-node_modules
+
+# Test files (development only)
+public/test-files/
+*.test.html
+*.debug.html
+
+# Build and distribution
+dist/
+build/
+*.min.js
+*.min.css

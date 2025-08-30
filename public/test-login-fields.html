@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Campos de Login - Sistema de Vendas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        .log {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .field-status {
+            margin-top: 5px;
+            font-size: 12px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .field-status.empty {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .field-status.filled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Teste de Campos de Login</h1>
+        
+        <div class="test-section">
+            <h3>📊 Status dos Campos</h3>
+            <div id="current-status" class="status info">
+                Verificando status dos campos...
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Campos de Login</h3>
+            <div class="form-group">
+                <label for="test-email">📧 Email</label>
+                <input type="email" id="test-email" name="email" placeholder="teste@email.com" autocomplete="off">
+                <div id="email-status" class="field-status empty">Campo vazio</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="test-password">🔒 Senha</label>
+                <input type="password" id="test-password" name="password" placeholder="senha123" autocomplete="new-password">
+                <div id="password-status" class="field-status empty">Campo vazio</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Testes de Limpeza</h3>
+            <button class="test-button" onclick="fillFields()">Preencher Campos</button>
+            <button class="test-button" onclick="clearFields()">Limpar Campos</button>
+            <button class="test-button" onclick="testAutoFill()">Testar Auto-preenchimento</button>
+            <button class="test-button" onclick="goToLoginPage()">Ir para Página de Login</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Logs</h3>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('current-status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function updateFieldStatus() {
+            const emailField = document.getElementById('test-email');
+            const passwordField = document.getElementById('test-password');
+            const emailStatus = document.getElementById('email-status');
+            const passwordStatus = document.getElementById('password-status');
+            
+            // Verificar email
+            if (emailField.value.trim() === '') {
+                emailStatus.textContent = 'Campo vazio';
+                emailStatus.className = 'field-status empty';
+            } else {
+                emailStatus.textContent = `Preenchido: ${emailField.value}`;
+                emailStatus.className = 'field-status filled';
+            }
+            
+            // Verificar senha
+            if (passwordField.value === '') {
+                passwordStatus.textContent = 'Campo vazio';
+                passwordStatus.className = 'field-status empty';
+            } else {
+                passwordStatus.textContent = `Preenchido: ${'*'.repeat(passwordField.value.length)}`;
+                passwordStatus.className = 'field-status filled';
+            }
+        }
+
+        function fillFields() {
+            log('🔧 Preenchendo campos de teste...');
+            
+            const emailField = document.getElementById('test-email');
+            const passwordField = document.getElementById('test-password');
+            
+            emailField.value = 'teste@email.com';
+            passwordField.value = 'senha123';
+            
+            updateFieldStatus();
+            updateStatus('✅ Campos preenchidos com dados de teste', 'success');
+            log('✅ Campos preenchidos com dados de teste');
+        }
+
+        function clearFields() {
+            log('🧹 Limpando campos...');
+            
+            const emailField = document.getElementById('test-email');
+            const passwordField = document.getElementById('test-password');
+            
+            emailField.value = '';
+            passwordField.value = '';
+            
+            // Forçar limpeza adicional
+            emailField.blur();
+            passwordField.blur();
+            
+            updateFieldStatus();
+            updateStatus('✅ Campos limpos com sucesso', 'success');
+            log('✅ Campos limpos com sucesso');
+        }
+
+        function testAutoFill() {
+            log('🔍 Testando auto-preenchimento...');
+            
+            // Simular dados salvos no localStorage
+            localStorage.setItem('testEmail', 'auto@email.com');
+            localStorage.setItem('testPassword', 'autopassword');
+            
+            // Tentar restaurar dados
+            const emailField = document.getElementById('test-email');
+            const passwordField = document.getElementById('test-password');
+            
+            emailField.value = localStorage.getItem('testEmail') || '';
+            passwordField.value = localStorage.getItem('testPassword') || '';
+            
+            updateFieldStatus();
+            updateStatus('⚠️ Auto-preenchimento simulado', 'info');
+            log('⚠️ Auto-preenchimento simulado');
+        }
+
+        function goToLoginPage() {
+            log('🔐 Navegando para página de login...');
+            
+            // Limpar dados de teste
+            localStorage.removeItem('testEmail');
+            localStorage.removeItem('testPassword');
+            
+            updateStatus('🔐 Redirecionando para página de login...', 'info');
+            log('🔐 Redirecionando para página de login...');
+            
+            setTimeout(() => {
+                window.location.href = '/login?message=authentication_required';
+            }, 1000);
+        }
+
+        // Monitorar mudanças nos campos
+        document.getElementById('test-email').addEventListener('input', updateFieldStatus);
+        document.getElementById('test-password').addEventListener('input', updateFieldStatus);
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🚀 Página de teste carregada');
+            updateFieldStatus();
+            updateStatus('✅ Página de teste carregada', 'success');
+        });
+    </script>
+</body>
+</html> 

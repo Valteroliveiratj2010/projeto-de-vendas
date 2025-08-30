@@ -13,22 +13,40 @@ class ProdutosPage {
     }
 
     init() {
-        console.log('🚀 Página de produtos inicializada!');
-        this.renderPage();
-        this.loadProdutos();
+        try {
+            console.log('🚀 Inicializando página de produtos...');
+            
+            // Renderizar estrutura HTML
+            this.renderPage();
+            
+            // Carregar dados
+            this.loadProdutos();
+            
+            // Configurar event listeners
+            this.setupEventListeners();
+            
+            console.log('✅ Página de produtos inicializada!');
+            
+        } catch (error) {
+            console.error('❌ Erro ao inicializar página de produtos:', error);
+            this.showError('Erro ao carregar página', error.message);
+        }
     }
 
+    /**
+     * Renderiza a estrutura HTML da página
+     */
     renderPage() {
-        const pageContainer = document.getElementById('produtos-page');
-        if (!pageContainer) return;
+        const pageContainer = document.getElementById('produtos-content');
+        if (!pageContainer) {
+            console.error('Container de produtos não encontrado!');
+            return;
+        }
 
         pageContainer.innerHTML = `
             <div class="page-header">
                 <div class="header-content">
-                    <h2>
-                        <i class="fas fa-box"></i>
-                        Gestão de Produtos
-                    </h2>
+                    <h2>Gestão de Produtos</h2>
                     <p>Gerencie seu estoque e produtos</p>
                 </div>
                 <div class="header-actions">
@@ -118,8 +136,6 @@ class ProdutosPage {
                 <div id="produtos-pagination" class="pagination-container"></div>
             </div>
         `;
-
-        this.setupEventListeners();
     }
 
     setupEventListeners() {
@@ -752,6 +768,74 @@ class ProdutosPage {
         }
         
         console.log('✅ Evento de atualização de produtos disparado!');
+    }
+
+    /**
+     * 🧹 LIMPA RECURSOS E ELEMENTOS DA PÁGINA
+     */
+    async cleanup() {
+        try {
+            console.log('🧹 Fazendo cleanup da ProdutosPage...');
+            
+            // ✅ LIMPAR CONTEÚDO HTML PARA EVITAR DUPLICAÇÃO
+            const pageContainer = document.getElementById('produtos-content');
+            if (pageContainer) {
+                pageContainer.innerHTML = `
+                    <div class="loading-placeholder">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Carregando módulo de Produtos...</p>
+                    </div>
+                `;
+                console.log('✅ Conteúdo HTML limpo');
+            }
+            
+            // ✅ LIMPAR ESTADO INTERNO
+            this.produtos = [];
+            this.filteredProdutos = [];
+            this.currentPage = 1;
+            this.isLoading = false;
+            
+            // ✅ REMOVER EVENT LISTENERS
+            this.removeEventListeners();
+            
+            console.log('✅ Cleanup da ProdutosPage concluído');
+            
+        } catch (error) {
+            console.error('❌ Erro durante cleanup:', error);
+        }
+    }
+    
+    /**
+     * 🧹 REMOVE EVENT LISTENERS PARA EVITAR MEMORY LEAKS
+     */
+    removeEventListeners() {
+        try {
+            console.log('🧹 Removendo event listeners...');
+            
+            // ✅ REMOVER LISTENERS DOS BOTÕES
+            const refreshBtn = document.getElementById('refresh-produtos-btn');
+            const newProdutoBtn = document.getElementById('new-produto-btn');
+            const searchBtn = document.getElementById('search-produtos-btn');
+            const searchInput = document.getElementById('search-produtos');
+            
+            if (refreshBtn) {
+                refreshBtn.replaceWith(refreshBtn.cloneNode(true));
+            }
+            if (newProdutoBtn) {
+                newProdutoBtn.replaceWith(newProdutoBtn.cloneNode(true));
+            }
+            if (searchBtn) {
+                searchBtn.replaceWith(searchBtn.cloneNode(true));
+            }
+            if (searchInput) {
+                searchInput.replaceWith(searchInput.cloneNode(true));
+            }
+            
+            console.log('✅ Event listeners removidos');
+            
+        } catch (error) {
+            console.warn('⚠️ Erro ao remover event listeners:', error);
+        }
     }
 }
 

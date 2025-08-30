@@ -553,4 +553,299 @@ router.get('/exportar/csv', async (req, res) => {
   }
 });
 
+// GET /api/relatorios/graficos/vendas-periodo - Dados para gráfico de vendas por período
+router.get('/graficos/vendas-periodo', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Vendas por período (últimos X dias)
+    const vendasPeriodoResult = await query(`
+      SELECT 
+        DATE(created_at) as data,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(total), 0) as valor_total
+      FROM vendas 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY DATE(created_at)
+      ORDER BY data ASC
+    `);
+    
+    res.json({
+      success: true,
+      data: vendasPeriodoResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de vendas por período:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/pagamentos-forma - Dados para gráfico de formas de pagamento
+router.get('/graficos/pagamentos-forma', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Formas de pagamento utilizadas
+    const pagamentosFormaResult = await query(`
+      SELECT 
+        forma_pagamento,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(valor_pago), 0) as valor_total
+      FROM pagamentos 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY forma_pagamento
+      ORDER BY valor_total DESC
+    `);
+    
+    res.json({
+      success: true,
+      data: pagamentosFormaResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de formas de pagamento:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/produtos-vendidos - Dados para gráfico de produtos mais vendidos
+router.get('/graficos/produtos-vendidos', async (req, res) => {
+  try {
+    const { periodo = 30, limite = 10 } = req.query;
+    
+    // Produtos mais vendidos
+    const produtosVendidosResult = await query(`
+      SELECT 
+        p.nome,
+        SUM(iv.quantidade) as quantidade_vendida,
+        COALESCE(SUM(iv.quantidade * iv.preco_unitario), 0) as valor_total
+      FROM produtos p
+      JOIN itens_venda iv ON p.id = iv.produto_id
+      JOIN vendas v ON iv.venda_id = v.id
+      WHERE v.created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY p.id, p.nome
+      ORDER BY quantidade_vendida DESC
+      LIMIT ${limite}
+    `);
+    
+    res.json({
+      success: true,
+      data: produtosVendidosResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de produtos vendidos:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/clientes-ativos - Dados para gráfico de clientes ativos
+router.get('/graficos/clientes-ativos', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Clientes ativos por período
+    const clientesAtivosResult = await query(`
+      SELECT 
+        DATE(created_at) as data,
+        COUNT(DISTINCT cliente_id) as clientes_ativos
+      FROM vendas 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY DATE(created_at)
+      ORDER BY data ASC
+    `);
+    
+    res.json({
+      success: true,
+      data: clientesAtivosResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de clientes ativos:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/estatisticas-gerais - Estatísticas para os cards
+router.get('/graficos/estatisticas-gerais', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Estatísticas gerais do período
+    const statsResult = await query(`
+      SELECT 
+        COUNT(*) as total_vendas,
+        COALESCE(SUM(total), 0) as receita_total,
+        AVG(total) as ticket_medio,
+        COUNT(DISTINCT cliente_id) as clientes_unicos,
+        (
+          SELECT COUNT(*) 
+          FROM vendas v2 
+          WHERE v2.created_at >= CURRENT_DATE - INTERVAL '${periodo * 2} days' 
+          AND v2.created_at < CURRENT_DATE - INTERVAL '${periodo} days'
+        ) as vendas_periodo_anterior,
+        (
+          SELECT COALESCE(SUM(total), 0) 
+          FROM vendas v3 
+          WHERE v3.created_at >= CURRENT_DATE - INTERVAL '${periodo * 2} days' 
+          AND v3.created_at < CURRENT_DATE - INTERVAL '${periodo} days'
+        ) as receita_periodo_anterior
+      FROM vendas 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+    `);
+    
+    const stats = statsResult.rows[0];
+    
+    // Calcular crescimento
+    const crescimento = stats.vendas_periodo_anterior > 0 
+      ? ((stats.total_vendas - stats.vendas_periodo_anterior) / stats.vendas_periodo_anterior * 100).toFixed(1)
+      : 0;
+    
+    res.json({
+      success: true,
+      data: {
+        ...stats,
+        crescimento: parseFloat(crescimento)
+      }
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar estatísticas gerais:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/tendencia-vendas - Dados para gráfico de tendência de vendas
+router.get('/graficos/tendencia-vendas', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Tendência de vendas (últimos X dias)
+    const tendenciaResult = await query(`
+      SELECT 
+        DATE(created_at) as data,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(total), 0) as valor_total
+      FROM vendas 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY DATE(created_at)
+      ORDER BY data ASC
+    `);
+    
+    res.json({
+      success: true,
+      data: tendenciaResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de tendência de vendas:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/vendas-status - Dados para gráfico de status das vendas
+router.get('/graficos/vendas-status', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Status das vendas
+    const vendasStatusResult = await query(`
+      SELECT 
+        status,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(total), 0) as valor_total
+      FROM vendas 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY status
+      ORDER BY quantidade DESC
+    `);
+    
+    res.json({
+      success: true,
+      data: vendasStatusResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de status das vendas:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/orcamentos-status - Dados para gráfico de status dos orçamentos
+router.get('/graficos/orcamentos-status', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Status dos orçamentos
+    const orcamentosStatusResult = await query(`
+      SELECT 
+        status,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(total), 0) as valor_total
+      FROM orcamentos 
+      WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      GROUP BY status
+      ORDER BY quantidade DESC
+    `);
+    
+    res.json({
+      success: true,
+      data: orcamentosStatusResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de status dos orçamentos:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
+// GET /api/relatorios/graficos/valores-distribuicao - Dados para gráfico de distribuição de valores
+router.get('/graficos/valores-distribuicao', async (req, res) => {
+  try {
+    const { periodo = 30 } = req.query;
+    
+    // Distribuição de valores das vendas - Versão simplificada
+    const valoresDistribuicaoResult = await query(`
+      WITH faixas AS (
+        SELECT 
+          total,
+          CASE 
+            WHEN total <= 100 THEN 'Até R$ 100'
+            WHEN total <= 500 THEN 'R$ 100 - R$ 500'
+            WHEN total <= 1000 THEN 'R$ 500 - R$ 1.000'
+            WHEN total <= 5000 THEN 'R$ 1.000 - R$ 5.000'
+            ELSE 'Acima de R$ 5.000'
+          END as faixa_valor,
+          CASE 
+            WHEN total <= 100 THEN 1
+            WHEN total <= 500 THEN 2
+            WHEN total <= 1000 THEN 3
+            WHEN total <= 5000 THEN 4
+            ELSE 5
+          END as ordem
+        FROM vendas 
+        WHERE created_at >= CURRENT_DATE - INTERVAL '${periodo} days'
+      )
+      SELECT 
+        faixa_valor,
+        COUNT(*) as quantidade,
+        COALESCE(SUM(total), 0) as valor_total,
+        ordem
+      FROM faixas
+      GROUP BY faixa_valor, ordem
+      ORDER BY ordem
+    `);
+    
+    res.json({
+      success: true,
+      data: valoresDistribuicaoResult.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar dados de distribuição de valores:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
 module.exports = router; 

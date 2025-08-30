@@ -23,9 +23,6 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- CSS -->
-    <!-- Responsividade PRIMEIRO para não sobrescrever estilos específicos -->
-    <link rel="stylesheet" href="/css/responsive.css" />
-    
     <!-- Responsividade Melhorada para todas as telas -->
     <link rel="stylesheet" href="/css/responsive-enhanced.css" />
     
@@ -46,10 +43,26 @@
     <link rel="stylesheet" href="/css/charts.css">
     
     <!-- Ícones Profissionais -->
-    <link rel="stylesheet" href="/css/icons-professional.css" />
+    <link rel="stylesheet" href="/css/icons-professional.css">
+    <link rel="stylesheet" href="/css/force-cleanup-icons.css">
     
     <!-- Action Buttons por último -->
     <link rel="stylesheet" href="/css/action-buttons.css" />
+    
+    <!-- Notificações de Pagamento -->
+    <link rel="stylesheet" href="/css/payment-notifications.css" />
+    
+    <!-- Atividades de Pagamento -->
+    <link rel="stylesheet" href="/css/payment-activities.css" />
+    
+    <!-- CSS Específico para Margens das Páginas -->
+    <link rel="stylesheet" href="/css/page-margins.css" />
+    
+    <!-- CSS para Limpeza de Ícones -->
+    <link rel="stylesheet" href="/css/force-cleanup-icons.css" />
+    
+    <!-- CSS para Ícones Profissionais da Sidebar -->
+    <link rel="stylesheet" href="/css/sidebar-icons.css" />
     
     <title>Sistema de Vendas - Página Principal</title>
 </head>
@@ -79,7 +92,7 @@
         <div id="sidebar" class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-store"></i>
                     <span>Sistema Vendas</span>
                 </div>
             </div>
@@ -118,7 +131,7 @@
                     </li>
                     <li class="nav-item" data-page="relatorios">
                         <a href="#relatorios">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fas fa-chart-line"></i>
                             <span>Relatórios</span>
                         </a>
                     </li>
@@ -145,10 +158,26 @@
                 
                 <!-- Seção de login (visível apenas quando NÃO logado) -->
                 <div class="login-section" id="login-section">
-                    <button class="btn btn-primary" id="login-btn">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Entrar
-                    </button>
+                    <div class="login-container">
+                        <h3>🔐 Login do Sistema</h3>
+                        <form id="login-form" class="login-form">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Senha:</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Entrar
+                                </button>
+                            </div>
+                            <div id="login-error" class="error-message" style="display: none;"></div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,7 +252,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-box"></i>
+                            <i class="fas fa-boxes-stacked"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-produtos">0</h3>
@@ -233,7 +262,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-cart-shopping"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-vendas">0</h3>
@@ -243,7 +272,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-file-invoice"></i>
+                            <i class="fas fa-file-lines"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="orcamentos-ativos">0</h3>
@@ -253,7 +282,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-circle-check"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="orcamentos-aprovados">0</h3>
@@ -263,7 +292,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-exchange-alt"></i>
+                            <i class="fas fa-arrow-right-arrow-left"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="orcamentos-convertidos">0</h3>
@@ -273,7 +302,7 @@
 
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
+                            <i class="fas fa-clock-rotate-left"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="orcamentos-expirados">0</h3>
@@ -322,19 +351,19 @@
                     <h3>Ações Rápidas</h3>
                     <div class="actions-grid">
                         <button class="action-btn" data-action="nova-venda">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-cart-plus"></i>
                             Nova Venda
                         </button>
                         <button class="action-btn" data-action="novo-cliente">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-user-plus"></i>
                             Novo Cliente
                         </button>
                         <button class="action-btn" data-action="novo-produto">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-box-open"></i>
                             Novo Produto
                         </button>
                         <button class="action-btn" data-action="novo-orcamento">
-                            <i class="fas fa-plus"></i>
+                            <i class="fas fa-file-circle-plus"></i>
                             Novo Orçamento
                         </button>
                     </div>
@@ -344,10 +373,6 @@
                 
                 <!-- Páginas do Sistema -->
                 <div id="clientes-page" class="page">
-                    <div class="page-header">
-                        <h2>👥 Gestão de Clientes</h2>
-                        <p>Gerencie seus clientes de forma eficiente</p>
-                    </div>
                     <div class="page-content" id="clientes-content">
                         <!-- Conteúdo será carregado pelo módulo ClientesPage -->
                         <div class="loading-placeholder">
@@ -358,10 +383,6 @@
                 </div>
                 
                 <div id="produtos-page" class="page">
-                    <div class="page-header">
-                        <h2>📦 Gestão de Produtos</h2>
-                        <p>Controle seu catálogo de produtos</p>
-                    </div>
                     <div class="page-content" id="produtos-content">
                         <!-- Conteúdo será carregado pelo módulo ProdutosPage -->
                         <div class="loading-placeholder">
@@ -372,10 +393,6 @@
                 </div>
                 
                 <div id="vendas-page" class="page">
-                    <div class="page-header">
-                        <h2>🛒 Gestão de Vendas</h2>
-                        <p>Controle suas vendas e receitas</p>
-                    </div>
                     <div class="page-content" id="vendas-content">
                         <!-- Conteúdo será carregado pelo módulo VendasPage -->
                         <div class="loading-placeholder">
@@ -386,10 +403,6 @@
                 </div>
                 
                 <div id="orcamentos-page" class="page">
-                    <div class="page-header">
-                        <h2>📋 Gestão de Orçamentos</h2>
-                        <p>Gerencie seus orçamentos e propostas</p>
-                    </div>
                     <div class="page-content" id="orcamentos-content">
                         <!-- Conteúdo será carregado pelo módulo OrcamentosPage -->
                         <div class="loading-placeholder">
@@ -400,12 +413,8 @@
                 </div>
                 
                 <div id="relatorios-page" class="page">
-                    <div class="page-header">
-                        <h2>📊 Relatórios e Análises</h2>
-                        <p>Visualize dados e insights do seu negócio</p>
-                    </div>
                     <div class="page-content" id="relatorios-content">
-                        <!-- Conteúdo será carregado pelo módulo RelatoriosPage -->
+                        <!-- Conteúdo será carregado pelo módulo RelatóriosPage -->
                         <div class="loading-placeholder">
                             <i class="fas fa-spinner fa-spin"></i>
                             <p>Carregando módulo de Relatórios...</p>
@@ -437,28 +446,39 @@
     <!-- Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
 
-    <!-- JavaScript ORIGINAL - FUNCIONANDO -->
+    <!-- JavaScript Modular - NOVA VERSÃO -->
     <!-- Chart.js para gráficos -->
     <script src="/js/libs/chart.js"></script>
     
-    <!-- Scripts principais -->
+    <!-- Sistema Modular -->
+    <script src="/js/modules/config.js"></script>
+    <script src="/js/modules/auth-manager.js"></script>
+    <script src="/js/modules/ui-manager.js"></script>
+    <script src="/js/modules/data-manager.js"></script>
+    <script src="/js/modules/routing-manager.js"></script>
+    <script src="/js/modules/index.js"></script>
+    <script src="/js/app-modular.js"></script>
+    
+    <!-- Scripts Legacy (serão migrados para módulos) -->
     <script src="/js/database.js"></script>
     <script src="/js/ui.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/utils/event-manager.js"></script>
     
-    <!-- Scripts das Páginas do Sistema -->
+    <!-- Scripts das Páginas do Sistema (Legacy) -->
     <script src="/js/pages/dashboard.js"></script>
     <script src="/js/pages/clientes.js"></script>
     <script src="/js/pages/produtos.js"></script>
     <script src="/js/pages/vendas.js"></script>
     <script src="/js/pages/orcamentos.js"></script>
     <script src="/js/pages/relatorios.js"></script>
+    <script src="/js/pages/relatorios-com-dados-reais.js"></script>
+    <script src="/js/pages/relatorios-simples-global.js"></script>
     
-    <!-- Script principal da aplicação -->
+    <!-- Script principal da aplicação (Legacy) -->
     <script src="/js/app.js"></script>
     
-    <!-- Sistema de Autenticação -->
+    <!-- Sistema de Autenticação (Legacy) -->
     <script src="/js/auth.js"></script>
     
     <!-- Sistema de Inicialização -->
@@ -863,58 +883,96 @@
         }
     </script>
     
-    <!-- Service Worker -->
-    <script src="/js/service-worker.js"></script>
-    
-    <!-- Scripts de Inicialização -->
-    <script>
-        // SISTEMA DE FORÇA BRUTA - QUEBRAR CACHE COMPLETAMENTE
-        (function() {
-            const VERSION = 'v' + Date.now();
-            console.log('💥 FORÇA BRUTA ATIVADA - Versão:', VERSION);
+                <!-- Service Worker -->
+            <script src="/js/service-worker.js"></script>
             
-            // 1. LIMPAR CACHE DO LOCALSTORAGE
-            const keysToKeep = ['authToken', 'userData'];
-            const allKeys = Object.keys(localStorage);
-            allKeys.forEach(key => {
-                if (!keysToKeep.includes(key)) {
-                    localStorage.removeItem(key);
-                    console.log('🗑️ Cache removido:', key);
+            <style>
+                /* Estilos para o sistema de login */
+                .login-section {
+                    display: none;
+                    padding: 20px;
+                    background: rgba(255, 255, 255, 0.95);
+                    border-radius: 8px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    margin: 10px;
+                }
+                
+                .login-container {
+                    max-width: 400px;
+                    margin: 0 auto;
+                }
+                
+                .login-container h3 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    color: #333;
+                }
+                
+                .login-form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                
+                .form-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+                
+                .form-group label {
+                    margin-bottom: 5px;
+                    font-weight: 500;
+                    color: #555;
+                }
+                
+                .form-group input {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 14px;
+                }
+                
+                .form-group input:focus {
+                    outline: none;
+                    border-color: #007bff;
+                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+                }
+                
+                .error-message {
+                    color: #dc3545;
+                    background: #f8d7da;
+                    border: 1px solid #f5c6cb;
+                    padding: 10px;
+                    border-radius: 4px;
+                    margin-top: 10px;
+                    text-align: center;
+                }
+            </style>
+    
+    <!-- Scripts de Inicialização Modular -->
+    <script>
+        // Sistema de Inicialização Modular
+        (function() {
+            const VERSION = 'v2.0.0-modular';
+            console.log('🚀 Sistema Modular - Versão:', VERSION);
+            
+            // Verificar se módulos estão carregados
+            window.addEventListener('modules:loaded', (event) => {
+                console.log('✅ Módulos carregados:', event.detail.modules);
+                
+                // Inicializar sistema principal
+                if (window.SistemaVendasModular) {
+                    window.sistemaVendas = new window.SistemaVendasModular();
                 }
             });
             
-            // 2. FORÇAR ATUALIZAÇÃO DO SERVICE WORKER
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                    for(let registration of registrations) {
-                        registration.unregister();
-                        console.log('🔄 Service Worker removido:', registration);
-                    }
-                });
-            }
+            // Tratamento de erros de módulos
+            window.addEventListener('modules:error', (event) => {
+                console.error('❌ Erro nos módulos:', event.detail.error);
+            });
             
-            // 3. FORÇAR RECARREGAMENTO SE NECESSÁRIO
-            const lastVersion = sessionStorage.getItem('appVersion');
-            if (lastVersion !== VERSION) {
-                sessionStorage.setItem('appVersion', VERSION);
-                console.log('🔄 Nova versão detectada:', VERSION);
-                
-                // Forçar atualização de todos os scripts
-                const scripts = document.querySelectorAll('script[src]');
-                scripts.forEach(script => {
-                    const originalSrc = script.src;
-                    script.src = originalSrc + '?v=' + VERSION;
-                    console.log('🔄 Script atualizado:', originalSrc);
-                });
-            }
-            
-            console.log('✅ FORÇA BRUTA CONCLUÍDA');
+            console.log('✅ Sistema de inicialização modular configurado');
         })();
-        
-        // Sistema de Proteção Simples e Eficiente
-        if (window.location.pathname === '/dashboard') {
-            window.location.replace('/');
-        }
     </script>
 </body>
 </html> 

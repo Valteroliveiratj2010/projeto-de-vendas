@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Redirecionamento - Sistema de Vendas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #1d4ed8;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+        .log {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Teste de Redirecionamento de Autenticação</h1>
+        
+        <div class="test-section">
+            <h3>📊 Status Atual</h3>
+            <div id="current-status" class="status info">
+                Verificando status de autenticação...
+            </div>
+            <div id="auth-info"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Testes de Autenticação</h3>
+            <button class="test-button" onclick="testAuthStatus()">Verificar Status</button>
+            <button class="test-button" onclick="testLoginRedirect()">Testar Redirecionamento Login</button>
+            <button class="test-button" onclick="testMainPageAccess()">Testar Acesso Página Principal</button>
+            <button class="test-button" onclick="clearAuth()">Limpar Autenticação</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🧭 Testes de Navegação</h3>
+            <button class="test-button" onclick="goToMainPage()">Ir para Página Principal</button>
+            <button class="test-button" onclick="goToLoginPage()">Ir para Página de Login</button>
+            <button class="test-button" onclick="goToDashboard()">Ir para Dashboard</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Logs</h3>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('current-status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function updateAuthInfo() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            const authInfoDiv = document.getElementById('auth-info');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    authInfoDiv.innerHTML = `
+                        <strong>✅ Autenticado</strong><br>
+                        <strong>Usuário:</strong> ${user.name || user.email}<br>
+                        <strong>Função:</strong> ${user.role || 'N/A'}<br>
+                        <strong>Token:</strong> ${token.substring(0, 20)}...
+                    `;
+                } catch (error) {
+                    authInfoDiv.innerHTML = '<strong>❌ Erro ao ler dados do usuário</strong>';
+                }
+            } else {
+                authInfoDiv.innerHTML = '<strong>❌ Não autenticado</strong>';
+            }
+        }
+
+        async function testAuthStatus() {
+            log('🔍 Testando status de autenticação...');
+            
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            
+            if (token && userData) {
+                try {
+                    const response = await fetch('/api/auth/verify', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        updateStatus('✅ Token válido - Usuário autenticado', 'success');
+                        log('✅ Token válido - Usuário autenticado');
+                    } else {
+                        updateStatus('❌ Token inválido - Usuário não autenticado', 'error');
+                        log('❌ Token inválido - Usuário não autenticado');
+                        clearAuth();
+                    }
+                } catch (error) {
+                    updateStatus('❌ Erro ao verificar token', 'error');
+                    log(`❌ Erro ao verificar token: ${error.message}`);
+                }
+            } else {
+                updateStatus('❌ Nenhum token encontrado - Usuário não autenticado', 'error');
+                log('❌ Nenhum token encontrado - Usuário não autenticado');
+            }
+            
+            updateAuthInfo();
+        }
+
+        function testLoginRedirect() {
+            log('🔐 Testando redirecionamento para login...');
+            
+            // Simular usuário não autenticado
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            
+            updateStatus('🔐 Redirecionando para página de login...', 'info');
+            log('🔐 Redirecionando para página de login...');
+            
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1000);
+        }
+
+        function testMainPageAccess() {
+            log('🏠 Testando acesso à página principal...');
+            
+            const token = localStorage.getItem('authToken');
+            
+            if (token) {
+                updateStatus('✅ Usuário autenticado - Acesso permitido à página principal', 'success');
+                log('✅ Usuário autenticado - Acesso permitido à página principal');
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            } else {
+                updateStatus('🔐 Usuário não autenticado - Será redirecionado para login', 'info');
+                log('🔐 Usuário não autenticado - Será redirecionado para login');
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1000);
+            }
+        }
+
+        function clearAuth() {
+            log('🧹 Limpando dados de autenticação...');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            updateStatus('🧹 Dados de autenticação limpos', 'info');
+            updateAuthInfo();
+        }
+
+        function goToMainPage() {
+            log('🏠 Navegando para página principal...');
+            window.location.href = '/';
+        }
+
+        function goToLoginPage() {
+            log('🔐 Navegando para página de login...');
+            window.location.href = '/login';
+        }
+
+        function goToDashboard() {
+            log('📊 Navegando para dashboard...');
+            window.location.href = '/#dashboard';
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🚀 Página de teste carregada');
+            testAuthStatus();
+        });
+    </script>
+</body>
+</html> 

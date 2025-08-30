@@ -1,0 +1,283 @@
+/* ===== ÍCONES PROFISSIONAIS E ELEGANTES DA SIDEBAR ===== */
+
+/* Logo da Sidebar */
+.sidebar-header .logo i {
+    font-size: 1.6rem;
+    color: var(--color-primary);
+    margin-right: var(--spacing-3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.sidebar-header .logo:hover i {
+    transform: scale(1.15) rotate(5deg);
+    color: var(--color-primary-dark);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Ícones dos itens de navegação */
+.sidebar-nav .nav-item i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+    margin-right: var(--spacing-3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.85;
+    position: relative;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+/* Estados dos ícones */
+.sidebar-nav .nav-item:hover i {
+    opacity: 1;
+    transform: translateX(3px) scale(1.05);
+    color: var(--color-primary);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.sidebar-nav .nav-item.active i {
+    opacity: 1;
+    color: var(--color-primary);
+    transform: scale(1.1);
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.2));
+}
+
+/* Ícones específicos com cores temáticas - Baseados nos ícones das páginas */
+.sidebar-nav .nav-item[data-page="dashboard"] i {
+    color: #6366f1; /* Indigo - Dashboard */
+}
+
+.sidebar-nav .nav-item[data-page="dashboard"]:hover i,
+.sidebar-nav .nav-item[data-page="dashboard"].active i {
+    color: #4f46e5;
+}
+
+.sidebar-nav .nav-item[data-page="clientes"] i {
+    color: #10b981; /* Emerald - Mesmo da página de clientes */
+}
+
+.sidebar-nav .nav-item[data-page="clientes"]:hover i,
+.sidebar-nav .nav-item[data-page="clientes"].active i {
+    color: #059669;
+}
+
+.sidebar-nav .nav-item[data-page="produtos"] i {
+    color: #f59e0b; /* Amber - Mesmo da página de produtos */
+}
+
+.sidebar-nav .nav-item[data-page="produtos"]:hover i,
+.sidebar-nav .nav-item[data-page="produtos"].active i {
+    color: #d97706;
+}
+
+.sidebar-nav .nav-item[data-page="vendas"] i {
+    color: #ef4444; /* Red - Mesmo da página de vendas */
+}
+
+.sidebar-nav .nav-item[data-page="vendas"]:hover i,
+.sidebar-nav .nav-item[data-page="vendas"].active i {
+    color: #dc2626;
+}
+
+.sidebar-nav .nav-item[data-page="orcamentos"] i {
+    color: #8b5cf6; /* Violet - Mesmo da página de orçamentos */
+}
+
+.sidebar-nav .nav-item[data-page="orcamentos"]:hover i,
+.sidebar-nav .nav-item[data-page="orcamentos"].active i {
+    color: #7c3aed;
+}
+
+.sidebar-nav .nav-item[data-page="relatorios"] i {
+    color: #06b6d4; /* Cyan - Mesmo da página de relatórios */
+}
+
+.sidebar-nav .nav-item[data-page="relatorios"]:hover i,
+.sidebar-nav .nav-item[data-page="relatorios"].active i {
+    color: #0891b2;
+}
+
+/* Efeitos de hover nos itens */
+.sidebar-nav .nav-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 2px 0;
+}
+
+.sidebar-nav .nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(135deg, var(--color-primary), rgba(255, 255, 255, 0.1));
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.08;
+    border-radius: 8px;
+}
+
+.sidebar-nav .nav-item:hover::before {
+    width: 100%;
+    opacity: 0.12;
+}
+
+.sidebar-nav .nav-item.active::before {
+    width: 100%;
+    opacity: 0.15;
+    background: linear-gradient(135deg, var(--color-primary), rgba(255, 255, 255, 0.2));
+}
+
+/* Animação de entrada dos ícones */
+@keyframes iconSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-15px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.sidebar-nav .nav-item i {
+    animation: iconSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--item-index, 0) * 0.1s);
+}
+
+/* Ícones com efeito de brilho elegante */
+.sidebar-nav .nav-item.active i::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 80%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation: iconGlow 3s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes iconGlow {
+    from {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+}
+
+/* Responsividade para ícones */
+@media (max-width: 768px) {
+    .sidebar-nav .nav-item i {
+        font-size: 1.1rem;
+        width: 20px;
+    }
+    
+    .sidebar-header .logo i {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-nav .nav-item i {
+        font-size: 1rem;
+        width: 18px;
+    }
+    
+    .sidebar-header .logo i {
+        font-size: 1.3rem;
+    }
+}
+
+/* Efeito de entrada sequencial para os itens */
+.sidebar-nav .nav-item:nth-child(1) i { --item-index: 1; }
+.sidebar-nav .nav-item:nth-child(2) i { --item-index: 2; }
+.sidebar-nav .nav-item:nth-child(3) i { --item-index: 3; }
+.sidebar-nav .nav-item:nth-child(4) i { --item-index: 4; }
+.sidebar-nav .nav-item:nth-child(5) i { --item-index: 5; }
+.sidebar-nav .nav-item:nth-child(6) i { --item-index: 6; }
+
+/* Ícones do footer da sidebar */
+.sidebar-footer .user-avatar i {
+    font-size: 1.2rem;
+    color: var(--color-gray-600);
+    transition: color 0.3s ease;
+}
+
+.sidebar-footer .user-avatar:hover i {
+    color: var(--color-primary);
+}
+
+/* Efeitos específicos por ícone */
+.sidebar-nav .nav-item[data-page="dashboard"] i {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-nav .nav-item[data-page="dashboard"]:hover i {
+    transform: translateX(3px) scale(1.05) rotate(8deg);
+}
+
+.sidebar-nav .nav-item[data-page="clientes"]:hover i {
+    transform: translateX(3px) scale(1.05);
+}
+
+.sidebar-nav .nav-item[data-page="produtos"]:hover i {
+    transform: translateX(3px) scale(1.05);
+}
+
+.sidebar-nav .nav-item[data-page="vendas"]:hover i {
+    transform: translateX(3px) scale(1.05);
+}
+
+.sidebar-nav .nav-item[data-page="orcamentos"]:hover i {
+    transform: translateX(3px) scale(1.05);
+}
+
+.sidebar-nav .nav-item[data-page="relatorios"]:hover i {
+    transform: translateX(3px) scale(1.05);
+}
+
+/* Ícones com gradiente elegante */
+.sidebar-nav .nav-item.active i {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark), var(--color-primary));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Efeito de pulso suave para ícones ativos */
+@keyframes iconPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.sidebar-nav .nav-item.active i {
+    animation: iconPulse 3s ease-in-out infinite;
+} 

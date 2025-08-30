@@ -125,7 +125,7 @@ class UI {
     /**
      * Mostra toast de notificação
      */
-    showToast(message, type = 'info', duration = null) {
+    showToast(message, type = 'info', duration = null, customIcon = null) {
         try {
             const container = document.getElementById('toast-container');
             if (!container) {
@@ -136,13 +136,17 @@ class UI {
             // Criar toast
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
+            
+            // Usar ícone personalizado se fornecido
+            const iconClass = customIcon || this.getToastIcon(type);
+            
             toast.innerHTML = `
                 <div class="toast-content">
                     <div class="toast-icon">
-                        <i class="${this.getToastIcon(type)}"></i>
+                        <i class="${iconClass}"></i>
                     </div>
                     <div class="toast-message">
-                        <p>${message}</p>
+                        <div>${message}</div>
                     </div>
                     <button class="toast-close">
                         <i class="fas fa-times"></i>
@@ -238,6 +242,202 @@ class UI {
      */
     showInfo(message, duration = null) {
         return this.showToast(message, 'info', duration);
+    }
+    
+    /**
+     * 💰 Mostra notificação especializada de pagamento
+     */
+    showPaymentNotification(pagamento, tipo = 'recebido') {
+        try {
+            // Criar container de notificações se não existir
+            this.createPaymentNotificationContainer();
+            
+            // Determinar ícone e classe CSS baseada na forma de pagamento
+            const icon = this.getPaymentIcon(pagamento.forma_pagamento);
+            const paymentClass = this.getPaymentCSSClass(pagamento.forma_pagamento);
+            
+            // Criar mensagem formatada
+            const cliente = pagamento.cliente_nome || 'Cliente';
+            const valor = this.formatCurrency(pagamento.valor_pago);
+            const forma = this.formatPaymentMethod(pagamento.forma_pagamento);
+            
+            const title = tipo === 'recebido' 
+                ? `Pagamento recebido de ${cliente}`
+                : `Pagamento atualizado de ${cliente}`;
+            
+            const details = `${valor} via ${forma}`;
+            
+            // Criar notificação especializada
+            const notification = this.createPaymentNotificationElement(title, details, icon, paymentClass);
+            
+            // Adicionar ao container
+            const container = document.getElementById('payment-notification-container');
+            container.appendChild(notification);
+            
+            // Mostrar com animação
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto-remover após 8 segundos
+            setTimeout(() => {
+                this.hidePaymentNotification(notification);
+            }, 8000);
+            
+            console.log('✅ Notificação de pagamento especializada exibida:', { cliente, valor, forma });
+            
+            return notification;
+            
+        } catch (error) {
+            console.error('❌ Erro ao mostrar notificação de pagamento:', error);
+            // Fallback para toast simples
+            return this.showSuccess('Pagamento recebido!', 5000);
+        }
+    }
+    
+    /**
+     * 🏗️ Criar container de notificações de pagamento
+     */
+    createPaymentNotificationContainer() {
+        if (!document.getElementById('payment-notification-container')) {
+            const container = document.createElement('div');
+            container.id = 'payment-notification-container';
+            container.className = 'payment-notification-container';
+            document.body.appendChild(container);
+            console.log('✅ Container de notificações de pagamento criado');
+        }
+    }
+    
+    /**
+     * 🎨 Criar elemento de notificação de pagamento
+     */
+    createPaymentNotificationElement(title, details, icon, paymentClass) {
+        const notification = document.createElement('div');
+        notification.className = `payment-notification ${paymentClass}`;
+        
+        notification.innerHTML = `
+            <div class="payment-notification-icon">
+                <i class="${icon}"></i>
+            </div>
+            <div class="payment-notification-content">
+                <div class="payment-notification-title">${title}</div>
+                <div class="payment-notification-details">${details}</div>
+            </div>
+            <button class="payment-notification-close" title="Fechar notificação">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        // Adicionar evento de fechar
+        const closeBtn = notification.querySelector('.payment-notification-close');
+        closeBtn.addEventListener('click', () => {
+            this.hidePaymentNotification(notification);
+        });
+        
+        return notification;
+    }
+    
+    /**
+     * 🚫 Ocultar notificação de pagamento
+     */
+    hidePaymentNotification(notification) {
+        if (!notification) return;
+        
+        notification.classList.remove('show');
+        notification.classList.add('hiding');
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 400);
+    }
+    
+    /**
+     * 🎨 Obter classe CSS para forma de pagamento
+     */
+    getPaymentCSSClass(formaPagamento) {
+        if (!formaPagamento) return 'dinheiro';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'dinheiro';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'cartao';
+        } else if (forma.includes('pix')) {
+            return 'pix';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'transferencia';
+        } else if (forma.includes('boleto')) {
+            return 'boleto';
+        } else if (forma.includes('cheque')) {
+            return 'cheque';
+        }
+        
+        return 'dinheiro';
+    }
+    
+    /**
+     * 🎨 Obter ícone para forma de pagamento
+     */
+    getPaymentIcon(formaPagamento) {
+        if (!formaPagamento) return 'fas fa-money-bill-wave';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'fas fa-money-bill-wave';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'fas fa-credit-card';
+        } else if (forma.includes('pix')) {
+            return 'fas fa-qrcode';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'fas fa-university';
+        } else if (forma.includes('boleto')) {
+            return 'fas fa-file-invoice';
+        } else if (forma.includes('cheque')) {
+            return 'fas fa-money-check';
+        }
+        
+        return 'fas fa-money-bill-wave';
+    }
+    
+    /**
+     * 📝 Formatar forma de pagamento para exibição
+     */
+    formatPaymentMethod(formaPagamento) {
+        if (!formaPagamento) return 'Não informado';
+        
+        const forma = formaPagamento.toLowerCase();
+        
+        if (forma.includes('dinheiro') || forma.includes('cash')) {
+            return 'Dinheiro';
+        } else if (forma.includes('cartão') || forma.includes('cartao') || forma.includes('card')) {
+            return 'Cartão';
+        } else if (forma.includes('pix')) {
+            return 'PIX';
+        } else if (forma.includes('transferência') || forma.includes('transferencia')) {
+            return 'Transferência';
+        } else if (forma.includes('boleto')) {
+            return 'Boleto';
+        } else if (forma.includes('cheque')) {
+            return 'Cheque';
+        }
+        
+        return formaPagamento;
+    }
+    
+    /**
+     * 💰 Formatar valor monetário
+     */
+    formatCurrency(value) {
+        if (!value) return 'R$ 0,00';
+        
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(value);
     }
 
     /**

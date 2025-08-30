@@ -423,4 +423,40 @@ router.get('/relatorio/resumo', async (req, res) => {
   }
 });
 
+// GET /api/vendas/relatorio/formas-pagamento - Relatório de formas de pagamento
+router.get('/relatorio/formas-pagamento', async (req, res) => {
+  try {
+    const { data_inicio, data_fim } = req.query;
+    
+    let whereClause = '';
+    let params = [];
+    
+    if (data_inicio && data_fim) {
+      whereClause = 'WHERE p.data_pagto BETWEEN $1 AND $2';
+      params = [data_inicio, data_fim];
+    }
+    
+    const result = await query(`
+      SELECT 
+        p.forma_pagamento,
+        COUNT(*) as quantidade,
+        SUM(p.valor_pago) as valor_total
+      FROM pagamentos p
+      JOIN vendas v ON p.venda_id = v.id
+      ${whereClause}
+      GROUP BY p.forma_pagamento
+      ORDER BY quantidade DESC
+    `, params);
+    
+    res.json({ 
+      success: true, 
+      data: result.rows
+    });
+    
+  } catch (error) {
+    console.error('Erro ao gerar relatório de formas de pagamento:', error);
+    res.status(500).json({ success: false, error: 'Erro interno do servidor' });
+  }
+});
+
 module.exports = router; 

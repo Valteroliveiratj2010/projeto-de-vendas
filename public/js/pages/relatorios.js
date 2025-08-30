@@ -132,100 +132,120 @@ class RelatoriosPageFinal {
     }
     
     renderPage() {
-        console.log('🎨 Renderizando página...');
-        
-        if (!this.container) {
-            throw new Error('Container não disponível para renderização');
+        const pageContainer = document.getElementById('relatorios-content');
+        if (!pageContainer) {
+            console.error('Container de relatórios não encontrado!');
+            return;
         }
-        
-        this.container.innerHTML = `
+
+        pageContainer.innerHTML = `
             <div class="page-header">
                 <div class="header-content">
-                    <h2><i class="fas fa-chart-bar"></i> Relatórios e Análises</h2>
-                    <p>Visualize dados e estatísticas do seu negócio</p>
+                    <h2>Relatórios e Análises</h2>
+                    <p>Visualize dados e insights do seu negócio</p>
                 </div>
                 <div class="header-actions">
                     <button class="btn btn-secondary" id="refresh-relatorios-btn">
-                        <i class="fas fa-sync-alt"></i> Atualizar Gráficos
-                    </button>
-                    <button class="btn btn-warning" id="force-refresh-data-btn">
-                        <i class="fas fa-database"></i> Atualizar Dados
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar
                     </button>
                     <button class="btn btn-primary" id="export-relatorios-btn">
-                        <i class="fas fa-download"></i> Exportar
+                        <i class="fas fa-download"></i>
+                        Exportar
                     </button>
                 </div>
             </div>
-            
+
             <div class="page-content">
-                <div class="charts-section">
-                    <h3>📊 Gráficos e Estatísticas</h3>
-                    
-                    <div class="charts-grid">
-                        <!-- Gráfico 1: Tendência de Vendas -->
-                        <div class="chart-card">
-                            <h4>Tendência de Vendas</h4>
-                            <div class="chart-container">
-                                <canvas id="tendencia-vendas-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
-                        </div>
+                <!-- Filtros de Período -->
+                <div class="filters-section">
+                    <div class="period-selector">
+                        <label for="period-select">Período:</label>
+                        <select id="period-select">
+                            <option value="7">Últimos 7 dias</option>
+                            <option value="30" selected>Últimos 30 dias</option>
+                            <option value="90">Últimos 3 meses</option>
+                            <option value="365">Último ano</option>
+                        </select>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="filter-vendas-relatorios">Vendas</button>
+                        <button class="btn btn-outline" id="filter-produtos-relatorios">Produtos</button>
+                        <button class="btn btn-outline" id="filter-clientes-relatorios">Clientes</button>
+                    </div>
+                </div>
 
-                        <!-- Gráfico 2: Vendas por Período -->
-                        <div class="chart-card">
-                            <h4>Vendas por Período</h4>
-                            <div class="chart-container">
-                                <canvas id="vendas-periodo-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
+                <!-- Estatísticas Rápidas -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-bar"></i>
                         </div>
-
-                        <!-- Gráfico 3: Status das Vendas -->
-                        <div class="chart-card">
-                            <h4>Status das Vendas</h4>
-                            <div class="chart-container">
-                                <canvas id="vendas-status-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
+                        <div class="stat-content">
+                            <h3 id="total-vendas-periodo-stat">0</h3>
+                            <p>Vendas no Período</p>
                         </div>
-
-                        <!-- Gráfico 4: Status dos Orçamentos -->
-                        <div class="chart-card">
-                            <h4>Status dos Orçamentos</h4>
-                            <div class="chart-container">
-                                <canvas id="orcamentos-status-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
                         </div>
-
-                        <!-- Gráfico 5: Distribuição de Valores -->
-                        <div class="chart-card">
-                            <h4>Distribuição de Valores</h4>
-                            <div class="chart-container">
-                                <canvas id="valores-distribuicao-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
+                        <div class="stat-content">
+                            <h3 id="receita-periodo-stat">R$ 0,00</h3>
+                            <p>Receita no Período</p>
                         </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trending-up"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="crescimento-stat">0%</h3>
+                            <p>Crescimento</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Gráfico 6: Formas de Pagamento -->
+                <!-- Gráficos -->
+                <div class="charts-container">
+                    <div class="chart-row">
                         <div class="chart-card">
-                            <h4>Formas de Pagamento</h4>
-                            <div class="chart-container">
-                                <canvas id="pagamentos-forma-chart"></canvas>
-                                <div class="chart-loading">Carregando gráfico...</div>
-                            </div>
+                            <h3>Tendência de Vendas</h3>
+                            <canvas id="tendencia-vendas-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Vendas por Período</h3>
+                            <canvas id="vendas-periodo-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <h3>Status das Vendas</h3>
+                            <canvas id="vendas-status-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Status dos Orçamentos</h3>
+                            <canvas id="orcamentos-status-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <h3>Distribuição de Valores</h3>
+                            <canvas id="valores-distribuicao-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Formas de Pagamento</h3>
+                            <canvas id="pagamentos-forma-chart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         `;
-        
-        console.log('✅ Página renderizada com sucesso');
     }
     
     async waitForDOM() {
         console.log('⏳ Aguardando DOM ser renderizado...');
-        await new Promise(resolve => setTimeout(resolve, 500)); // Mais tempo
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Mais tempo
         
         // Verificar se todos os canvases estão disponíveis
         const canvases = [
@@ -240,7 +260,10 @@ class RelatoriosPageFinal {
         for (const canvasId of canvases) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) {
+                console.error(`❌ Canvas ${canvasId} não encontrado`);
                 throw new Error(`Canvas ${canvasId} não encontrado`);
+            } else {
+                console.log(`✅ Canvas ${canvasId} encontrado`);
             }
         }
         
@@ -257,12 +280,10 @@ class RelatoriosPageFinal {
             
             // 2. Criar gráficos com dados reais
             console.log('📊 Criando gráficos com dados reais...');
-            await this.createTendenciaVendasChart();
             await this.createVendasPeriodoChart();
-            await this.createVendasStatusChart();
-            await this.createOrcamentosStatusChart();
-            await this.createValoresDistribuicaoChart();
             await this.createPagamentosFormaChart();
+            await this.createProdutosVendidosChart();
+            await this.createClientesAtivosChart();
             
             this.chartsCreated = true;
             console.log('✅ Todos os gráficos criados com dados reais!');
@@ -328,9 +349,12 @@ class RelatoriosPageFinal {
                 // A API retorna: {"data": {"success": true, "data": [...], "pagination": {...}}}
                 if (response && response.data && response.data.success && response.data.data) {
                     console.log('✅ Dados de vendas extraídos da API:', response.data.data);
+                    console.log('🔍 Primeira venda (exemplo):', response.data.data[0]);
+                    console.log('🔍 Quantidade de vendas:', response.data.data.length);
                     return response.data.data; // Array real das vendas
                 } else {
                     console.warn('⚠️ Estrutura da API vendas inválida, usando fallback');
+                    console.warn('🔍 Resposta completa:', response);
                     return await this.getVendasFromDB();
                 }
             } else {
@@ -353,9 +377,12 @@ class RelatoriosPageFinal {
                 // A API retorna: {"data": {"success": true, "data": [...], "pagination": {...}}}
                 if (response && response.data && response.data.success && response.data.data) {
                     console.log('✅ Dados de orçamentos extraídos da API:', response.data.data);
+                    console.log('🔍 Primeiro orçamento (exemplo):', response.data.data[0]);
+                    console.log('🔍 Quantidade de orçamentos:', response.data.data.length);
                     return response.data.data; // Array real dos orçamentos
                 } else {
                     console.warn('⚠️ Estrutura da API orçamentos inválida, usando fallback');
+                    console.warn('🔍 Resposta completa:', response);
                     return await this.getOrcamentosFromDB();
                 }
             } else {
@@ -634,10 +661,14 @@ class RelatoriosPageFinal {
     // Processar dados de tendência de vendas
     processVendasTendencia() {
         console.log('🔍 Verificando dados de vendas:', this.vendasData);
+        console.log('🔍 Tipo dos dados:', typeof this.vendasData);
+        console.log('🔍 É array?', Array.isArray(this.vendasData));
+        console.log('🔍 Quantidade:', this.vendasData ? this.vendasData.length : 'undefined');
         
         // Verificação mais robusta
         if (!this.vendasData || !Array.isArray(this.vendasData) || this.vendasData.length === 0) {
             console.log('⚠️ Sem dados de vendas válidos, usando dados mock');
+            console.log('🔍 Dados recebidos:', this.vendasData);
             return {
                 labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
                 valores: [12000, 15000, 13000, 18000, 16000, 20000]
@@ -654,18 +685,37 @@ class RelatoriosPageFinal {
             this.vendasData.forEach((venda, index) => {
                 console.log(`📋 Venda ${index + 1}:`, venda);
                 
-                // Usar 'created_at' em vez de 'data' e 'total' em vez de 'valorTotal'
-                if (venda && venda.created_at) {
-                    const data = new Date(venda.created_at);
-                    const mes = data.getMonth();
+                // Tentar diferentes campos de data
+                let dataVenda = null;
+                if (venda.created_at) {
+                    dataVenda = new Date(venda.created_at);
+                } else if (venda.data_venda) {
+                    dataVenda = new Date(venda.data_venda);
+                } else if (venda.data) {
+                    dataVenda = new Date(venda.data);
+                }
+                
+                if (dataVenda && !isNaN(dataVenda.getTime())) {
+                    const mes = dataVenda.getMonth();
                     const mesNome = meses[mes];
                     
                     if (!vendasPorMes[mesNome]) {
                         vendasPorMes[mesNome] = 0;
                     }
                     
-                    // Somar valor da venda - usar 'total' em vez de 'valorTotal'
-                    const valor = parseFloat(venda.total) || 0;
+                    // Tentar diferentes campos de valor
+                    let valor = 0;
+                    if (venda.total) {
+                        valor = parseFloat(venda.total);
+                    } else if (venda.valor_total) {
+                        valor = parseFloat(venda.valor_total);
+                    } else if (venda.valorTotal) {
+                        valor = parseFloat(venda.valorTotal);
+                    } else if (venda.valor) {
+                        valor = parseFloat(venda.valor);
+                    }
+                    
+                    valor = valor || 0;
                     vendasPorMes[mesNome] += valor;
                     
                     console.log(`📅 Mês: ${mesNome}, Valor: R$ ${valor.toFixed(2)}`);
@@ -765,16 +815,37 @@ class RelatoriosPageFinal {
             const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
             
             this.vendasData.forEach((venda, index) => {
-                if (venda && venda.created_at) {
-                    const data = new Date(venda.created_at);
-                    const mes = data.getMonth();
+                // Tentar diferentes campos de data
+                let dataVenda = null;
+                if (venda.created_at) {
+                    dataVenda = new Date(venda.created_at);
+                } else if (venda.data_venda) {
+                    dataVenda = new Date(venda.data_venda);
+                } else if (venda.data) {
+                    dataVenda = new Date(venda.data);
+                }
+                
+                if (dataVenda && !isNaN(dataVenda.getTime())) {
+                    const mes = dataVenda.getMonth();
                     const mesNome = meses[mes];
                     
                     if (!vendasPorMes[mesNome]) {
                         vendasPorMes[mesNome] = 0;
                     }
                     
-                    const valor = parseFloat(venda.total) || 0;
+                    // Tentar diferentes campos de valor
+                    let valor = 0;
+                    if (venda.total) {
+                        valor = parseFloat(venda.total);
+                    } else if (venda.valor_total) {
+                        valor = parseFloat(venda.valor_total);
+                    } else if (venda.valorTotal) {
+                        valor = parseFloat(venda.valorTotal);
+                    } else if (venda.valor) {
+                        valor = parseFloat(venda.valor);
+                    }
+                    
+                    valor = valor || 0;
                     vendasPorMes[mesNome] += valor;
                 }
             });
@@ -870,19 +941,22 @@ class RelatoriosPageFinal {
                 // Mapear status da API para labels do gráfico
                 let statusLabel = 'Pendentes'; // padrão
                 
-                if (venda.status) {
-                    const statusLower = venda.status.toLowerCase();
-                    if (statusLower === 'pago' || statusLower === 'paga' || statusLower === 'paid') {
+                // Tentar diferentes campos de status
+                let statusVenda = venda.status || venda.situacao || venda.estado || 'pendente';
+                
+                if (statusVenda) {
+                    const statusLower = statusVenda.toString().toLowerCase();
+                    if (statusLower === 'pago' || statusLower === 'paga' || statusLower === 'paid' || statusLower === 'finalizada' || statusLower === 'concluida' || statusLower === 'aprovado') {
                         statusLabel = 'Pagas';
-                    } else if (statusLower === 'pendente' || statusLower === 'pending') {
+                    } else if (statusLower === 'pendente' || statusLower === 'pending' || statusLower === 'aberto' || statusLower === 'em_andamento') {
                         statusLabel = 'Pendentes';
-                    } else if (statusLower === 'cancelado' || statusLower === 'cancelada' || statusLower === 'cancelled') {
+                    } else if (statusLower === 'cancelado' || statusLower === 'cancelada' || statusLower === 'cancelled' || statusLower === 'rejeitado') {
                         statusLabel = 'Canceladas';
                     }
                 }
                 
                 statusCount[statusLabel]++;
-                console.log(`📊 Status mapeado: "${venda.status}" → "${statusLabel}"`);
+                console.log(`📊 Status mapeado: "${statusVenda}" → "${statusLabel}"`);
             });
             
             const labels = Object.keys(statusCount);
@@ -972,12 +1046,27 @@ class RelatoriosPageFinal {
             this.orcamentosData.forEach((orcamento, index) => {
                 console.log(`📋 Orçamento ${index + 1} status:`, orcamento.status);
                 
-                const status = orcamento.status || 'Ativo';
-                if (statusCount.hasOwnProperty(status)) {
-                    statusCount[status]++;
-                } else {
-                    statusCount['Ativo']++;
+                // Tentar diferentes campos de status
+                let statusOrcamento = orcamento.status || orcamento.situacao || orcamento.estado || 'Ativo';
+                
+                // Mapear status para labels padrão
+                let statusLabel = 'Ativo'; // padrão
+                
+                if (statusOrcamento) {
+                    const statusLower = statusOrcamento.toString().toLowerCase();
+                    if (statusLower === 'ativo' || statusLower === 'aberto' || statusLower === 'pendente' || statusLower === 'em_andamento') {
+                        statusLabel = 'Ativo';
+                    } else if (statusLower === 'aprovado' || statusLower === 'aceito' || statusLower === 'confirmado') {
+                        statusLabel = 'Aprovado';
+                    } else if (statusLower === 'convertido' || statusLower === 'finalizado' || statusLower === 'concluido' || statusLower === 'vendido') {
+                        statusLabel = 'Convertido';
+                    } else if (statusLower === 'expirado' || statusLower === 'vencido' || statusLower === 'cancelado' || statusLower === 'rejeitado') {
+                        statusLabel = 'Expirado';
+                    }
                 }
+                
+                statusCount[statusLabel]++;
+                console.log(`📊 Status orçamento mapeado: "${statusOrcamento}" → "${statusLabel}"`);
             });
             
             const labels = Object.keys(statusCount);
@@ -1063,8 +1152,21 @@ class RelatoriosPageFinal {
             };
             
             this.vendasData.forEach((venda, index) => {
-                if (venda && venda.total) {
-                    const valor = parseFloat(venda.total) || 0;
+                // Tentar diferentes campos de valor
+                let valor = 0;
+                if (venda.total) {
+                    valor = parseFloat(venda.total);
+                } else if (venda.valor_total) {
+                    valor = parseFloat(venda.valor_total);
+                } else if (venda.valorTotal) {
+                    valor = parseFloat(venda.valorTotal);
+                } else if (venda.valor) {
+                    valor = parseFloat(venda.valor);
+                }
+                
+                valor = valor || 0;
+                
+                if (valor > 0) {
                     console.log(`📋 Venda ${index + 1}: R$ ${valor.toFixed(2)}`);
                     
                     if (valor <= 1000) {
@@ -1076,6 +1178,8 @@ class RelatoriosPageFinal {
                     } else {
                         faixas['Acima de R$ 10.000']++;
                     }
+                } else {
+                    console.warn(`⚠️ Venda ${index + 1} sem valor válido:`, venda);
                 }
             });
             
@@ -1105,11 +1209,45 @@ class RelatoriosPageFinal {
             const canvas = document.getElementById('pagamentos-forma-chart');
             if (!canvas) throw new Error('Canvas não encontrado');
             
-            const existingChart = Chart.getChart(canvas);
-            if (existingChart) existingChart.destroy();
+            // ✅ VERIFICAÇÃO ROBUSTA DE GRÁFICOS EXISTENTES
+            let existingChart = Chart.getChart(canvas);
+            if (existingChart) {
+                console.log('🗑️ Destruindo gráfico existente no canvas pagamentos-forma-chart');
+                existingChart.destroy();
+                existingChart = null;
+                
+                // Aguardar um pouco para garantir que o canvas foi liberado
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // ✅ VERIFICAÇÃO ADICIONAL DE CANVAS ORFÃOS
+            const allCharts = Chart.instances;
+            if (allCharts) {
+                Object.values(allCharts).forEach(chart => {
+                    if (chart && chart.canvas && chart.canvas.id === 'pagamentos-forma-chart') {
+                        console.log('🗑️ Destruindo gráfico orfão encontrado');
+                        try {
+                            chart.destroy();
+                        } catch (e) {
+                            console.warn('⚠️ Erro ao destruir gráfico orfão:', e);
+                        }
+                    }
+                });
+            }
+            
+            // ✅ VERIFICAR SE O CANVAS ESTÁ REALMENTE DISPONÍVEL
+            try {
+                const testContext = canvas.getContext('2d');
+                if (!testContext) {
+                    throw new Error('Contexto 2D não disponível');
+                }
+            } catch (contextError) {
+                console.error('❌ Erro no contexto do canvas:', contextError);
+                throw new Error('Canvas não está disponível para uso');
+            }
             
             // Processar dados reais de formas de pagamento
-            const chartData = this.processPagamentosForma();
+            const chartData = await this.processPagamentosForma();
             
             const chart = new Chart(canvas, {
                 type: 'doughnut',
@@ -1146,88 +1284,105 @@ class RelatoriosPageFinal {
             
         } catch (error) {
             console.error('❌ Erro no gráfico de formas de pagamento:', error);
+            
+            // ✅ TENTAR LIMPAR O CANVAS EM CASO DE ERRO
+            try {
+                const canvas = document.getElementById('pagamentos-forma-chart');
+                if (canvas) {
+                    const existingChart = Chart.getChart(canvas);
+                    if (existingChart) {
+                        existingChart.destroy();
+                    }
+                }
+            } catch (cleanupError) {
+                console.warn('⚠️ Erro ao limpar canvas após erro:', cleanupError);
+            }
         }
     }
     
     // Processar dados de formas de pagamento
-    processPagamentosForma() {
-        console.log('🔍 Verificando dados de formas de pagamento:', this.vendasData);
-        
-        // Verificação mais robusta
-        if (!this.vendasData || !Array.isArray(this.vendasData) || this.vendasData.length === 0) {
-            console.log('⚠️ Sem dados de vendas válidos, usando dados mock');
-            return {
-                labels: ['Dinheiro', 'Cartão', 'PIX', 'Transferência'],
-                valores: [35, 40, 15, 10],
-                cores: ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b']
-            };
-        }
+    async processPagamentosForma() {
+        console.log('🔍 Buscando dados reais de formas de pagamento...');
         
         try {
-            console.log('📊 Processando', this.vendasData.length, 'registros de formas de pagamento');
-            
-            // Contar vendas por forma de pagamento
-            const formaCount = {
-                'Dinheiro': 0,
-                'Cartão': 0,
-                'PIX': 0,
-                'Transferência': 0
-            };
-            
-            this.vendasData.forEach((venda, index) => {
-                console.log(`📋 Venda ${index + 1} completa:`, venda);
+            // Buscar dados reais da API
+            if (window.api && window.api.get) {
+                const response = await window.api.get('/api/vendas/relatorio/formas-pagamento');
+                console.log('📡 Resposta da API formas de pagamento:', response);
                 
-                // Verificar diferentes campos possíveis para forma de pagamento
-                let formaPagamento = 'Dinheiro'; // padrão
-                
-                if (venda.formaPagamento) {
-                    formaPagamento = venda.formaPagamento;
-                } else if (venda.forma_pagamento) {
-                    formaPagamento = venda.forma_pagamento;
-                } else if (venda.payment_method) {
-                    formaPagamento = venda.payment_method;
-                } else if (venda.metodo_pagamento) {
-                    formaPagamento = venda.metodo_pagamento;
-                }
-                
-                console.log(`📋 Venda ${index + 1} forma pagamento encontrada:`, formaPagamento);
-                
-                // Mapear para labels padronizados
-                let formaLabel = 'Dinheiro'; // padrão
-                
-                if (formaPagamento) {
-                    const formaLower = formaPagamento.toLowerCase();
-                    if (formaLower === 'dinheiro' || formaLower === 'cash' || formaLower === 'moeda') {
-                        formaLabel = 'Dinheiro';
-                    } else if (formaLower === 'cartão' || formaLower === 'cartao' || formaLower === 'card' || formaLower === 'credito' || formaLower === 'debito') {
-                        formaLabel = 'Cartão';
-                    } else if (formaLower === 'pix') {
-                        formaLabel = 'PIX';
-                    } else if (formaLower === 'transferência' || formaLower === 'transferencia' || formaLower === 'transfer' || formaLower === 'ted' || formaLower === 'doc') {
-                        formaLabel = 'Transferência';
+                if (response && response.data && response.data.success && response.data.data) {
+                    const dadosReais = response.data.data;
+                    console.log('✅ Dados reais de formas de pagamento:', dadosReais);
+                    
+                    if (dadosReais.length === 0) {
+                        console.log('⚠️ Nenhum pagamento encontrado, usando dados padrão');
+                        return this.getDefaultPagamentosData();
                     }
+                    
+                    // Processar dados reais
+                    const labels = [];
+                    const valores = [];
+                    const cores = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444', '#8b5cf6'];
+                    
+                    dadosReais.forEach((item, index) => {
+                        const formaPagamento = item.forma_pagamento || 'Não informado';
+                        const quantidade = parseInt(item.quantidade) || 0;
+                        
+                        // Mapear para labels padronizados
+                        let formaLabel = this.mapearFormaPagamento(formaPagamento);
+                        
+                        labels.push(formaLabel);
+                        valores.push(quantidade);
+                        
+                        console.log(`📊 Forma: "${formaPagamento}" → "${formaLabel}" (${quantidade})`);
+                    });
+                    
+                    return { labels, valores, cores: cores.slice(0, labels.length) };
                 }
-                
-                formaCount[formaLabel]++;
-                console.log(`📊 Forma mapeada: "${formaPagamento}" → "${formaLabel}"`);
-            });
+            }
             
-            const labels = Object.keys(formaCount);
-            const valores = Object.values(formaCount);
-            const cores = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b'];
-            
-            console.log('📊 Dados de formas de pagamento processados:', { labels, valores });
-            console.log('📊 Contagem por forma:', formaCount);
-            return { labels, valores, cores };
+            console.log('⚠️ API não disponível, usando dados mock');
+            return this.getDefaultPagamentosData();
             
         } catch (error) {
-            console.error('❌ Erro ao processar dados de formas de pagamento:', error);
-            return {
-                labels: ['Dinheiro', 'Cartão', 'PIX', 'Transferência'],
-                valores: [35, 40, 15, 10],
-                cores: ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b']
-            };
+            console.error('❌ Erro ao buscar dados de formas de pagamento:', error);
+            return this.getDefaultPagamentosData();
         }
+    }
+    
+    // Mapear forma de pagamento para label padronizado
+    mapearFormaPagamento(formaPagamento) {
+        if (!formaPagamento) {
+            return 'Não informado';
+        }
+        
+        const formaLower = formaPagamento.toLowerCase().trim();
+        
+        if (formaLower === 'dinheiro' || formaLower === 'cash' || formaLower === 'moeda') {
+            return 'Dinheiro';
+        } else if (formaLower === 'cartão' || formaLower === 'cartao' || formaLower === 'card' || formaLower === 'credito' || formaLower === 'debito' || formaLower.includes('cartão') || formaLower.includes('cartao')) {
+            return 'Cartão';
+        } else if (formaLower === 'pix' || formaLower.includes('pix')) {
+            return 'PIX';
+        } else if (formaLower === 'transferência' || formaLower === 'transferencia' || formaLower === 'transfer' || formaLower === 'ted' || formaLower === 'doc' || formaLower.includes('transfer')) {
+            return 'Transferência';
+        } else if (formaLower === 'boleto' || formaLower.includes('boleto')) {
+            return 'Boleto';
+        } else if (formaLower === 'cheque' || formaLower.includes('cheque')) {
+            return 'Cheque';
+        }
+        
+        // Se não reconhecer, retornar o valor original
+        return formaPagamento;
+    }
+    
+    // Dados padrão para formas de pagamento
+    getDefaultPagamentosData() {
+        return {
+            labels: ['Dinheiro', 'Cartão', 'PIX', 'Transferência'],
+            valores: [35, 40, 15, 10],
+            cores: ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b']
+        };
     }
     
     // MÉTODOS AUXILIARES
@@ -1249,15 +1404,56 @@ class RelatoriosPageFinal {
     destroyCharts() {
         console.log('🗑️ Destruindo gráficos...');
         
-        Object.values(this.chartInstances).forEach(chart => {
-            if (chart && typeof chart.destroy === 'function') {
-                chart.destroy();
+        try {
+            // ✅ DESTRUIR TODOS OS GRÁFICOS REGISTRADOS
+            Object.values(this.chartInstances).forEach(chart => {
+                if (chart && typeof chart.destroy === 'function') {
+                    try {
+                        chart.destroy();
+                        console.log('✅ Gráfico registrado destruído com sucesso');
+                    } catch (error) {
+                        console.warn('⚠️ Erro ao destruir gráfico registrado:', error);
+                    }
+                }
+            });
+            
+            // ✅ LIMPAR REFERÊNCIAS
+            this.chartInstances = {};
+            this.chartsCreated = false;
+            
+            // ✅ VERIFICAR E DESTRUIR CANVAS ORFÃOS
+            const canvasElements = document.querySelectorAll('canvas[id*="chart"]');
+            canvasElements.forEach(canvas => {
+                try {
+                    const existingChart = Chart.getChart(canvas);
+                    if (existingChart) {
+                        console.log('🗑️ Destruindo gráfico orfão no canvas:', canvas.id);
+                        existingChart.destroy();
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Erro ao verificar canvas:', canvas.id, error);
+                }
+            });
+            
+            // ✅ VERIFICAR INSTÂNCIAS GLOBAIS DO CHART.JS
+            if (Chart.instances) {
+                Object.values(Chart.instances).forEach(chart => {
+                    if (chart && typeof chart.destroy === 'function') {
+                        try {
+                            console.log('🗑️ Destruindo instância global do Chart.js');
+                            chart.destroy();
+                        } catch (error) {
+                            console.warn('⚠️ Erro ao destruir instância global:', error);
+                        }
+                    }
+                });
             }
-        });
-        
-        this.chartInstances = {};
-        this.chartsCreated = false;
-        console.log('✅ Gráficos destruídos');
+            
+            console.log('✅ Todos os gráficos destruídos e canvas limpos');
+            
+        } catch (error) {
+            console.error('❌ Erro durante destruição de gráficos:', error);
+        }
     }
     
     // MÉTODOS DE COMPATIBILIDADE
@@ -1312,6 +1508,31 @@ class RelatoriosPageFinal {
     
     async loadRelatorios() {
         console.log('📊 Relatórios carregados');
+    }
+    
+    // ✅ MÉTODO DE CLEANUP PARA RESOLVER PROBLEMA DE CANVAS
+    async cleanup() {
+        console.log('🧹 RELATÓRIOS FINAL - Iniciando cleanup para resolver problema de canvas...');
+        
+        try {
+            // 1. Destruir todos os gráficos
+            this.destroyCharts();
+            
+            // 2. Limpar estado interno
+            this.initialized = false;
+            this.chartsCreated = false;
+            this.container = null;
+            
+            // 3. Remover referência global
+            if (window.relatoriosPage === this) {
+                window.relatoriosPage = null;
+            }
+            
+            console.log('✅ RELATÓRIOS FINAL - Cleanup concluído, canvas liberado!');
+            
+        } catch (error) {
+            console.error('❌ RELATÓRIOS FINAL - Erro durante cleanup:', error);
+        }
     }
 }
 

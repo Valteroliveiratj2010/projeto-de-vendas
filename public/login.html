@@ -402,9 +402,6 @@
         function checkAlreadyLoggedIn() {
             console.log('🔐 Verificando status de login...');
             
-            // ✅ SEMPRE FORÇAR LIMPEZA INICIAL POR SEGURANÇA
-            forceClearAllData();
-            
             // ✅ VERIFICAR SE HÁ MENSAGEM DE SEGURANÇA NA URL
             const urlParams = new URLSearchParams(window.location.search);
             const message = urlParams.get('message');
@@ -421,11 +418,14 @@
                 // ✅ EXIBIR MENSAGEM DE SEGURANÇA
                 checkSecurityMessages();
                 
+                // ✅ SEMPRE LIMPAR DADOS QUANDO HÁ MENSAGEM DE SEGURANÇA
+                forceClearAllData();
+                
                 // ✅ BLOQUEAR QUALQUER TENTATIVA DE AUTO-LOGIN
                 return false;
             }
             
-            // ✅ VERIFICAR SE HÁ DADOS VÁLIDOS APÓS LIMPEZA
+            // ✅ VERIFICAR SE HÁ DADOS VÁLIDOS
             const token = localStorage.getItem('authToken');
             const userData = localStorage.getItem('userData');
             
@@ -466,6 +466,7 @@
             return false;
         }
         
+        
         // ✅ LIMPAR DADOS PERSISTENTES DO NAVEGADOR
         function clearPersistentData() {
             console.log('🚫 Limpando dados persistentes do navegador...');
@@ -498,7 +499,7 @@
         function forceSecurityInitialization() {
             console.log('🔒 Inicializando segurança forçada...');
             
-            // ✅ SEMPRE LIMPAR DADOS NO CARREGAMENTO
+            // ✅ SEMPRE LIMPAR DADOS QUANDO A PÁGINA É CARREGADA
             forceClearAllData();
             
             // ✅ DESABILITAR AUTOCOMPLETE GLOBALMENTE
@@ -513,6 +514,11 @@
                 console.log('🔒 Janela focada, verificando segurança...');
                 forceClearAllData();
             });
+            
+            // ✅ LIMPAR CAMPOS ADICIONALMENTE APÓS CARREGAMENTO
+            setTimeout(() => {
+                forceClearAllData();
+            }, 100);
             
             console.log('✅ Segurança forçada inicializada');
         }
@@ -602,15 +608,18 @@
                 
                 if (data.success) {
                     // Salvar dados de autenticação
-                    localStorage.setItem('authToken', data.data.token);
-                    localStorage.setItem('userData', JSON.stringify(data.data.user));
+                    const token = data.data?.token || data.token;
+                    const user = data.data?.user || data.user;
+                    
+                    localStorage.setItem('authToken', token);
+                    localStorage.setItem('userData', JSON.stringify(user));
                     
                     showStatus('✅ Login realizado com sucesso!', 'success');
                     
                     // ✅ REDIRECIONAR PARA ROTA PROTEGIDA DO SISTEMA
                     setTimeout(() => {
                         // Redirecionar para rota protegida com token
-                        window.location.replace(`/system?token=${data.data.token}`);
+                        window.location.replace(`/system?token=${token}`);
                     }, 1000);
                     
                 } else {
@@ -652,6 +661,11 @@
             // ✅ VERIFICAR LOGIN E MENSAGENS DE SEGURANÇA
             checkAlreadyLoggedIn();
             checkSecurityMessages();
+            
+            // ✅ LIMPAR CAMPOS ADICIONALMENTE
+            setTimeout(() => {
+                forceClearAllData();
+            }, 500);
             
             console.log('✅ Inicialização de segurança concluída');
         });

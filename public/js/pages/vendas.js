@@ -15,9 +15,130 @@ class VendasPage {
     }
 
     init() {
-        console.log('🚀 Página de vendas inicializada!');
-        this.renderPage();
-        this.loadInitialData();
+        try {
+            console.log('🚀 Inicializando página de vendas...');
+            
+            // Renderizar estrutura HTML
+            this.renderPage();
+            
+            // Carregar dados
+            this.loadInitialData();
+            
+            // Configurar event listeners
+            this.setupEventListeners();
+            
+            console.log('✅ Página de vendas inicializada!');
+            
+        } catch (error) {
+            console.error('❌ Erro ao inicializar página de vendas:', error);
+            this.showError('Erro ao carregar página', error.message);
+        }
+    }
+
+    /**
+     * Renderiza a estrutura HTML da página
+     */
+    renderPage() {
+        const pageContainer = document.getElementById('vendas-content');
+        if (!pageContainer) {
+            console.error('Container de vendas não encontrado!');
+            return;
+        }
+
+        pageContainer.innerHTML = `
+            <div class="page-header">
+                <div class="header-content">
+                    <h2>Gestão de Vendas</h2>
+                    <p>Controle suas vendas e receitas</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refresh-vendas-btn">
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar
+                    </button>
+                    <button class="btn btn-primary" id="new-venda-btn">
+                        <i class="fas fa-plus"></i>
+                        Nova Venda
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <!-- Filtros e Busca -->
+                <div class="filters-section">
+                    <div class="search-box">
+                        <input type="text" id="search-vendas" placeholder="Buscar vendas por cliente ou produto...">
+                        <button id="search-vendas-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="filter-all-vendas">Todas</button>
+                        <button class="btn btn-outline" id="filter-today-vendas">Hoje</button>
+                        <button class="btn btn-outline" id="filter-month-vendas">Este Mês</button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Rápidas -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-vendas-stat">0</h3>
+                            <p>Total de Vendas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="receita-total-stat">R$ 0,00</h3>
+                            <p>Receita Total</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="media-venda-stat">R$ 0,00</h3>
+                            <p>Média por Venda</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Vendas -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Produtos</th>
+                                <th>Total</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vendas-table-body">
+                            <tr>
+                                <td colspan="7" class="loading-row">
+                                    <div class="loading-spinner"></div>
+                                    <span>Carregando vendas...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginação -->
+                <div id="vendas-pagination" class="pagination-container"></div>
+            </div>
+        `;
     }
 
     async loadInitialData() {
@@ -35,10 +156,7 @@ class VendasPage {
         pageContainer.innerHTML = `
             <div class="page-header">
                 <div class="header-content">
-                    <h2>
-                        <i class="fas fa-shopping-cart"></i>
-                        Gestão de Vendas
-                    </h2>
+                    <h2>Gestão de Vendas</h2>
                     <p>Gerencie suas vendas e pedidos</p>
                 </div>
                 <div class="header-actions">
@@ -1203,6 +1321,75 @@ class VendasPage {
         }
         
         console.log('✅ Evento de atualização de vendas disparado!');
+    }
+
+    // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
+    async cleanup() {
+        console.log('🧹 VENDAS - Iniciando cleanup...');
+        
+        try {
+            // 1. Limpar event listeners
+            this.removeEventListeners();
+            
+            // 2. Limpar estado interno
+            this.vendas = [];
+            this.filteredVendas = [];
+            this.currentPage = 1;
+            this.isLoading = false;
+            this.clientes = [];
+            this.produtos = [];
+            
+            // 3. Limpar referência global
+            if (window.vendasPageInstance === this) {
+                window.vendasPageInstance = null;
+            }
+            
+            console.log('✅ VENDAS - Cleanup concluído com sucesso!');
+            
+        } catch (error) {
+            console.error('❌ VENDAS - Erro durante cleanup:', error);
+        }
+    }
+
+    // ✅ REMOVER EVENT LISTENERS
+    removeEventListeners() {
+        console.log('🔌 Removendo event listeners de vendas...');
+        
+        try {
+            // Botão Atualizar
+            const refreshBtn = document.getElementById('refresh-vendas-btn');
+            if (refreshBtn) {
+                refreshBtn.replaceWith(refreshBtn.cloneNode(true));
+            }
+
+            // Botão Nova Venda
+            const newBtn = document.getElementById('new-venda-btn');
+            if (newBtn) {
+                newBtn.replaceWith(newBtn.cloneNode(true));
+            }
+
+            // Campo de busca
+            const searchInput = document.getElementById('search-vendas');
+            if (searchInput) {
+                searchInput.replaceWith(searchInput.cloneNode(true));
+            }
+
+            // Botões de filtro
+            const filterAll = document.getElementById('filter-all');
+            const filterPendente = document.getElementById('filter-pendente');
+            const filterPago = document.getElementById('filter-pago');
+            const filterCancelado = document.getElementById('filter-cancelado');
+            
+            if (filterAll) filterAll.replaceWith(filterAll.cloneNode(true));
+            if (filterPendente) filterPendente.replaceWith(filterPendente.cloneNode(true));
+            if (filterPago) filterPago.replaceWith(filterPago.cloneNode(true));
+            if (filterCancelado) filterCancelado.replaceWith(filterCancelado.cloneNode(true));
+
+            console.log('✅ Event listeners de vendas removidos');
+
+        } catch (error) {
+            console.error('❌ Erro ao remover event listeners de vendas:', error);
+        }
     }
 }
 

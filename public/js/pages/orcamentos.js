@@ -15,9 +15,130 @@ class OrcamentosPage {
     }
 
     init() {
-        console.log('🚀 Página de orçamentos inicializada!');
-        this.renderPage();
-        this.loadInitialData();
+        try {
+            console.log('🚀 Inicializando página de orçamentos...');
+            
+            // Renderizar estrutura HTML
+            this.renderPage();
+            
+            // Carregar dados
+            this.loadInitialData();
+            
+            // Configurar event listeners
+            this.setupEventListeners();
+            
+            console.log('✅ Página de orçamentos inicializada!');
+            
+        } catch (error) {
+            console.error('❌ Erro ao inicializar página de orçamentos:', error);
+            this.showError('Erro ao carregar página', error.message);
+        }
+    }
+
+    /**
+     * Renderiza a estrutura HTML da página
+     */
+    renderPage() {
+        const pageContainer = document.getElementById('orcamentos-content');
+        if (!pageContainer) {
+            console.error('Container de orçamentos não encontrado!');
+            return;
+        }
+
+        pageContainer.innerHTML = `
+            <div class="page-header">
+                <div class="header-content">
+                    <h2>Gestão de Orçamentos</h2>
+                    <p>Gerencie seus orçamentos e propostas</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refresh-orcamentos-btn">
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar
+                    </button>
+                    <button class="btn btn-primary" id="new-orcamento-btn">
+                        <i class="fas fa-plus"></i>
+                        Novo Orçamento
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <!-- Filtros e Busca -->
+                <div class="filters-section">
+                    <div class="search-box">
+                        <input type="text" id="search-orcamentos" placeholder="Buscar orçamentos por cliente...">
+                        <button id="search-orcamentos-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="filter-all-orcamentos">Todos</button>
+                        <button class="btn btn-outline" id="filter-pendentes-orcamentos">Pendentes</button>
+                        <button class="btn btn-outline" id="filter-aprovados-orcamentos">Aprovados</button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Rápidas -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-orcamentos-stat">0</h3>
+                            <p>Total de Orçamentos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="orcamentos-pendentes-stat">0</h3>
+                            <p>Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="orcamentos-aprovados-stat">0</h3>
+                            <p>Aprovados</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Orçamentos -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Validade</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orcamentos-table-body">
+                            <tr>
+                                <td colspan="7" class="loading-row">
+                                    <div class="loading-spinner"></div>
+                                    <span>Carregando orçamentos...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginação -->
+                <div id="orcamentos-pagination" class="pagination-container"></div>
+            </div>
+        `;
     }
 
     async loadInitialData() {
@@ -35,10 +156,7 @@ class OrcamentosPage {
         pageContainer.innerHTML = `
             <div class="page-header">
                 <div class="header-content">
-                    <h2>
-                        <i class="fas fa-file-invoice"></i>
-                        Gestão de Orçamentos
-                    </h2>
+                    <h2>Gestão de Orçamentos</h2>
                     <p>Crie e gerencie seus orçamentos</p>
                 </div>
                 <div class="header-actions">
@@ -1139,6 +1257,75 @@ class OrcamentosPage {
     }
 
     // ===== FUNÇÕES DE CONVERSÃO =====
+
+    // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
+    async cleanup() {
+        console.log('🧹 ORÇAMENTOS - Iniciando cleanup...');
+        
+        try {
+            // 1. Limpar event listeners
+            this.removeEventListeners();
+            
+            // 2. Limpar estado interno
+            this.orcamentos = [];
+            this.filteredOrcamentos = [];
+            this.currentPage = 1;
+            this.isLoading = false;
+            this.clientes = [];
+            this.produtos = [];
+            
+            // 3. Limpar referência global
+            if (window.orcamentosPageInstance === this) {
+                window.orcamentosPageInstance = null;
+            }
+            
+            console.log('✅ ORÇAMENTOS - Cleanup concluído com sucesso!');
+            
+        } catch (error) {
+            console.error('❌ ORÇAMENTOS - Erro durante cleanup:', error);
+        }
+    }
+
+    // ✅ REMOVER EVENT LISTENERS
+    removeEventListeners() {
+        console.log('🔌 Removendo event listeners de orçamentos...');
+        
+        try {
+            // Botão Atualizar
+            const refreshBtn = document.getElementById('refresh-orcamentos-btn');
+            if (refreshBtn) {
+                refreshBtn.replaceWith(refreshBtn.cloneNode(true));
+            }
+
+            // Botão Novo Orçamento
+            const newBtn = document.getElementById('new-orcamento-btn');
+            if (newBtn) {
+                newBtn.replaceWith(newBtn.cloneNode(true));
+            }
+
+            // Campo de busca
+            const searchInput = document.getElementById('search-orcamentos');
+            if (searchInput) {
+                searchInput.replaceWith(searchInput.cloneNode(true));
+            }
+
+            // Botões de filtro
+            const filterAll = document.getElementById('filter-all');
+            const filterAtivo = document.getElementById('filter-ativo');
+            const filterAprovado = document.getElementById('filter-aprovado');
+            const filterExpirado = document.getElementById('filter-expirado');
+            
+            if (filterAll) filterAll.replaceWith(filterAll.cloneNode(true));
+            if (filterAtivo) filterAtivo.replaceWith(filterAtivo.cloneNode(true));
+            if (filterAprovado) filterAprovado.replaceWith(filterAprovado.cloneNode(true));
+            if (filterExpirado) filterExpirado.replaceWith(filterExpirado.cloneNode(true));
+
+            console.log('✅ Event listeners de orçamentos removidos');
+
+        } catch (error) {
+            console.error('❌ Erro ao remover event listeners de orçamentos:', error);
+        }
+    }
 }
 
 // Inicializar página quando carregar

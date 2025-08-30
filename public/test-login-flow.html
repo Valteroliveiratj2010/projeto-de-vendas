@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Teste do Fluxo de Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .test-button.success {
+            background: #28a745;
+        }
+        .test-button.error {
+            background: #dc3545;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste do Fluxo de Login</h1>
+    
+    <div class="test-section">
+        <h2>📋 Status Atual</h2>
+        <div id="current-status" class="status info">
+            Verificando status...
+        </div>
+        <button class="test-button" onclick="checkCurrentStatus()">🔄 Verificar Status</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🔐 Teste de Login</h2>
+        <p>Credenciais de teste:</p>
+        <ul>
+            <li><strong>Admin:</strong> admin@sistema.com / admin123</li>
+            <li><strong>Vendedor:</strong> vendedor@sistema.com / vendedor123</li>
+            <li><strong>Gerente:</strong> gerente@sistema.com / gerente123</li>
+        </ul>
+        
+        <div>
+            <label>Email:</label>
+            <input type="email" id="test-email" value="admin@sistema.com" style="width: 200px; padding: 5px;">
+        </div>
+        <div style="margin-top: 10px;">
+            <label>Senha:</label>
+            <input type="password" id="test-password" value="admin123" style="width: 200px; padding: 5px;">
+        </div>
+        <button class="test-button" onclick="testLogin()">🔑 Testar Login</button>
+        <button class="test-button" onclick="testLoginFlow()">🚀 Testar Fluxo Completo</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🧹 Limpeza</h2>
+        <button class="test-button" onclick="clearAuthData()">🗑️ Limpar Dados de Auth</button>
+        <button class="test-button" onclick="clearAllData()">🧹 Limpar Tudo</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Logs</h2>
+        <div id="log-container" class="log"></div>
+        <button class="test-button" onclick="clearLogs()">🗑️ Limpar Logs</button>
+    </div>
+
+    <script>
+        // Sistema de logs
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function clearLogs() {
+            document.getElementById('log-container').innerHTML = '';
+        }
+
+        // Verificar status atual
+        function checkCurrentStatus() {
+            const statusDiv = document.getElementById('current-status');
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = `
+                        ✅ <strong>Usuário Autenticado</strong><br>
+                        Nome: ${user.name}<br>
+                        Email: ${user.email}<br>
+                        Role: ${user.role}<br>
+                        Token: ${token.substring(0, 20)}...
+                    `;
+                    log('✅ Usuário autenticado encontrado', 'success');
+                } catch (error) {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = '❌ Dados de usuário corrompidos';
+                    log('❌ Erro ao parsear dados do usuário: ' + error.message, 'error');
+                }
+            } else {
+                statusDiv.className = 'status info';
+                statusDiv.innerHTML = '🔐 Nenhum usuário autenticado';
+                log('🔐 Nenhum usuário autenticado encontrado', 'info');
+            }
+        }
+
+        // Testar login
+        async function testLogin() {
+            const email = document.getElementById('test-email').value;
+            const password = document.getElementById('test-password').value;
+            
+            if (!email || !password) {
+                log('❌ Email e senha são obrigatórios', 'error');
+                return;
+            }
+            
+            log(`🔑 Tentando login com: ${email}`, 'info');
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    log('✅ Login bem-sucedido!', 'success');
+                    log(`Token: ${data.data.token.substring(0, 20)}...`, 'success');
+                    log(`Usuário: ${data.data.user.name} (${data.data.user.role})`, 'success');
+                    
+                    // Salvar dados
+                    localStorage.setItem('authToken', data.data.token);
+                    localStorage.setItem('userData', JSON.stringify(data.data.user));
+                    
+                    // Atualizar status
+                    checkCurrentStatus();
+                    
+                } else {
+                    log(`❌ Erro no login: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ Erro de conexão: ${error.message}`, 'error');
+            }
+        }
+
+        // Testar fluxo completo
+        async function testLoginFlow() {
+            log('🚀 Iniciando teste do fluxo completo...', 'info');
+            
+            // 1. Limpar dados existentes
+            log('🧹 Limpando dados existentes...', 'info');
+            clearAuthData();
+            
+            // 2. Fazer login
+            log('🔑 Fazendo login...', 'info');
+            await testLogin();
+            
+            // 3. Verificar se dados foram salvos
+            setTimeout(() => {
+                log('🔍 Verificando dados salvos...', 'info');
+                checkCurrentStatus();
+                
+                // 4. Simular redirecionamento
+                log('🔄 Simulando redirecionamento...', 'info');
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    log('✅ Token encontrado, redirecionamento simulado com sucesso!', 'success');
+                } else {
+                    log('❌ Token não encontrado', 'error');
+                }
+            }, 1000);
+        }
+
+        // Limpar dados de autenticação
+        function clearAuthData() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            log('🗑️ Dados de autenticação removidos', 'info');
+            checkCurrentStatus();
+        }
+
+        // Limpar todos os dados
+        function clearAllData() {
+            localStorage.clear();
+            sessionStorage.clear();
+            log('🧹 Todos os dados limpos', 'info');
+            checkCurrentStatus();
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🧪 Página de teste carregada', 'info');
+            checkCurrentStatus();
+        });
+    </script>
+</body>
+</html> 

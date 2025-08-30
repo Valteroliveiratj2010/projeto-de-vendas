@@ -416,10 +416,8 @@ class SistemaVendas {
         // ✅ ARMAZENAR REFERÊNCIA PARA REMOÇÃO POSTERIOR
         overlay._escapeHandler = escapeHandler;
         
-        // ✅ ANIMAÇÃO DE ENTRADA DISCRETA
-        setTimeout(() => {
-            overlay.classList.add('visible');
-        }, 10);
+        // ✅ ANIMAÇÃO DE ENTRADA IMEDIATA
+        overlay.classList.add('visible');
         
         console.log('✅ Overlay discreto da sidebar criado (mobile/tablet)');
     }
@@ -480,23 +478,25 @@ class SistemaVendas {
                 if (sidebar.classList.contains('open')) {
                     sidebarToggle.classList.add('active');
                     console.log('✅ Sidebar aberta - botão ativo');
+                    
+                    // ✅ CRIAR OVERLAY IMEDIATAMENTE APÓS ABRIR A SIDEBAR
+                    if (window.innerWidth <= 1024) {
+                        // CRIAR OVERLAY IMEDIATAMENTE SEM DELAY
+                        this.createSidebarOverlay();
+                        console.log('✅ Overlay criado imediatamente após sidebar aberta (mobile/tablet)');
+                    }
                 } else {
                     sidebarToggle.classList.remove('active');
                     console.log('❌ Sidebar fechada - botão inativo');
+                    
+                    // ✅ REMOVER OVERLAY IMEDIATAMENTE AO FECHAR
+                    if (window.innerWidth <= 1024) {
+                        this.removeSidebarOverlay();
+                        console.log('❌ Overlay removido ao fechar sidebar (mobile/tablet)');
+                    }
                 }
                 
-                // Gerenciar overlay apenas no mobile/tablet
-                if (window.innerWidth <= 1024) {
-                    if (sidebar.classList.contains('open')) {
-                        this.createSidebarOverlay();
-                        console.log('✅ Sidebar aberta (mobile/tablet)');
-                    } else {
-                        this.removeSidebarOverlay();
-                        console.log('❌ Sidebar fechada (mobile/tablet)');
-                    }
-                } else {
-                    console.log('🖥️ Desktop: sidebar sempre visível, sem overlay');
-                }
+                console.log('🖥️ Desktop: sidebar sempre visível, sem overlay');
             });
             
             // ✅ ADICIONAR ESTADOS DE HOVER E FOCUS
@@ -626,6 +626,12 @@ class SistemaVendas {
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.slice(1) || 'dashboard';
             
+            // ✅ PROTEÇÃO CONTRA LOOP INFINITO
+            if (this._navigatingTo === hash) {
+                console.log('⚠️ Hash change ignorado - navegação em andamento para:', hash);
+                return;
+            }
+            
             // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE NAVEGAR
             if (!this.checkUserAuthentication()) {
                 console.log('🚫 Usuário não autenticado, redirecionando para login...');
@@ -662,6 +668,12 @@ class SistemaVendas {
             console.log('🔄 window.currentPage antes:', window.currentPage);
             console.log('🔄 this.currentPage antes:', this.currentPage);
             
+            // ✅ PROTEÇÃO CONTRA LOOP INFINITO
+            if (this._navigatingTo === page) {
+                console.log('⚠️ Tentativa de navegação duplicada para:', page, '- IGNORANDO');
+                return;
+            }
+            
             // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE NAVEGAR
             if (!this.checkUserAuthentication()) {
                 console.log('🚫 Usuário não autenticado, redirecionando para login...');
@@ -673,6 +685,10 @@ class SistemaVendas {
             
             // ✅ PERMITIR NAVEGAÇÃO NORMAL - REMOVER FORÇAMENTO DO DASHBOARD
             console.log('🔄 Navegando para página:', page);
+            
+            // ✅ MARCAR COMO NAVEGANDO PARA EVITAR LOOP
+            this._navigatingTo = page;
+            
             window.currentPage = page; // Definir para uso global
             this.currentPage = page;
             
@@ -685,8 +701,13 @@ class SistemaVendas {
             // ✅ CARREGAR PÁGINA
             await this.loadPage(page);
             
+            // ✅ LIMPAR FLAG DE NAVEGAÇÃO APÓS CONCLUIR
+            this._navigatingTo = null;
+            
         } catch (error) {
             console.error('❌ Erro ao navegar para página:', error);
+            // ✅ SEMPRE LIMPAR FLAG EM CASO DE ERRO
+            this._navigatingTo = null;
         }
     }
     
@@ -707,6 +728,15 @@ class SistemaVendas {
         try {
             console.log(`🔄 loadPage chamado com: ${pageName}`);
             console.log(`🔄 window.currentPage antes: ${window.currentPage}`);
+            
+            // ✅ PROTEÇÃO CONTRA MÚLTIPLAS CHAMADAS SIMULTÂNEAS
+            if (this._loadingPage === pageName) {
+                console.log('⚠️ Página já está sendo carregada:', pageName, '- IGNORANDO');
+                return;
+            }
+            
+            // ✅ MARCAR COMO CARREGANDO
+            this._loadingPage = pageName;
             
             // ✅ VERIFICAR AUTENTICAÇÃO ANTES DE CARREGAR PÁGINA
             if (!this.checkUserAuthentication()) {
@@ -742,9 +772,41 @@ class SistemaVendas {
                 this.currentPage = pageName;
                 
                 console.log('🔄 window.currentPage depois:', window.currentPage);
-                console.log('🔄 this.currentPage depois:', this.currentPage);
+                console.log('🔄 this.currentPage depois:', window.currentPage);
                 
                 this.updateActiveNavigation(pageName);
+                
+                // ✅ REINICIALIZAR PÁGINA SE FOR DASHBOARD
+                if (pageName === 'dashboard') {
+                    console.log('🔄 Dashboard detectado - forçando reinicialização...');
+                    
+                    // ✅ LIMPEZA COMPLETA E AGUARDAR FINALIZAÇÃO
+                    if (window.dashboardPage) {
+                        console.log('🧹 Limpando instância anterior do dashboard...');
+                        
+                        try {
+                            // Aguardar cleanup completo
+                            if (window.dashboardPage.cleanup) {
+                                await window.dashboardPage.cleanup();
+                                console.log('✅ Cleanup da instância anterior concluído');
+                            }
+                            
+                            // Aguardar um pouco para garantir que tudo foi limpo
+                            await new Promise(resolve => setTimeout(resolve, 100));
+                            
+                        } catch (cleanupError) {
+                            console.warn('⚠️ Erro no cleanup:', cleanupError);
+                        } finally {
+                            // ✅ FORÇAR NULL E AGUARDAR GARBAGE COLLECTION
+                            window.dashboardPage = null;
+                            console.log('✅ Instância anterior removida da memória');
+                            
+                            // Aguardar um pouco mais para garantir limpeza
+                            await new Promise(resolve => setTimeout(resolve, 200));
+                        }
+                    }
+                }
+                
                 await this.loadPageData(pageName);
                 
             } else {
@@ -757,8 +819,13 @@ class SistemaVendas {
                 return;
             }
             
+            // ✅ LIMPAR FLAG DE CARREGAMENTO
+            this._loadingPage = null;
+            
         } catch (error) {
             console.error('❌ Erro ao navegar para página:', error);
+            // ✅ SEMPRE LIMPAR FLAG EM CASO DE ERRO
+            this._loadingPage = null;
         }
     }
     
@@ -769,6 +836,32 @@ class SistemaVendas {
             switch (pageName) {
                 case 'dashboard':
                     console.log('🏠 Carregando dados do dashboard...');
+                    
+                    // ✅ VERIFICAR SE JÁ EXISTE UMA INSTÂNCIA ATIVA
+                    if (window.dashboardPage) {
+                        console.log('⚠️ Instância do dashboard já existe, verificando se está válida...');
+                        
+                        // Verificar se a instância está funcionando
+                        if (window.dashboardPage.isActive && window.dashboardPage.isActive()) {
+                            console.log('✅ Instância existente está ativa, reutilizando...');
+                        } else {
+                            console.log('🔄 Instância existente não está ativa, criando nova...');
+                            window.dashboardPage = null;
+                        }
+                    }
+                    
+                    // ✅ CRIAR NOVA INSTÂNCIA SE NECESSÁRIO
+                    if (!window.dashboardPage) {
+                        console.log('🆕 Criando nova instância do DashboardPage...');
+                        if (window.DashboardPage) {
+                            window.dashboardPage = new window.DashboardPage();
+                            console.log('✅ Nova instância criada com sucesso');
+                        } else {
+                            console.error('❌ Classe DashboardPage não encontrada');
+                            return;
+                        }
+                    }
+                    
                     await this.loadDashboardData();
                     break;
                 case 'clientes':
@@ -815,30 +908,8 @@ class SistemaVendas {
         }
     }
     
-    async loadProdutosData() {
-        try {
-            console.log('📦 Carregando módulo de Produtos...');
-            
-            // Verificar se a classe ProdutosPage está disponível
-            if (window.ProdutosPage) {
-                if (!window.produtosPageInstance) {
-                    window.produtosPageInstance = new window.ProdutosPage();
-                    console.log('✅ Nova instância de ProdutosPage criada');
-                }
-                
-                // Inicializar se necessário
-                if (window.produtosPageInstance.init) {
-                    await window.produtosPageInstance.init();
-                }
-                
-                console.log('✅ Módulo de Produtos carregado com sucesso');
-            } else {
-                console.warn('⚠️ Classe ProdutosPage não encontrada');
-            }
-        } catch (error) {
-            console.error('❌ Erro ao carregar módulo de Produtos:', error);
-        }
-    }
+    // ❌ REMOVIDO: loadProdutosData() - FUNÇÃO DUPLICADA
+    // A página de produtos agora é gerenciada pelo initializePage()
     
     async loadVendasData() {
         try {
@@ -890,85 +961,119 @@ class SistemaVendas {
         }
     }
     
+    // ✅ BLOQUEIO GLOBAL PARA EVITAR MÚLTIPLAS INICIALIZAÇÕES
+    static dashboardLoadingLock = false;
+    
     async loadDashboardData() {
         try {
+            // ✅ VERIFICAR SE JÁ ESTÁ CARREGANDO
+            if (this.constructor.dashboardLoadingLock) {
+                console.log('⚠️ Dashboard já está sendo carregado, aguardando...');
+                while (this.constructor.dashboardLoadingLock) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                console.log('✅ Dashboard carregado por outra operação');
+                return;
+            }
+            
+            // ✅ ATIVAR BLOQUEIO
+            this.constructor.dashboardLoadingLock = true;
+            console.log('🔒 Bloqueio ativado para carregamento do dashboard');
+            
             console.log('🔄 Carregando dados do dashboard...');
             
-            // Mostrar loading
-            this.showDashboardLoading();
-            
-            // Buscar dados reais do sistema
-            const response = await fetch('/api/relatorios/dashboard', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                throw new Error('Resposta não é JSON válido');
-            }
-
-            const data = await response.json();
-            console.log('✅ Dados do dashboard carregados:', data);
-            
-            // Verificar se a resposta tem a estrutura esperada
-            if (data.success && data.data && data.data.estatisticas) {
-                const estatisticas = data.data.estatisticas;
-                console.log('📊 Estatísticas extraídas:', estatisticas);
+            // ✅ VERIFICAR SE A INSTÂNCIA DO DASHBOARD EXISTE E ESTÁ VÁLIDA
+            if (!window.dashboardPage || !this.isDashboardInstanceValid()) {
+                console.log('⚠️ Instância do dashboard não encontrada ou inválida, criando nova...');
                 
-                // Atualizar cards com dados reais da estrutura correta
-                this.updateDashboardCards(estatisticas);
-                
-                // Atualizar resumo financeiro
-                this.updateFinancialSummary(estatisticas);
-                
-                // Atualizar atividade recente
-                this.updateRecentActivity(estatisticas);
-                
-                // Carregar alertas de estoque baixo
-                if (window.dashboardPage && window.dashboardPage.loadEstoqueAlerts) {
-                    console.log('🔍 Carregando alertas de estoque via dashboardPage...');
-                    console.log('🔍 dashboardPage:', window.dashboardPage);
-                    console.log('🔍 loadEstoqueAlerts disponível:', typeof window.dashboardPage.loadEstoqueAlerts);
-                    await window.dashboardPage.loadEstoqueAlerts();
-                } else {
-                    console.log('⚠️ dashboardPage não disponível para alertas de estoque');
-                    console.log('🔍 dashboardPage:', window.dashboardPage);
-                    console.log('🔍 Tentando aguardar inicialização...');
-                    
-                    // Aguardar um pouco e tentar novamente
-                    setTimeout(async () => {
-                        if (window.dashboardPage && window.dashboardPage.loadEstoqueAlerts) {
-                            console.log('✅ dashboardPage disponível após delay, carregando alertas...');
-                            await window.dashboardPage.loadEstoqueAlerts();
-                        } else {
-                            console.log('❌ dashboardPage ainda não disponível após delay');
-                            console.log('🔍 dashboardPage:', window.dashboardPage);
+                // Limpar instância anterior se existir
+                if (window.dashboardPage) {
+                    try {
+                        if (window.dashboardPage.cleanup) {
+                            await window.dashboardPage.cleanup();
                         }
-                    }, 1000);
+                    } catch (cleanupError) {
+                        console.warn('⚠️ Erro ao limpar instância anterior:', cleanupError);
+                    }
+                    window.dashboardPage = null;
                 }
                 
-                // Esconder loading
-                this.hideDashboardLoading();
-            } else {
-                throw new Error('Estrutura de dados inválida na resposta da API');
+                // Criar nova instância
+                if (window.DashboardPage) {
+                    window.dashboardPage = new window.DashboardPage();
+                    console.log('✅ Nova instância do DashboardPage criada');
+                } else {
+                    console.error('❌ Classe DashboardPage não encontrada');
+                    this.constructor.dashboardLoadingLock = false;
+                    return;
+                }
             }
+            
+            // ✅ VERIFICAR SE A INSTÂNCIA JÁ ESTÁ INICIALIZADA
+            if (window.dashboardPage.isInitialized && window.dashboardPage.isInitialized()) {
+                console.log('✅ Dashboard já está inicializado, atualizando dados...');
+                await this.updateDashboardData();
+            } else {
+                console.log('🔄 Inicializando dashboard...');
+                await window.dashboardPage.init();
+            }
+            
+            console.log('✅ Dashboard carregado com sucesso');
             
         } catch (error) {
             console.error('❌ Erro ao carregar dados do dashboard:', error);
             
-            // Carregar dados padrão em caso de erro
-            this.loadDefaultDashboardData();
+            // ✅ TENTAR CARREGAR DADOS PADRÃO EM CASO DE ERRO
+            try {
+                if (window.dashboardPage && window.dashboardPage.loadDashboardStats) {
+                    await window.dashboardPage.loadDashboardStats();
+                }
+            } catch (fallbackError) {
+                console.error('❌ Erro no fallback:', fallbackError);
+            }
+        } finally {
+            // ✅ SEMPRE LIBERAR O BLOQUEIO
+            this.constructor.dashboardLoadingLock = false;
+            console.log('🔓 Bloqueio liberado para carregamento do dashboard');
+        }
+    }
+    
+    // ✅ VERIFICAR SE A INSTÂNCIA DO DASHBOARD É VÁLIDA
+    isDashboardInstanceValid() {
+        if (!window.dashboardPage) return false;
+        
+        // Verificar se tem métodos essenciais
+        const hasEssentialMethods = window.dashboardPage.init && 
+                                  window.dashboardPage.cleanup && 
+                                  window.dashboardPage.loadRecentActivities;
+        
+        // Verificar se não está em estado de erro
+        const isNotInError = !window.dashboardPage.hasError;
+        
+        return hasEssentialMethods && isNotInError;
+    }
+    
+    // ✅ ATUALIZAR DADOS DO DASHBOARD SEM REINICIALIZAR
+    async updateDashboardData() {
+        try {
+            console.log('🔄 Atualizando dados do dashboard...');
             
-            // Esconder loading
-            this.hideDashboardLoading();
+            if (window.dashboardPage.loadDashboardStats) {
+                await window.dashboardPage.loadDashboardStats();
+            }
+            
+            if (window.dashboardPage.loadRecentActivities) {
+                await window.dashboardPage.loadRecentActivities();
+            }
+            
+            if (window.dashboardPage.loadEstoqueAlerts) {
+                await window.dashboardPage.loadEstoqueAlerts();
+            }
+            
+            console.log('✅ Dados do dashboard atualizados com sucesso');
+            
+        } catch (error) {
+            console.error('❌ Erro ao atualizar dados do dashboard:', error);
         }
     }
 
@@ -1217,19 +1322,248 @@ class SistemaVendas {
     }
     
     async loadRelatoriosData() {
+        console.log('📊 Carregando dados de relatórios...');
+        
         try {
-            // Verificar se a classe RelatoriosPageFinal está disponível
-            if (window.RelatoriosPageFinal) {
-                const relatoriosPage = new window.RelatoriosPageFinal();
-                await relatoriosPage.init();
-            } else if (window.RelatoriosPage) {
-                const relatoriosPage = new window.RelatoriosPage();
-                await relatoriosPage.init();
-            } else {
-                console.warn('⚠️ Classe RelatoriosPage não encontrada');
+            // Verificar se a função global está disponível
+            if (typeof window.createRelatoriosSimples === 'function') {
+                console.log('🆕 Usando função global de relatórios...');
+                window.createRelatoriosSimples();
+                return;
             }
+            
+            // Fallback para versões anteriores
+            console.log('🔍 Verificando classes disponíveis...');
+            console.log('RelatoriosPageComDadosReais:', typeof window.RelatoriosPageComDadosReais);
+            console.log('RelatoriosPageFinal:', typeof window.RelatoriosPageFinal);
+            
+            // Limpar instâncias anteriores
+            if (window.relatoriosPageComDadosReais) {
+                console.log('🗑️ Limpando instância anterior...');
+                if (window.relatoriosPageComDadosReais.cleanup) {
+                    await window.relatoriosPageComDadosReais.cleanup();
+                }
+                window.relatoriosPageComDadosReais = null;
+            }
+            
+            if (window.relatoriosPage) {
+                console.log('🗑️ Limpando relatoriosPage anterior...');
+                if (window.relatoriosPage.cleanup) {
+                    await window.relatoriosPage.cleanup();
+                }
+                window.relatoriosPage = null;
+            }
+            
+            // Aguardar um pouco
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            // Tentar criar instância com dados reais primeiro
+            if (typeof window.RelatoriosPageComDadosReais === 'function') {
+                console.log('🆕 Criando RelatoriosPageComDadosReais...');
+                window.relatoriosPageComDadosReais = new window.RelatoriosPageComDadosReais();
+            } else if (typeof window.RelatoriosPageFinal === 'function') {
+                console.log('🆕 Criando RelatoriosPageFinal...');
+                window.relatoriosPage = new window.RelatoriosPageFinal();
+            } else {
+                console.error('❌ Nenhuma classe de relatórios encontrada!');
+                // Criar uma versão de emergência
+                this.createEmergencyRelatorios();
+            }
+            
         } catch (error) {
-            console.error('❌ Erro ao carregar página de relatórios:', error);
+            console.error('❌ Erro ao carregar relatórios:', error);
+            // Criar uma versão de emergência
+            this.createEmergencyRelatorios();
+        }
+    }
+    
+    createEmergencyRelatorios() {
+        console.log('🚨 Criando relatórios de emergência...');
+        
+        const pageContainer = document.getElementById('relatorios-content');
+        if (!pageContainer) {
+            console.error('❌ Container não encontrado!');
+            return;
+        }
+        
+        pageContainer.innerHTML = `
+            <div class="page-header">
+                <div class="header-content">
+                    <h2>Relatórios e Análises</h2>
+                    <p>Visualize dados e insights do seu negócio</p>
+                </div>
+            </div>
+            
+            <div class="page-content">
+                <div class="charts-container">
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <h3>Tendência de Vendas</h3>
+                            <canvas id="tendencia-vendas-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Vendas por Período</h3>
+                            <canvas id="vendas-periodo-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <h3>Status das Vendas</h3>
+                            <canvas id="vendas-status-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Status dos Orçamentos</h3>
+                            <canvas id="orcamentos-status-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-row">
+                        <div class="chart-card">
+                            <h3>Distribuição de Valores</h3>
+                            <canvas id="valores-distribuicao-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Formas de Pagamento</h3>
+                            <canvas id="pagamentos-forma-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Criar gráficos simples
+        setTimeout(() => {
+            this.createSimpleCharts();
+        }, 500);
+    }
+    
+    createSimpleCharts() {
+        console.log('📊 Criando gráficos simples de emergência...');
+        
+        try {
+            // Gráfico 1: Tendência de Vendas
+            const tendenciaCanvas = document.getElementById('tendencia-vendas-chart');
+            if (tendenciaCanvas && typeof Chart !== 'undefined') {
+                new Chart(tendenciaCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                        datasets: [{
+                            label: 'Vendas',
+                            data: [12000, 15000, 13000, 18000, 16000, 20000],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Gráfico 2: Vendas por Período
+            const vendasCanvas = document.getElementById('vendas-periodo-chart');
+            if (vendasCanvas && typeof Chart !== 'undefined') {
+                new Chart(vendasCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                        datasets: [{
+                            label: 'Vendas',
+                            data: [5, 8, 6, 10, 7, 12],
+                            backgroundColor: '#10b981'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Gráfico 3: Status das Vendas
+            const statusCanvas = document.getElementById('vendas-status-chart');
+            if (statusCanvas && typeof Chart !== 'undefined') {
+                new Chart(statusCanvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pago', 'Pendente', 'Cancelado'],
+                        datasets: [{
+                            data: [15, 8, 3],
+                            backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Gráfico 4: Status dos Orçamentos
+            const orcamentosCanvas = document.getElementById('orcamentos-status-chart');
+            if (orcamentosCanvas && typeof Chart !== 'undefined') {
+                new Chart(orcamentosCanvas, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Ativo', 'Aprovado', 'Convertido'],
+                        datasets: [{
+                            data: [5, 3, 8],
+                            backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Gráfico 5: Distribuição de Valores
+            const valoresCanvas = document.getElementById('valores-distribuicao-chart');
+            if (valoresCanvas && typeof Chart !== 'undefined') {
+                new Chart(valoresCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Até R$ 100', 'R$ 100-500', 'R$ 500-1.000'],
+                        datasets: [{
+                            label: 'Vendas',
+                            data: [8, 12, 15],
+                            backgroundColor: '#8b5cf6'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            // Gráfico 6: Formas de Pagamento
+            const pagamentosCanvas = document.getElementById('pagamentos-forma-chart');
+            if (pagamentosCanvas && typeof Chart !== 'undefined') {
+                new Chart(pagamentosCanvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Dinheiro', 'Cartão', 'PIX'],
+                        datasets: [{
+                            data: [30, 25, 35],
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            console.log('✅ Gráficos de emergência criados!');
+            
+        } catch (error) {
+            console.error('❌ Erro ao criar gráficos de emergência:', error);
         }
     }
     
@@ -1410,10 +1744,32 @@ class SistemaVendas {
         try {
             console.log(`🚀 Inicializando página: ${pageName}`);
             
+            // ✅ VERIFICAR SE JÁ EXISTE UMA INSTÂNCIA ATIVA
+            const instanceKey = `${pageName}PageInstance`;
+            if (window[instanceKey]) {
+                console.log(`⚠️ Instância de ${pageName} já existe, fazendo cleanup...`);
+                try {
+                    // Tentar fazer cleanup da instância existente
+                    if (window[instanceKey].cleanup && typeof window[instanceKey].cleanup === 'function') {
+                        await window[instanceKey].cleanup();
+                        console.log(`✅ Cleanup da instância ${pageName} concluído`);
+                    }
+                } catch (cleanupError) {
+                    console.warn(`⚠️ Erro no cleanup da instância ${pageName}:`, cleanupError);
+                }
+                // Limpar referência
+                window[instanceKey] = null;
+            }
+            
             const pageClass = window[`${pageName.charAt(0).toUpperCase() + pageName.slice(1)}Page`];
             if (pageClass) {
-                console.log(`✅ Classe ${pageClass.name} encontrada, criando instância...`);
+                console.log(`✅ Classe ${pageClass.name} encontrada, criando nova instância...`);
+                
+                // ✅ CRIAR NOVA INSTÂNCIA
                 const pageInstance = new pageClass();
+                
+                // ✅ ARMAZENAR REFERÊNCIA GLOBAL
+                window[instanceKey] = pageInstance;
                 
                 if (pageInstance.init && typeof pageInstance.init === 'function') {
                     console.log(`✅ Inicializando ${pageName}...`);

@@ -39,17 +39,20 @@ class ClientesPage {
      * Renderiza a estrutura HTML da página
      */
     renderPage() {
-        const pageContainer = document.getElementById('clientes-page');
-        if (!pageContainer) return;
+        const pageContainer = document.getElementById('clientes-content');
+        if (!pageContainer) {
+            console.error('Container de clientes não encontrado!');
+            return;
+        }
 
         pageContainer.innerHTML = `
             <div class="page-header">
                 <div class="header-content">
                     <h2>Gestão de Clientes</h2>
-                    <p>Cadastre, edite e gerencie seus clientes</p>
+                    <p>Gerencie seus clientes de forma eficiente</p>
                 </div>
                 <div class="header-actions">
-                    <button class="btn btn-secondary" id="refresh-btn">
+                    <button class="btn btn-secondary" id="refresh-clientes-btn">
                         <i class="fas fa-sync-alt"></i>
                         Atualizar
                     </button>
@@ -64,17 +67,46 @@ class ClientesPage {
                 <!-- Filtros e Busca -->
                 <div class="filters-section">
                     <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Buscar por nome, email ou documento...">
-                        <button id="search-btn">
+                        <input type="text" id="search-clientes" placeholder="Buscar clientes por nome ou email...">
+                        <button id="search-clientes-btn">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
-                    <div class="filters">
-                        <select id="status-filter">
-                            <option value="">Todos os Status</option>
-                            <option value="ativo">Ativo</option>
-                            <option value="inativo">Inativo</option>
-                        </select>
+                    <div class="filter-buttons">
+                        <button class="btn btn-outline" id="filter-all-clientes">Todos</button>
+                        <button class="btn btn-outline" id="filter-active-clientes">Ativos</button>
+                        <button class="btn btn-outline" id="filter-vip-clientes">VIP</button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Rápidas -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-clientes-stat">0</h3>
+                            <p>Total de Clientes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="clientes-vip-stat">0</h3>
+                            <p>Clientes VIP</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="novos-clientes-stat">0</h3>
+                            <p>Novos este Mês</p>
+                        </div>
                     </div>
                 </div>
 
@@ -85,16 +117,15 @@ class ClientesPage {
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Telefone</th>
                                 <th>Email</th>
-                                <th>Documento</th>
+                                <th>Telefone</th>
                                 <th>Status</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody id="clientes-table-body">
                             <tr>
-                                <td colspan="7" class="loading-row">
+                                <td colspan="6" class="loading-row">
                                     <div class="loading-spinner"></div>
                                     <span>Carregando clientes...</span>
                                 </td>
@@ -104,12 +135,8 @@ class ClientesPage {
                 </div>
 
                 <!-- Paginação -->
-                <div class="pagination" id="pagination">
-                    <!-- Paginação será renderizada aqui -->
-                </div>
+                <div id="clientes-pagination" class="pagination-container"></div>
             </div>
-
-            <!-- Modal será criado dinamicamente pelo sistema UI -->
         `;
     }
 
@@ -124,13 +151,13 @@ class ClientesPage {
         }
 
         // Botão atualizar
-        const refreshBtn = document.getElementById('refresh-btn');
+        const refreshBtn = document.getElementById('refresh-clientes-btn');
         if (refreshBtn) {
             refreshBtn.addEventListener('click', () => this.loadClientes());
         }
 
         // Busca
-        const searchInput = document.getElementById('search-input');
+        const searchInput = document.getElementById('search-clientes');
         if (searchInput) {
             searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
         }
@@ -174,7 +201,7 @@ class ClientesPage {
         if (this.clientes.length === 0) {
                     tbody.innerHTML = `
             <tr>
-                <td colspan="7" class="empty-state">
+                <td colspan="6" class="empty-state">
                     <div class="empty-icon">
                         <i class="fas fa-users"></i>
                     </div>
@@ -210,9 +237,8 @@ class ClientesPage {
                         <small>${cliente.email || 'Sem email'}</small>
                     </div>
                 </td>
-                <td>${cliente.telefone}</td>
                 <td>${cliente.email || '-'}</td>
-                <td>${cliente.documento || '-'}</td>
+                <td>${cliente.telefone}</td>
                 <td>
                     <span class="status-badge status-ativo">Ativo</span>
                 </td>
@@ -240,7 +266,7 @@ class ClientesPage {
      * Renderiza paginação
      */
     renderPagination() {
-        const pagination = document.getElementById('pagination');
+        const pagination = document.getElementById('clientes-pagination');
         if (!pagination) return;
 
         const totalPages = Math.ceil(this.clientes.length / this.itemsPerPage);
@@ -320,7 +346,7 @@ class ClientesPage {
      * Configura event listeners para a paginação
      */
     setupPaginationButtons() {
-        const pagination = document.getElementById('pagination');
+        const pagination = document.getElementById('clientes-pagination');
         if (!pagination) return;
         
         const pageButtons = pagination.querySelectorAll('.btn-page[data-page]');
@@ -853,7 +879,7 @@ class ClientesPage {
         if (clientes.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="7" class="empty-state">
+                    <td colspan="6" class="empty-state">
                         <p>Nenhum cliente encontrado para esta busca</p>
                     </td>
                 </tr>
@@ -870,9 +896,8 @@ class ClientesPage {
                         <small>${cliente.email || 'Sem email'}</small>
                     </div>
                 </td>
-                <td>${cliente.telefone}</td>
                 <td>${cliente.email || '-'}</td>
-                <td>${cliente.documento || '-'}</td>
+                <td>${cliente.telefone}</td>
                 <td>
                     <span class="status-badge status-ativo">Ativo</span>
                 </td>
@@ -901,7 +926,7 @@ class ClientesPage {
         if (tbody) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="7" class="loading-row">
+                    <td colspan="6" class="loading-row">
                         <div class="loading-spinner"></div>
                         <span>Carregando clientes...</span>
                     </td>
@@ -918,7 +943,7 @@ class ClientesPage {
         if (tbody) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="7" class="empty-state">
+                    <td colspan="6" class="empty-state">
                         <div class="empty-icon">
                             <i class="fas fa-users"></i>
                         </div>
@@ -990,6 +1015,67 @@ class ClientesPage {
         }
         
         console.log('✅ Evento de atualização disparado!');
+    }
+
+    // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
+    async cleanup() {
+        console.log('🧹 CLIENTES - Iniciando cleanup...');
+        
+        try {
+            // 1. Limpar event listeners
+            this.removeEventListeners();
+            
+            // 2. Limpar estado interno
+            this.clientes = [];
+            this.currentPage = 1;
+            this.itemsPerPage = 10;
+            
+            // 3. Limpar referência global
+            if (window.clientesPageInstance === this) {
+                window.clientesPageInstance = null;
+            }
+            
+            console.log('✅ CLIENTES - Cleanup concluído com sucesso!');
+            
+        } catch (error) {
+            console.error('❌ CLIENTES - Erro durante cleanup:', error);
+        }
+    }
+
+    // ✅ REMOVER EVENT LISTENERS
+    removeEventListeners() {
+        console.log('🔌 Removendo event listeners de clientes...');
+        
+        try {
+            // Botão Novo Cliente
+            const newBtn = document.getElementById('new-cliente-btn');
+            if (newBtn) {
+                newBtn.replaceWith(newBtn.cloneNode(true));
+            }
+
+            // Botão Atualizar
+            const refreshBtn = document.getElementById('refresh-clientes-btn');
+            if (refreshBtn) {
+                refreshBtn.replaceWith(refreshBtn.cloneNode(true));
+            }
+
+            // Campo de busca
+            const searchInput = document.getElementById('search-clientes');
+            if (searchInput) {
+                searchInput.replaceWith(searchInput.cloneNode(true));
+            }
+
+            // Filtro de status
+            const statusFilter = document.getElementById('status-filter');
+            if (statusFilter) {
+                statusFilter.replaceWith(statusFilter.cloneNode(true));
+            }
+
+            console.log('✅ Event listeners de clientes removidos');
+
+        } catch (error) {
+            console.error('❌ Erro ao remover event listeners de clientes:', error);
+        }
     }
 }
 
