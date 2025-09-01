@@ -1,0 +1,560 @@
+/* ===== PADRONIZAÇÃO DE ÍCONES DO SISTEMA ===== */
+/* Baseado nos ícones do Dashboard e Sidebar */
+
+/* ===== ÍCONES PRINCIPAIS DO SISTEMA ===== */
+
+/* 🏪 Logo/Sistema */
+.system-logo,
+.logo i {
+    content: "\f54e" !important;
+    /* fa-store */
+}
+
+/* 📊 Dashboard */
+.dashboard-icon,
+[data-page="dashboard"] i,
+.dashboard-nav i {
+    content: "\f3fd" !important;
+    /* fa-tachometer-alt */
+}
+
+/* 👥 Clientes */
+.clientes-icon,
+[data-page="clientes"] i,
+.clientes-nav i,
+.cliente-icon {
+    content: "\f500" !important;
+    /* fa-user-group */
+}
+
+/* 📦 Produtos */
+.produtos-icon,
+[data-page="produtos"] i,
+.produtos-nav i,
+.produto-icon {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* 🛒 Vendas */
+.vendas-icon,
+[data-page="vendas"] i,
+.vendas-nav i,
+.venda-icon {
+    content: "\f290" !important;
+    /* fa-shopping-bag */
+}
+
+/* 💰 Orçamentos */
+.orcamentos-icon,
+[data-page="orcamentos"] i,
+.orcamentos-nav i,
+.orcamento-icon {
+    content: "\f571" !important;
+    /* fa-file-invoice-dollar */
+}
+
+/* 📈 Relatórios */
+.relatorios-icon,
+[data-page="relatorios"] i,
+.relatorios-nav i,
+.relatorio-icon {
+    content: "\f201" !important;
+    /* fa-chart-line */
+}
+
+/* ===== ÍCONES DOS CARDS DO DASHBOARD ===== */
+
+/* Card 1 - Total de Clientes */
+.stat-card:nth-child(1) .stat-icon i,
+#total-clientes-card .stat-icon i {
+    content: "\f500" !important;
+    /* fa-user-group */
+}
+
+/* Card 2 - Total de Produtos */
+.stat-card:nth-child(2) .stat-icon i,
+#total-produtos-card .stat-icon i {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* Card 3 - Total de Vendas */
+.stat-card:nth-child(3) .stat-icon i,
+#total-vendas-card .stat-icon i {
+    content: "\f290" !important;
+    /* fa-shopping-bag */
+}
+
+/* Card 4 - Orçamentos Ativos */
+.stat-card:nth-child(4) .stat-icon i,
+#orcamentos-ativos-card .stat-icon i {
+    content: "\f571" !important;
+    /* fa-file-invoice-dollar */
+}
+
+/* Card 5 - Orçamentos Aprovados */
+.stat-card:nth-child(5) .stat-icon i,
+#orcamentos-aprovados-card .stat-icon i {
+    content: "\f058" !important;
+    /* fa-check-circle */
+}
+
+/* Card 6 - Convertidos em Vendas */
+.stat-card:nth-child(6) .stat-icon i,
+#orcamentos-convertidos-card .stat-icon i {
+    content: "\f362" !important;
+    /* fa-exchange-alt */
+}
+
+/* Card 7 - Orçamentos Expirados */
+.stat-card:nth-child(7) .stat-icon i,
+#orcamentos-expirados-card .stat-icon i {
+    content: "\f017" !important;
+    /* fa-clock */
+}
+
+/* ===== ÍCONES DE AÇÕES RÁPIDAS ===== */
+
+/* Nova Venda */
+[data-action="nova-venda"] i,
+.nova-venda-btn i {
+    content: "\f217" !important;
+    /* fa-cart-plus */
+}
+
+/* Novo Cliente */
+[data-action="novo-cliente"] i,
+.novo-cliente-btn i {
+    content: "\f234" !important;
+    /* fa-user-plus */
+}
+
+/* Novo Produto */
+[data-action="novo-produto"] i,
+.novo-produto-btn i {
+    content: "\f49e" !important;
+    /* fa-box-open */
+}
+
+/* Novo Orçamento */
+[data-action="novo-orcamento"] i,
+.novo-orcamento-btn i {
+    content: "\f574" !important;
+    /* fa-file-circle-plus */
+}
+
+/* ===== ÍCONES DE AÇÕES COMUNS ===== */
+
+/* Adicionar/Criar */
+.add-icon,
+.create-icon,
+.new-icon,
+.plus-icon {
+    content: "\f067" !important;
+    /* fa-plus */
+}
+
+/* Editar */
+.edit-icon,
+.modify-icon {
+    content: "\f304" !important;
+    /* fa-edit */
+}
+
+/* Excluir */
+.delete-icon,
+.remove-icon,
+.trash-icon {
+    content: "\f1f8" !important;
+    /* fa-trash */
+}
+
+/* Visualizar */
+.view-icon,
+.eye-icon,
+.details-icon {
+    content: "\f06e" !important;
+    /* fa-eye */
+}
+
+/* Buscar */
+.search-icon,
+.find-icon {
+    content: "\f002" !important;
+    /* fa-search */
+}
+
+/* Atualizar/Recarregar */
+.refresh-icon,
+.reload-icon,
+.sync-icon {
+    content: "\f021" !important;
+    /* fa-sync-alt */
+}
+
+/* Download/Exportar */
+.download-icon,
+.export-icon {
+    content: "\f019" !important;
+    /* fa-download */
+}
+
+/* Filtro */
+.filter-icon {
+    content: "\f0b0" !important;
+    /* fa-filter */
+}
+
+/* ===== ÍCONES DE STATUS ===== */
+
+/* Sucesso/Aprovado */
+.success-icon,
+.approved-icon,
+.check-icon {
+    content: "\f058" !important;
+    /* fa-check-circle */
+}
+
+/* Aviso/Alerta */
+.warning-icon,
+.alert-icon {
+    content: "\f071" !important;
+    /* fa-exclamation-triangle */
+}
+
+/* Erro/Problema */
+.error-icon,
+.danger-icon {
+    content: "\f057" !important;
+    /* fa-times-circle */
+}
+
+/* Informação */
+.info-icon,
+.information-icon {
+    content: "\f05a" !important;
+    /* fa-info-circle */
+}
+
+/* ===== ÍCONES DE PAGAMENTO ===== */
+
+/* Dinheiro */
+.money-icon,
+.cash-icon {
+    content: "\f0d6" !important;
+    /* fa-dollar-sign */
+}
+
+/* Cartão de Crédito */
+.credit-card-icon,
+.card-icon {
+    content: "\f09d" !important;
+    /* fa-credit-card */
+}
+
+/* ===== ÍCONES DE TEMPO ===== */
+
+/* Relógio */
+.clock-icon,
+.time-icon {
+    content: "\f017" !important;
+    /* fa-clock */
+}
+
+/* Calendário */
+.calendar-icon,
+.date-icon {
+    content: "\f073" !important;
+    /* fa-calendar */
+}
+
+/* ===== ÍCONES DE USUÁRIO ===== */
+
+/* Usuário */
+.user-icon,
+.person-icon {
+    content: "\f007" !important;
+    /* fa-user */
+}
+
+/* Usuários (múltiplos) */
+.users-icon,
+.people-icon {
+    content: "\f0c0" !important;
+    /* fa-users */
+}
+
+/* ===== ÍCONES DE GRÁFICOS ===== */
+
+/* Gráfico de Barras */
+.bar-chart-icon,
+.chart-bar-icon {
+    content: "\f080" !important;
+    /* fa-chart-bar */
+}
+
+/* Gráfico de Linha */
+.line-chart-icon,
+.chart-line-icon {
+    content: "\f201" !important;
+    /* fa-chart-line */
+}
+
+/* Tendência */
+.trend-icon,
+.trending-icon {
+    content: "\f062" !important;
+    /* fa-trending-up */
+}
+
+/* ===== ÍCONES DE NAVEGAÇÃO ===== */
+
+/* Expandir */
+.expand-icon,
+.open-icon {
+    content: "\f35c" !important;
+    /* fa-expand-alt */
+}
+
+/* Comprimir */
+.compress-icon,
+.close-icon {
+    content: "\f360" !important;
+    /* fa-compress-alt */
+}
+
+/* Sair/Logout */
+.logout-icon,
+.exit-icon {
+    content: "\f08b" !important;
+    /* fa-sign-out-alt */
+}
+
+/* ===== ÍCONES DE CARREGAMENTO ===== */
+
+/* Spinner */
+.loading-icon,
+.spinner-icon {
+    content: "\f110" !important;
+    /* fa-spinner */
+}
+
+/* ===== ÍCONES DE CONEXÃO ===== */
+
+/* Online */
+.online-icon,
+.connected-icon {
+    content: "\f111" !important;
+    /* fa-circle */
+}
+
+/* Offline */
+.offline-icon,
+.disconnected-icon {
+    content: "\f1eb" !important;
+    /* fa-wifi-slash */
+}
+
+/* ===== ÍCONES DE ESTOQUE ===== */
+
+/* Estoque */
+.stock-icon,
+.inventory-icon {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* Estoque Baixo */
+.low-stock-icon {
+    content: "\f071" !important;
+    /* fa-exclamation-triangle */
+}
+
+/* ===== ÍCONES DE ATIVIDADE ===== */
+
+/* Atividade Recente */
+.activity-icon,
+.recent-icon {
+    content: "\f05a" !important;
+    /* fa-info-circle */
+}
+
+/* ===== ÍCONES DE CONVERSÃO ===== */
+
+/* Converter */
+.convert-icon,
+.exchange-icon {
+    content: "\f362" !important;
+    /* fa-exchange-alt */
+}
+
+/* ===== APLICAÇÃO FORÇADA DOS ÍCONES ===== */
+
+/* Forçar aplicação em todos os elementos */
+*[class*="fa-"] {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    line-height: 1 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* ===== FALLBACK COM EMOJIS ===== */
+/* Se o FontAwesome não carregar, usar emojis como fallback */
+
+.fa-store:before {
+    content: "🏪" !important;
+}
+
+.fa-tachometer-alt:before {
+    content: "📊" !important;
+}
+
+.fa-user-group:before {
+    content: "👥" !important;
+}
+
+.fa-boxes-stacked:before {
+    content: "📦" !important;
+}
+
+.fa-shopping-bag:before {
+    content: "🛒" !important;
+}
+
+.fa-file-invoice-dollar:before {
+    content: "💰" !important;
+}
+
+.fa-chart-line:before {
+    content: "📈" !important;
+}
+
+.fa-cart-plus:before {
+    content: "🛒➕" !important;
+}
+
+.fa-user-plus:before {
+    content: "👤➕" !important;
+}
+
+.fa-box-open:before {
+    content: "📦" !important;
+}
+
+.fa-file-circle-plus:before {
+    content: "📄➕" !important;
+}
+
+.fa-plus:before {
+    content: "➕" !important;
+}
+
+.fa-edit:before {
+    content: "✏️" !important;
+}
+
+.fa-trash:before {
+    content: "🗑️" !important;
+}
+
+.fa-eye:before {
+    content: "👁️" !important;
+}
+
+.fa-search:before {
+    content: "🔍" !important;
+}
+
+.fa-sync-alt:before {
+    content: "🔄" !important;
+}
+
+.fa-download:before {
+    content: "⬇️" !important;
+}
+
+.fa-filter:before {
+    content: "🔧" !important;
+}
+
+.fa-check-circle:before {
+    content: "✅" !important;
+}
+
+.fa-exclamation-triangle:before {
+    content: "⚠️" !important;
+}
+
+.fa-times-circle:before {
+    content: "❌" !important;
+}
+
+.fa-info-circle:before {
+    content: "ℹ️" !important;
+}
+
+.fa-dollar-sign:before {
+    content: "💲" !important;
+}
+
+.fa-credit-card:before {
+    content: "💳" !important;
+}
+
+.fa-clock:before {
+    content: "⏰" !important;
+}
+
+.fa-calendar:before {
+    content: "📅" !important;
+}
+
+.fa-user:before {
+    content: "👤" !important;
+}
+
+.fa-users:before {
+    content: "👥" !important;
+}
+
+.fa-chart-bar:before {
+    content: "📊" !important;
+}
+
+.fa-trending-up:before {
+    content: "📈" !important;
+}
+
+.fa-expand-alt:before {
+    content: "⤢" !important;
+}
+
+.fa-compress-alt:before {
+    content: "⤡" !important;
+}
+
+.fa-sign-out-alt:before {
+    content: "🚪" !important;
+}
+
+.fa-spinner:before {
+    content: "⏳" !important;
+}
+
+.fa-circle:before {
+    content: "●" !important;
+}
+
+.fa-wifi-slash:before {
+    content: "📶❌" !important;
+}
+
+.fa-exchange-alt:before {
+    content: "🔄" !important;
+}

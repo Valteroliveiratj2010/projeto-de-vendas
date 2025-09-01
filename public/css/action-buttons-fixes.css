@@ -1,0 +1,305 @@
+/* ===== CORREÇÕES PARA BOTÕES DE AÇÃO ===== */
+/* Corrige problemas de exibição do texto nos botões */
+
+/* ===== BOTÕES DE AÇÃO DO DASHBOARD ===== */
+#dashboard-page .action-btn {
+  background: #3b82f6 !important; /* Fundo azul */
+  border: 1px solid #3b82f6 !important;
+  padding: var(--spacing-4);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  text-align: center;
+  min-height: 80px;
+  width: 100%;
+  position: relative;
+}
+
+/* ===== ÍCONES DOS BOTÕES ===== */
+#dashboard-page .action-btn i {
+  font-size: var(--font-size-xl);
+  color: #ffffff !important; /* Ícones brancos */
+  display: block !important;
+  margin-bottom: var(--spacing-1);
+}
+
+/* ===== TEXTO DOS BOTÕES ===== */
+#dashboard-page .action-btn {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: #ffffff !important; /* Texto branco */
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+/* ===== FORÇAR COR DO TEXTO ===== */
+#dashboard-page .action-btn,
+#dashboard-page .action-btn * {
+  color: #ffffff !important; /* Texto branco */
+  background-color: transparent !important;
+}
+
+/* ===== SOBRESCREVER CORES BRANCAS ===== */
+#dashboard-page .action-btn[style*="color: white"],
+#dashboard-page .action-btn[style*="color: #fff"],
+#dashboard-page .action-btn[style*="color: #ffffff"],
+#dashboard-page .action-btn[style*="color: var(--color-white)"] {
+  color: #ffffff !important; /* Manter texto branco */
+}
+
+/* ===== TEXTO DIRETO NO BOTÃO ===== */
+#dashboard-page .action-btn:not(:has(span)) {
+  color: #ffffff !important; /* Texto branco */
+  font-size: var(--font-size-sm) !important;
+  font-weight: 500 !important;
+}
+
+/* ===== GARANTIR VISIBILIDADE DO TEXTO ===== */
+#dashboard-page .action-btn,
+#dashboard-page .action-btn * {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+}
+
+/* ===== SOBRESCREVER TODAS AS REGRAS DE COR ===== */
+#dashboard-page .action-btn {
+  color: #ffffff !important; /* Texto branco */
+  background-color: #3b82f6 !important; /* Fundo azul */
+}
+
+#dashboard-page .action-btn:hover {
+  color: #ffffff !important; /* Texto branco */
+  background-color: #2563eb !important; /* Azul mais escuro no hover */
+  border-color: #1d4ed8 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===== SOBRESCREVER REGRAS GLOBAIS ===== */
+.action-btn[data-action] {
+  color: #ffffff !important; /* Texto branco */
+  background-color: #3b82f6 !important; /* Fundo azul */
+}
+
+.action-btn[data-action]:hover {
+  color: #ffffff !important; /* Texto branco */
+  background-color: #2563eb !important; /* Azul mais escuro no hover */
+}
+
+/* ===== SOBRESCREVER REGRAS QUE OCULTAM TEXTO ===== */
+#dashboard-page .action-btn[style*="display: none"],
+#dashboard-page .action-btn[style*="visibility: hidden"],
+#dashboard-page .action-btn[style*="opacity: 0"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ===== REMOVER PSEUDO-ELEMENTOS QUE PODEM OCULTAR TEXTO ===== */
+#dashboard-page .action-btn::before,
+#dashboard-page .action-btn::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ===== GARANTIR QUE O TEXTO SEJA O CONTEÚDO PRINCIPAL ===== */
+#dashboard-page .action-btn {
+  content: attr(data-action) !important;
+}
+
+/* ===== SOBRESCREVER QUALQUER CSS QUE AFETE CORES ===== */
+#dashboard-page .action-btn,
+#dashboard-page .action-btn *,
+#dashboard-page .action-btn::before,
+#dashboard-page .action-btn::after {
+  color: #ffffff !important; /* Texto branco */
+  background-color: transparent !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+#dashboard-page .action-btn:hover {
+  background: #2563eb !important; /* Azul mais escuro */
+  border-color: #1d4ed8 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+#dashboard-page .action-btn:hover i {
+  color: #ffffff !important; /* Ícones brancos */
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* ===== FOCUS STATES ===== */
+#dashboard-page .action-btn:focus {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===== ACTIVE STATES ===== */
+#dashboard-page .action-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ===== GRID DE AÇÕES ===== */
+#dashboard-page .actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-4);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  #dashboard-page .actions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-3);
+  }
+  
+  #dashboard-page .action-btn {
+    min-height: 70px;
+    padding: var(--spacing-3);
+  }
+  
+  #dashboard-page .action-btn i {
+    font-size: var(--font-size-lg);
+  }
+  
+  #dashboard-page .action-btn {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Mobile (481px - 767px) */
+@media (max-width: 767px) {
+  #dashboard-page .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2);
+  }
+  
+  #dashboard-page .action-btn {
+    min-height: 60px;
+    padding: var(--spacing-2);
+  }
+  
+  #dashboard-page .action-btn i {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  #dashboard-page .action-btn {
+    font-size: var(--font-size-xs);
+    line-height: 1.1;
+  }
+}
+
+/* Mobile Pequeno (≤ 480px) */
+@media (max-width: 480px) {
+  #dashboard-page .actions-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+  }
+  
+  #dashboard-page .action-btn {
+    min-height: 50px;
+    padding: var(--spacing-2);
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  
+  #dashboard-page .action-btn i {
+    font-size: var(--font-size-base);
+    margin-bottom: 0;
+    margin-right: var(--spacing-2);
+  }
+  
+  #dashboard-page .action-btn {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes actionBtnPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#dashboard-page .action-btn:hover {
+  animation: actionBtnPulse 0.3s ease-in-out;
+}
+
+/* ===== ESTADOS DE CARREGAMENTO ===== */
+#dashboard-page .action-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+#dashboard-page .action-btn.loading i {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  #dashboard-page .action-btn {
+    background: #3b82f6 !important; /* Manter azul mesmo no dark mode */
+    border-color: #3b82f6 !important;
+    color: #ffffff !important; /* Manter texto branco */
+  }
+  
+  #dashboard-page .action-btn:hover {
+    background: #2563eb !important; /* Azul mais escuro no hover */
+    border-color: #1d4ed8 !important;
+  }
+  
+  #dashboard-page .action-btn i {
+    color: #ffffff !important; /* Ícones brancos */
+  }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+#dashboard-page .action-btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+#dashboard-page .action-btn:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  #dashboard-page .action-btn {
+    display: none !important;
+  }
+} 

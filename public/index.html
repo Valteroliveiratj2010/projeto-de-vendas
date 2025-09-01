@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- PWA Meta Tags -->
     <meta name="description" content="Sistema completo de gestão de vendas com suporte offline">
     <meta name="keywords" content="vendas, gestão, clientes, produtos, orçamentos, sistema">
@@ -15,23 +16,28 @@
     <meta name="apple-mobile-web-app-title" content="Sistema de Vendas">
     <meta name="msapplication-TileColor" content="#2563eb">
     <meta name="msapplication-config" content="/browserconfig.xml">
-    
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
-    
+
     <!-- Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- CSS -->
     <!-- Responsividade Melhorada para todas as telas -->
     <link rel="stylesheet" href="/css/responsive-enhanced.css" />
-    
+
     <!-- Menu Hambúrguer Elegante e Profissional -->
     <link rel="stylesheet" href="/css/hamburger-menu-enhanced.css" />
-    
+
     <!-- Overlay Elegante da Sidebar -->
     <link rel="stylesheet" href="/css/sidebar-overlay.css" />
-    
+
     <!-- Estilos principais -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/components.css">
@@ -41,31 +47,89 @@
     <link rel="stylesheet" href="/css/tables.css">
     <link rel="stylesheet" href="/css/forms.css">
     <link rel="stylesheet" href="/css/charts.css">
-    
+
     <!-- Ícones Profissionais -->
     <link rel="stylesheet" href="/css/icons-professional.css">
     <link rel="stylesheet" href="/css/force-cleanup-icons.css">
-    
+
     <!-- Action Buttons por último -->
     <link rel="stylesheet" href="/css/action-buttons.css" />
-    
+
     <!-- Notificações de Pagamento -->
     <link rel="stylesheet" href="/css/payment-notifications.css" />
-    
+
     <!-- Atividades de Pagamento -->
     <link rel="stylesheet" href="/css/payment-activities.css" />
-    
+
     <!-- CSS Específico para Margens das Páginas -->
     <link rel="stylesheet" href="/css/page-margins.css" />
-    
+
     <!-- CSS para Limpeza de Ícones -->
     <link rel="stylesheet" href="/css/force-cleanup-icons.css" />
-    
+
     <!-- CSS para Ícones Profissionais da Sidebar -->
     <link rel="stylesheet" href="/css/sidebar-icons.css" />
-    
+
+    <!-- CSS Responsivo Específico para Relatórios -->
+    <link rel="stylesheet" href="/css/reports-responsive.css" />
+
+    <!-- CSS Responsivo Global para Todas as Páginas -->
+    <link rel="stylesheet" href="/css/global-responsive.css" />
+
+    <!-- CSS Responsivo Específico para Dashboard -->
+    <link rel="stylesheet" href="/css/dashboard-responsive.css" />
+
+    <!-- CSS Responsivo para Páginas de Gestão -->
+    <link rel="stylesheet" href="/css/pages-responsive.css" />
+
+    <!-- CSS Correções Responsivas para Botões -->
+    <link rel="stylesheet" href="/css/button-responsive-fixes.css" />
+
+    <!-- CSS Correções para Telas Pequenas (abaixo de 417px) -->
+    <link rel="stylesheet" href="/css/mobile-small-fixes.css" />
+
+    <!-- CSS Correções para Botões Sair -->
+    <link rel="stylesheet" href="/css/button-logout-fixes.css" />
+
+    <!-- CSS Correções para Botões de Ação -->
+    <link rel="stylesheet" href="/css/action-buttons-fixes.css" />
+
+    <!-- CSS Correção de Emergência para Botões de Ação -->
+    <link rel="stylesheet" href="/css/action-buttons-emergency-fix.css" />
+
+    <!-- CSS Correções para Botões de Ação nas Páginas de Gestão -->
+    <link rel="stylesheet" href="/css/page-action-buttons-fixes.css" />
+
+    <!-- CSS Correções para Ícones dos Cards do Dashboard -->
+    <link rel="stylesheet" href="/css/dashboard-icons-fixes.css" />
+
+    <!-- CSS Correção de Emergência Máxima para Ícones -->
+    <link rel="stylesheet" href="/css/dashboard-icons-emergency-fix.css" />
+
+    <!-- CSS Melhorias Avançadas para Ícones do Dashboard -->
+    <link rel="stylesheet" href="/css/dashboard-icons-enhanced.css" />
+
+    <!-- CSS Correção Ultimate para Eliminar Quadradinhos -->
+    <link rel="stylesheet" href="/css/dashboard-icons-ultimate-fix.css" />
+
+    <!-- CSS Correção Final com Fallback de Emojis -->
+    <link rel="stylesheet" href="/css/dashboard-icons-final-fix.css" />
+
+    <!-- CSS Correção Definitiva do Z-Index dos Ícones -->
+    <link rel="stylesheet" href="/css/dashboard-icons-z-index-fix.css" />
+
+    <!-- CSS Padronização de Ícones do Sistema -->
+    <link rel="stylesheet" href="/css/icon-standardization.css" />
+
+    <!-- CSS Melhorias Avançadas para Ícones da Sidebar -->
+    <link rel="stylesheet" href="/css/sidebar-icons-enhanced.css" />
+
+    <!-- CSS Correção de Altura do Overlay -->
+    <link rel="stylesheet" href="/css/overlay-height-fix.css" />
+
     <title>Sistema de Vendas - Página Principal</title>
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
@@ -96,7 +160,7 @@
                     <span>Sistema Vendas</span>
                 </div>
             </div>
-            
+
             <nav class="sidebar-nav">
                 <ul>
                     <li class="nav-item active" data-page="dashboard">
@@ -107,25 +171,25 @@
                     </li>
                     <li class="nav-item" data-page="clientes">
                         <a href="#clientes">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-user-group"></i>
                             <span>Clientes</span>
                         </a>
                     </li>
                     <li class="nav-item" data-page="produtos">
                         <a href="#produtos">
-                            <i class="fas fa-box"></i>
+                            <i class="fas fa-boxes-stacked"></i>
                             <span>Produtos</span>
                         </a>
                     </li>
                     <li class="nav-item" data-page="vendas">
                         <a href="#vendas">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-bag"></i>
                             <span>Vendas</span>
                         </a>
                     </li>
                     <li class="nav-item" data-page="orcamentos">
                         <a href="#orcamentos">
-                            <i class="fas fa-file-invoice"></i>
+                            <i class="fas fa-file-invoice-dollar"></i>
                             <span>Orçamentos</span>
                         </a>
                     </li>
@@ -137,7 +201,7 @@
                     </li>
                 </ul>
             </nav>
-            
+
             <div class="sidebar-footer">
                 <!-- Informações do usuário (visível quando logado) -->
                 <div class="user-info" id="user-info" style="display: none;">
@@ -149,13 +213,12 @@
                         <span class="user-role" id="user-role">Administrador</span>
                     </div>
                 </div>
-                
+
                 <!-- Botão de logout (visível quando logado) -->
                 <button class="logout-btn" id="logout-btn" style="display: none;">
-                    <i class="fas fa-sign-out-alt"></i>
                     <span>Sair</span>
                 </button>
-                
+
                 <!-- Seção de login (visível apenas quando NÃO logado) -->
                 <div class="login-section" id="login-section">
                     <div class="login-container">
@@ -181,7 +244,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- NOTIFICAÇÃO DE ESTOQUE BAIXO -->
         <div class="estoque-notification" id="estoque-notification" style="display: none;">
             <!-- Notificação será carregada dinamicamente -->
@@ -192,12 +255,13 @@
             <!-- Header Superior -->
             <div class="top-header">
                 <div class="header-left">
-                    <button id="sidebar-toggle" class="sidebar-toggle" title="Abrir/Fechar Menu" aria-label="Abrir ou fechar menu de navegação" aria-expanded="false">
+                    <button id="sidebar-toggle" class="sidebar-toggle" title="Abrir/Fechar Menu"
+                        aria-label="Abrir ou fechar menu de navegação" aria-expanded="false">
                         <span class="hamburger-line"></span>
                     </button>
                     <h1>Sistema de Vendas</h1>
                 </div>
-                
+
                 <div class="header-right">
                     <div class="status-indicators">
                         <span class="status-badge online">
@@ -213,164 +277,163 @@
                             Sincronizar
                         </button>
                         <button id="header-logout-btn" class="btn btn-danger" style="display: none;">
-                            <i class="fas fa-sign-out-alt"></i>
                             Sair
                         </button>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Conteúdo das Páginas -->
             <div class="page-container">
                 <!-- Dashboard Page -->
                 <div id="dashboard-page" class="dashboard-page page active">
                     <div class="dashboard-grid">
                         <!-- Cards de Estatísticas - LAYOUT DA IMAGEM -->
-                <div class="dashboard-header">
-                    <h2>📊 Dashboard do Sistema</h2>
-                    <button class="btn-refresh" id="refresh-dashboard" title="Atualizar dados">
-                        <i class="fas fa-sync-alt"></i>
-                        Atualizar Dados
-                    </button>
-                </div>
-                
-                <!-- ALERTAS DE ESTOQUE BAIXO -->
-                <div class="estoque-alerts" id="estoque-alerts">
-                    <!-- Alerta será carregado dinamicamente -->
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
+                        <div class="dashboard-header">
+                            <h2>📊 Dashboard do Sistema</h2>
+                            <button class="btn-refresh" id="refresh-dashboard" title="Atualizar dados">
+                                <i class="fas fa-sync-alt"></i>
+                                Atualizar Dados
+                            </button>
                         </div>
-                        <div class="stat-content">
-                            <h3 id="total-clientes">0</h3>
-                            <p>Total de Clientes</p>
-                        </div>
-                    </div>
 
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-boxes-stacked"></i>
+                        <!-- ALERTAS DE ESTOQUE BAIXO -->
+                        <div class="estoque-alerts" id="estoque-alerts">
+                            <!-- Alerta será carregado dinamicamente -->
                         </div>
-                        <div class="stat-content">
-                            <h3 id="total-produtos">0</h3>
-                            <p>Total de Produtos</p>
-                        </div>
-                    </div>
 
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-cart-shopping"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="total-vendas">0</h3>
-                            <p>Total de Vendas</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-file-lines"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="orcamentos-ativos">0</h3>
-                            <p>Orçamentos Ativos</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-circle-check"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="orcamentos-aprovados">0</h3>
-                            <p>Orçamentos Aprovados</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-arrow-right-arrow-left"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="orcamentos-convertidos">0</h3>
-                            <p>Convertidos em Vendas</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock-rotate-left"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="orcamentos-expirados">0</h3>
-                            <p>Orçamentos Expirados</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Resumo Financeiro - LAYOUT DA IMAGEM -->
-                <div class="financial-summary">
-                    <h3>Resumo Financeiro</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <span class="label">Total de Vendas:</span>
-                            <span class="value" id="valor-total-vendas">R$ 0,00</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="label">Total Pago:</span>
-                            <span class="value success" id="valor-total-pago">R$ 0,00</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="label">Total Devido:</span>
-                            <span class="value danger" id="valor-total-devido">R$ 0,00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Atividade Recente - LAYOUT DA IMAGEM -->
-                <div class="recent-activity">
-                    <h3>Atividade Recente</h3>
-                    <div class="activity-list" id="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon">
-                                <i class="fas fa-info-circle"></i>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-group"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-clientes">0</h3>
+                                    <p>Total de Clientes</p>
+                                </div>
                             </div>
-                            <div class="activity-content">
-                                <p>Carregando atividades...</p>
-                                <span class="activity-time">Agora</span>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-boxes-stacked"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-produtos">0</h3>
+                                    <p>Total de Produtos</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-vendas">0</h3>
+                                    <p>Total de Vendas</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-ativos">0</h3>
+                                    <p>Orçamentos Ativos</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-aprovados">0</h3>
+                                    <p>Orçamentos Aprovados</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-convertidos">0</h3>
+                                    <p>Convertidos em Vendas</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-expirados">0</h3>
+                                    <p>Orçamentos Expirados</p>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Resumo Financeiro - LAYOUT DA IMAGEM -->
+                        <div class="financial-summary">
+                            <h3>Resumo Financeiro</h3>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="label">Total de Vendas:</span>
+                                    <span class="value" id="valor-total-vendas">R$ 0,00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total Pago:</span>
+                                    <span class="value success" id="valor-total-pago">R$ 0,00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total Devido:</span>
+                                    <span class="value danger" id="valor-total-devido">R$ 0,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Atividade Recente - LAYOUT DA IMAGEM -->
+                        <div class="recent-activity">
+                            <h3>Atividade Recente</h3>
+                            <div class="activity-list" id="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>Carregando atividades...</p>
+                                        <span class="activity-time">Agora</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ações Rápidas - LAYOUT DA IMAGEM -->
+                        <div class="quick-actions">
+                            <h3>Ações Rápidas</h3>
+                            <div class="actions-grid">
+                                <button class="action-btn" data-action="nova-venda">
+                                    <i class="fas fa-cart-plus"></i>
+                                    Nova Venda
+                                </button>
+                                <button class="action-btn" data-action="novo-cliente">
+                                    <i class="fas fa-user-plus"></i>
+                                    Novo Cliente
+                                </button>
+                                <button class="action-btn" data-action="novo-produto">
+                                    <i class="fas fa-box-open"></i>
+                                    Novo Produto
+                                </button>
+                                <button class="action-btn" data-action="novo-orcamento">
+                                    <i class="fas fa-file-circle-plus"></i>
+                                    Novo Orçamento
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Ações Rápidas - LAYOUT DA IMAGEM -->
-                <div class="quick-actions">
-                    <h3>Ações Rápidas</h3>
-                    <div class="actions-grid">
-                        <button class="action-btn" data-action="nova-venda">
-                            <i class="fas fa-cart-plus"></i>
-                            Nova Venda
-                        </button>
-                        <button class="action-btn" data-action="novo-cliente">
-                            <i class="fas fa-user-plus"></i>
-                            Novo Cliente
-                        </button>
-                        <button class="action-btn" data-action="novo-produto">
-                            <i class="fas fa-box-open"></i>
-                            Novo Produto
-                        </button>
-                        <button class="action-btn" data-action="novo-orcamento">
-                            <i class="fas fa-file-circle-plus"></i>
-                            Novo Orçamento
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-                
                 <!-- Páginas do Sistema -->
                 <div id="clientes-page" class="page">
                     <div class="page-content" id="clientes-content">
@@ -381,7 +444,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="produtos-page" class="page">
                     <div class="page-content" id="produtos-content">
                         <!-- Conteúdo será carregado pelo módulo ProdutosPage -->
@@ -391,7 +454,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="vendas-page" class="page">
                     <div class="page-content" id="vendas-content">
                         <!-- Conteúdo será carregado pelo módulo VendasPage -->
@@ -401,7 +464,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="orcamentos-page" class="page">
                     <div class="page-content" id="orcamentos-content">
                         <!-- Conteúdo será carregado pelo módulo OrcamentosPage -->
@@ -411,7 +474,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="relatorios-page" class="page">
                     <div class="page-content" id="relatorios-content">
                         <!-- Conteúdo será carregado pelo módulo RelatóriosPage -->
@@ -421,7 +484,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
             </div>
         </div>
@@ -449,7 +512,7 @@
     <!-- JavaScript Modular - NOVA VERSÃO -->
     <!-- Chart.js para gráficos -->
     <script src="/js/libs/chart.js"></script>
-    
+
     <!-- Sistema Modular -->
     <script src="/js/modules/config.js"></script>
     <script src="/js/modules/auth-manager.js"></script>
@@ -458,13 +521,13 @@
     <script src="/js/modules/routing-manager.js"></script>
     <script src="/js/modules/index.js"></script>
     <script src="/js/app-modular.js"></script>
-    
+
     <!-- Scripts Legacy (serão migrados para módulos) -->
     <script src="/js/database.js"></script>
     <script src="/js/ui.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/utils/event-manager.js"></script>
-    
+
     <!-- Scripts das Páginas do Sistema (Legacy) -->
     <script src="/js/pages/dashboard.js"></script>
     <script src="/js/pages/clientes.js"></script>
@@ -472,19 +535,23 @@
     <script src="/js/pages/vendas.js"></script>
     <script src="/js/pages/orcamentos.js"></script>
     <script src="/js/pages/relatorios.js"></script>
+
+    <!-- Padronização de Ícones do Sistema -->
+    <script src="/js/icon-standardization.js"></script>
     <script src="/js/pages/relatorios-com-dados-reais.js"></script>
     <script src="/js/pages/relatorios-simples-global.js"></script>
-    
+    <script src="/js/pages/relatorios-responsive.js"></script>
+
     <!-- Script principal da aplicação (Legacy) -->
     <script src="/js/app.js"></script>
-    
+
     <!-- Sistema de Autenticação (Legacy) -->
     <script src="/js/auth.js"></script>
-    
+
     <!-- Sistema de Inicialização -->
     <script>
         console.log('🚀 Sistema de Vendas carregando...');
-        
+
         // Função para configurar botões de login quando disponíveis
         function setupLoginButtons() {
             const loginBtn = document.getElementById('login-btn');
@@ -492,7 +559,7 @@
                 loginBtn.addEventListener('click', () => window.location.href = '/login');
             }
         }
-        
+
         // Função para configurar botão de refresh
         function setupRefreshButton() {
             const refreshBtn = document.getElementById('refresh-dashboard');
@@ -510,138 +577,138 @@
                 console.log('✅ Botão de refresh configurado');
             }
         }
-        
+
         // Configurar quando DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             console.log('✅ DOM carregado');
             setupLoginButtons();
             setupRefreshButton();
             setupModalSystem();
             setupDebugSystem();
-            
+
             // NÃO carregar dados aqui - deixar o app.js fazer isso
             console.log('⚠️ JavaScript inline carregado - aguardando app.js');
         });
-        
+
         // Sistema de Modais Padronizado
         function setupModalSystem() {
             console.log('🎭 Configurando sistema de modais...');
-            
+
             // Configurar botões de ação rápida
             const actionButtons = document.querySelectorAll('[data-action]');
             actionButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const action = this.getAttribute('data-action');
                     openModal(action);
                 });
             });
-            
+
             // Configurar fechamento do modal
             const modalClose = document.getElementById('modal-close');
             const modalOverlay = document.getElementById('modal-overlay');
-            
+
             if (modalClose) {
                 modalClose.addEventListener('click', closeModal);
             }
-            
+
             if (modalOverlay) {
                 modalOverlay.addEventListener('click', closeModal);
             }
-            
+
             // Fechar modal com ESC
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                     closeModal();
                 }
             });
-            
+
             // Event listeners para botões de cancelar modais
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (e.target && e.target.classList.contains('cancel-modal-btn')) {
                     closeModal();
                 }
             });
-            
+
             console.log('✅ Sistema de modais configurado');
         }
-        
+
         // Sistema de Debug para Sidebar
         function setupDebugSystem() {
             console.log('🔍 Configurando sistema de debug...');
-            
+
             // Aguardar carregamento do app.js
             setTimeout(() => {
                 debugSidebarSystem();
             }, 3000);
         }
-        
+
         function debugSidebarSystem() {
             console.log('🔍 === DEBUG SIDEBAR INICIADO ===');
-            
+
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sistemaVendas = window.sistemaVendas;
-            
+
             console.log('📋 Sidebar element:', sidebar);
             console.log('📋 Toggle element:', sidebarToggle);
             console.log('📋 Sistema Vendas:', sistemaVendas);
-            
+
             if (sidebar) {
                 console.log('📋 Sidebar classes:', sidebar.className);
                 console.log('📋 Sidebar display:', window.getComputedStyle(sidebar).display);
                 console.log('📋 Sidebar transform:', window.getComputedStyle(sidebar).transform);
                 console.log('📋 Sidebar z-index:', window.getComputedStyle(sidebar).zIndex);
             }
-            
+
             if (sidebarToggle) {
                 console.log('📋 Toggle display:', window.getComputedStyle(sidebarToggle).display);
                 console.log('📋 Toggle z-index:', window.getComputedStyle(sidebarToggle).zIndex);
                 console.log('📋 Toggle position:', window.getComputedStyle(sidebarToggle).position);
             }
-            
+
             console.log('📱 Largura da tela:', window.innerWidth);
-            
+
             // Testar se o toggle está funcionando
             if (sidebarToggle && sidebar) {
                 console.log('🧪 Testando toggle da sidebar...');
-                
+
                 // Verificar se há event listeners
                 const originalClick = sidebarToggle.onclick;
                 console.log('📡 Toggle onclick original:', originalClick);
-                
+
                 // Adicionar listener de teste
                 sidebarToggle.addEventListener('click', function debugTest() {
                     console.log('🎯 DEBUG: Toggle clicado!');
                     console.log('📋 Classes antes:', sidebar.className);
-                    
+
                     sidebar.classList.toggle('open');
-                    
+
                     console.log('📋 Classes depois:', sidebar.className);
                     console.log('📋 Sidebar aberta:', sidebar.classList.contains('open'));
-                    
+
                     // Remover listener de teste
                     sidebarToggle.removeEventListener('click', debugTest);
                 }, { once: true });
-                
+
                 console.log('✅ Listener de teste adicionado ao toggle');
             }
-            
+
             console.log('🔍 === DEBUG SIDEBAR CONCLUÍDO ===');
         }
-        
+
         // Abrir modal baseado na ação
         function openModal(action) {
             console.log(`🎭 Abrindo modal para: ${action}`);
-            
+
             const modalContainer = document.getElementById('modal-container');
             const modalTitle = document.getElementById('modal-title');
             const modalBody = document.getElementById('modal-body');
-            
+
             if (!modalContainer || !modalTitle || !modalBody) {
                 console.error('❌ Elementos do modal não encontrados');
                 return;
             }
-            
+
             // Definir título e conteúdo baseado na ação
             switch (action) {
                 case 'nova-venda':
@@ -664,29 +731,29 @@
                     console.warn(`⚠️ Ação não reconhecida: ${action}`);
                     return;
             }
-            
+
             // Mostrar modal
             modalContainer.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            
+
             // Focar no primeiro campo
             setTimeout(() => {
                 const firstInput = modalBody.querySelector('input, select, textarea');
                 if (firstInput) firstInput.focus();
             }, 100);
         }
-        
+
         // Fechar modal
         function closeModal() {
             console.log('🎭 Fechando modal');
-            
+
             const modalContainer = document.getElementById('modal-container');
             if (modalContainer) {
                 modalContainer.classList.add('hidden');
                 document.body.style.overflow = '';
             }
         }
-        
+
         // Criar formulário de Nova Venda
         function createVendaForm() {
             return `
@@ -735,7 +802,7 @@
                 </form>
             `;
         }
-        
+
         // Criar formulário de Novo Cliente
         function createClienteForm() {
             return `
@@ -781,7 +848,7 @@
                 </form>
             `;
         }
-        
+
         // Criar formulário de Novo Produto
         function createProdutoForm() {
             return `
@@ -830,7 +897,7 @@
                 </form>
             `;
         }
-        
+
         // Criar formulário de Novo Orçamento
         function createOrcamentoForm() {
             return `
@@ -882,97 +949,98 @@
             `;
         }
     </script>
-    
-                <!-- Service Worker -->
-            <script src="/js/service-worker.js"></script>
-            
-            <style>
-                /* Estilos para o sistema de login */
-                .login-section {
-                    display: none;
-                    padding: 20px;
-                    background: rgba(255, 255, 255, 0.95);
-                    border-radius: 8px;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                    margin: 10px;
-                }
-                
-                .login-container {
-                    max-width: 400px;
-                    margin: 0 auto;
-                }
-                
-                .login-container h3 {
-                    text-align: center;
-                    margin-bottom: 20px;
-                    color: #333;
-                }
-                
-                .login-form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-                }
-                
-                .form-group {
-                    display: flex;
-                    flex-direction: column;
-                }
-                
-                .form-group label {
-                    margin-bottom: 5px;
-                    font-weight: 500;
-                    color: #555;
-                }
-                
-                .form-group input {
-                    padding: 10px;
-                    border: 1px solid #ddd;
-                    border-radius: 4px;
-                    font-size: 14px;
-                }
-                
-                .form-group input:focus {
-                    outline: none;
-                    border-color: #007bff;
-                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-                }
-                
-                .error-message {
-                    color: #dc3545;
-                    background: #f8d7da;
-                    border: 1px solid #f5c6cb;
-                    padding: 10px;
-                    border-radius: 4px;
-                    margin-top: 10px;
-                    text-align: center;
-                }
-            </style>
-    
+
+    <!-- Service Worker -->
+    <script src="/js/service-worker.js"></script>
+
+    <style>
+        /* Estilos para o sistema de login */
+        .login-section {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .error-message {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+
     <!-- Scripts de Inicialização Modular -->
     <script>
         // Sistema de Inicialização Modular
-        (function() {
+        (function () {
             const VERSION = 'v2.0.0-modular';
             console.log('🚀 Sistema Modular - Versão:', VERSION);
-            
+
             // Verificar se módulos estão carregados
             window.addEventListener('modules:loaded', (event) => {
                 console.log('✅ Módulos carregados:', event.detail.modules);
-                
+
                 // Inicializar sistema principal
                 if (window.SistemaVendasModular) {
                     window.sistemaVendas = new window.SistemaVendasModular();
                 }
             });
-            
+
             // Tratamento de erros de módulos
             window.addEventListener('modules:error', (event) => {
                 console.error('❌ Erro nos módulos:', event.detail.error);
             });
-            
+
             console.log('✅ Sistema de inicialização modular configurado');
         })();
     </script>
 </body>
-</html> 
+
+</html>

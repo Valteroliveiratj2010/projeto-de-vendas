@@ -1,0 +1,220 @@
+/* ===== CORREÇÕES PARA BOTÕES SAIR ===== */
+/* Centraliza o texto dos botões Sair e remove ícones */
+
+/* ===== BOTÕES SAIR GLOBAIS ===== */
+.logout-btn,
+#header-logout-btn,
+.btn-danger {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* ===== BOTÃO SAIR DA SIDEBAR ===== */
+.sidebar .logout-btn {
+  width: auto !important;
+  min-width: 120px;
+  max-width: 200px;
+  margin: 0 auto;
+  align-self: center;
+  justify-self: center;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== CONTAINER DO BOTÃO NA SIDEBAR ===== */
+.sidebar .sidebar-footer,
+.sidebar .user-section,
+.sidebar .logout-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-md);
+}
+
+/* ===== DESKTOP (TELAS GRANDES) ===== */
+@media (min-width: 1024px) {
+  .sidebar .logout-btn {
+    min-width: 140px;
+    max-width: 220px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    height: 44px;
+  }
+}
+
+/* ===== LAPTOP (TELAS MÉDIAS) ===== */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .sidebar .logout-btn {
+    min-width: 130px;
+    max-width: 180px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    height: 40px;
+  }
+}
+
+/* ===== TEXTO CENTRALIZADO ===== */
+.logout-btn span,
+#header-logout-btn {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* ===== REMOÇÃO DE ÍCONES ===== */
+.logout-btn i,
+#header-logout-btn i {
+  display: none !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .logout-btn,
+  #header-logout-btn,
+  .btn-danger {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-width: 80px;
+    height: 36px;
+  }
+  
+  /* Botão Sair da sidebar em tablet */
+  .sidebar .logout-btn {
+    min-width: 100px;
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logout-btn,
+  #header-logout-btn,
+  .btn-danger {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    min-width: 60px;
+    max-width: 80px;
+    height: 32px;
+  }
+  
+  /* Botão Sair da sidebar em mobile */
+  .sidebar .logout-btn {
+    min-width: 80px;
+    max-width: 120px;
+  }
+}
+
+/* ===== HOVER EFFECTS ===== */
+.logout-btn:hover,
+#header-logout-btn:hover,
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* ===== FOCUS STATES ===== */
+.logout-btn:focus,
+#header-logout-btn:focus,
+.btn-danger:focus {
+  outline: 2px solid var(--color-red-500);
+  outline-offset: 2px;
+}
+
+/* ===== ACTIVE STATES ===== */
+.logout-btn:active,
+#header-logout-btn:active,
+.btn-danger:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+/* ===== DISABLED STATES ===== */
+.logout-btn:disabled,
+#header-logout-btn:disabled,
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== LOADING STATES ===== */
+.logout-btn.loading,
+#header-logout-btn.loading,
+.btn-danger.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.logout-btn.loading::after,
+#header-logout-btn.loading::after,
+.btn-danger.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: var(--spacing-xs);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  .logout-btn,
+  #header-logout-btn,
+  .btn-danger {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .logout-btn:hover,
+  #header-logout-btn:hover,
+  .btn-danger:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ===== SOBRESCREVER REGRAS DE LARGURA ===== */
+/* Garantir que o botão da sidebar não ocupe 100% da largura */
+.sidebar .logout-btn,
+.sidebar #header-logout-btn,
+.sidebar .btn-danger {
+  width: auto !important;
+  max-width: 200px !important;
+  min-width: 120px !important;
+}
+
+/* Sobrescrever regras globais que forçam largura 100% */
+.sidebar .logout-btn[style*="width: 100%"],
+.sidebar #header-logout-btn[style*="width: 100%"],
+.sidebar .btn-danger[style*="width: 100%"] {
+  width: auto !important;
+  max-width: 200px !important;
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  .logout-btn,
+  #header-logout-btn,
+  .btn-danger {
+    display: none !important;
+  }
+} 

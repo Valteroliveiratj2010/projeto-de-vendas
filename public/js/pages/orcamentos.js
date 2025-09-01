@@ -17,18 +17,18 @@ class OrcamentosPage {
     init() {
         try {
             console.log('🚀 Inicializando página de orçamentos...');
-            
+
             // Renderizar estrutura HTML
             this.renderPage();
-            
+
             // Carregar dados
             this.loadInitialData();
-            
+
             // Configurar event listeners
             this.setupEventListeners();
-            
+
             console.log('✅ Página de orçamentos inicializada!');
-            
+
         } catch (error) {
             console.error('❌ Erro ao inicializar página de orçamentos:', error);
             this.showError('Erro ao carregar página', error.message);
@@ -83,7 +83,7 @@ class OrcamentosPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-file-invoice"></i>
+                            <i class="fas fa-file-invoice-dollar"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-orcamentos-stat">0</h3>
@@ -192,7 +192,7 @@ class OrcamentosPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-file-invoice"></i>
+                            <i class="fas fa-file-invoice-dollar"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-orcamentos-stat">0</h3>
@@ -301,18 +301,18 @@ class OrcamentosPage {
 
     async loadOrcamentos() {
         if (this.isLoading) return;
-        
+
         try {
             this.isLoading = true;
             this.showLoading();
-            
+
             console.log('📋 Carregando orçamentos...');
             const response = await window.api.get('/api/orcamentos');
-            
+
             if (response.data && response.data.success) {
                 this.orcamentos = response.data.data || [];
                 this.filteredOrcamentos = [...this.orcamentos];
-                
+
                 console.log(`✅ ${this.orcamentos.length} orçamentos carregados`);
                 console.log('📋 Dados dos orçamentos:', this.orcamentos.map(o => ({
                     id: o.id,
@@ -320,14 +320,14 @@ class OrcamentosPage {
                     total: o.total,
                     tipo_total: typeof o.total
                 })));
-                
+
                 this.updateStats();
                 this.renderOrcamentosTable();
                 this.renderPagination();
             } else {
                 throw new Error(response.data?.error || 'Erro ao carregar orçamentos');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao carregar orçamentos:', error);
             this.showError('Erro ao carregar orçamentos', error.message);
@@ -377,14 +377,14 @@ class OrcamentosPage {
                     </td>
                 </tr>
             `;
-            
+
             const firstOrcamentoBtn = document.getElementById('first-orcamento-btn');
             if (firstOrcamentoBtn) {
                 firstOrcamentoBtn.addEventListener('click', () => {
                     this.showNewOrcamentoModal();
                 });
             }
-            
+
             return;
         }
 
@@ -437,14 +437,14 @@ class OrcamentosPage {
                 </td>
             </tr>
         `).join('');
-        
+
         this.setupActionButtons();
     }
 
     setupActionButtons() {
         const tbody = document.getElementById('orcamentos-table-body');
         if (!tbody) return;
-        
+
         // Botões de visualizar
         const viewButtons = tbody.querySelectorAll('.btn-view');
         viewButtons.forEach(button => {
@@ -454,7 +454,7 @@ class OrcamentosPage {
                 this.viewOrcamento(orcamentoId);
             });
         });
-        
+
         // Botões de PDF
         const pdfButtons = tbody.querySelectorAll('.btn-pdf');
         pdfButtons.forEach(button => {
@@ -464,7 +464,7 @@ class OrcamentosPage {
                 this.generatePDF(orcamentoId);
             });
         });
-        
+
         // Botões de converter
         const convertButtons = tbody.querySelectorAll('.btn-convert');
         convertButtons.forEach(button => {
@@ -474,7 +474,7 @@ class OrcamentosPage {
                 this.convertToVenda(orcamentoId);
             });
         });
-        
+
         // Botões de editar
         const editButtons = tbody.querySelectorAll('.btn-edit');
         editButtons.forEach(button => {
@@ -484,7 +484,7 @@ class OrcamentosPage {
                 this.editOrcamento(orcamentoId);
             });
         });
-        
+
         // Botões de excluir
         const deleteButtons = tbody.querySelectorAll('.btn-delete');
         deleteButtons.forEach(button => {
@@ -498,27 +498,27 @@ class OrcamentosPage {
 
     updateStats() {
         const totalOrcamentos = this.orcamentos.length;
-        
+
         // Calcular valor total corretamente, tratando valores nulos/undefined
         const valorOrcamentos = this.orcamentos.reduce((total, orcamento) => {
             const valor = parseFloat(orcamento.total) || 0;
             return total + valor;
         }, 0);
-        
+
         // Contar orçamentos por status corretamente
-        const orcamentosAprovados = this.orcamentos.filter(orcamento => 
+        const orcamentosAprovados = this.orcamentos.filter(orcamento =>
             orcamento.status === 'aprovado' || orcamento.status === 'Aprovado'
         ).length;
-        
-        const orcamentosPendentes = this.orcamentos.filter(orcamento => 
+
+        const orcamentosPendentes = this.orcamentos.filter(orcamento =>
             orcamento.status === 'ativo' || orcamento.status === 'Ativo'
         ).length;
-        
-        const orcamentosConvertidos = this.orcamentos.filter(orcamento => 
+
+        const orcamentosConvertidos = this.orcamentos.filter(orcamento =>
             orcamento.status === 'convertido' || orcamento.status === 'Convertido'
         ).length;
-        
-        const orcamentosExpirados = this.orcamentos.filter(orcamento => 
+
+        const orcamentosExpirados = this.orcamentos.filter(orcamento =>
             orcamento.status === 'expirado' || orcamento.status === 'Expirado'
         ).length;
 
@@ -531,7 +531,7 @@ class OrcamentosPage {
         if (valorOrcamentosStat) valorOrcamentosStat.textContent = this.formatCurrency(valorOrcamentos);
         if (orcamentosAprovadosStat) orcamentosAprovadosStat.textContent = orcamentosAprovados;
         if (orcamentosPendentesStat) orcamentosPendentesStat.textContent = orcamentosPendentes;
-        
+
         // Log para debug
         console.log('📊 Estatísticas atualizadas:', {
             total: totalOrcamentos,
@@ -546,7 +546,7 @@ class OrcamentosPage {
 
     showNewOrcamentoModal() {
         console.log('➕ Abrindo modal de novo orçamento');
-        
+
         if (!window.UI) {
             alert('Sistema de modal não disponível. Recarregue a página.');
             return;
@@ -684,7 +684,7 @@ class OrcamentosPage {
 
     setupItemListeners() {
         const itensContainer = document.getElementById('itens-container');
-        
+
         // Remover listeners antigos
         const removeButtons = itensContainer.querySelectorAll('.btn-remove-item');
         removeButtons.forEach(btn => {
@@ -696,7 +696,7 @@ class OrcamentosPage {
             if (e.target.closest('.btn-remove-item')) {
                 const itemRow = e.target.closest('.item-row');
                 const allRows = itensContainer.querySelectorAll('.item-row');
-                
+
                 if (allRows.length > 1) {
                     itemRow.remove();
                     this.calculateTotal();
@@ -743,7 +743,7 @@ class OrcamentosPage {
     async createOrcamento(form) {
         try {
             const formData = new FormData(form);
-            
+
             const orcamentoData = {
                 cliente_id: parseInt(formData.get('cliente_id')),
                 validade: formData.get('validade'),
@@ -772,17 +772,17 @@ class OrcamentosPage {
 
             const response = await window.api.post('/api/orcamentos', orcamentoData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Orçamento criado com sucesso!');
                 window.UI.hideModal();
                 await this.loadOrcamentos();
-                
+
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao criar orçamento');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao criar orçamento:', error);
             this.showError('Erro ao criar orçamento', error.message);
@@ -882,7 +882,7 @@ class OrcamentosPage {
         if (!orcamento) return;
 
         let confirmed = false;
-        
+
         if (window.UI) {
             confirmed = await window.UI.showConfirm({
                 title: 'Converter para Venda',
@@ -893,22 +893,22 @@ class OrcamentosPage {
         } else {
             confirmed = confirm(`Deseja converter o orçamento #${orcamento.id} em uma venda?`);
         }
-        
+
         if (!confirmed) return;
-        
+
         try {
-            const response = await window.api.put(`/api/orcamentos/${orcamentoId}`, { 
+            const response = await window.api.put(`/api/orcamentos/${orcamentoId}`, {
                 status: 'aprovado',
-                converter_para_venda: true 
+                converter_para_venda: true
             });
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Orçamento convertido para venda com sucesso!');
                 await this.loadOrcamentos();
-                
+
                 this.notifyDashboardUpdate();
-                
+
                 // Opcional: redirecionar para a página de vendas
                 if (data.venda_id) {
                     setTimeout(() => {
@@ -918,7 +918,7 @@ class OrcamentosPage {
             } else {
                 throw new Error(data.error || 'Erro ao converter orçamento');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao converter orçamento:', error);
             this.showError('Erro ao converter orçamento: ' + (error.message || 'Erro desconhecido'));
@@ -935,7 +935,7 @@ class OrcamentosPage {
         if (!orcamento) return;
 
         let confirmed = false;
-        
+
         if (window.UI) {
             confirmed = await window.UI.showConfirm({
                 title: 'Confirmar Exclusão',
@@ -946,22 +946,22 @@ class OrcamentosPage {
         } else {
             confirmed = confirm(`Tem certeza que deseja excluir o orçamento #${orcamento.id}?`);
         }
-        
+
         if (!confirmed) return;
-        
+
         try {
             const response = await window.api.delete(`/api/orcamentos/${id}`);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Orçamento excluído com sucesso!');
                 await this.loadOrcamentos();
-                
+
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao excluir orçamento');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao excluir orçamento:', error);
             this.showError('Erro ao excluir orçamento: ' + (error.message || 'Erro desconhecido'));
@@ -973,18 +973,18 @@ class OrcamentosPage {
         if (!pagination) return;
 
         const totalPages = Math.ceil(this.filteredOrcamentos.length / this.itemsPerPage);
-        
+
         if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
         let paginationHTML = '<div class="pagination-controls">';
-        
+
         if (this.currentPage > 1) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage - 1}">Anterior</button>`;
         }
-        
+
         for (let i = 1; i <= totalPages; i++) {
             if (i === this.currentPage) {
                 paginationHTML += `<button class="btn-page active">${i}</button>`;
@@ -992,14 +992,14 @@ class OrcamentosPage {
                 paginationHTML += `<button class="btn-page" data-page="${i}">${i}</button>`;
             }
         }
-        
+
         if (this.currentPage < totalPages) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage + 1}">Próximo</button>`;
         }
-        
+
         paginationHTML += '</div>';
         pagination.innerHTML = paginationHTML;
-        
+
         const pageButtons = pagination.querySelectorAll('.btn-page[data-page]');
         pageButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -1020,12 +1020,12 @@ class OrcamentosPage {
         if (!query.trim()) {
             this.filteredOrcamentos = [...this.orcamentos];
         } else {
-            this.filteredOrcamentos = this.orcamentos.filter(orcamento => 
+            this.filteredOrcamentos = this.orcamentos.filter(orcamento =>
                 orcamento.cliente_nome.toLowerCase().includes(query.toLowerCase()) ||
                 orcamento.id.toString().includes(query)
             );
         }
-        
+
         this.currentPage = 1;
         this.renderOrcamentosTable();
         this.renderPagination();
@@ -1038,7 +1038,7 @@ class OrcamentosPage {
         });
 
         let activeButton;
-        switch(filterType) {
+        switch (filterType) {
             case 'all':
                 activeButton = document.getElementById('filter-all');
                 this.filteredOrcamentos = [...this.orcamentos];
@@ -1097,7 +1097,7 @@ class OrcamentosPage {
                     </td>
                 </tr>
             `;
-            
+
             const retryBtn = document.getElementById('retry-load-orcamentos-btn');
             if (retryBtn) {
                 retryBtn.addEventListener('click', () => {
@@ -1132,11 +1132,11 @@ class OrcamentosPage {
 
     formatDate(dateString) {
         if (!dateString) return '-';
-        
+
         try {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return '-'; // Data inválida
-            
+
             return date.toLocaleDateString('pt-BR');
         } catch (error) {
             console.error('❌ Erro ao formatar data:', dateString, error);
@@ -1146,16 +1146,16 @@ class OrcamentosPage {
 
     isExpired(dateString) {
         if (!dateString) return false;
-        
+
         try {
             const date = new Date(dateString);
             if (isNaN(date.getTime())) return false; // Data inválida
-            
+
             const now = new Date();
             // Resetar horas para comparar apenas as datas
             const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
             const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            
+
             return dateOnly < nowOnly;
         } catch (error) {
             console.error('❌ Erro ao verificar validade da data:', dateString, error);
@@ -1181,7 +1181,7 @@ class OrcamentosPage {
 
     notifyDashboardUpdate() {
         console.log('🔄 Notificando dashboard sobre atualização de orçamentos...');
-        
+
         if (window.eventManager) {
             window.eventManager.dispatchUpdate('orcamentos', 'update', {
                 action: 'crud',
@@ -1195,25 +1195,25 @@ class OrcamentosPage {
                     action: 'update'
                 }
             });
-            
+
             window.dispatchEvent(updateEvent);
             document.dispatchEvent(updateEvent);
         }
-        
+
         console.log('✅ Evento de atualização de orçamentos disparado!');
     }
 
     // ===== FUNÇÕES DE PDF =====
-    
+
     async generatePDF(orcamentoId) {
         try {
             console.log('📄 Gerando PDF para orçamento:', orcamentoId);
-            
+
             // Mostrar loading
             if (window.UI) {
                 window.UI.showLoading('Gerando PDF...');
             }
-            
+
             // Fazer download do PDF
             const response = await fetch(`/api/pdf/orcamento/${orcamentoId}`, {
                 method: 'GET',
@@ -1221,7 +1221,7 @@ class OrcamentosPage {
                     'Content-Type': 'application/pdf'
                 }
             });
-            
+
             if (response.ok) {
                 // Criar blob e fazer download
                 const blob = await response.blob();
@@ -1234,17 +1234,17 @@ class OrcamentosPage {
                 a.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-                
+
                 // Mostrar sucesso
                 if (window.UI) {
                     window.UI.showSuccess('PDF gerado com sucesso!');
                 }
-                
+
                 console.log('✅ PDF gerado com sucesso');
             } else {
                 throw new Error('Erro ao gerar PDF');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao gerar PDF:', error);
             this.showError('Erro ao gerar PDF: ' + error.message);
@@ -1261,11 +1261,11 @@ class OrcamentosPage {
     // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
     async cleanup() {
         console.log('🧹 ORÇAMENTOS - Iniciando cleanup...');
-        
+
         try {
             // 1. Limpar event listeners
             this.removeEventListeners();
-            
+
             // 2. Limpar estado interno
             this.orcamentos = [];
             this.filteredOrcamentos = [];
@@ -1273,14 +1273,14 @@ class OrcamentosPage {
             this.isLoading = false;
             this.clientes = [];
             this.produtos = [];
-            
+
             // 3. Limpar referência global
             if (window.orcamentosPageInstance === this) {
                 window.orcamentosPageInstance = null;
             }
-            
+
             console.log('✅ ORÇAMENTOS - Cleanup concluído com sucesso!');
-            
+
         } catch (error) {
             console.error('❌ ORÇAMENTOS - Erro durante cleanup:', error);
         }
@@ -1289,7 +1289,7 @@ class OrcamentosPage {
     // ✅ REMOVER EVENT LISTENERS
     removeEventListeners() {
         console.log('🔌 Removendo event listeners de orçamentos...');
-        
+
         try {
             // Botão Atualizar
             const refreshBtn = document.getElementById('refresh-orcamentos-btn');
@@ -1314,7 +1314,7 @@ class OrcamentosPage {
             const filterAtivo = document.getElementById('filter-ativo');
             const filterAprovado = document.getElementById('filter-aprovado');
             const filterExpirado = document.getElementById('filter-expirado');
-            
+
             if (filterAll) filterAll.replaceWith(filterAll.cloneNode(true));
             if (filterAtivo) filterAtivo.replaceWith(filterAtivo.cloneNode(true));
             if (filterAprovado) filterAprovado.replaceWith(filterAprovado.cloneNode(true));

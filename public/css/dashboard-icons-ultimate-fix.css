@@ -1,0 +1,300 @@
+/* ===== CORREÇÃO ULTIMATE - ELIMINAR QUADRADINHOS E MOSTRAR ÍCONES ===== */
+/* Força MÁXIMA para garantir que os ícones apareçam */
+
+/* ===== RESET COMPLETO DOS CONTAINERS ===== */
+#dashboard-page .stat-icon,
+.stats-grid .stat-icon,
+.stat-icon,
+.dashboard .stat-icon,
+div.stat-icon,
+*[class*="stat-icon"] {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24px !important;
+  color: #ffffff !important;
+  background: #3b82f6 !important;
+  position: relative !important;
+  z-index: 1 !important;
+  /* ✅ CORRIGIDO - reduzido para não passar por cima do header */
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  list-style: none !important;
+}
+
+/* ===== FORÇAR ÍCONES A APARECEREM ===== */
+#dashboard-page .stat-icon i,
+.stats-grid .stat-icon i,
+.stat-icon i,
+.dashboard .stat-icon i,
+div.stat-icon i,
+*[class*="stat-icon"] i,
+i.fas,
+i.far,
+i.fab,
+i.fal,
+i.fad {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-size: 24px !important;
+  z-index: 1 !important;
+  /* ✅ CORRIGIDO - reduzido para não passar por cima do header */
+  position: relative !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  border: none !important;
+  background: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  list-style: none !important;
+  content: "" !important;
+}
+
+/* ===== ELIMINAR COMPLETAMENTE PSEUDO-ELEMENTOS ===== */
+#dashboard-page .stat-icon::before,
+#dashboard-page .stat-icon::after,
+.stats-grid .stat-icon::before,
+.stats-grid .stat-icon::after,
+.stat-icon::before,
+.stat-icon::after,
+.dashboard .stat-icon::before,
+.dashboard .stat-icon::after,
+div.stat-icon::before,
+div.stat-icon::after,
+*[class*="stat-icon"]::before,
+*[class*="stat-icon"]::after {
+  display: none !important;
+  content: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+}
+
+/* ===== CÓDIGOS UNICODE FORÇADOS ===== */
+.fa-user-group::before {
+  content: "\f500" !important;
+}
+
+.fa-boxes-stacked::before {
+  content: "\f468" !important;
+}
+
+.fa-shopping-bag::before {
+  content: "\f290" !important;
+}
+
+.fa-file-invoice-dollar::before {
+  content: "\f571" !important;
+}
+
+.fa-check-circle::before {
+  content: "\f058" !important;
+}
+
+.fa-exchange-alt::before {
+  content: "\f362" !important;
+}
+
+.fa-clock::before {
+  content: "\f017" !important;
+}
+
+/* ===== CORES ESPECÍFICAS FORÇADAS ===== */
+
+/* Card 1 - Clientes */
+#dashboard-page .stat-card:nth-child(1) .stat-icon,
+.stats-grid .stat-card:nth-child(1) .stat-icon {
+  background: #3b82f6 !important;
+  /* Azul */
+}
+
+/* Card 2 - Produtos */
+#dashboard-page .stat-card:nth-child(2) .stat-icon,
+.stats-grid .stat-card:nth-child(2) .stat-icon {
+  background: #10b981 !important;
+  /* Verde */
+}
+
+/* Card 3 - Vendas */
+#dashboard-page .stat-card:nth-child(3) .stat-icon,
+.stats-grid .stat-card:nth-child(3) .stat-icon {
+  background: #f59e0b !important;
+  /* Laranja */
+}
+
+/* Card 4 - Orçamentos Ativos */
+#dashboard-page .stat-card:nth-child(4) .stat-icon,
+.stats-grid .stat-card:nth-child(4) .stat-icon {
+  background: #06b6d4 !important;
+  /* Azul claro */
+}
+
+/* Card 5 - Orçamentos Aprovados */
+#dashboard-page .stat-card:nth-child(5) .stat-icon,
+.stats-grid .stat-card:nth-child(5) .stat-icon {
+  background: #10b981 !important;
+  /* Verde */
+}
+
+/* Card 6 - Convertidos */
+#dashboard-page .stat-card:nth-child(6) .stat-icon,
+.stats-grid .stat-card:nth-child(6) .stat-icon {
+  background: #f59e0b !important;
+  /* Amarelo */
+}
+
+/* Card 7 - Expirados */
+#dashboard-page .stat-card:nth-child(7) .stat-icon,
+.stats-grid .stat-card:nth-child(7) .stat-icon {
+  background: #ef4444 !important;
+  /* Vermelho */
+}
+
+/* ===== SOBRESCREVER QUALQUER ESTILO INLINE ===== */
+.stat-icon[style],
+.stat-icon[style] i,
+i[style] {
+  width: auto !important;
+  height: auto !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+}
+
+/* ===== GARANTIR FONTAWESOME ===== */
+@font-face {
+  font-family: "Font Awesome 6 Free";
+  font-style: normal;
+  font-weight: 900;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2");
+}
+
+/* ===== FORÇAR FONTAWESOME EM TODOS OS ÍCONES ===== */
+i.fas,
+i.far,
+i.fab,
+i.fal,
+i.fad,
+[class*="fa-"] {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ===== ELIMINAR QUADRADINHOS ESPECÍFICOS ===== */
+.stat-icon:empty,
+.stat-icon:blank,
+.stat-icon:not(:has(i)) {
+  display: none !important;
+}
+
+/* ===== FORÇAR CONTEÚDO DOS ÍCONES ===== */
+.fa-user-group:before {
+  content: "👥" !important;
+}
+
+.fa-boxes-stacked:before {
+  content: "📦" !important;
+}
+
+.fa-shopping-bag:before {
+  content: "🛒" !important;
+}
+
+.fa-file-invoice-dollar:before {
+  content: "💰" !important;
+}
+
+.fa-check-circle:before {
+  content: "✅" !important;
+}
+
+.fa-exchange-alt:before {
+  content: "🔄" !important;
+}
+
+.fa-clock:before {
+  content: "⏰" !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+
+  #dashboard-page .stat-icon,
+  .stats-grid .stat-icon,
+  .stat-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 20px !important;
+  }
+
+  #dashboard-page .stat-icon i,
+  .stats-grid .stat-icon i,
+  .stat-icon i {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  #dashboard-page .stat-icon,
+  .stats-grid .stat-icon,
+  .stat-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 16px !important;
+  }
+
+  #dashboard-page .stat-icon i,
+  .stats-grid .stat-icon i,
+  .stat-icon i {
+    font-size: 16px !important;
+  }
+}
+
+/* ===== SOBRESCREVER TUDO ===== */
+* .stat-icon,
+* .stat-icon i,
+* i.fas,
+* i.far,
+* i.fab {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  color: #ffffff !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+}

@@ -1,0 +1,290 @@
+/* ===== CORREÇÕES RESPONSIVAS PARA BOTÕES ===== */
+/* Corrige o problema dos botões "Ver mais" e "Ver todos" tomando largura total */
+
+/* ===== BOTÕES DE PAGINAÇÃO E AÇÃO ===== */
+.pagination-btn,
+.load-more-btn,
+.expand-all-btn,
+.collapse-btn,
+.btn-action,
+.btn-secondary,
+.btn-outline {
+  /* Garantir que botões de ação não tomem largura total */
+  width: auto !important;
+  min-width: fit-content;
+  max-width: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* ===== CONTAINER DE CONTROLES DE PAGINAÇÃO ===== */
+.pagination-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: var(--spacing-md);
+}
+
+/* ===== BOTÕES ESPECÍFICOS ===== */
+.load-more-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border: 1px solid #2563eb;
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.load-more-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.expand-all-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1px solid #10b981;
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.expand-all-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.collapse-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border: 1px solid #f59e0b;
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.collapse-btn:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* ===== RESPONSIVIDADE - TABLET (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pagination-controls {
+    flex-direction: row;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+  
+  .pagination-btn,
+  .load-more-btn,
+  .expand-all-btn,
+  .collapse-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    min-width: 120px;
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE GRANDE (481px - 767px) ===== */
+@media (min-width: 481px) and (max-width: 767px) {
+  .pagination-controls {
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    justify-content: center;
+  }
+  
+  .pagination-btn,
+  .load-more-btn,
+  .expand-all-btn,
+  .collapse-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-width: 100px;
+    max-width: 150px;
+  }
+  
+  /* Em mobile, se houver muitos botões, quebrar linha */
+  .pagination-controls {
+    flex-wrap: wrap;
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE (320px - 480px) ===== */
+@media (max-width: 480px) {
+  .pagination-controls {
+    flex-direction: row;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    justify-content: center;
+  }
+  
+  .pagination-btn,
+  .load-more-btn,
+  .expand-all-btn,
+  .collapse-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    min-width: 80px;
+    max-width: 120px;
+    height: 36px;
+  }
+  
+  /* Texto mais compacto em mobile */
+  .pagination-btn span,
+  .load-more-btn span,
+  .expand-all-btn span,
+  .collapse-btn span {
+    font-size: var(--font-size-xs);
+  }
+  
+  /* Ícones menores em mobile */
+  .pagination-btn i,
+  .load-more-btn i,
+  .expand-all-btn i,
+  .collapse-btn i {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE PEQUENO (< 320px) ===== */
+@media (max-width: 319px) {
+  .pagination-controls {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+  }
+  
+  .pagination-btn,
+  .load-more-btn,
+  .expand-all-btn,
+  .collapse-btn {
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    min-width: 100%;
+    max-width: none;
+    height: 32px;
+  }
+}
+
+/* ===== EXCEÇÕES PARA BOTÕES QUE DEVEM TOMAR LARGURA TOTAL ===== */
+/* Botões que devem manter largura total em mobile */
+.btn.btn-full-width,
+.btn-primary.btn-full-width,
+.btn-secondary.btn-full-width,
+.btn-outline.btn-full-width {
+  width: 100% !important;
+}
+
+/* Botões de formulário que devem manter largura total */
+.form-group .btn,
+.modal-footer .btn,
+.card-footer .btn {
+  width: 100% !important;
+}
+
+/* ===== MELHORIAS DE ACESSIBILIDADE ===== */
+.pagination-btn:focus,
+.load-more-btn:focus,
+.expand-all-btn:focus,
+.collapse-btn:focus {
+  outline: 2px solid var(--color-blue-500);
+  outline-offset: 2px;
+}
+
+/* ===== ESTADOS DE CARREGAMENTO ===== */
+.pagination-btn.loading,
+.load-more-btn.loading,
+.expand-all-btn.loading,
+.collapse-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-btn.loading i,
+.load-more-btn.loading i,
+.expand-all-btn.loading i,
+.collapse-btn.loading i {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== MELHORIAS VISUAIS ===== */
+.pagination-btn,
+.load-more-btn,
+.expand-all-btn,
+.collapse-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.pagination-btn::before,
+.load-more-btn::before,
+.expand-all-btn::before,
+.collapse-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.pagination-btn:hover::before,
+.load-more-btn:hover::before,
+.expand-all-btn:hover::before,
+.collapse-btn:hover::before {
+  left: 100%;
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  .pagination-btn,
+  .load-more-btn,
+  .expand-all-btn,
+  .collapse-btn {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .pagination-btn:hover,
+  .load-more-btn:hover,
+  .expand-all-btn:hover,
+  .collapse-btn:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  .pagination-controls {
+    display: none !important;
+  }
+} 

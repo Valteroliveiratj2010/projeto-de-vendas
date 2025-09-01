@@ -1,0 +1,607 @@
+/* ===== RESPONSIVIDADE ESPECÍFICA PARA DASHBOARD ===== */
+
+/* ===== CONTAINER PRINCIPAL ===== */
+#dashboard-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-gray-50);
+}
+
+#dashboard-page .page-content {
+  padding: var(--spacing-xl);
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ===== HEADER DO DASHBOARD ===== */
+#dashboard-page .dashboard-header {
+  margin: var(--spacing-6) var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-6) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+#dashboard-page .dashboard-header h1 {
+  font-size: var(--font-size-h1-desktop);
+  color: var(--color-gray-900);
+  margin: 0;
+  font-weight: 700;
+}
+
+#dashboard-page .dashboard-header .header-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+/* ===== ALERTAS DE ESTOQUE ===== */
+#dashboard-page .estoque-alerts {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+}
+
+#dashboard-page .estoque-notification {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+#dashboard-page .estoque-notification:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+#dashboard-page .estoque-notification-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+#dashboard-page .estoque-notification h3 {
+  color: #92400e;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+#dashboard-page .estoque-notification p {
+  color: #92400e;
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+/* ===== GRID DE ESTATÍSTICAS ===== */
+#dashboard-page .stats-grid {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+#dashboard-page .stat-card {
+  background: var(--color-white);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-gray-200);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#dashboard-page .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-blue-500), var(--color-blue-600));
+}
+
+#dashboard-page .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+#dashboard-page .stat-card h3 {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin: 0 0 var(--spacing-sm) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#dashboard-page .stat-card .value {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+#dashboard-page .stat-card .change {
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+#dashboard-page .stat-card .change.positive {
+  color: var(--color-green-600);
+}
+
+#dashboard-page .stat-card .change.negative {
+  color: var(--color-red-600);
+}
+
+/* ===== RESUMO FINANCEIRO ===== */
+#dashboard-page .financial-summary {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+}
+
+#dashboard-page .financial-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-gray-200);
+  overflow: hidden;
+}
+
+#dashboard-page .financial-header {
+  background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+  color: var(--color-white);
+  padding: var(--spacing-lg);
+}
+
+#dashboard-page .financial-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+#dashboard-page .financial-body {
+  padding: var(--spacing-lg);
+}
+
+#dashboard-page .financial-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+#dashboard-page .financial-item:last-child {
+  border-bottom: none;
+}
+
+#dashboard-page .financial-label {
+  color: var(--color-gray-600);
+  font-size: var(--font-size-base);
+}
+
+#dashboard-page .financial-value {
+  font-weight: 600;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-base);
+}
+
+/* ===== ATIVIDADE RECENTE ===== */
+#dashboard-page .recent-activity {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+}
+
+#dashboard-page .activity-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-gray-200);
+  overflow: hidden;
+}
+
+#dashboard-page .activity-header {
+  background: var(--color-gray-50);
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+#dashboard-page .activity-header h3 {
+  margin: 0;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+#dashboard-page .activity-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#dashboard-page .activity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-gray-100);
+  transition: background-color 0.3s ease;
+}
+
+#dashboard-page .activity-item:hover {
+  background: var(--color-gray-50);
+}
+
+#dashboard-page .activity-item:last-child {
+  border-bottom: none;
+}
+
+#dashboard-page .activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+#dashboard-page .activity-icon.sale {
+  background: var(--color-green-500);
+}
+
+#dashboard-page .activity-icon.purchase {
+  background: var(--color-blue-500);
+}
+
+#dashboard-page .activity-icon.customer {
+  background: var(--color-purple-500);
+}
+
+#dashboard-page .activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
+#dashboard-page .activity-title {
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
+}
+
+#dashboard-page .activity-description {
+  color: var(--color-gray-600);
+  margin: 0;
+  font-size: var(--font-size-xs);
+}
+
+#dashboard-page .activity-time {
+  color: var(--color-gray-500);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+/* ===== AÇÕES RÁPIDAS ===== */
+#dashboard-page .quick-actions {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  padding: var(--spacing-4) 0;
+}
+
+#dashboard-page .quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+#dashboard-page .quick-action-card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-gray-200);
+  padding: var(--spacing-lg);
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+#dashboard-page .quick-action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-blue-300);
+}
+
+#dashboard-page .quick-action-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-md) auto;
+  font-size: var(--font-size-xl);
+  color: var(--color-white);
+}
+
+#dashboard-page .quick-action-title {
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-base);
+}
+
+#dashboard-page .quick-action-description {
+  color: var(--color-gray-600);
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+/* ===== RESPONSIVIDADE - DESKTOP GRANDE (> 1440px) ===== */
+@media (min-width: 1441px) {
+  #dashboard-page .stats-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  #dashboard-page .page-content {
+    padding: var(--spacing-2xl);
+  }
+}
+
+/* ===== RESPONSIVIDADE - DESKTOP (1025px - 1440px) ===== */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  #dashboard-page .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== RESPONSIVIDADE - TABLET (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #dashboard-page .page-content {
+    padding: var(--spacing-lg);
+  }
+  
+  #dashboard-page .dashboard-header {
+    margin: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-4);
+    padding: var(--spacing-4) 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #dashboard-page .dashboard-header h1 {
+    font-size: var(--font-size-h1-tablet);
+  }
+  
+  #dashboard-page .stats-grid {
+    margin: 0 var(--spacing-4) var(--spacing-4) var(--spacing-4);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+  
+  #dashboard-page .stat-card {
+    padding: var(--spacing-md);
+  }
+  
+  #dashboard-page .stat-card .value {
+    font-size: var(--font-size-2xl);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #dashboard-page .estoque-alerts,
+  #dashboard-page .financial-summary,
+  #dashboard-page .recent-activity,
+  #dashboard-page .quick-actions {
+    margin: 0 var(--spacing-4) var(--spacing-4) var(--spacing-4);
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE GRANDE (481px - 767px) ===== */
+@media (min-width: 481px) and (max-width: 767px) {
+  #dashboard-page .page-content {
+    padding: var(--spacing-md);
+  }
+  
+  #dashboard-page .dashboard-header {
+    margin: var(--spacing-3) var(--spacing-3) var(--spacing-3) var(--spacing-3);
+    padding: var(--spacing-3) 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #dashboard-page .dashboard-header h1 {
+    font-size: var(--font-size-h1-mobile);
+  }
+  
+  #dashboard-page .dashboard-header .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  #dashboard-page .stats-grid {
+    margin: 0 var(--spacing-3) var(--spacing-3) var(--spacing-3);
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  #dashboard-page .stat-card {
+    padding: var(--spacing-md);
+  }
+  
+  #dashboard-page .stat-card .value {
+    font-size: var(--font-size-xl);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #dashboard-page .quick-action-card {
+    padding: var(--spacing-md);
+  }
+  
+  #dashboard-page .quick-action-icon {
+    width: 50px;
+    height: 50px;
+    font-size: var(--font-size-lg);
+  }
+  
+  #dashboard-page .estoque-notification-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  #dashboard-page .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  #dashboard-page .activity-time {
+    align-self: flex-end;
+  }
+  
+  #dashboard-page .estoque-alerts,
+  #dashboard-page .financial-summary,
+  #dashboard-page .recent-activity,
+  #dashboard-page .quick-actions {
+    margin: 0 var(--spacing-3) var(--spacing-3) var(--spacing-3);
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE (320px - 480px) ===== */
+@media (max-width: 480px) {
+  #dashboard-page .page-content {
+    padding: var(--spacing-sm);
+  }
+  
+  #dashboard-page .dashboard-header {
+    margin: var(--spacing-2) var(--spacing-2) var(--spacing-2) var(--spacing-2);
+    padding: var(--spacing-2) 0;
+  }
+  
+  #dashboard-page .dashboard-header h1 {
+    font-size: var(--font-size-lg);
+  }
+  
+  #dashboard-page .stats-grid {
+    margin: 0 var(--spacing-2) var(--spacing-2) var(--spacing-2);
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  #dashboard-page .stat-card {
+    padding: var(--spacing-sm);
+  }
+  
+  #dashboard-page .stat-card .value {
+    font-size: var(--font-size-lg);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  #dashboard-page .quick-action-card {
+    padding: var(--spacing-sm);
+  }
+  
+  #dashboard-page .quick-action-icon {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-base);
+  }
+  
+  #dashboard-page .financial-header,
+  #dashboard-page .financial-body,
+  #dashboard-page .activity-header,
+  #dashboard-page .activity-item {
+    padding: var(--spacing-sm);
+  }
+  
+  #dashboard-page .estoque-alerts,
+  #dashboard-page .financial-summary,
+  #dashboard-page .recent-activity,
+  #dashboard-page .quick-actions {
+    margin: 0 var(--spacing-2) var(--spacing-2) var(--spacing-2);
+  }
+}
+
+/* ===== RESPONSIVIDADE - MOBILE PEQUENO (< 320px) ===== */
+@media (max-width: 319px) {
+  #dashboard-page .page-content {
+    padding: var(--spacing-xs);
+  }
+  
+  #dashboard-page .dashboard-header {
+    margin: var(--spacing-1) var(--spacing-1) var(--spacing-1) var(--spacing-1);
+    padding: var(--spacing-1) 0;
+  }
+  
+  #dashboard-page .dashboard-header h1 {
+    font-size: var(--font-size-base);
+  }
+  
+  #dashboard-page .stats-grid {
+    margin: 0 var(--spacing-1) var(--spacing-1) var(--spacing-1);
+    gap: var(--spacing-xs);
+  }
+  
+  #dashboard-page .stat-card {
+    padding: var(--spacing-xs);
+  }
+  
+  #dashboard-page .stat-card .value {
+    font-size: var(--font-size-base);
+  }
+  
+  #dashboard-page .quick-actions-grid {
+    gap: var(--spacing-xs);
+  }
+  
+  #dashboard-page .quick-action-card {
+    padding: var(--spacing-xs);
+  }
+  
+  #dashboard-page .quick-action-icon {
+    width: 30px;
+    height: 30px;
+    font-size: var(--font-size-sm);
+  }
+  
+  #dashboard-page .estoque-alerts,
+  #dashboard-page .financial-summary,
+  #dashboard-page .recent-activity,
+  #dashboard-page .quick-actions {
+    margin: 0 var(--spacing-1) var(--spacing-1) var(--spacing-1);
+  }
+} 

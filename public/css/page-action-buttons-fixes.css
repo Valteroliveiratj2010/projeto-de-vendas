@@ -1,0 +1,279 @@
+/* ===== CORREÇÕES PARA BOTÕES DE AÇÃO NAS PÁGINAS DE GESTÃO ===== */
+/* Corrige problemas de exibição do texto nos botões das páginas de gestão */
+
+/* ===== BOTÕES DE AÇÃO NAS PÁGINAS ===== */
+.btn-primary[id*="new-"],
+.btn-primary[id*="btn"] {
+  background: #3b82f6 !important; /* Fundo azul */
+  color: #ffffff !important; /* Texto branco */
+  border: 1px solid #3b82f6 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ===== ÍCONES DOS BOTÕES ===== */
+.btn-primary[id*="new-"] i,
+.btn-primary[id*="btn"] i {
+  font-size: 16px !important;
+  color: #ffffff !important; /* Ícones brancos */
+  display: inline-block !important;
+  margin-right: 4px !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.btn-primary[id*="new-"]:hover,
+.btn-primary[id*="btn"]:hover {
+  background: #2563eb !important; /* Azul mais escuro */
+  color: #ffffff !important; /* Texto branco */
+  border-color: #1d4ed8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===== FOCUS STATES ===== */
+.btn-primary[id*="new-"]:focus,
+.btn-primary[id*="btn"]:focus {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===== ACTIVE STATES ===== */
+.btn-primary[id*="new-"]:active,
+.btn-primary[id*="btn"]:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* ===== BOTÕES ESPECÍFICOS ===== */
+
+/* Botão Novo Cliente */
+#new-cliente-btn {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+#new-cliente-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+#new-cliente-btn i {
+  color: #ffffff !important;
+}
+
+/* Botão Nova Venda */
+#new-venda-btn {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+#new-venda-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+#new-venda-btn i {
+  color: #ffffff !important;
+}
+
+/* Botão Novo Produto */
+#new-produto-btn {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+#new-produto-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+#new-produto-btn i {
+  color: #ffffff !important;
+}
+
+/* Botão Novo Orçamento */
+#new-orcamento-btn {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+#new-orcamento-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+#new-orcamento-btn i {
+  color: #ffffff !important;
+}
+
+/* ===== SOBRESCREVER REGRAS CONFLITANTES ===== */
+.btn-primary[id*="new-"] *,
+.btn-primary[id*="btn"] * {
+  color: inherit !important;
+  background-color: transparent !important;
+}
+
+/* ===== REMOVER PSEUDO-ELEMENTOS ===== */
+.btn-primary[id*="new-"]::before,
+.btn-primary[id*="new-"]::after,
+.btn-primary[id*="btn"]::before,
+.btn-primary[id*="btn"]::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ===== GARANTIR VISIBILIDADE ===== */
+.btn-primary[id*="new-"],
+.btn-primary[id*="btn"] {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-flex !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .btn-primary[id*="new-"],
+  .btn-primary[id*="btn"] {
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+  }
+  
+  .btn-primary[id*="new-"] i,
+  .btn-primary[id*="btn"] i {
+    font-size: 14px !important;
+  }
+}
+
+/* Mobile (481px - 767px) */
+@media (max-width: 767px) {
+  .btn-primary[id*="new-"],
+  .btn-primary[id*="btn"] {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    min-width: 80px !important;
+  }
+  
+  .btn-primary[id*="new-"] i,
+  .btn-primary[id*="btn"] i {
+    font-size: 12px !important;
+    margin-right: 2px !important;
+  }
+}
+
+/* Mobile Pequeno (≤ 480px) */
+@media (max-width: 480px) {
+  .btn-primary[id*="new-"],
+  .btn-primary[id*="btn"] {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    min-width: 70px !important;
+  }
+  
+  .btn-primary[id*="new-"] i,
+  .btn-primary[id*="btn"] i {
+    font-size: 10px !important;
+    margin-right: 2px !important;
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes pageActionBtnPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-primary[id*="new-"]:hover,
+.btn-primary[id*="btn"]:hover {
+  animation: pageActionBtnPulse 0.3s ease-in-out;
+}
+
+/* ===== ESTADOS DE CARREGAMENTO ===== */
+.btn-primary[id*="new-"].loading,
+.btn-primary[id*="btn"].loading {
+  opacity: 0.7 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.btn-primary[id*="new-"].loading i,
+.btn-primary[id*="btn"].loading i {
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  .btn-primary[id*="new-"],
+  .btn-primary[id*="btn"] {
+    background: #3b82f6 !important; /* Manter azul mesmo no dark mode */
+    border-color: #3b82f6 !important;
+    color: #ffffff !important; /* Manter texto branco */
+  }
+  
+  .btn-primary[id*="new-"]:hover,
+  .btn-primary[id*="btn"]:hover {
+    background: #2563eb !important; /* Azul mais escuro no hover */
+    border-color: #1d4ed8 !important;
+  }
+  
+  .btn-primary[id*="new-"] i,
+  .btn-primary[id*="btn"] i {
+    color: #ffffff !important; /* Ícones brancos */
+  }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+.btn-primary[id*="new-"],
+.btn-primary[id*="btn"] {
+  min-height: 36px !important;
+  min-width: 36px !important;
+}
+
+.btn-primary[id*="new-"]:focus-visible,
+.btn-primary[id*="btn"]:focus-visible {
+  outline: 2px solid #ffffff !important;
+  outline-offset: 2px !important;
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  .btn-primary[id*="new-"],
+  .btn-primary[id*="btn"] {
+    display: none !important;
+  }
+} 

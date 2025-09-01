@@ -17,18 +17,18 @@ class ClientesPage {
     async init() {
         try {
             console.log('🚀 Inicializando página de clientes...');
-            
+
             // Renderizar estrutura HTML
             this.renderPage();
-            
+
             // Carregar dados
             await this.loadClientes();
-            
+
             // Configurar event listeners
             this.setupEventListeners();
-            
+
             console.log('✅ Página de clientes inicializada!');
-            
+
         } catch (error) {
             console.error('❌ Erro ao inicializar página de clientes:', error);
             this.showError('Erro ao carregar página', error.message);
@@ -83,7 +83,7 @@ class ClientesPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-user-group"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-clientes-stat">0</h3>
@@ -172,10 +172,10 @@ class ClientesPage {
     async loadClientes() {
         try {
             this.showLoading();
-            
+
             const response = await window.api.get('/api/clientes');
             const data = response.data;
-            
+
             if (data.success) {
                 this.clientes = data.data;
                 this.renderClientesTable();
@@ -183,7 +183,7 @@ class ClientesPage {
             } else {
                 throw new Error(data.error || 'Erro ao carregar clientes');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao carregar clientes:', error);
             this.showError('Erro ao carregar clientes', error.message);
@@ -199,7 +199,7 @@ class ClientesPage {
         if (!tbody) return;
 
         if (this.clientes.length === 0) {
-                    tbody.innerHTML = `
+            tbody.innerHTML = `
             <tr>
                 <td colspan="6" class="empty-state">
                     <div class="empty-icon">
@@ -212,16 +212,16 @@ class ClientesPage {
                 </td>
             </tr>
         `;
-        
-        // Configurar event listener para o botão de primeiro cliente
-        const firstClienteBtn = document.getElementById('first-cliente-btn');
-        if (firstClienteBtn) {
-            firstClienteBtn.addEventListener('click', () => {
-                this.showNewClienteModal();
-            });
-        }
-        
-        return;
+
+            // Configurar event listener para o botão de primeiro cliente
+            const firstClienteBtn = document.getElementById('first-cliente-btn');
+            if (firstClienteBtn) {
+                firstClienteBtn.addEventListener('click', () => {
+                    this.showNewClienteModal();
+                });
+            }
+
+            return;
         }
 
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -257,7 +257,7 @@ class ClientesPage {
                 </td>
             </tr>
         `).join('');
-        
+
         // Configurar event listeners para os botões de ação
         this.setupActionButtons();
     }
@@ -270,19 +270,19 @@ class ClientesPage {
         if (!pagination) return;
 
         const totalPages = Math.ceil(this.clientes.length / this.itemsPerPage);
-        
+
         if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
         let paginationHTML = '<div class="pagination-controls">';
-        
+
         // Botão anterior
         if (this.currentPage > 1) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage - 1}">Anterior</button>`;
         }
-        
+
         // Páginas
         for (let i = 1; i <= totalPages; i++) {
             if (i === this.currentPage) {
@@ -291,15 +291,15 @@ class ClientesPage {
                 paginationHTML += `<button class="btn-page" data-page="${i}">${i}</button>`;
             }
         }
-        
+
         // Botão próximo
         if (this.currentPage < totalPages) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage + 1}">Próximo</button>`;
         }
-        
+
         paginationHTML += '</div>';
         pagination.innerHTML = paginationHTML;
-        
+
         // Configurar event listeners para a paginação
         this.setupPaginationButtons();
     }
@@ -310,7 +310,7 @@ class ClientesPage {
     setupActionButtons() {
         const tbody = document.getElementById('clientes-table-body');
         if (!tbody) return;
-        
+
         // Botões de visualizar
         const viewButtons = tbody.querySelectorAll('.btn-view');
         viewButtons.forEach(button => {
@@ -320,7 +320,7 @@ class ClientesPage {
                 this.viewCliente(clienteId);
             });
         });
-        
+
         // Botões de editar
         const editButtons = tbody.querySelectorAll('.btn-edit');
         editButtons.forEach(button => {
@@ -330,7 +330,7 @@ class ClientesPage {
                 this.editCliente(clienteId);
             });
         });
-        
+
         // Botões de excluir
         const deleteButtons = tbody.querySelectorAll('.btn-delete');
         deleteButtons.forEach(button => {
@@ -341,14 +341,14 @@ class ClientesPage {
             });
         });
     }
-    
+
     /**
      * Configura event listeners para a paginação
      */
     setupPaginationButtons() {
         const pagination = document.getElementById('clientes-pagination');
         if (!pagination) return;
-        
+
         const pageButtons = pagination.querySelectorAll('.btn-page[data-page]');
         pageButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -358,7 +358,7 @@ class ClientesPage {
             });
         });
     }
-    
+
     /**
      * Vai para uma página específica
      */
@@ -373,7 +373,7 @@ class ClientesPage {
      */
     showNewClienteModal() {
         console.log('🔄 Abrindo modal de novo cliente...');
-        
+
         if (window.UI && window.UI.showModal) {
             console.log('✅ Usando modal da UI');
             this.showClienteFormModal(null, 'create');
@@ -389,13 +389,13 @@ class ClientesPage {
      */
     validateClienteData(clienteData) {
         console.log('🔍 Validando dados do cliente:', clienteData);
-        
+
         // Remover espaços em branco
         const nome = (clienteData.nome || '').trim();
         const telefone = (clienteData.telefone || '').trim();
         const email = (clienteData.email || '').trim();
         const documento = (clienteData.documento || '').trim();
-        
+
         // Validar nome (obrigatório, 2-150 caracteres)
         if (!nome || nome.length < 2 || nome.length > 150) {
             return {
@@ -403,7 +403,7 @@ class ClientesPage {
                 error: 'Nome é obrigatório e deve ter entre 2 e 150 caracteres'
             };
         }
-        
+
         // Validar telefone (obrigatório, 10-20 caracteres)
         if (!telefone || telefone.length < 10 || telefone.length > 20) {
             return {
@@ -411,7 +411,7 @@ class ClientesPage {
                 error: 'Telefone é obrigatório e deve ter entre 10 e 20 caracteres'
             };
         }
-        
+
         // Validar email (opcional, mas se preenchido deve ser válido)
         if (email && !this.isValidEmail(email)) {
             return {
@@ -419,7 +419,7 @@ class ClientesPage {
                 error: 'Email deve ser válido'
             };
         }
-        
+
         // Validar documento (opcional, mas se preenchido deve ter 11-30 caracteres)
         if (documento && (documento.length < 11 || documento.length > 30)) {
             return {
@@ -427,16 +427,16 @@ class ClientesPage {
                 error: 'Documento deve ter entre 11 e 30 caracteres'
             };
         }
-        
+
         // Atualizar dados limpos
         clienteData.nome = nome;
         clienteData.telefone = telefone;
         clienteData.email = email || null;
         clienteData.documento = documento || null;
-        
+
         return { valid: true };
     }
-    
+
     /**
      * Valida formato de email
      */
@@ -450,7 +450,7 @@ class ClientesPage {
      */
     showClienteFormModal(cliente, mode) {
         console.log(`🔄 Abrindo modal de cliente: ${mode}`);
-        
+
         const title = mode === 'create' ? 'Novo Cliente' : 'Editar Cliente';
         const content = `
             <form id="cliente-form-ui" class="cliente-form">
@@ -500,47 +500,47 @@ class ClientesPage {
                 </div>
             </form>
         `;
-        
+
         try {
             const closeModal = window.UI.showModal({
                 title: title,
                 content: content,
                 size: 'md'
             });
-            
+
             if (closeModal && typeof closeModal === 'function') {
                 console.log('✅ Modal aberto com sucesso');
-                
+
                 // Configurar event listeners
                 setTimeout(() => {
                     const form = document.getElementById('cliente-form-ui');
                     const cancelBtn = document.getElementById('cancel-cliente-ui');
                     const saveBtn = document.getElementById('save-cliente-ui');
-                    
+
                     if (cancelBtn) {
                         cancelBtn.addEventListener('click', () => {
                             console.log('❌ Modal cancelado');
                             closeModal();
                         });
                     }
-                    
+
                     if (form && saveBtn) {
                         form.addEventListener('submit', async (e) => {
                             e.preventDefault();
                             console.log('💾 Salvando cliente...');
-                            
+
                             // Evitar múltiplos submits - desabilitar botão
                             if (saveBtn.disabled) {
                                 console.log('⚠️ Já processando, ignorando submit...');
                                 return;
                             }
-                            
+
                             saveBtn.disabled = true;
                             saveBtn.textContent = 'Salvando...';
-                            
+
                             const formData = new FormData(form);
                             const clienteData = Object.fromEntries(formData.entries());
-                            
+
                             // Validar dados no frontend antes de enviar
                             const validation = this.validateClienteData(clienteData);
                             if (!validation.valid) {
@@ -550,17 +550,17 @@ class ClientesPage {
                                 saveBtn.textContent = mode === 'create' ? 'Criar Cliente' : 'Atualizar Cliente';
                                 return;
                             }
-                            
+
                             try {
                                 if (mode === 'create') {
                                     await this.createCliente(clienteData);
                                 } else {
                                     await this.updateCliente(cliente.id, clienteData);
                                 }
-                                
+
                                 closeModal();
                                 await this.loadClientes();
-                                
+
                             } catch (error) {
                                 console.error('❌ Erro ao salvar cliente:', error);
                                 // Reabilitar botão em caso de erro
@@ -584,30 +584,30 @@ class ClientesPage {
     async createCliente(clienteData) {
         try {
             console.log('📤 Enviando dados do cliente:', clienteData);
-            
+
             const response = await window.api.post('/api/clientes', clienteData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Cliente criado com sucesso!');
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
-                
+
                 return data.data;
             } else {
                 throw new Error(data.error || 'Erro ao criar cliente');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao criar cliente:', error);
             console.error('❌ Resposta completa:', error.response);
-            
+
             // Tratar erros de validação específicos
             if (error.response && error.response.status === 400) {
                 const errorData = error.response.data;
                 console.error('❌ Dados do erro 400:', errorData);
-                
+
                 if (errorData.errors && Array.isArray(errorData.errors)) {
                     // Erro de validação com detalhes
                     const errorMessages = errorData.errors.map(err => err.msg).join(', ');
@@ -632,18 +632,18 @@ class ClientesPage {
         try {
             const response = await window.api.put(`/api/clientes/${id}`, clienteData);
             const data = response.data;
-            
-                    if (data.success) {
-            this.showSuccess('Cliente atualizado com sucesso!');
-            
-            // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
-            this.notifyDashboardUpdate();
-            
-            return data.data;
-        } else {
-            throw new Error(data.error || 'Erro ao atualizar cliente');
-        }
-            
+
+            if (data.success) {
+                this.showSuccess('Cliente atualizado com sucesso!');
+
+                // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
+                this.notifyDashboardUpdate();
+
+                return data.data;
+            } else {
+                throw new Error(data.error || 'Erro ao atualizar cliente');
+            }
+
         } catch (error) {
             console.error('❌ Erro ao atualizar cliente:', error);
             this.showError('Erro ao atualizar cliente', error.message);
@@ -663,19 +663,19 @@ class ClientesPage {
             const modal = document.getElementById('cliente-modal');
             const modalTitle = document.getElementById('modal-title');
             const form = document.getElementById('cliente-form');
-            
+
             if (modal && modalTitle && form) {
                 modalTitle.textContent = 'Editar Cliente';
                 form.dataset.mode = 'edit';
                 form.dataset.clienteId = cliente.id;
-                
+
                 // Preencher campos
                 document.getElementById('nome').value = cliente.nome;
                 document.getElementById('telefone').value = cliente.telefone;
                 document.getElementById('email').value = cliente.email || '';
                 document.getElementById('documento').value = cliente.documento || '';
                 document.getElementById('endereco').value = cliente.endereco || '';
-                
+
                 modal.classList.add('active');
             }
         }
@@ -727,29 +727,29 @@ class ClientesPage {
      */
     async deleteCliente(id) {
         let confirmed = false;
-        
+
         // Buscar informações do cliente antes de excluir
         try {
             const clienteResponse = await window.api.get(`/api/clientes/${id}`);
             if (!clienteResponse.data.success) {
                 throw new Error('Erro ao buscar dados do cliente');
             }
-            
+
             const cliente = clienteResponse.data.data;
-            
+
             // Verificar se cliente tem vendas ou orçamentos
             let message = 'Tem certeza que deseja excluir este cliente?';
             let hasActivities = false;
-            
+
             if (cliente.total_vendas > 0 || cliente.total_orcamentos > 0) {
                 hasActivities = true;
                 message = `⚠️ ATENÇÃO: Este cliente possui atividades registradas!\n\n` +
-                         `• Vendas: ${cliente.total_vendas || 0}\n` +
-                         `• Orçamentos: ${cliente.total_orcamentos || 0}\n\n` +
-                         `Ao excluir o cliente, TODAS essas atividades serão removidas permanentemente!\n\n` +
-                         `Tem certeza que deseja continuar?`;
+                    `• Vendas: ${cliente.total_vendas || 0}\n` +
+                    `• Orçamentos: ${cliente.total_orcamentos || 0}\n\n` +
+                    `Ao excluir o cliente, TODAS essas atividades serão removidas permanentemente!\n\n` +
+                    `Tem certeza que deseja continuar?`;
             }
-            
+
             if (window.UI) {
                 confirmed = await window.UI.showConfirm({
                     title: hasActivities ? '⚠️ Confirmação de Exclusão' : 'Confirmar Exclusão',
@@ -761,7 +761,7 @@ class ClientesPage {
             } else {
                 confirmed = confirm(message);
             }
-            
+
         } catch (error) {
             console.warn('⚠️ Erro ao buscar dados do cliente, usando confirmação simples:', error);
             if (window.UI) {
@@ -775,37 +775,37 @@ class ClientesPage {
                 confirmed = confirm('Tem certeza que deseja excluir este cliente?');
             }
         }
-        
+
         if (!confirmed) return;
-        
+
         try {
             const response = await window.api.delete(`/api/clientes/${id}`);
             const data = response.data;
-            
+
             if (data.success) {
                 // Mostrar resumo da exclusão se disponível
                 let successMessage = 'Cliente excluído com sucesso!';
-                
+
                 if (data.data && data.data.resumo) {
                     const resumo = data.data.resumo;
                     successMessage = `✅ Cliente excluído com sucesso!\n\n` +
-                                   `📊 Resumo da exclusão:\n` +
-                                   `• Vendas removidas: ${resumo.vendas_excluidas}\n` +
-                                   `• Orçamentos removidos: ${resumo.orcamentos_excluidos}\n` +
-                                   `• Pagamentos removidos: ${resumo.pagamentos_excluidos}\n` +
-                                   `• Itens de venda removidos: ${resumo.itens_venda_excluidos}\n` +
-                                   `• Itens de orçamento removidos: ${resumo.itens_orcamento_excluidos}`;
+                        `📊 Resumo da exclusão:\n` +
+                        `• Vendas removidas: ${resumo.vendas_excluidas}\n` +
+                        `• Orçamentos removidos: ${resumo.orcamentos_excluidos}\n` +
+                        `• Pagamentos removidos: ${resumo.pagamentos_excluidos}\n` +
+                        `• Itens de venda removidos: ${resumo.itens_venda_excluidos}\n` +
+                        `• Itens de orçamento removidos: ${resumo.itens_orcamento_excluidos}`;
                 }
-                
+
                 this.showSuccess(successMessage);
                 await this.loadClientes();
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao excluir cliente');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao excluir cliente:', error);
             if (window.UI) {
@@ -840,7 +840,7 @@ class ClientesPage {
                     </div>
                 </div>
             `;
-            
+
             window.UI.showModal({
                 title: `Detalhes do Cliente`,
                 content: content,
@@ -859,13 +859,13 @@ class ClientesPage {
             this.renderClientesTable();
             return;
         }
-        
-        const filtered = this.clientes.filter(cliente => 
+
+        const filtered = this.clientes.filter(cliente =>
             cliente.nome.toLowerCase().includes(query.toLowerCase()) ||
             cliente.email?.toLowerCase().includes(query.toLowerCase()) ||
             cliente.documento?.includes(query)
         );
-        
+
         this.renderFilteredClientes(filtered);
     }
 
@@ -954,7 +954,7 @@ class ClientesPage {
                     </td>
                 </tr>
             `;
-            
+
             // Configurar event listener para o botão de tentar novamente
             const retryBtn = document.getElementById('retry-load-btn');
             if (retryBtn) {
@@ -986,14 +986,14 @@ class ClientesPage {
             alert(`${title}: ${message}`);
         }
     }
-    
+
     /**
      * 🔄 NOTIFICA DASHBOARD SOBRE ATUALIZAÇÕES
      * Dispara evento customizado para atualizar estatísticas automaticamente
      */
     notifyDashboardUpdate() {
         console.log('🔄 Notificando dashboard sobre atualização...');
-        
+
         // Usar EventManager global se disponível
         if (window.eventManager) {
             window.eventManager.dispatchUpdate('clientes', 'update', {
@@ -1009,34 +1009,34 @@ class ClientesPage {
                     action: 'update'
                 }
             });
-            
+
             window.dispatchEvent(updateEvent);
             document.dispatchEvent(updateEvent);
         }
-        
+
         console.log('✅ Evento de atualização disparado!');
     }
 
     // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
     async cleanup() {
         console.log('🧹 CLIENTES - Iniciando cleanup...');
-        
+
         try {
             // 1. Limpar event listeners
             this.removeEventListeners();
-            
+
             // 2. Limpar estado interno
             this.clientes = [];
             this.currentPage = 1;
             this.itemsPerPage = 10;
-            
+
             // 3. Limpar referência global
             if (window.clientesPageInstance === this) {
                 window.clientesPageInstance = null;
             }
-            
+
             console.log('✅ CLIENTES - Cleanup concluído com sucesso!');
-            
+
         } catch (error) {
             console.error('❌ CLIENTES - Erro durante cleanup:', error);
         }
@@ -1045,7 +1045,7 @@ class ClientesPage {
     // ✅ REMOVER EVENT LISTENERS
     removeEventListeners() {
         console.log('🔌 Removendo event listeners de clientes...');
-        
+
         try {
             // Botão Novo Cliente
             const newBtn = document.getElementById('new-cliente-btn');

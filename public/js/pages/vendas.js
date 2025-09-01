@@ -17,18 +17,18 @@ class VendasPage {
     init() {
         try {
             console.log('🚀 Inicializando página de vendas...');
-            
+
             // Renderizar estrutura HTML
             this.renderPage();
-            
+
             // Carregar dados
             this.loadInitialData();
-            
+
             // Configurar event listeners
             this.setupEventListeners();
-            
+
             console.log('✅ Página de vendas inicializada!');
-            
+
         } catch (error) {
             console.error('❌ Erro ao inicializar página de vendas:', error);
             this.showError('Erro ao carregar página', error.message);
@@ -83,7 +83,7 @@ class VendasPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-bag"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-vendas-stat">0</h3>
@@ -302,18 +302,18 @@ class VendasPage {
 
     async loadVendas() {
         if (this.isLoading) return;
-        
+
         try {
             this.isLoading = true;
             this.showLoading();
-            
+
             console.log('🛒 Carregando vendas...');
             const response = await window.api.get('/api/vendas');
-            
+
             if (response.data && response.data.success) {
                 this.vendas = response.data.data || [];
                 this.filteredVendas = [...this.vendas];
-                
+
                 console.log(`✅ ${this.vendas.length} vendas carregadas`);
                 this.updateStats();
                 this.renderVendasTable();
@@ -321,7 +321,7 @@ class VendasPage {
             } else {
                 throw new Error(response.data?.error || 'Erro ao carregar vendas');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao carregar vendas:', error);
             this.showErrorWithTitle('Erro ao carregar vendas', error.message);
@@ -334,7 +334,7 @@ class VendasPage {
     async loadClientes() {
         try {
             const response = await window.api.get('/api/clientes?limit=all');
-            
+
             if (response.data && response.data.success) {
                 this.clientes = response.data.data || [];
             } else {
@@ -376,14 +376,14 @@ class VendasPage {
                     </td>
                 </tr>
             `;
-            
+
             const firstVendaBtn = document.getElementById('first-venda-btn');
             if (firstVendaBtn) {
                 firstVendaBtn.addEventListener('click', () => {
                     this.showNewVendaModal();
                 });
             }
-            
+
             return;
         }
 
@@ -439,14 +439,14 @@ class VendasPage {
                 </td>
             </tr>
         `).join('');
-        
+
         this.setupActionButtons();
     }
 
     setupActionButtons() {
         const tbody = document.getElementById('vendas-table-body');
         if (!tbody) return;
-        
+
         // Botões de visualizar
         const viewButtons = tbody.querySelectorAll('.btn-view');
         viewButtons.forEach(button => {
@@ -456,7 +456,7 @@ class VendasPage {
                 this.viewVenda(vendaId);
             });
         });
-        
+
         // Botões de pagamento
         const paymentButtons = tbody.querySelectorAll('.btn-payment');
         paymentButtons.forEach(button => {
@@ -466,7 +466,7 @@ class VendasPage {
                 this.showPaymentModal(vendaId);
             });
         });
-        
+
         // Botões de PDF
         const pdfButtons = tbody.querySelectorAll('.btn-pdf');
         pdfButtons.forEach(button => {
@@ -476,7 +476,7 @@ class VendasPage {
                 this.generatePDF(vendaId);
             });
         });
-        
+
         // Botões de editar
         const editButtons = tbody.querySelectorAll('.btn-edit');
         editButtons.forEach(button => {
@@ -486,7 +486,7 @@ class VendasPage {
                 this.editVenda(vendaId);
             });
         });
-        
+
         // Botões de cancelar
         const deleteButtons = tbody.querySelectorAll('.btn-delete');
         deleteButtons.forEach(button => {
@@ -500,23 +500,23 @@ class VendasPage {
 
     updateStats() {
         const totalVendas = this.vendas.length;
-        
+
         // Converter valores string para números antes de calcular
         const valorVendas = this.vendas.reduce((total, venda) => {
             const valor = parseFloat(venda.total) || 0;
             return total + valor;
         }, 0);
-        
+
         // Calcular status baseado nos valores reais, não apenas no campo status
         let vendasPendentes = 0;
         let vendasPagas = 0;
         let vendasParciais = 0;
-        
+
         this.vendas.forEach(venda => {
             const total = parseFloat(venda.total) || 0;
             const pago = parseFloat(venda.pago) || 0;
             const saldo = parseFloat(venda.saldo) || 0;
-            
+
             if (pago === 0) {
                 vendasPendentes++;
             } else if (saldo === 0) {
@@ -663,7 +663,7 @@ class VendasPage {
 
     setupItemListeners() {
         const itensContainer = document.getElementById('itens-container');
-        
+
         // Remove listeners antigos para evitar duplicação
         const removeButtons = itensContainer.querySelectorAll('.btn-remove-item');
         removeButtons.forEach(btn => {
@@ -675,7 +675,7 @@ class VendasPage {
             if (e.target.closest('.btn-remove-item')) {
                 const itemRow = e.target.closest('.item-row');
                 const allRows = itensContainer.querySelectorAll('.item-row');
-                
+
                 if (allRows.length > 1) {
                     itemRow.remove();
                     this.calculateTotal();
@@ -723,7 +723,7 @@ class VendasPage {
     async createVenda(form) {
         try {
             const formData = new FormData(form);
-            
+
             // Extrair dados do formulário
             const vendaData = {
                 cliente_id: parseInt(formData.get('cliente_id')),
@@ -752,18 +752,18 @@ class VendasPage {
 
             const response = await window.api.post('/api/vendas', vendaData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Venda criada com sucesso!');
                 window.UI.hideModal();
                 await this.loadVendas();
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao criar venda');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao criar venda:', error);
             this.showErrorWithTitle('Erro ao criar venda', error.message);
@@ -955,11 +955,11 @@ class VendasPage {
 
             const response = await window.api.post('/api/pagamentos', paymentData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Pagamento registrado com sucesso!');
                 window.UI.hideModal();
-                
+
                 // Atualizar dados da venda localmente com os novos valores
                 if (data.data && data.data.venda_atualizada) {
                     const vendaIndex = this.vendas.findIndex(v => v.id === vendaId);
@@ -970,19 +970,19 @@ class VendasPage {
                             saldo: data.data.venda_atualizada.saldo,
                             status: data.data.venda_atualizada.status
                         };
-                        
+
                         // Atualizar estatísticas imediatamente
                         this.updateStats();
                         this.renderVendasTable();
                     }
                 }
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao registrar pagamento');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao processar pagamento:', error);
             this.showErrorWithTitle('Erro ao processar pagamento', error.message);
@@ -990,16 +990,16 @@ class VendasPage {
     }
 
     // ===== FUNÇÕES DE PDF =====
-    
+
     async generatePDF(vendaId) {
         try {
             console.log('📄 Gerando PDF para venda:', vendaId);
-            
+
             // Mostrar loading
             if (window.UI) {
                 window.UI.showLoading('Gerando PDF...');
             }
-            
+
             // Fazer download do PDF
             const response = await fetch(`/api/pdf/venda/${vendaId}`, {
                 method: 'GET',
@@ -1007,7 +1007,7 @@ class VendasPage {
                     'Content-Type': 'application/pdf'
                 }
             });
-            
+
             if (response.ok) {
                 // Criar blob e fazer download
                 const blob = await response.blob();
@@ -1020,17 +1020,17 @@ class VendasPage {
                 a.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-                
+
                 // Mostrar sucesso
                 if (window.UI) {
                     window.UI.showSuccess('PDF gerado com sucesso!');
                 }
-                
+
                 console.log('✅ PDF gerado com sucesso');
             } else {
                 throw new Error('Erro ao gerar PDF');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao gerar PDF:', error);
             this.showErrorWithTitle('Erro ao gerar PDF', error.message);
@@ -1050,18 +1050,18 @@ class VendasPage {
         if (!pagination) return;
 
         const totalPages = Math.ceil(this.filteredVendas.length / this.itemsPerPage);
-        
+
         if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
         let paginationHTML = '<div class="pagination-controls">';
-        
+
         if (this.currentPage > 1) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage - 1}">Anterior</button>`;
         }
-        
+
         for (let i = 1; i <= totalPages; i++) {
             if (i === this.currentPage) {
                 paginationHTML += `<button class="btn-page active">${i}</button>`;
@@ -1069,14 +1069,14 @@ class VendasPage {
                 paginationHTML += `<button class="btn-page" data-page="${i}">${i}</button>`;
             }
         }
-        
+
         if (this.currentPage < totalPages) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage + 1}">Próximo</button>`;
         }
-        
+
         paginationHTML += '</div>';
         pagination.innerHTML = paginationHTML;
-        
+
         const pageButtons = pagination.querySelectorAll('.btn-page[data-page]');
         pageButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -1097,12 +1097,12 @@ class VendasPage {
         if (!query.trim()) {
             this.filteredVendas = [...this.vendas];
         } else {
-            this.filteredVendas = this.vendas.filter(venda => 
+            this.filteredVendas = this.vendas.filter(venda =>
                 venda.cliente_nome.toLowerCase().includes(query.toLowerCase()) ||
                 venda.id.toString().includes(query)
             );
         }
-        
+
         this.currentPage = 1;
         this.renderVendasTable();
         this.renderPagination();
@@ -1115,7 +1115,7 @@ class VendasPage {
         });
 
         let activeButton;
-        switch(filterType) {
+        switch (filterType) {
             case 'all':
                 activeButton = document.getElementById('filter-all');
                 this.filteredVendas = [...this.vendas];
@@ -1155,7 +1155,7 @@ class VendasPage {
         if (!venda) return;
 
         let confirmed = false;
-        
+
         if (window.UI) {
             confirmed = await window.UI.showConfirm({
                 title: 'Confirmar Cancelamento',
@@ -1166,22 +1166,22 @@ class VendasPage {
         } else {
             confirmed = confirm(`Tem certeza que deseja cancelar a venda #${venda.id}?`);
         }
-        
+
         if (!confirmed) return;
-        
+
         try {
             const response = await window.api.delete(`/api/vendas/${id}`);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Venda cancelada com sucesso!');
                 await this.loadVendas();
-                
+
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao cancelar venda');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao cancelar venda:', error);
             this.showErrorWithTitle('Erro ao cancelar venda', error.message);
@@ -1218,7 +1218,7 @@ class VendasPage {
                     </td>
                 </tr>
             `;
-            
+
             const retryBtn = document.getElementById('retry-load-vendas-btn');
             if (retryBtn) {
                 retryBtn.addEventListener('click', () => {
@@ -1249,15 +1249,15 @@ class VendasPage {
         if (value === null || value === undefined || isNaN(value)) {
             return 'R$ 0,00';
         }
-        
+
         // Converter para número se for string
         const numericValue = typeof value === 'string' ? parseFloat(value) : value;
-        
+
         // Verificar se é um número válido
         if (isNaN(numericValue)) {
             return 'R$ 0,00';
         }
-        
+
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
@@ -1266,15 +1266,15 @@ class VendasPage {
 
     formatDate(dateString) {
         if (!dateString) return '-';
-        
+
         try {
             const date = new Date(dateString);
-            
+
             // Verificar se a data é válida
             if (isNaN(date.getTime())) {
                 return '-';
             }
-            
+
             return date.toLocaleDateString('pt-BR');
         } catch (error) {
             console.warn('⚠️ Erro ao formatar data:', dateString, error);
@@ -1284,7 +1284,7 @@ class VendasPage {
 
     getStatusText(status) {
         if (!status) return 'Pendente';
-        
+
         const statusMap = {
             'pendente': 'Pendente',
             'parcial': 'Parcial',
@@ -1295,13 +1295,13 @@ class VendasPage {
             'Pago': 'Pago',
             'Cancelado': 'Cancelado'
         };
-        
+
         return statusMap[status] || status;
     }
 
     notifyDashboardUpdate() {
         console.log('🔄 Notificando dashboard sobre atualização de vendas...');
-        
+
         if (window.eventManager) {
             window.eventManager.dispatchUpdate('vendas', 'update', {
                 action: 'crud',
@@ -1315,22 +1315,22 @@ class VendasPage {
                     action: 'update'
                 }
             });
-            
+
             window.dispatchEvent(updateEvent);
             document.dispatchEvent(updateEvent);
         }
-        
+
         console.log('✅ Evento de atualização de vendas disparado!');
     }
 
     // ✅ MÉTODO DE CLEANUP PARA SER CHAMADO PELO SISTEMA PRINCIPAL
     async cleanup() {
         console.log('🧹 VENDAS - Iniciando cleanup...');
-        
+
         try {
             // 1. Limpar event listeners
             this.removeEventListeners();
-            
+
             // 2. Limpar estado interno
             this.vendas = [];
             this.filteredVendas = [];
@@ -1338,14 +1338,14 @@ class VendasPage {
             this.isLoading = false;
             this.clientes = [];
             this.produtos = [];
-            
+
             // 3. Limpar referência global
             if (window.vendasPageInstance === this) {
                 window.vendasPageInstance = null;
             }
-            
+
             console.log('✅ VENDAS - Cleanup concluído com sucesso!');
-            
+
         } catch (error) {
             console.error('❌ VENDAS - Erro durante cleanup:', error);
         }
@@ -1354,7 +1354,7 @@ class VendasPage {
     // ✅ REMOVER EVENT LISTENERS
     removeEventListeners() {
         console.log('🔌 Removendo event listeners de vendas...');
-        
+
         try {
             // Botão Atualizar
             const refreshBtn = document.getElementById('refresh-vendas-btn');
@@ -1379,7 +1379,7 @@ class VendasPage {
             const filterPendente = document.getElementById('filter-pendente');
             const filterPago = document.getElementById('filter-pago');
             const filterCancelado = document.getElementById('filter-cancelado');
-            
+
             if (filterAll) filterAll.replaceWith(filterAll.cloneNode(true));
             if (filterPendente) filterPendente.replaceWith(filterPendente.cloneNode(true));
             if (filterPago) filterPago.replaceWith(filterPago.cloneNode(true));

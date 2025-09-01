@@ -15,18 +15,18 @@ class ProdutosPage {
     init() {
         try {
             console.log('🚀 Inicializando página de produtos...');
-            
+
             // Renderizar estrutura HTML
             this.renderPage();
-            
+
             // Carregar dados
             this.loadProdutos();
-            
+
             // Configurar event listeners
             this.setupEventListeners();
-            
+
             console.log('✅ Página de produtos inicializada!');
-            
+
         } catch (error) {
             console.error('❌ Erro ao inicializar página de produtos:', error);
             this.showError('Erro ao carregar página', error.message);
@@ -81,7 +81,7 @@ class ProdutosPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-box"></i>
+                            <i class="fas fa-boxes-stacked"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-produtos-stat">0</h3>
@@ -173,18 +173,18 @@ class ProdutosPage {
 
     async loadProdutos() {
         if (this.isLoading) return;
-        
+
         try {
             this.isLoading = true;
             this.showLoading();
-            
+
             console.log('📦 Carregando produtos...');
             const response = await window.api.get('/api/produtos');
-            
+
             if (response.data && response.data.success) {
                 this.produtos = response.data.data || [];
                 this.filteredProdutos = [...this.produtos];
-                
+
                 console.log(`✅ ${this.produtos.length} produtos carregados`);
                 this.updateStats();
                 this.renderProdutosTable();
@@ -192,7 +192,7 @@ class ProdutosPage {
             } else {
                 throw new Error(response.data?.error || 'Erro ao carregar produtos');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao carregar produtos:', error);
             this.showError('Erro ao carregar produtos', error.message);
@@ -220,7 +220,7 @@ class ProdutosPage {
                     </td>
                 </tr>
             `;
-            
+
             // Configurar event listener para o botão
             const firstProdutoBtn = document.getElementById('first-produto-btn');
             if (firstProdutoBtn) {
@@ -228,7 +228,7 @@ class ProdutosPage {
                     this.showNewProdutoModal();
                 });
             }
-            
+
             return;
         }
 
@@ -274,7 +274,7 @@ class ProdutosPage {
                 </td>
             </tr>
         `).join('');
-        
+
         // Configurar event listeners para os botões de ação
         this.setupActionButtons();
     }
@@ -282,7 +282,7 @@ class ProdutosPage {
     setupActionButtons() {
         const tbody = document.getElementById('produtos-table-body');
         if (!tbody) return;
-        
+
         // Botões de visualizar
         const viewButtons = tbody.querySelectorAll('.btn-view');
         viewButtons.forEach(button => {
@@ -292,7 +292,7 @@ class ProdutosPage {
                 this.viewProduto(produtoId);
             });
         });
-        
+
         // Botões de editar
         const editButtons = tbody.querySelectorAll('.btn-edit');
         editButtons.forEach(button => {
@@ -302,7 +302,7 @@ class ProdutosPage {
                 this.editProduto(produtoId);
             });
         });
-        
+
         // Botões de excluir
         const deleteButtons = tbody.querySelectorAll('.btn-delete');
         deleteButtons.forEach(button => {
@@ -319,19 +319,19 @@ class ProdutosPage {
         if (!pagination) return;
 
         const totalPages = Math.ceil(this.filteredProdutos.length / this.itemsPerPage);
-        
+
         if (totalPages <= 1) {
             pagination.innerHTML = '';
             return;
         }
 
         let paginationHTML = '<div class="pagination-controls">';
-        
+
         // Botão anterior
         if (this.currentPage > 1) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage - 1}">Anterior</button>`;
         }
-        
+
         // Páginas
         for (let i = 1; i <= totalPages; i++) {
             if (i === this.currentPage) {
@@ -340,15 +340,15 @@ class ProdutosPage {
                 paginationHTML += `<button class="btn-page" data-page="${i}">${i}</button>`;
             }
         }
-        
+
         // Botão próximo
         if (this.currentPage < totalPages) {
             paginationHTML += `<button class="btn-page" data-page="${this.currentPage + 1}">Próximo</button>`;
         }
-        
+
         paginationHTML += '</div>';
         pagination.innerHTML = paginationHTML;
-        
+
         // Configurar event listeners para a paginação
         this.setupPaginationButtons();
     }
@@ -356,7 +356,7 @@ class ProdutosPage {
     setupPaginationButtons() {
         const pagination = document.getElementById('produtos-pagination');
         if (!pagination) return;
-        
+
         const pageButtons = pagination.querySelectorAll('.btn-page[data-page]');
         pageButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -393,12 +393,12 @@ class ProdutosPage {
         if (!query.trim()) {
             this.filteredProdutos = [...this.produtos];
         } else {
-            this.filteredProdutos = this.produtos.filter(produto => 
+            this.filteredProdutos = this.produtos.filter(produto =>
                 produto.nome.toLowerCase().includes(query.toLowerCase()) ||
                 produto.descricao?.toLowerCase().includes(query.toLowerCase())
             );
         }
-        
+
         this.currentPage = 1;
         this.renderProdutosTable();
         this.renderPagination();
@@ -413,7 +413,7 @@ class ProdutosPage {
 
         // Adicionar classe active ao filtro selecionado
         let activeButton;
-        switch(filterType) {
+        switch (filterType) {
             case 'all':
                 activeButton = document.getElementById('filter-all');
                 this.filteredProdutos = [...this.produtos];
@@ -504,22 +504,22 @@ class ProdutosPage {
         if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
+
                 const formData = new FormData(form);
                 const produtoData = Object.fromEntries(formData.entries());
-                
+
                 // Converter números
                 produtoData.preco = parseFloat(produtoData.preco);
                 produtoData.estoque = parseInt(produtoData.estoque);
                 produtoData.estoque_minimo = parseInt(produtoData.estoque_minimo);
-                
+
                 try {
                     if (mode === 'create') {
                         await this.createProduto(produtoData);
                     } else {
                         await this.updateProduto(produto.id, produtoData);
                     }
-                    
+
                     window.UI.hideModal();
                     await this.loadProdutos();
                 } catch (error) {
@@ -533,18 +533,18 @@ class ProdutosPage {
         try {
             const response = await window.api.post('/api/produtos', produtoData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Produto criado com sucesso!');
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
-                
+
                 return data.data;
             } else {
                 throw new Error(data.error || 'Erro ao criar produto');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao criar produto:', error);
             this.showError('Erro ao criar produto', error.message);
@@ -556,18 +556,18 @@ class ProdutosPage {
         try {
             const response = await window.api.put(`/api/produtos/${id}`, produtoData);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Produto atualizado com sucesso!');
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
-                
+
                 return data.data;
             } else {
                 throw new Error(data.error || 'Erro ao atualizar produto');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao atualizar produto:', error);
             this.showError('Erro ao atualizar produto', error.message);
@@ -606,7 +606,7 @@ class ProdutosPage {
                     </div>
                 </div>
             `;
-            
+
             window.UI.showModal({
                 title: `Detalhes do Produto - ${produto.nome}`,
                 content: content,
@@ -627,7 +627,7 @@ class ProdutosPage {
         if (!produto) return;
 
         let confirmed = false;
-        
+
         if (window.UI) {
             confirmed = await window.UI.showConfirm({
                 title: 'Confirmar Exclusão',
@@ -638,30 +638,30 @@ class ProdutosPage {
         } else {
             confirmed = confirm(`Tem certeza que deseja excluir o produto "${produto.nome}"?`);
         }
-        
+
         if (!confirmed) return;
-        
+
         try {
             const response = await window.api.delete(`/api/produtos/${id}`);
             const data = response.data;
-            
+
             if (data.success) {
                 this.showSuccess('Produto excluído com sucesso!');
                 await this.loadProdutos();
-                
+
                 // 🔄 DISPARAR EVENTO DE ATUALIZAÇÃO AUTOMÁTICA
                 this.notifyDashboardUpdate();
             } else {
                 throw new Error(data.error || 'Erro ao excluir produto');
             }
-            
+
         } catch (error) {
             console.error('❌ Erro ao excluir produto:', error);
-            
+
             // Tratar erros específicos da API
             let errorMessage = 'Erro ao excluir produto';
             let errorTitle = 'Erro';
-            
+
             if (error.response && error.response.data) {
                 const apiError = error.response.data;
                 if (apiError.error) {
@@ -671,7 +671,7 @@ class ProdutosPage {
             } else if (error.message) {
                 errorMessage = error.message;
             }
-            
+
             this.showError(errorTitle, errorMessage);
         }
     }
@@ -706,7 +706,7 @@ class ProdutosPage {
                     </td>
                 </tr>
             `;
-            
+
             // Configurar event listener para o botão de tentar novamente
             const retryBtn = document.getElementById('retry-load-produtos-btn');
             if (retryBtn) {
@@ -739,14 +739,14 @@ class ProdutosPage {
             currency: 'BRL'
         }).format(value);
     }
-    
+
     /**
      * 🔄 NOTIFICA DASHBOARD SOBRE ATUALIZAÇÕES
      * Dispara evento customizado para atualizar estatísticas automaticamente
      */
     notifyDashboardUpdate() {
         console.log('🔄 Notificando dashboard sobre atualização de produtos...');
-        
+
         // Usar EventManager global se disponível
         if (window.eventManager) {
             window.eventManager.dispatchUpdate('produtos', 'update', {
@@ -762,11 +762,11 @@ class ProdutosPage {
                     action: 'update'
                 }
             });
-            
+
             window.dispatchEvent(updateEvent);
             document.dispatchEvent(updateEvent);
         }
-        
+
         console.log('✅ Evento de atualização de produtos disparado!');
     }
 
@@ -776,7 +776,7 @@ class ProdutosPage {
     async cleanup() {
         try {
             console.log('🧹 Fazendo cleanup da ProdutosPage...');
-            
+
             // ✅ LIMPAR CONTEÚDO HTML PARA EVITAR DUPLICAÇÃO
             const pageContainer = document.getElementById('produtos-content');
             if (pageContainer) {
@@ -788,36 +788,36 @@ class ProdutosPage {
                 `;
                 console.log('✅ Conteúdo HTML limpo');
             }
-            
+
             // ✅ LIMPAR ESTADO INTERNO
             this.produtos = [];
             this.filteredProdutos = [];
             this.currentPage = 1;
             this.isLoading = false;
-            
+
             // ✅ REMOVER EVENT LISTENERS
             this.removeEventListeners();
-            
+
             console.log('✅ Cleanup da ProdutosPage concluído');
-            
+
         } catch (error) {
             console.error('❌ Erro durante cleanup:', error);
         }
     }
-    
+
     /**
      * 🧹 REMOVE EVENT LISTENERS PARA EVITAR MEMORY LEAKS
      */
     removeEventListeners() {
         try {
             console.log('🧹 Removendo event listeners...');
-            
+
             // ✅ REMOVER LISTENERS DOS BOTÕES
             const refreshBtn = document.getElementById('refresh-produtos-btn');
             const newProdutoBtn = document.getElementById('new-produto-btn');
             const searchBtn = document.getElementById('search-produtos-btn');
             const searchInput = document.getElementById('search-produtos');
-            
+
             if (refreshBtn) {
                 refreshBtn.replaceWith(refreshBtn.cloneNode(true));
             }
@@ -830,9 +830,9 @@ class ProdutosPage {
             if (searchInput) {
                 searchInput.replaceWith(searchInput.cloneNode(true));
             }
-            
+
             console.log('✅ Event listeners removidos');
-            
+
         } catch (error) {
             console.warn('⚠️ Erro ao remover event listeners:', error);
         }

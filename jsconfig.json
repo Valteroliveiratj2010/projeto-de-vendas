@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false,
+        "strict": false,
+        "noEmit": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"]
+    },
+    "include": [
+        "public/**/*",
+        "routes/**/*",
+        "middleware/**/*",
+        "utils/**/*",
+        "scripts/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build"
+    ]
+} 

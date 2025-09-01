@@ -1,0 +1,220 @@
+/* ===== CORREÇÃO DE ALTURA DO OVERLAY ===== */
+/* Garantir que o overlay ocupe toda a altura da tela */
+
+/* ===== OVERLAY BASE CORRIGIDO ===== */
+.sidebar-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  
+  /* ✅ FUNDO MUITO TRANSPARENTE PARA NÃO BLOQUEAR CONTEÚDO */
+  background: var(--overlay-background) !important;
+  backdrop-filter: var(--overlay-blur) !important;
+  -webkit-backdrop-filter: var(--overlay-blur) !important;
+  
+  /* ✅ POSICIONAMENTO E Z-INDEX */
+  z-index: 997 !important; /* Abaixo da sidebar mas acima do conteúdo */
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  
+  /* ✅ ANIMAÇÕES E TRANSIÇÕES */
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all var(--overlay-transition) !important;
+  
+  /* ✅ INTERAÇÃO - APENAS PARA FECHAR SIDEBAR */
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  
+  /* ✅ ESTADOS INICIAIS */
+  transform: scale(0.95) !important;
+  
+  /* ✅ GARANTIR QUE OCUPE TODA A TELA */
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+/* ===== OVERLAY VISÍVEL ===== */
+.sidebar-overlay.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(1) !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+/* ===== OVERLAY FADE OUT ===== */
+.sidebar-overlay.fade-out {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.95) !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+/* ===== CORREÇÃO PARA DIFERENTES ALTURAS DE TELA ===== */
+@media (max-height: 600px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+}
+
+@media (min-height: 800px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA MOBILE ===== */
+@media (max-width: 768px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA TABLET ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA DESKTOP ===== */
+@media (min-width: 1025px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA TELAS ALTAS ===== */
+@media (min-height: 1080px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA TELAS BAIXAS ===== */
+@media (max-height: 500px) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA ORIENTAÇÃO LANDSCAPE ===== */
+@media (orientation: landscape) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA ORIENTAÇÃO PORTRAIT ===== */
+@media (orientation: portrait) {
+  .sidebar-overlay {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+  }
+}
+
+/* ===== CORREÇÃO PARA DIFERENTES UNIDADES ===== */
+.sidebar-overlay {
+  /* Usar viewport units para garantir altura total */
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  
+  /* Usar viewport units para garantir largura total */
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  
+  /* Garantir que não haja scroll */
+  overflow: hidden !important;
+  
+  /* Garantir posicionamento correto */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* ===== CORREÇÃO PARA BODY E HTML ===== */
+html, body {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* ===== CORREÇÃO PARA CONTAINER PRINCIPAL ===== */
+.app-container {
+  position: relative !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+/* ===== CORREÇÃO PARA MAIN CONTENT ===== */
+.main-content {
+  position: relative !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+/* ===== SOBRESCREVER QUALQUER OUTRO CSS ===== */
+* .sidebar-overlay {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+} 

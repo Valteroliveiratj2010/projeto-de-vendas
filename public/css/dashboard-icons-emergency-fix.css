@@ -1,0 +1,219 @@
+/* ===== CORREÇÃO DE EMERGÊNCIA MÁXIMA - ÍCONES DOS CARDS ===== */
+/* Força ABSOLUTA para os ícones aparecerem */
+
+/* ===== SOBRESCREVER TUDO COM FORÇA MÁXIMA ===== */
+#dashboard-page .stat-icon,
+.stat-icon,
+.dashboard .stat-icon,
+div.stat-icon {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24px !important;
+  color: #ffffff !important;
+  background: #3b82f6 !important;
+  position: relative !important;
+  z-index: 1 !important;
+  /* ✅ CORRIGIDO - reduzido para não passar por cima do header */
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}
+
+/* ===== ÍCONES DENTRO DOS CONTAINERS ===== */
+#dashboard-page .stat-icon i,
+.stat-icon i,
+.dashboard .stat-icon i,
+div.stat-icon i {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+  font-size: 24px !important;
+  z-index: 1 !important;
+  /* ✅ CORRIGIDO - reduzido para não passar por cima do header */
+  position: relative !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  border: none !important;
+  background: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ===== CORES ESPECÍFICAS FORÇADAS ===== */
+
+/* Card 1 - Clientes */
+#dashboard-page .stat-card:nth-child(1) .stat-icon,
+.stats-grid .stat-card:nth-child(1) .stat-icon {
+  background: #3b82f6 !important;
+  /* Azul */
+}
+
+/* Card 2 - Produtos */
+#dashboard-page .stat-card:nth-child(2) .stat-icon,
+.stats-grid .stat-card:nth-child(2) .stat-icon {
+  background: #10b981 !important;
+  /* Verde */
+}
+
+/* Card 3 - Vendas */
+#dashboard-page .stat-card:nth-child(3) .stat-icon,
+.stats-grid .stat-card:nth-child(3) .stat-icon {
+  background: #f59e0b !important;
+  /* Laranja */
+}
+
+/* Card 4 - Orçamentos Ativos */
+#dashboard-page .stat-card:nth-child(4) .stat-icon,
+.stats-grid .stat-card:nth-child(4) .stat-icon {
+  background: #06b6d4 !important;
+  /* Azul claro */
+}
+
+/* Card 5 - Orçamentos Aprovados */
+#dashboard-page .stat-card:nth-child(5) .stat-icon,
+.stats-grid .stat-card:nth-child(5) .stat-icon {
+  background: #10b981 !important;
+  /* Verde */
+}
+
+/* Card 6 - Convertidos */
+#dashboard-page .stat-card:nth-child(6) .stat-icon,
+.stats-grid .stat-card:nth-child(6) .stat-icon {
+  background: #f59e0b !important;
+  /* Amarelo */
+}
+
+/* Card 7 - Expirados */
+#dashboard-page .stat-card:nth-child(7) .stat-icon,
+.stats-grid .stat-card:nth-child(7) .stat-icon {
+  background: #ef4444 !important;
+  /* Vermelho */
+}
+
+/* ===== REMOVER QUALQUER INTERFERÊNCIA ===== */
+#dashboard-page .stat-icon::before,
+#dashboard-page .stat-icon::after,
+.stat-icon::before,
+.stat-icon::after {
+  display: none !important;
+  content: none !important;
+  visibility: hidden !important;
+}
+
+/* ===== SOBRESCREVER ESTILOS INLINE ===== */
+.stat-icon[style] {
+  width: 60px !important;
+  height: 60px !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.stat-icon[style] i {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: #ffffff !important;
+}
+
+/* ===== GARANTIR FONTAWESOME ===== */
+i.fas,
+i.far,
+i.fab,
+i.fal,
+i.fad {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  display: inline-block !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+}
+
+/* ===== CÓDIGOS ESPECÍFICOS DOS ÍCONES MELHORADOS ===== */
+.fa-user-group::before {
+  content: "\f500" !important;
+}
+
+.fa-boxes-stacked::before {
+  content: "\f468" !important;
+}
+
+.fa-shopping-bag::before {
+  content: "\f290" !important;
+}
+
+.fa-file-invoice-dollar::before {
+  content: "\f571" !important;
+}
+
+.fa-check-circle::before {
+  content: "\f058" !important;
+}
+
+.fa-exchange-alt::before {
+  content: "\f362" !important;
+}
+
+.fa-clock::before {
+  content: "\f017" !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+#dashboard-page .stat-card:hover .stat-icon,
+.stat-card:hover .stat-icon {
+  transform: scale(1.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* ===== RESPONSIVIDADE FORÇADA ===== */
+@media (max-width: 768px) {
+
+  #dashboard-page .stat-icon,
+  .stat-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 20px !important;
+  }
+
+  #dashboard-page .stat-icon i,
+  .stat-icon i {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  #dashboard-page .stat-icon,
+  .stat-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 16px !important;
+  }
+
+  #dashboard-page .stat-icon i,
+  .stat-icon i {
+    font-size: 16px !important;
+  }
+}
+
+/* ===== SOBRESCREVER QUALQUER COISA ===== */
+* .stat-icon,
+* .stat-icon i {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+  color: #ffffff !important;
+}

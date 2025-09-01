@@ -1,0 +1,220 @@
+/* ===== CORREÇÕES PARA ÍCONES DOS CARDS DO DASHBOARD ===== */
+/* Garante que os ícones dos cards sejam visíveis */
+
+/* ===== ÍCONES DOS CARDS ===== */
+#dashboard-page .stat-icon {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: var(--border-radius-lg) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: var(--font-size-2xl) !important;
+  color: var(--color-white) !important;
+  background: var(--color-primary) !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* ===== GARANTIR VISIBILIDADE DOS ÍCONES ===== */
+#dashboard-page .stat-icon i {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: var(--color-white) !important;
+  font-size: 24px !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+
+/* ===== CORES ESPECÍFICAS PARA CADA CARD ===== */
+
+/* Card 1 - Total de Clientes */
+#dashboard-page .stat-card:nth-child(1) .stat-icon {
+  background: var(--color-primary) !important; /* Azul */
+}
+
+#dashboard-page .stat-card:nth-child(1) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 2 - Total de Produtos */
+#dashboard-page .stat-card:nth-child(2) .stat-icon {
+  background: var(--color-success) !important; /* Verde */
+}
+
+#dashboard-page .stat-card:nth-child(2) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 3 - Total de Vendas */
+#dashboard-page .stat-card:nth-child(3) .stat-icon {
+  background: var(--color-accent) !important; /* Laranja */
+}
+
+#dashboard-page .stat-card:nth-child(3) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 4 - Orçamentos Ativos */
+#dashboard-page .stat-card:nth-child(4) .stat-icon {
+  background: var(--color-info) !important; /* Azul claro */
+}
+
+#dashboard-page .stat-card:nth-child(4) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 5 - Orçamentos Aprovados */
+#dashboard-page .stat-card:nth-child(5) .stat-icon {
+  background: var(--color-success) !important; /* Verde */
+}
+
+#dashboard-page .stat-card:nth-child(5) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 6 - Convertidos em Vendas */
+#dashboard-page .stat-card:nth-child(6) .stat-icon {
+  background: var(--color-warning) !important; /* Amarelo */
+}
+
+#dashboard-page .stat-card:nth-child(6) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* Card 7 - Orçamentos Expirados */
+#dashboard-page .stat-card:nth-child(7) .stat-icon {
+  background: var(--color-danger) !important; /* Vermelho */
+}
+
+#dashboard-page .stat-card:nth-child(7) .stat-icon i {
+  color: var(--color-white) !important;
+}
+
+/* ===== REMOVER PSEUDO-ELEMENTOS QUE PODEM INTERFERIR ===== */
+#dashboard-page .stat-icon::before,
+#dashboard-page .stat-icon::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ===== SOBRESCREVER QUALQUER CSS QUE OCULTE ÍCONES ===== */
+#dashboard-page .stat-icon[style*="display: none"],
+#dashboard-page .stat-icon[style*="visibility: hidden"],
+#dashboard-page .stat-icon[style*="opacity: 0"] {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#dashboard-page .stat-icon i[style*="display: none"],
+#dashboard-page .stat-icon i[style*="visibility: hidden"],
+#dashboard-page .stat-icon i[style*="opacity: 0"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+#dashboard-page .stat-card:hover .stat-icon {
+  transform: scale(1.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+#dashboard-page .stat-card:hover .stat-icon i {
+  transform: scale(1.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  #dashboard-page .stat-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: var(--font-size-xl) !important;
+  }
+  
+  #dashboard-page .stat-icon i {
+    font-size: 20px !important;
+  }
+}
+
+/* Mobile (481px - 767px) */
+@media (max-width: 767px) {
+  #dashboard-page .stat-icon {
+    width: 45px !important;
+    height: 45px !important;
+    font-size: var(--font-size-lg) !important;
+  }
+  
+  #dashboard-page .stat-icon i {
+    font-size: 18px !important;
+  }
+}
+
+/* Mobile Pequeno (≤ 480px) */
+@media (max-width: 480px) {
+  #dashboard-page .stat-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: var(--font-size-base) !important;
+  }
+  
+  #dashboard-page .stat-icon i {
+    font-size: 16px !important;
+  }
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes iconPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#dashboard-page .stat-card:hover .stat-icon {
+  animation: iconPulse 0.3s ease-in-out;
+}
+
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  #dashboard-page .stat-icon {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  #dashboard-page .stat-icon i {
+    color: var(--color-white) !important;
+  }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+#dashboard-page .stat-icon {
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+#dashboard-page .stat-icon:focus-visible {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  #dashboard-page .stat-icon {
+    background: var(--color-gray-300) !important;
+    color: var(--color-gray-900) !important;
+  }
+  
+  #dashboard-page .stat-icon i {
+    color: var(--color-gray-900) !important;
+  }
+} 

@@ -124,6 +124,8 @@ class SistemaVendas {
     }
     
     // MUTATION OBSERVER - REMOVER OVERLAY ASSIM QUE FOR CRIADO
+    // COMENTADO PARA PERMITIR OVERLAY FUNCIONAR CORRETAMENTE
+    /*
     setupOverlayObserver() {
         console.log('👁️ CONFIGURANDO OBSERVADOR PARA REMOVER OVERLAY AUTOMATICAMENTE');
         
@@ -164,6 +166,7 @@ class SistemaVendas {
         
         console.log('👁️ Observador configurado e ativo');
     }
+    */
     
     // Parar observador
     stopOverlayObserver() {
@@ -175,6 +178,8 @@ class SistemaVendas {
     }
     
     // REMOÇÃO CONTÍNUA DO OVERLAY - INTERVALO
+    // COMENTADO PARA PERMITIR OVERLAY FUNCIONAR CORRETAMENTE
+    /*
     startContinuousOverlayRemoval() {
         console.log('🔄 INICIANDO REMOÇÃO CONTÍNUA DO OVERLAY');
         
@@ -194,6 +199,7 @@ class SistemaVendas {
         
         console.log('🔄 Remoção contínua do overlay iniciada');
     }
+    */
     
     // Parar remoção contínua
     stopContinuousOverlayRemoval() {
@@ -205,6 +211,8 @@ class SistemaVendas {
     }
     
     // REMOÇÃO FORÇADA DO OVERLAY - ABORDAGEM AGRESSIVA
+    // COMENTADO PARA PERMITIR OVERLAY FUNCIONAR CORRETAMENTE
+    /*
     forceRemoveOverlayAggressive() {
         console.log('🚨 REMOÇÃO FORÇADA DO OVERLAY INICIADA');
         
@@ -265,6 +273,7 @@ class SistemaVendas {
         
         console.log('🚨 REMOÇÃO FORÇADA DO OVERLAY CONCLUÍDA');
     }
+    */
     
     // Verificar estado atual do overlay
     checkOverlayStatus() {

@@ -1,0 +1,253 @@
+/* ===== MELHORIAS AVANÇADAS PARA ÍCONES DA SIDEBAR ===== */
+/* Aplicando os mesmos efeitos visuais dos cards do dashboard */
+
+/* ===== ÍCONES DA SIDEBAR ===== */
+.sidebar-nav .nav-item i {
+  font-size: 18px !important;
+  color: var(--color-gray-600) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900 !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  border: none !important;
+  background: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  list-style: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: inline-block !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.sidebar-nav .nav-item:hover i {
+  color: var(--color-primary) !important;
+  transform: scale(1.1) !important;
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3)) !important;
+}
+
+/* ===== ACTIVE STATE ===== */
+.sidebar-nav .nav-item.active i {
+  color: var(--color-primary) !important;
+  transform: scale(1.05) !important;
+  filter: drop-shadow(0 1px 3px rgba(59, 130, 246, 0.4)) !important;
+}
+
+/* ===== ÍCONES ESPECÍFICOS DA SIDEBAR ===== */
+
+/* Dashboard */
+.sidebar-nav .nav-item[data-page="dashboard"] i {
+  color: var(--color-primary) !important;
+}
+
+.sidebar-nav .nav-item[data-page="dashboard"]:hover i {
+  color: var(--color-blue-600) !important;
+  transform: scale(1.15) !important;
+}
+
+/* Clientes */
+.sidebar-nav .nav-item[data-page="clientes"] i {
+  color: var(--color-blue-500) !important;
+}
+
+.sidebar-nav .nav-item[data-page="clientes"]:hover i {
+  color: var(--color-blue-600) !important;
+  transform: scale(1.15) !important;
+}
+
+.sidebar-nav .nav-item[data-page="clientes"].active i {
+  color: var(--color-blue-600) !important;
+}
+
+/* Produtos */
+.sidebar-nav .nav-item[data-page="produtos"] i {
+  color: var(--color-green-500) !important;
+}
+
+.sidebar-nav .nav-item[data-page="produtos"]:hover i {
+  color: var(--color-green-600) !important;
+  transform: scale(1.15) !important;
+}
+
+.sidebar-nav .nav-item[data-page="produtos"].active i {
+  color: var(--color-green-600) !important;
+}
+
+/* Vendas */
+.sidebar-nav .nav-item[data-page="vendas"] i {
+  color: var(--color-orange-500) !important;
+}
+
+.sidebar-nav .nav-item[data-page="vendas"]:hover i {
+  color: var(--color-orange-600) !important;
+  transform: scale(1.15) !important;
+}
+
+.sidebar-nav .nav-item[data-page="vendas"].active i {
+  color: var(--color-orange-600) !important;
+}
+
+/* Orçamentos */
+.sidebar-nav .nav-item[data-page="orcamentos"] i {
+  color: var(--color-cyan-500) !important;
+}
+
+.sidebar-nav .nav-item[data-page="orcamentos"]:hover i {
+  color: var(--color-cyan-600) !important;
+  transform: scale(1.15) !important;
+}
+
+.sidebar-nav .nav-item[data-page="orcamentos"].active i {
+  color: var(--color-cyan-600) !important;
+}
+
+/* Relatórios */
+.sidebar-nav .nav-item[data-page="relatorios"] i {
+  color: var(--color-purple-500) !important;
+}
+
+.sidebar-nav .nav-item[data-page="relatorios"]:hover i {
+  color: var(--color-purple-600) !important;
+  transform: scale(1.15) !important;
+}
+
+.sidebar-nav .nav-item[data-page="relatorios"].active i {
+  color: var(--color-purple-600) !important;
+}
+
+/* ===== ANIMAÇÕES DE ENTRADA ===== */
+@keyframes sidebarIconSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.sidebar-nav .nav-item i {
+  animation: sidebarIconSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+/* ===== ANIMAÇÃO SEQUENCIAL ===== */
+.sidebar-nav .nav-item:nth-child(1) i { animation-delay: 0.1s !important; }
+.sidebar-nav .nav-item:nth-child(2) i { animation-delay: 0.2s !important; }
+.sidebar-nav .nav-item:nth-child(3) i { animation-delay: 0.3s !important; }
+.sidebar-nav .nav-item:nth-child(4) i { animation-delay: 0.4s !important; }
+.sidebar-nav .nav-item:nth-child(5) i { animation-delay: 0.5s !important; }
+.sidebar-nav .nav-item:nth-child(6) i { animation-delay: 0.6s !important; }
+
+/* ===== EFEITOS DE FOCUS ===== */
+.sidebar-nav .nav-item:focus-visible i {
+  outline: 2px solid rgba(59, 130, 246, 0.5) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* ===== LOGO DA SIDEBAR ===== */
+.sidebar-header .logo i {
+  font-size: 24px !important;
+  color: var(--color-primary) !important;
+  text-shadow: 0 2px 4px rgba(59, 130, 246, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.sidebar-header .logo:hover i {
+  transform: scale(1.1) rotate(5deg) !important;
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.4)) !important;
+}
+
+/* ===== AVATAR DO USUÁRIO ===== */
+.user-avatar i {
+  font-size: 20px !important;
+  color: var(--color-gray-600) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.user-avatar:hover i {
+  color: var(--color-primary) !important;
+  transform: scale(1.1) !important;
+  filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.3)) !important;
+}
+
+/* ===== ÍCONE DE LOGIN ===== */
+.login-form .btn i {
+  font-size: 16px !important;
+  color: var(--color-white) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.login-form .btn:hover i {
+  transform: scale(1.1) !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3)) !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .sidebar-nav .nav-item i {
+    font-size: 16px !important;
+  }
+  
+  .sidebar-header .logo i {
+    font-size: 20px !important;
+  }
+  
+  .user-avatar i {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-nav .nav-item i {
+    font-size: 14px !important;
+  }
+  
+  .sidebar-header .logo i {
+    font-size: 18px !important;
+  }
+  
+  .user-avatar i {
+    font-size: 16px !important;
+  }
+}
+
+/* ===== EFEITOS DE DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  .sidebar-nav .nav-item i {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .sidebar-nav .nav-item:hover i {
+    filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.5)) !important;
+  }
+}
+
+/* ===== EFEITOS DE REDUÇÃO DE MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-nav .nav-item i,
+  .sidebar-header .logo i,
+  .user-avatar i,
+  .login-form .btn i {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .sidebar-nav .nav-item:hover i,
+  .sidebar-header .logo:hover i,
+  .user-avatar:hover i,
+  .login-form .btn:hover i {
+    transform: none !important;
+  }
+} 

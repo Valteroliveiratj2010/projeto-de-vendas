@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Módulos</title>
+</head>
+<body>
+    <h1>Teste de Carregamento de Módulos</h1>
+    <div id="status"></div>
+    
+    <script src="/js/modules/config.js"></script>
+    <script src="/js/modules/auth-manager.js"></script>
+    <script src="/js/modules/ui-manager.js"></script>
+    <script src="/js/modules/data-manager.js"></script>
+    <script src="/js/modules/routing-manager.js"></script>
+    
+    <script>
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            const modules = ['SystemConfig', 'AuthManager', 'UIManager', 'DataManager', 'RoutingManager'];
+            
+            let html = '<h2>Status dos Módulos:</h2><ul>';
+            
+            modules.forEach(module => {
+                const exists = window[module] ? '✅' : '❌';
+                html += `<li>${exists} ${module}: ${window[module] ? 'Carregado' : 'Não encontrado'}</li>`;
+            });
+            
+            html += '</ul>';
+            
+            html += '<h2>Módulos Disponíveis no Window:</h2><ul>';
+            Object.keys(window).filter(key => key.includes('Manager') || key.includes('Config')).forEach(key => {
+                html += `<li>${key}</li>`;
+            });
+            html += '</ul>';
+            
+            status.innerHTML = html;
+        }, 1000);
+    </script>
+</body>
+</html>
