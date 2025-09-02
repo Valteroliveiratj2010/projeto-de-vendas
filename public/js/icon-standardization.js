@@ -3,6 +3,8 @@
  * Baseado nos ícones do Dashboard e Sidebar
  */
 
+console.log('🎨 Icon Standardization JS carregado!');
+
 class IconStandardization {
     constructor() {
         this.icons = {

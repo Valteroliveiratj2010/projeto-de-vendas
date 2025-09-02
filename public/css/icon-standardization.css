@@ -1,6 +1,22 @@
 /* ===== PADRONIZAÇÃO DE ÍCONES DO SISTEMA ===== */
 /* Baseado nos ícones do Dashboard e Sidebar */
 
+/* Debug: Verificar se o CSS está carregado */
+body::before {
+    content: "🎨 Icon Standardization CSS carregado!";
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 99999;
+    display: none;
+    /* Remover esta linha para debug */
+}
+
 /* ===== ÍCONES PRINCIPAIS DO SISTEMA ===== */
 
 /* 🏪 Logo/Sistema */

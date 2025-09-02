@@ -3,9 +3,9 @@
  * Gerencia cache offline e funcionalidades PWA
  */
 
-const CACHE_NAME = 'sistema-vendas-v1.0.0';
-const STATIC_CACHE = 'static-v1.0.0';
-const DYNAMIC_CACHE = 'dynamic-v1.0.0';
+const CACHE_NAME = 'sistema-vendas-v1.0.1';
+const STATIC_CACHE = 'static-v1.0.1';
+const DYNAMIC_CACHE = 'dynamic-v1.0.1';
 
 // Arquivos para cache estático
 const STATIC_FILES = [
@@ -14,10 +14,13 @@ const STATIC_FILES = [
     '/css/styles.css',
     '/css/components.css',
     '/css/responsive.css',
+    '/css/icon-standardization.css',
+    '/css/dashboard-icons-z-index-fix.css',
     '/js/app.js',
     '/js/api.js',
     '/js/database.js',
     '/js/ui.js',
+    '/js/icon-standardization.js',
     '/js/pages/dashboard.js',
     '/js/pages/clientes.js',
     '/js/pages/produtos.js',
@@ -43,7 +46,7 @@ const CACHE_STRATEGIES = {
  */
 self.addEventListener('install', (event) => {
     console.log('🔄 Service Worker instalando...');
-    
+
     event.waitUntil(
         caches.open(STATIC_CACHE)
             .then(cache => {
@@ -65,7 +68,7 @@ self.addEventListener('install', (event) => {
  */
 self.addEventListener('activate', (event) => {
     console.log('🚀 Service Worker ativando...');
-    
+
     event.waitUntil(
         caches.keys()
             .then(cacheNames => {
@@ -92,15 +95,15 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
-    
+
     // Ignorar requisições não-GET
     if (request.method !== 'GET') {
         return;
     }
-    
+
     // Determinar estratégia de cache
     const strategy = getCacheStrategy(url);
-    
+
     switch (strategy) {
         case CACHE_STRATEGIES.STATIC:
             event.respondWith(cacheFirst(request, STATIC_CACHE));
@@ -121,29 +124,29 @@ self.addEventListener('fetch', (event) => {
  */
 function getCacheStrategy(url) {
     // Arquivos estáticos
-    if (url.pathname.startsWith('/css/') || 
-        url.pathname.startsWith('/js/') || 
+    if (url.pathname.startsWith('/css/') ||
+        url.pathname.startsWith('/js/') ||
         url.pathname.startsWith('/manifest.json') ||
         url.pathname === '/' ||
         url.pathname === '/index.html') {
         return CACHE_STRATEGIES.STATIC;
     }
-    
+
     // APIs
     if (url.pathname.startsWith('/api/')) {
         return CACHE_STRATEGIES.API;
     }
-    
+
     // Imagens
     if (url.pathname.match(/\.(jpg|jpeg|png|gif|svg|ico)$/)) {
         return CACHE_STRATEGIES.IMAGE;
     }
-    
+
     // Fontes
     if (url.pathname.match(/\.(woff|woff2|ttf|eot)$/)) {
         return CACHE_STRATEGIES.STATIC;
     }
-    
+
     return CACHE_STRATEGIES.API;
 }
 
@@ -157,27 +160,27 @@ async function cacheFirst(request, cacheName) {
         if (cachedResponse) {
             return cachedResponse;
         }
-        
+
         // Se não estiver no cache, buscar da rede
         const networkResponse = await fetch(request);
-        
+
         // Armazenar no cache para uso futuro
         if (networkResponse.ok) {
             const cache = await caches.open(cacheName);
             cache.put(request, networkResponse.clone());
         }
-        
+
         return networkResponse;
-        
+
     } catch (error) {
         console.error('❌ Erro na estratégia Cache First:', error);
-        
+
         // Em caso de erro, tentar buscar do cache mesmo que seja antigo
         const cachedResponse = await caches.match(request);
         if (cachedResponse) {
             return cachedResponse;
         }
-        
+
         // Retornar página offline se disponível
         return getOfflinePage();
     }
@@ -190,24 +193,24 @@ async function networkFirst(request, cacheName) {
     try {
         // Tentar buscar da rede primeiro
         const networkResponse = await fetch(request);
-        
+
         // Armazenar no cache se for bem-sucedida
         if (networkResponse.ok) {
             const cache = await caches.open(cacheName);
             cache.put(request, networkResponse.clone());
         }
-        
+
         return networkResponse;
-        
+
     } catch (error) {
         console.error('❌ Erro na estratégia Network First:', error);
-        
+
         // Se a rede falhar, tentar buscar do cache
         const cachedResponse = await caches.match(request);
         if (cachedResponse) {
             return cachedResponse;
         }
-        
+
         // Retornar página offline se disponível
         return getOfflinePage();
     }
@@ -220,11 +223,11 @@ async function getOfflinePage() {
     try {
         const cache = await caches.open(STATIC_CACHE);
         const offlineResponse = await cache.match('/index.html');
-        
+
         if (offlineResponse) {
             return offlineResponse;
         }
-        
+
         // Criar resposta offline básica
         const offlineHTML = `
             <!DOCTYPE html>
@@ -278,14 +281,14 @@ async function getOfflinePage() {
             </body>
             </html>
         `;
-        
+
         return new Response(offlineHTML, {
             headers: { 'Content-Type': 'text/html' }
         });
-        
+
     } catch (error) {
         console.error('❌ Erro ao criar página offline:', error);
-        
+
         // Retornar resposta de erro básica
         return new Response('Offline - Sistema de Vendas', {
             status: 503,
@@ -299,7 +302,7 @@ async function getOfflinePage() {
  */
 self.addEventListener('sync', (event) => {
     console.log('🔄 Sincronização em background:', event.tag);
-    
+
     if (event.tag === 'sync-data') {
         event.waitUntil(syncData());
     }
@@ -311,12 +314,12 @@ self.addEventListener('sync', (event) => {
 async function syncData() {
     try {
         console.log('🔄 Iniciando sincronização em background...');
-        
+
         // Implementar sincronização de dados pendentes
         // Esta função será chamada quando a conexão for restaurada
-        
+
         console.log('✅ Sincronização em background concluída');
-        
+
     } catch (error) {
         console.error('❌ Erro na sincronização em background:', error);
     }
@@ -327,10 +330,10 @@ async function syncData() {
  */
 self.addEventListener('push', (event) => {
     console.log('📱 Notificação push recebida:', event);
-    
+
     if (event.data) {
         const data = event.data.json();
-        
+
         const options = {
             body: data.body || 'Nova notificação do Sistema de Vendas',
             icon: '/favicon-32x32.png',
@@ -340,7 +343,7 @@ self.addEventListener('push', (event) => {
             actions: data.actions || [],
             requireInteraction: true
         };
-        
+
         event.waitUntil(
             self.registration.showNotification(data.title || 'Sistema de Vendas', options)
         );
@@ -352,9 +355,9 @@ self.addEventListener('push', (event) => {
  */
 self.addEventListener('notificationclick', (event) => {
     console.log('👆 Notificação clicada:', event);
-    
+
     event.notification.close();
-    
+
     if (event.action) {
         // Ação específica da notificação
         handleNotificationAction(event.action, event.notification.data);
@@ -388,9 +391,9 @@ function handleNotificationAction(action, data) {
  */
 self.addEventListener('message', (event) => {
     console.log('💬 Mensagem recebida do cliente:', event.data);
-    
+
     const { type, data } = event.data;
-    
+
     switch (type) {
         case 'SKIP_WAITING':
             self.skipWaiting();
