@@ -1,0 +1,383 @@
+/* ===== MELHORIAS DO DASHBOARD - DESKTOP ===== */
+/* Otimizações específicas para o dashboard em telas grandes */
+
+/* ===== DESKTOP GRANDE (> 1440px) ===== */
+@media (min-width: 1441px) {
+
+    /* Dashboard Grid com melhor distribuição */
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: 2fr 1fr !important;
+        grid-template-rows: auto auto auto !important;
+        gap: var(--spacing-xl) !important;
+        padding: var(--spacing-2xl) !important;
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Header do Dashboard */
+    .dashboard-header {
+        grid-column: 1 / -1 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: var(--spacing-lg) !important;
+    }
+
+    /* Stats Grid - 4 colunas */
+    .stats-grid {
+        grid-column: 1 / -1 !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: var(--spacing-lg) !important;
+        margin-bottom: var(--spacing-xl) !important;
+    }
+
+    /* Financial Summary - Lado direito */
+    .financial-summary {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        align-self: start !important;
+    }
+
+    /* Recent Activity - Lado esquerdo */
+    .recent-activity {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        align-self: start !important;
+    }
+
+    /* Quick Actions - Largura total */
+    .quick-actions {
+        grid-column: 1 / -1 !important;
+        grid-row: 3 !important;
+    }
+
+    /* Cards com melhor espaçamento */
+    .stat-card {
+        padding: var(--spacing-xl) !important;
+        min-height: 120px !important;
+    }
+
+    .financial-summary,
+    .recent-activity {
+        padding: var(--spacing-xl) !important;
+        min-height: 300px !important;
+    }
+
+    .quick-actions {
+        padding: var(--spacing-xl) !important;
+    }
+
+    /* Actions Grid - 4 colunas */
+    .actions-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: var(--spacing-lg) !important;
+    }
+}
+
+/* ===== DESKTOP NORMAL (1025px - 1440px) ===== */
+@media (min-width: 1025px) and (max-width: 1440px) {
+
+    /* Dashboard Grid com layout otimizado */
+    .dashboard-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: var(--spacing-lg) !important;
+        padding: var(--spacing-xl) !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Header do Dashboard */
+    .dashboard-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-bottom: var(--spacing-lg) !important;
+    }
+
+    /* Stats Grid - 3 colunas */
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--spacing-lg) !important;
+        margin-bottom: var(--spacing-xl) !important;
+    }
+
+    /* Financial Summary */
+    .financial-summary {
+        margin-bottom: var(--spacing-lg) !important;
+    }
+
+    /* Recent Activity */
+    .recent-activity {
+        margin-bottom: var(--spacing-lg) !important;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        margin-top: var(--spacing-lg) !important;
+    }
+
+    /* Cards com espaçamento adequado */
+    .stat-card {
+        padding: var(--spacing-lg) !important;
+        min-height: 100px !important;
+    }
+
+    .financial-summary,
+    .recent-activity {
+        padding: var(--spacing-lg) !important;
+        min-height: 250px !important;
+    }
+
+    .quick-actions {
+        padding: var(--spacing-lg) !important;
+    }
+
+    /* Actions Grid - 3 colunas */
+    .actions-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: var(--spacing-md) !important;
+    }
+}
+
+/* ===== MELHORIAS GERAIS DO DASHBOARD ===== */
+
+/* Cards com melhor design */
+.stat-card {
+    background: var(--color-white) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--color-gray-200) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* Ícones dos cards */
+.stat-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)) !important;
+    color: var(--color-white) !important;
+    font-size: var(--font-size-xl) !important;
+    margin-bottom: var(--spacing-md) !important;
+}
+
+/* Conteúdo dos cards */
+.stat-content h3 {
+    font-size: var(--font-size-3xl) !important;
+    font-weight: 700 !important;
+    color: var(--color-gray-900) !important;
+    margin: 0 0 var(--spacing-xs) 0 !important;
+}
+
+.stat-content p {
+    font-size: var(--font-size-sm) !important;
+    color: var(--color-gray-600) !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+}
+
+/* Financial Summary */
+.financial-summary {
+    background: var(--color-white) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--color-gray-200) !important;
+}
+
+.financial-summary h3 {
+    font-size: var(--font-size-xl) !important;
+    font-weight: 600 !important;
+    color: var(--color-gray-900) !important;
+    margin-bottom: var(--spacing-lg) !important;
+    padding-bottom: var(--spacing-md) !important;
+    border-bottom: 2px solid var(--color-gray-200) !important;
+}
+
+.summary-grid {
+    display: grid !important;
+    gap: var(--spacing-md) !important;
+}
+
+.summary-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: var(--spacing-sm) 0 !important;
+}
+
+.summary-item .label {
+    font-weight: 500 !important;
+    color: var(--color-gray-700) !important;
+}
+
+.summary-item .value {
+    font-weight: 600 !important;
+    font-size: var(--font-size-lg) !important;
+}
+
+.summary-item .value.success {
+    color: var(--color-success) !important;
+}
+
+.summary-item .value.danger {
+    color: var(--color-danger) !important;
+}
+
+/* Recent Activity */
+.recent-activity {
+    background: var(--color-white) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--color-gray-200) !important;
+}
+
+.recent-activity h3 {
+    font-size: var(--font-size-xl) !important;
+    font-weight: 600 !important;
+    color: var(--color-gray-900) !important;
+    margin-bottom: var(--spacing-lg) !important;
+    padding-bottom: var(--spacing-md) !important;
+    border-bottom: 2px solid var(--color-gray-200) !important;
+}
+
+.activity-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-md) !important;
+}
+
+.activity-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: var(--spacing-md) !important;
+    padding: var(--spacing-sm) 0 !important;
+    border-bottom: 1px solid var(--color-gray-100) !important;
+}
+
+.activity-item:last-child {
+    border-bottom: none !important;
+}
+
+.activity-icon {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    background: var(--color-primary-light) !important;
+    color: var(--color-white) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: var(--font-size-sm) !important;
+    flex-shrink: 0 !important;
+}
+
+.activity-content {
+    flex: 1 !important;
+}
+
+.activity-content p {
+    margin: 0 0 var(--spacing-xs) 0 !important;
+    color: var(--color-gray-700) !important;
+    font-size: var(--font-size-sm) !important;
+}
+
+.activity-time {
+    font-size: var(--font-size-xs) !important;
+    color: var(--color-gray-500) !important;
+}
+
+/* Quick Actions */
+.quick-actions {
+    background: var(--color-white) !important;
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-md) !important;
+    border: 1px solid var(--color-gray-200) !important;
+}
+
+.quick-actions h3 {
+    font-size: var(--font-size-xl) !important;
+    font-weight: 600 !important;
+    color: var(--color-gray-900) !important;
+    margin-bottom: var(--spacing-lg) !important;
+    padding-bottom: var(--spacing-md) !important;
+    border-bottom: 2px solid var(--color-gray-200) !important;
+}
+
+.actions-grid {
+    display: grid !important;
+    gap: var(--spacing-md) !important;
+}
+
+.action-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: var(--spacing-lg) !important;
+    border: 2px solid var(--color-gray-200) !important;
+    border-radius: var(--border-radius-md) !important;
+    background: var(--color-white) !important;
+    color: var(--color-gray-700) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+    min-height: 100px !important;
+}
+
+.action-btn:hover {
+    border-color: var(--color-primary) !important;
+    background: var(--color-primary-light) !important;
+    color: var(--color-white) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+.action-btn i {
+    font-size: var(--font-size-2xl) !important;
+    margin-bottom: var(--spacing-sm) !important;
+}
+
+/* ===== RESPONSIVIDADE ADICIONAL ===== */
+
+/* Tablet - 2 colunas nos stats */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Mobile - 1 coluna */
+@media (max-width: 767px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .actions-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .dashboard-grid {
+        padding: var(--spacing-md) !important;
+    }
+}
