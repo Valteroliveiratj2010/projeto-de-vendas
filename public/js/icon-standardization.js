@@ -13,7 +13,7 @@ class IconStandardization {
             dashboard: 'fas fa-tachometer-alt',
             clientes: 'fas fa-user-group',
             produtos: 'fas fa-boxes-stacked',
-            vendas: 'fas fa-shopping-bag',
+            vendas: 'fas fa-shopping-cart',
             orcamentos: 'fas fa-file-invoice-dollar',
             relatorios: 'fas fa-chart-line',
 

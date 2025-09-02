@@ -1,0 +1,432 @@
+/* ===== PADRONIZAÇÃO DE ÍCONES - SISTEMA COMPLETO ===== */
+/* Baseado nos ícones dos botões de ações rápidas */
+
+/* ===== ÍCONES PRINCIPAIS DO SISTEMA ===== */
+
+/* 🏪 Logo/Sistema */
+.fa-store::before,
+.fas.fa-store::before {
+    content: "\f54e" !important;
+    /* fa-store */
+}
+
+/* 📊 Dashboard */
+.fa-tachometer-alt::before,
+.fas.fa-tachometer-alt::before {
+    content: "\f3fd" !important;
+    /* fa-tachometer-alt */
+}
+
+/* 👥 Clientes */
+.fa-user-group::before,
+.fas.fa-user-group::before {
+    content: "\f500" !important;
+    /* fa-user-group */
+}
+
+/* 📦 Produtos */
+.fa-boxes-stacked::before,
+.fas.fa-boxes-stacked::before {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* 🛒 Vendas */
+.fa-shopping-bag::before,
+.fas.fa-shopping-bag::before {
+    content: "\f290" !important;
+    /* fa-shopping-bag */
+}
+
+/* 💰 Orçamentos */
+.fa-file-invoice-dollar::before,
+.fas.fa-file-invoice-dollar::before {
+    content: "\f571" !important;
+    /* fa-file-invoice-dollar */
+}
+
+/* 📈 Relatórios */
+.fa-chart-line::before,
+.fas.fa-chart-line::before {
+    content: "\f201" !important;
+    /* fa-chart-line */
+}
+
+/* ===== ÍCONES DE AÇÕES RÁPIDAS (PADRÃO BASE) ===== */
+
+/* 🛒 Nova Venda */
+.fa-cart-plus::before,
+.fas.fa-cart-plus::before {
+    content: "\f217" !important;
+    /* fa-cart-plus */
+}
+
+/* 👤 Novo Cliente */
+.fa-user-plus::before,
+.fas.fa-user-plus::before {
+    content: "\f234" !important;
+    /* fa-user-plus */
+}
+
+/* 📦 Novo Produto */
+.fa-box-open::before,
+.fas.fa-box-open::before {
+    content: "\f49e" !important;
+    /* fa-box-open */
+}
+
+/* 📋 Novo Orçamento */
+.fa-file-circle-plus::before,
+.fas.fa-file-circle-plus::before {
+    content: "\f494" !important;
+    /* fa-file-circle-plus */
+}
+
+/* ===== ÍCONES DE AÇÕES GERAIS ===== */
+
+/* ➕ Adicionar */
+.fa-plus::before,
+.fas.fa-plus::before {
+    content: "\f067" !important;
+    /* fa-plus */
+}
+
+/* ✏️ Editar */
+.fa-edit::before,
+.fas.fa-edit::before {
+    content: "\f044" !important;
+    /* fa-edit */
+}
+
+/* 🗑️ Deletar */
+.fa-trash::before,
+.fas.fa-trash::before {
+    content: "\f1f8" !important;
+    /* fa-trash */
+}
+
+/* 👁️ Visualizar */
+.fa-eye::before,
+.fas.fa-eye::before {
+    content: "\f06e" !important;
+    /* fa-eye */
+}
+
+/* 🔄 Atualizar/Sincronizar */
+.fa-sync-alt::before,
+.fas.fa-sync-alt::before {
+    content: "\f2f1" !important;
+    /* fa-sync-alt */
+}
+
+/* 🔍 Buscar */
+.fa-search::before,
+.fas.fa-search::before {
+    content: "\f002" !important;
+    /* fa-search */
+}
+
+/* 📥 Download */
+.fa-download::before,
+.fas.fa-download::before {
+    content: "\f019" !important;
+    /* fa-download */
+}
+
+/* 🔧 Configurações */
+.fa-cog::before,
+.fas.fa-cog::before {
+    content: "\f013" !important;
+    /* fa-cog */
+}
+
+/* ===== ÍCONES DE STATUS ===== */
+
+/* ✅ Sucesso/Aprovado */
+.fa-check-circle::before,
+.fas.fa-check-circle::before {
+    content: "\f058" !important;
+    /* fa-check-circle */
+}
+
+/* ⚠️ Aviso */
+.fa-exclamation-triangle::before,
+.fas.fa-exclamation-triangle::before {
+    content: "\f071" !important;
+    /* fa-exclamation-triangle */
+}
+
+/* ❌ Erro/Fechar */
+.fa-times::before,
+.fas.fa-times::before {
+    content: "\f00d" !important;
+    /* fa-times */
+}
+
+.fa-times-circle::before,
+.fas.fa-times-circle::before {
+    content: "\f057" !important;
+    /* fa-times-circle */
+}
+
+/* ℹ️ Informação */
+.fa-info-circle::before,
+.fas.fa-info-circle::before {
+    content: "\f05a" !important;
+    /* fa-info-circle */
+}
+
+/* ===== ÍCONES DE PAGAMENTO ===== */
+
+/* 💰 Dinheiro */
+.fa-dollar-sign::before,
+.fas.fa-dollar-sign::before {
+    content: "\f155" !important;
+    /* fa-dollar-sign */
+}
+
+/* 💳 Cartão de Crédito */
+.fa-credit-card::before,
+.fas.fa-credit-card::before {
+    content: "\f09d" !important;
+    /* fa-credit-card */
+}
+
+/* ===== ÍCONES DE TEMPO ===== */
+
+/* ⏰ Relógio */
+.fa-clock::before,
+.fas.fa-clock::before {
+    content: "\f017" !important;
+    /* fa-clock */
+}
+
+/* 📅 Calendário */
+.fa-calendar::before,
+.fas.fa-calendar::before {
+    content: "\f133" !important;
+    /* fa-calendar */
+}
+
+/* ===== ÍCONES DE USUÁRIO ===== */
+
+/* 👤 Usuário */
+.fa-user::before,
+.fas.fa-user::before {
+    content: "\f007" !important;
+    /* fa-user */
+}
+
+/* 👥 Usuários */
+.fa-users::before,
+.fas.fa-users::before {
+    content: "\f0c0" !important;
+    /* fa-users */
+}
+
+/* ===== ÍCONES DE GRÁFICOS ===== */
+
+/* 📊 Gráfico de Barras */
+.fa-chart-bar::before,
+.fas.fa-chart-bar::before {
+    content: "\f080" !important;
+    /* fa-chart-bar */
+}
+
+/* 📈 Gráfico de Linha */
+.fa-chart-line::before,
+.fas.fa-chart-line::before {
+    content: "\f201" !important;
+    /* fa-chart-line */
+}
+
+/* 📈 Tendência */
+.fa-trending-up::before,
+.fas.fa-trending-up::before {
+    content: "\f062" !important;
+    /* fa-trending-up */
+}
+
+/* ===== ÍCONES DE NAVEGAÇÃO ===== */
+
+/* 🔽 Expandir */
+.fa-expand-alt::before,
+.fas.fa-expand-alt::before {
+    content: "\f424" !important;
+    /* fa-expand-alt */
+}
+
+/* 🔽 Comprimir */
+.fa-compress-alt::before,
+.fas.fa-compress-alt::before {
+    content: "\f422" !important;
+    /* fa-compress-alt */
+}
+
+/* 🚪 Sair */
+.fa-sign-out-alt::before,
+.fas.fa-sign-out-alt::before {
+    content: "\f2f5" !important;
+    /* fa-sign-out-alt */
+}
+
+/* ===== ÍCONES DE CARREGAMENTO ===== */
+
+/* ⏳ Carregando */
+.fa-spinner::before,
+.fas.fa-spinner::before {
+    content: "\f110" !important;
+    /* fa-spinner */
+}
+
+/* ===== ÍCONES DE CONEXÃO ===== */
+
+/* 🟢 Online */
+.fa-circle::before,
+.fas.fa-circle::before {
+    content: "\f111" !important;
+    /* fa-circle */
+}
+
+/* 📶 Offline */
+.fa-wifi-slash::before,
+.fas.fa-wifi-slash::before {
+    content: "\f6ac" !important;
+    /* fa-wifi-slash */
+}
+
+/* ===== ÍCONES DE ESTOQUE ===== */
+
+/* 📦 Estoque */
+.fa-boxes-stacked::before,
+.fas.fa-boxes-stacked::before {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* ⚠️ Estoque Baixo */
+.fa-exclamation-triangle::before,
+.fas.fa-exclamation-triangle::before {
+    content: "\f071" !important;
+    /* fa-exclamation-triangle */
+}
+
+/* ===== ÍCONES DE ATIVIDADE ===== */
+
+/* ℹ️ Atividade */
+.fa-info-circle::before,
+.fas.fa-info-circle::before {
+    content: "\f05a" !important;
+    /* fa-info-circle */
+}
+
+/* ===== ÍCONES DE CONVERSÃO ===== */
+
+/* 🔄 Trocar/Converter */
+.fa-exchange-alt::before,
+.fas.fa-exchange-alt::before {
+    content: "\f362" !important;
+    /* fa-exchange-alt */
+}
+
+/* ===== ÍCONES DE BANCO DE DADOS ===== */
+
+/* 💾 Banco de Dados */
+.fa-database::before,
+.fas.fa-database::before {
+    content: "\f1c0" !important;
+    /* fa-database */
+}
+
+/* ===== ÍCONES DE LOGIN ===== */
+
+/* 🔐 Login */
+.fa-sign-in-alt::before,
+.fas.fa-sign-in-alt::before {
+    content: "\f2f6" !important;
+    /* fa-sign-in-alt */
+}
+
+/* ===== GARANTIA DE APLICAÇÃO ===== */
+/* Força a aplicação dos ícones em todo o sistema */
+
+/* Aplicar em todos os elementos com ícones */
+.fa::before,
+.fas::before {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    line-height: 1 !important;
+}
+
+/* Garantir que ícones específicos sejam aplicados */
+.stat-icon i,
+.sidebar-nav i,
+.action-btn i,
+.btn i,
+.status-badge i,
+.modal-close i,
+.loading-placeholder i {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+}
+
+/* ===== FALLBACKS PARA ÍCONES NÃO ENCONTRADOS ===== */
+/* Se um ícone não estiver definido, usar emoji como fallback */
+
+.fa-store::before:not([content]),
+.fas.fa-store::before:not([content]) {
+    content: "🏪" !important;
+}
+
+.fa-tachometer-alt::before:not([content]),
+.fas.fa-tachometer-alt::before:not([content]) {
+    content: "📊" !important;
+}
+
+.fa-user-group::before:not([content]),
+.fas.fa-user-group::before:not([content]) {
+    content: "👥" !important;
+}
+
+.fa-boxes-stacked::before:not([content]),
+.fas.fa-boxes-stacked::before:not([content]) {
+    content: "📦" !important;
+}
+
+.fa-shopping-bag::before:not([content]),
+.fas.fa-shopping-bag::before:not([content]) {
+    content: "🛒" !important;
+}
+
+.fa-file-invoice-dollar::before:not([content]),
+.fas.fa-file-invoice-dollar::before:not([content]) {
+    content: "💰" !important;
+}
+
+.fa-chart-line::before:not([content]),
+.fas.fa-chart-line::before:not([content]) {
+    content: "📈" !important;
+}
+
+.fa-cart-plus::before:not([content]),
+.fas.fa-cart-plus::before:not([content]) {
+    content: "🛒" !important;
+}
+
+.fa-user-plus::before:not([content]),
+.fas.fa-user-plus::before:not([content]) {
+    content: "👤" !important;
+}
+
+.fa-box-open::before:not([content]),
+.fas.fa-box-open::before:not([content]) {
+    content: "📦" !important;
+}
+
+.fa-file-circle-plus::before:not([content]),
+.fas.fa-file-circle-plus::before:not([content]) {
+    content: "📋" !important;
+}

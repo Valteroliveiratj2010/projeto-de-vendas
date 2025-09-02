@@ -107,7 +107,7 @@ div.stat-icon i {
 .stat-icon::before,
 .stat-icon::after {
   display: none !important;
-  content: none !important;
+  /* REMOVIDO: content: none !important; - ESTAVA REMOVENDO OS ÍCONES */
   visibility: hidden !important;
 }
 

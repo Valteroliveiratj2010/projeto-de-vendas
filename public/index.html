@@ -23,10 +23,8 @@
     <!-- Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- FontAwesome Icons (LOCAL - RESOLVE CSP) -->
+    <link rel="stylesheet" href="/css/fontawesome-local.css?v=1.0.1" />
 
     <!-- CSS -->
     <!-- Responsividade Melhorada para todas as telas -->
@@ -49,11 +47,12 @@
     <link rel="stylesheet" href="/css/charts.css">
 
     <!-- Ícones Profissionais -->
-    <link rel="stylesheet" href="/css/icons-professional.css">
     <link rel="stylesheet" href="/css/force-cleanup-icons.css">
 
     <!-- Action Buttons por último -->
     <link rel="stylesheet" href="/css/action-buttons.css" />
+
+    <!-- Notificações de Pagamento -->
 
     <!-- Notificações de Pagamento -->
     <link rel="stylesheet" href="/css/payment-notifications.css" />
@@ -75,6 +74,12 @@
 
     <!-- CSS Responsivo Global para Todas as Páginas -->
     <link rel="stylesheet" href="/css/global-responsive.css" />
+
+    <!-- CSS RESPONSIVIDADE GLOBAL MELHORADA - TODAS AS PÁGINAS -->
+    <link rel="stylesheet" href="/css/responsive-global-enhanced.css?v=1.0.1" />
+
+    <!-- CSS CORREÇÕES RESPONSIVIDADE - PÁGINA DE CLIENTES -->
+    <link rel="stylesheet" href="/css/clientes-responsive-fixes.css?v=1.0.1" />
 
     <!-- CSS Responsivo Específico para Dashboard -->
     <link rel="stylesheet" href="/css/dashboard-responsive.css" />
@@ -103,9 +108,6 @@
     <!-- CSS Correções para Ícones dos Cards do Dashboard -->
     <link rel="stylesheet" href="/css/dashboard-icons-fixes.css" />
 
-    <!-- CSS Correção de Emergência Máxima para Ícones -->
-    <link rel="stylesheet" href="/css/dashboard-icons-emergency-fix.css" />
-
     <!-- CSS Melhorias Avançadas para Ícones do Dashboard -->
     <link rel="stylesheet" href="/css/dashboard-icons-enhanced.css" />
 
@@ -127,11 +129,26 @@
     <!-- CSS Padronização de Ícones do Sistema -->
     <link rel="stylesheet" href="/css/icon-standardization.css?v=1.0.1" />
 
+    <!-- CSS Correção de Emergência Máxima para Ícones (CORRIGIDO - SEM REMOVER CONTENT) -->
+    <link rel="stylesheet" href="/css/dashboard-icons-emergency-fix.css?v=1.0.3" />
+
+    <!-- CSS EMERGÊNCIA MÁXIMA - GARANTIR TODOS OS ÍCONES -->
+    <link rel="stylesheet" href="/css/icons-emergency-fix.css?v=1.0.1" />
+
     <!-- CSS Melhorias Avançadas para Ícones da Sidebar -->
     <link rel="stylesheet" href="/css/sidebar-icons-enhanced.css" />
 
+    <!-- CSS ÍCONES SIDEBAR COLORIDOS - PADRÃO SIMPLES -->
+    <link rel="stylesheet" href="/css/sidebar-icons-simple.css?v=1.0.1" />
+
     <!-- CSS Correção de Altura do Overlay -->
     <link rel="stylesheet" href="/css/overlay-height-fix.css" />
+
+    <!-- CSS CORREÇÃO DA MARGEM DO HEADER -->
+    <link rel="stylesheet" href="/css/header-margin-fix.css?v=1.0.3" />
+
+    <!-- CSS Ícones Profissionais (CORRIGIDO - SEM REMOVER CONTENT) -->
+    <link rel="stylesheet" href="/css/icons-professional.css?v=1.0.10" />
 
     <title>Sistema de Vendas - Página Principal</title>
 </head>
@@ -189,7 +206,7 @@
                     </li>
                     <li class="nav-item" data-page="vendas">
                         <a href="#vendas">
-                            <i class="fas fa-shopping-bag"></i>
+                            <i class="fas fa-shopping-cart"></i>
                             <span>Vendas</span>
                         </a>
                     </li>
@@ -331,7 +348,7 @@
 
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fas fa-shopping-bag"></i>
+                                    <i class="fas fa-shopping-cart"></i>
                                 </div>
                                 <div class="stat-content">
                                     <h3 id="total-vendas">0</h3>
@@ -514,6 +531,9 @@
 
     <!-- Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script de Verificação de Ícones -->
+    <script src="/js/icon-checker.js?v=1.0.1"></script>
 
     <!-- JavaScript Modular - NOVA VERSÃO -->
     <!-- Chart.js para gráficos -->

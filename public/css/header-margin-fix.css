@@ -1,0 +1,82 @@
+/* ===== HEADER 100% DA LARGURA - SISTEMA DE VENDAS ===== */
+/* Fazer o header ocupar toda a largura da página */
+
+/* Header ocupando 100% da largura */
+.top-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: var(--spacing-4) var(--spacing-6) !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+/* Container do header ocupando toda largura */
+.top-header .header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-4) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+}
+
+/* Título ocupando espaço disponível */
+.top-header h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: var(--font-size-2xl) !important;
+    font-weight: 700 !important;
+    color: var(--color-gray-900) !important;
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+/* Lado direito do header */
+.top-header .header-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-3) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Botão do menu */
+.sidebar-toggle {
+    margin: 0 !important;
+    padding: var(--spacing-2) !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .top-header {
+        padding: var(--spacing-3) var(--spacing-4) !important;
+        width: 100% !important;
+    }
+
+    .top-header h1 {
+        font-size: var(--font-size-xl) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-header {
+        padding: var(--spacing-2) var(--spacing-3) !important;
+        width: 100% !important;
+    }
+
+    .top-header h1 {
+        font-size: var(--font-size-lg) !important;
+    }
+}

@@ -1,0 +1,49 @@
+/* ===== ÍCONES DA SIDEBAR COLORIDOS - PADRÃO SIMPLES ===== */
+/* Cores dos ícones da sidebar seguindo o padrão das páginas */
+
+/* 🏪 Sistema/Logo */
+.sidebar .logo i {
+    color: #2563eb !important;
+}
+
+/* 📊 Dashboard */
+.sidebar-nav .nav-item[data-page="dashboard"] i {
+    color: #667eea !important;
+}
+
+/* 👥 Clientes */
+.sidebar-nav .nav-item[data-page="clientes"] i {
+    color: #17a2b8 !important;
+}
+
+/* 📦 Produtos */
+.sidebar-nav .nav-item[data-page="produtos"] i {
+    color: #fd7e14 !important;
+}
+
+/* 🛒 Vendas */
+.sidebar-nav .nav-item[data-page="vendas"] i {
+    color: #ffc107 !important;
+}
+
+/* 💰 Orçamentos */
+.sidebar-nav .nav-item[data-page="orcamentos"] i {
+    color: #28a745 !important;
+}
+
+/* 📈 Relatórios */
+.sidebar-nav .nav-item[data-page="relatorios"] i {
+    color: #6f42c1 !important;
+}
+
+/* Hover effects simples */
+.sidebar-nav .nav-item:hover i {
+    transform: scale(1.1) !important;
+    transition: transform 0.2s ease !important;
+}
+
+/* Ícone ativo da sidebar */
+.sidebar-nav .nav-item.active i {
+    filter: brightness(1.2) !important;
+    transform: scale(1.05) !important;
+}

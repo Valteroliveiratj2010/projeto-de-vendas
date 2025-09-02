@@ -83,7 +83,7 @@ class VendasPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-shopping-bag"></i>
+                            <i class="fas fa-shopping-cart"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-vendas-stat">0</h3>
