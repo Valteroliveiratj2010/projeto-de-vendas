@@ -13,11 +13,11 @@ console.log('========================================\n');
 async function setupWhatsApp() {
     try {
         console.log('🔍 Verificando configurações atuais...\n');
-        
+
         // Verificar arquivo .env
         const envPath = path.join(__dirname, '..', '.env');
         let envExists = false;
-        
+
         try {
             await fs.access(envPath);
             envExists = true;
@@ -25,17 +25,17 @@ async function setupWhatsApp() {
         } catch {
             console.log('❌ Arquivo .env não encontrado');
         }
-        
+
         // Verificar variáveis do WhatsApp
         const whatsappVars = {
             TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
             TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
             TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER
         };
-        
+
         console.log('\n📋 Configurações do WhatsApp:');
         console.log('-------------------------------');
-        
+
         Object.entries(whatsappVars).forEach(([key, value]) => {
             if (value) {
                 if (key === 'TWILIO_AUTH_TOKEN') {
@@ -47,56 +47,56 @@ async function setupWhatsApp() {
                 console.log(`${key}: ❌ NÃO CONFIGURADO`);
             }
         });
-        
+
         // Verificar se todas as variáveis estão configuradas
         const missingVars = Object.entries(whatsappVars)
             .filter(([key, value]) => !value)
             .map(([key]) => key);
-        
+
         if (missingVars.length > 0) {
             console.log(`\n⚠️  Variáveis faltando: ${missingVars.join(', ')}`);
             console.log('\n🔧 Para configurar, adicione no arquivo .env:');
-            
+
             if (!envExists) {
                 console.log('\n📝 CRIE um arquivo .env na raiz do projeto com:');
             } else {
                 console.log('\n📝 ADICIONE no arquivo .env:');
             }
-            
+
             console.log(`
 # Configurações WhatsApp (Twilio)
 TWILIO_ACCOUNT_SID=seu_account_sid_aqui
 TWILIO_AUTH_TOKEN=seu_auth_token_aqui
 TWILIO_PHONE_NUMBER=seu_numero_whatsapp
             `);
-            
+
             console.log('\n📚 INSTRUÇÕES PARA CONFIGURAR:');
             console.log('1. Crie uma conta em: https://www.twilio.com/');
             console.log('2. Obtenha seu Account SID e Auth Token no console');
             console.log('3. Configure um número WhatsApp Business no Twilio');
             console.log('4. Adicione as credenciais no arquivo .env');
-            
+
             console.log('\n💰 CUSTOS:');
             console.log('- Twilio: $0.0049 por mensagem (aproximadamente R$ 0,025)');
             console.log('- Número WhatsApp: $1.00/mês (aproximadamente R$ 5,00)');
-            
+
             return false;
         }
-        
+
         console.log('\n✅ Todas as variáveis do WhatsApp estão configuradas!');
-        
+
         // Testar configuração
         console.log('\n🧪 Testando configuração do WhatsApp...');
-        
+
         try {
             const WhatsAppService = require('../utils/whatsapp-service');
             const whatsappService = new WhatsAppService();
-            
+
             // Aguardar inicialização
             await new Promise(resolve => setTimeout(resolve, 2000));
-            
+
             const testResult = await whatsappService.testConnection();
-            
+
             if (testResult.success) {
                 console.log('✅ Configuração do WhatsApp válida!');
                 console.log('🎉 Sistema de WhatsApp pronto para uso!');
@@ -106,13 +106,13 @@ TWILIO_PHONE_NUMBER=seu_numero_whatsapp
                 console.log(`   ${testResult.message}`);
                 return false;
             }
-            
+
         } catch (error) {
             console.log('❌ Erro ao testar configuração:');
             console.log(`   ${error.message}`);
             return false;
         }
-        
+
     } catch (error) {
         console.error('❌ Erro durante a configuração:', error.message);
         return false;
@@ -147,13 +147,13 @@ TWILIO_ACCOUNT_SID=seu_account_sid_aqui
 TWILIO_AUTH_TOKEN=seu_auth_token_aqui
 TWILIO_PHONE_NUMBER=seu_numero_whatsapp
 `;
-        
+
         const envPath = path.join(__dirname, '..', '.env');
         await fs.writeFile(envPath, envTemplate);
-        
+
         console.log('✅ Arquivo .env criado com sucesso!');
         console.log('📝 Edite o arquivo e configure suas credenciais do WhatsApp');
-        
+
     } catch (error) {
         console.error('❌ Erro ao criar arquivo .env:', error.message);
     }
@@ -162,12 +162,12 @@ TWILIO_PHONE_NUMBER=seu_numero_whatsapp
 // Menu principal
 async function main() {
     const args = process.argv.slice(2);
-    
+
     if (args.includes('--create-env')) {
         await createEnvTemplate();
         return;
     }
-    
+
     if (args.includes('--help')) {
         console.log(`
 📱 CONFIGURADOR DO SISTEMA DE WHATSAPP
@@ -187,14 +187,14 @@ Exemplos:
         `);
         return;
     }
-    
+
     // Executar configuração padrão
     const success = await setupWhatsApp();
-    
+
     if (success) {
         console.log('\n🎯 Próximos passos:');
-        console.log('1. Acesse: http://localhost:3000/test-whatsapp.html');
-        console.log('2. Teste o envio de mensagens WhatsApp');
+        console.log('1. Configure as variáveis do WhatsApp no .env');
+        console.log('2. Teste o envio de mensagens WhatsApp via API');
         console.log('3. Use as APIs de WhatsApp no seu sistema');
         console.log('4. Configure notificações automáticas');
     } else {

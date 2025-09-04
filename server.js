@@ -25,28 +25,28 @@ const authRoutes = require('./routes/auth');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-    }
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
 });
 
 const PORT = process.env.PORT || 3000;
 
 // Configuração do Express
 app.use((req, res, next) => {
-    // Headers para quebrar cache
-    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.set('Pragma', 'no-cache');
-    res.set('Expires', '0');
-    res.set('Last-Modified', new Date().toUTCString());
-    
-    // Adicionar timestamp único para arquivos estáticos
-    if (req.path.match(/\.(js|css|html)$/)) {
-        res.set('ETag', `"${Date.now()}"`);
-    }
-    
-    next();
+  // Headers para quebrar cache
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  res.set('Last-Modified', new Date().toUTCString());
+
+  // Adicionar timestamp único para arquivos estáticos
+  if (req.path.match(/\.(js|css|html)$/)) {
+    res.set('ETag', `"${Date.now()}"`);
+  }
+
+  next();
 });
 
 // Middleware de segurança
@@ -56,8 +56,9 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      scriptSrcAttr: ["'unsafe-inline'"], // Permitir inline event handlers
       imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "http://localhost:*", "ws://localhost:*"],
+      connectSrc: ["'self'", "http://localhost:*", "ws://localhost:*", "http://127.0.0.1:*"],
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
       mediaSrc: ["'self'"],
@@ -66,16 +67,49 @@ app.use(helmet({
   },
 }));
 
-// Rate limiting - Mais permissivo para desenvolvimento
+// Rate limiting - DESABILITADO TEMPORARIAMENTE PARA DESENVOLVIMENTO
+/*
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 1000, // Máximo 1000 requests por IP (mais permissivo para desenvolvimento)
-  message: 'Muitas requisições deste IP, tente novamente mais tarde.'
+  max: 5000, // Máximo 5000 requests por IP (muito mais permissivo para desenvolvimento)
+  message: 'Muitas requisições deste IP, tente novamente mais tarde.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  skipSuccessfulRequests: true, // Não contar requisições bem-sucedidas
+  skipFailedRequests: false
 });
 app.use('/api/', limiter);
+*/
+
+// Middleware para MIME types corretos
+app.use((req, res, next) => {
+  const url = req.url;
+
+  // Definir MIME types corretos para arquivos estáticos
+  if (url.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+  } else if (url.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+  } else if (url.endsWith('.html')) {
+    res.setHeader('Content-Type', 'text/html');
+  } else if (url.endsWith('.json')) {
+    res.setHeader('Content-Type', 'application/json');
+  } else if (url.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (url.endsWith('.ico')) {
+    res.setHeader('Content-Type', 'image/x-icon');
+  }
+
+  next();
+});
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true, // Permitir todas as origens em desenvolvimento
+  credentials: true, // Permitir cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
@@ -87,49 +121,49 @@ app.use((req, res, next) => {
 
 // ✅ MIDDLEWARE DE SEGURANÇA - DEVE VIR ANTES DOS ARQUIVOS ESTÁTICOS
 app.use((req, res, next) => {
-    // Permitir acesso a arquivos estáticos e API
-    if (req.path.startsWith('/api/') || 
-        req.path.startsWith('/css/') || 
-        req.path.startsWith('/js/') || 
-        req.path.startsWith('/webfonts/') ||
-        req.path.includes('.') ||
-        req.path === '/login' ||
-        req.path === '/favicon.ico' ||
-        req.path === '/manifest.json' ||
-        req.path === '/browserconfig.xml') {
-        return next();
-    }
-    
-    // ✅ VERIFICAR AUTENTICAÇÃO PARA PÁGINA PRINCIPAL
-    if (req.path === '/') {
-        const authToken = req.headers.authorization || req.query.token || req.cookies?.authToken;
-        
-        if (authToken && authToken.trim() !== '') {
-            console.log('✅ Usuário autenticado, acesso à página principal permitido');
-            return next();
-        } else {
-            console.log('🔐 Usuário não autenticado, redirecionando para login');
-            return res.redirect('/login?message=authentication_required');
-        }
-    }
-    
-    // ✅ PERMITIR ACESSO A ROTAS PROTEGIDAS SE HOUVER TOKEN
-    if (req.path === '/dashboard' || req.path === '/system') {
-        const authToken = req.headers.authorization || req.query.token;
-        if (authToken && authToken.trim() !== '') {
-            console.log('✅ Acesso autorizado a rota protegida:', req.path);
-            return next();
-        } else {
-            console.log('🚫 Tentativa de acesso a rota protegida sem token:', req.path);
-            console.log('🎯 Servindo página de login...');
-            // ✅ SERVIR DIRETAMENTE A PÁGINA DE LOGIN EM VEZ DE REDIRECIONAR
-            return res.sendFile(path.join(__dirname, 'public', 'login.html'));
-        }
-    }
-    
-    // ✅ PERMITIR ACESSO A OUTRAS ROTAS (arquivos estáticos, etc.)
-    console.log('✅ Acesso permitido a:', req.originalUrl);
+  // Permitir acesso a arquivos estáticos e API
+  if (req.path.startsWith('/api/') ||
+    req.path.startsWith('/css/') ||
+    req.path.startsWith('/js/') ||
+    req.path.startsWith('/webfonts/') ||
+    req.path.includes('.') ||
+    req.path === '/login' ||
+    req.path === '/favicon.ico' ||
+    req.path === '/manifest.json' ||
+    req.path === '/browserconfig.xml') {
     return next();
+  }
+
+  // ✅ VERIFICAR AUTENTICAÇÃO PARA PÁGINA PRINCIPAL
+  if (req.path === '/') {
+    const authToken = req.headers.authorization || req.query.token || req.cookies?.authToken;
+
+    if (authToken && authToken.trim() !== '') {
+      console.log('✅ Usuário autenticado, acesso à página principal permitido');
+      return next();
+    } else {
+      console.log('🔐 Usuário não autenticado, redirecionando para login');
+      return res.redirect('/login?message=authentication_required');
+    }
+  }
+
+  // ✅ PERMITIR ACESSO A ROTAS PROTEGIDAS SE HOUVER TOKEN
+  if (req.path === '/dashboard' || req.path === '/system') {
+    const authToken = req.headers.authorization || req.query.token;
+    if (authToken && authToken.trim() !== '') {
+      console.log('✅ Acesso autorizado a rota protegida:', req.path);
+      return next();
+    } else {
+      console.log('🚫 Tentativa de acesso a rota protegida sem token:', req.path);
+      console.log('🎯 Servindo página de login...');
+      // ✅ SERVIR DIRETAMENTE A PÁGINA DE LOGIN EM VEZ DE REDIRECIONAR
+      return res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    }
+  }
+
+  // ✅ PERMITIR ACESSO A OUTRAS ROTAS (arquivos estáticos, etc.)
+  console.log('✅ Acesso permitido a:', req.originalUrl);
+  return next();
 });
 
 // Servir arquivos estáticos
@@ -152,34 +186,34 @@ app.use('/api/auth', authRoutes);
 // Inicializar serviço de sincronização
 let syncService = null;
 try {
-    const SyncService = require('./utils/sync-service');
-    syncService = new SyncService(io);
-    app.locals.syncService = syncService;
-    console.log('✅ Serviço de sincronização inicializado');
+  const SyncService = require('./utils/sync-service');
+  syncService = new SyncService(io);
+  app.locals.syncService = syncService;
+  console.log('✅ Serviço de sincronização inicializado');
 } catch (error) {
-    console.error('❌ Erro ao inicializar serviço de sincronização:', error.message);
+  console.error('❌ Erro ao inicializar serviço de sincronização:', error.message);
 }
 
 // Rota de teste da API
 app.get('/api/health', (req, res) => {
-    res.json({
-        status: 'OK',
-        message: 'Sistema de Vendas funcionando!',
-        timestamp: new Date().toISOString(),
-        version: '1.0.0',
-        features: {
-            email: true,
-            whatsapp: true,
-            pushNotifications: true,
-            realTimeSync: !!syncService
-        }
-    });
+  res.json({
+    status: 'OK',
+    message: 'Sistema de Vendas funcionando!',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0',
+    features: {
+      email: true,
+      whatsapp: true,
+      pushNotifications: true,
+      realTimeSync: !!syncService
+    }
+  });
 });
 
 // ROTAS ESPECÍFICAS PARA PÁGINAS
 // Rota para página de login
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Endpoint de health check
@@ -194,44 +228,44 @@ app.get('/api/health', (req, res) => {
 
 // ✅ ROTAS PROTEGADAS - AGORA GERENCIADAS PELO MIDDLEWARE DE SEGURANÇA
 app.get('/dashboard', (req, res) => {
-    // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
-    console.log('✅ Servindo dashboard para usuário autenticado');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
+  console.log('✅ Servindo dashboard para usuário autenticado');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/system', (req, res) => {
-    // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
-    console.log('✅ Servindo sistema para usuário autenticado');
-    
-    // Verificar se há token na query string para compatibilidade
-    const token = req.query.token;
-    if (token) {
-        console.log('🔑 Token recebido via query string, configurando cookie de sessão');
-        // Configurar cookie de sessão para compatibilidade
-        res.cookie('sessionToken', token, { 
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000 // 24 horas
-        });
-    }
-    
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // ✅ O MIDDLEWARE JÁ VERIFICOU O TOKEN, ENTÃO PODEMOS SERVIR A PÁGINA
+  console.log('✅ Servindo sistema para usuário autenticado');
+
+  // Verificar se há token na query string para compatibilidade
+  const token = req.query.token;
+  if (token) {
+    console.log('🔑 Token recebido via query string, configurando cookie de sessão');
+    // Configurar cookie de sessão para compatibilidade
+    res.cookie('sessionToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    });
+  }
+
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ELIMINAR COMPLETAMENTE O ACESSO AO DASHBOARD
 app.all('/dashboard*', (req, res) => {
-    console.log('🚫 ACESSO BLOQUEADO ao dashboard!');
-    console.log('📍 URL solicitada:', req.originalUrl);
-    console.log('🎯 FORÇANDO redirecionamento para login...');
-    
-    // Redirecionamento FORÇADO para login
-    res.status(302).redirect('/login');
+  console.log('🚫 ACESSO BLOQUEADO ao dashboard!');
+  console.log('📍 URL solicitada:', req.originalUrl);
+  console.log('🎯 FORÇANDO redirecionamento para login...');
+
+  // Redirecionamento FORÇADO para login
+  res.status(302).redirect('/login');
 });
 
 // Rota para página inicial (index) - PERMITIDA
 app.get('/', (req, res) => {
-    console.log('🏠 Servindo página inicial');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  console.log('🏠 Servindo página inicial');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Rota para página de teste básico - AGORA BLOQUEADA
@@ -252,11 +286,11 @@ app.get('/', (req, res) => {
 // Middleware de tratamento de erros
 app.use((err, req, res, next) => {
   console.error('Erro:', err);
-  
+
   if (err.type === 'entity.parse.failed') {
     return res.status(400).json({ error: 'Dados inválidos enviados' });
   }
-  
+
   res.status(err.status || 500).json({
     error: err.message || 'Erro interno do servidor',
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
@@ -276,7 +310,7 @@ server.listen(PORT, () => {
   console.log(`📊 API disponível em: http://localhost:${PORT}/api/health`);
   console.log(`🔄 Socket.IO disponível em: http://localhost:${PORT}`);
   console.log('✨ Sistema pronto para uso!');
-  
+
   if (syncService) {
     console.log('🔄 Sincronização em tempo real ativa!');
   }

@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Sistema completo de gestão de vendas com suporte offline">
+    <meta name="keywords" content="vendas, gestão, clientes, produtos, orçamentos, sistema">
+    <meta name="author" content="Sistema de Vendas">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sistema de Vendas">
+    <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- FontAwesome Icons (LOCAL - RESOLVE CSP) -->
+    <link rel="stylesheet" href="/css/fontawesome-local.css?v=1.0.1" />
+
+    <!-- CSS -->
+    <!-- Sistema de Responsividade Consolidado -->
+    <link rel="stylesheet" href="/css/responsive-consolidated.css" />
+
+    <!-- Menu Hambúrguer Elegante e Profissional -->
+    <link rel="stylesheet" href="/css/hamburger-menu-enhanced.css" />
+
+    <!-- Overlay Elegante da Sidebar -->
+    <link rel="stylesheet" href="/css/sidebar-overlay.css" />
+
+    <!-- Estilos principais -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/ui.css">
+    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/buttons.css">
+    <link rel="stylesheet" href="/css/tables.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/charts.css">
+
+    <!-- Ícones Profissionais -->
+    <!-- Removido: force-cleanup-icons.css (arquivo conflitante) -->
+
+    <!-- Action Buttons por último -->
+    <link rel="stylesheet" href="/css/action-buttons.css" />
+
+    <!-- Notificações de Pagamento -->
+
+    <!-- Notificações de Pagamento -->
+    <link rel="stylesheet" href="/css/payment-notifications.css" />
+
+    <!-- Atividades de Pagamento -->
+    <link rel="stylesheet" href="/css/payment-activities.css" />
+
+    <!-- CSS Específico para Margens das Páginas -->
+    <link rel="stylesheet" href="/css/page-margins.css" />
+
+    <!-- CSS para Limpeza de Ícones -->
+    <!-- Removido: force-cleanup-icons.css (arquivo conflitante) -->
+
+    <!-- CSS para Ícones Profissionais da Sidebar -->
+    <!-- Removido: sidebar-icons.css (consolidado em icons-unified.css) -->
+
+    <!-- Sistema de Responsividade Específica Consolidado -->
+    <!-- Removido: pages-responsive.css (arquivo não existe) -->
+
+    <!-- CSS Responsivo Global para Todas as Páginas -->
+    <link rel="stylesheet" href="/css/responsive-consolidated.css" />
+
+    <!-- CSS Responsivo para Páginas de Gestão -->
+    <!-- Removido: pages-responsive.css duplicado (arquivo não existe) -->
+
+    <!-- CSS Correções Responsivas para Botões -->
+    <!-- Removido: button-responsive-fixes.css (arquivo não existe) -->
+
+    <!-- CSS Correções para Telas Pequenas (abaixo de 417px) -->
+    <!-- Removido: mobile-small-fixes.css (arquivo não existe) -->
+
+    <!-- CSS Correções para Botões Sair -->
+    <!-- Removido: button-logout-fixes.css (consolidado em button-enhancements.css) -->
+
+    <!-- CSS Correções para Botões de Ação -->
+    <!-- Removido: action-buttons-fixes.css (arquivo não existe) -->
+
+    <!-- CSS Correção do Tamanho do Botão Logout no Header -->
+    <!-- Removido: header-logout-size-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção da Altura do Overlay -->
+    <!-- Removido: overlay-height-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção da Sincronização do Menu Hambúrguer -->
+    <!-- Removido: hamburger-overlay-sync-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção Visual dos Botões de Ação -->
+    <!-- Removido: action-buttons-visual-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção de Emergência para Botões de Ação -->
+    <link rel="stylesheet" href="/css/action-buttons.css" />
+
+    <!-- CSS Melhorias para Botões -->
+    <link rel="stylesheet" href="/css/button-enhancements.css" />
+
+    <!-- CSS Correções para Ícones dos Cards do Dashboard -->
+    <!-- Removido: dashboard-icons-fixes.css (arquivo não existe) -->
+
+    <!-- CSS Melhorias Avançadas para Ícones do Dashboard -->
+    <!-- Removido: dashboard-icons-enhanced.css (arquivo não existe) -->
+
+    <!-- CSS Correção Ultimate para Eliminar Quadradinhos -->
+    <!-- Removido: dashboard-icons-ultimate-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção Final com Fallback de Emojis -->
+    <!-- Removido: dashboard-icons-final-fix.css (arquivo não existe) -->
+
+    <!-- CSS Melhorias do Dashboard Desktop -->
+    <link rel="stylesheet" href="/css/dashboard-desktop-improvements.css" />
+
+    <!-- CSS Força Máxima para Sobrescrever Botões de Ação -->
+    <!-- Removido: action-buttons-force-override.css (arquivo não existe) -->
+
+    <!-- CSS Remover Ícones Duplicados dos Botões de Ação -->
+    <!-- Removido: action-buttons-remove-duplicates.css (arquivo não existe) -->
+
+    <!-- CSS Correção de Margem da Sidebar -->
+    <!-- Removido: sidebar-margin-fix.css (arquivo não existe) -->
+
+    <!-- CSS Correção Definitiva do Z-Index dos Ícones -->
+    <!-- Removido: dashboard-icons-z-index-fix.css (arquivo não existe) -->
+
+    <!-- Sistema de Ícones Unificado -->
+    <link rel="stylesheet" href="/css/icons-unified.css" />
+
+    <!-- CSS Correção de Altura do Overlay -->
+    <!-- Removido: overlay-height-fix.css duplicado (arquivo não existe) -->
+
+    <!-- CSS CORREÇÃO DA MARGEM DO HEADER -->
+    <!-- Removido: header-margin-fix.css (arquivo não existe) -->
+
+    <!-- CSS Ícones Profissionais (CORRIGIDO - SEM REMOVER CONTENT) -->
+    <!-- Removido: icons-professional.css (duplicado) -->
+
+    <!-- CSS SOLUÇÃO DEFINITIVA PARA ÍCONES DUPLICADOS -->
+    <!-- Removido: action-buttons-definitive-fix.css (arquivo não existe) -->
+
+    <!-- CSS CORES PROFISSIONAIS PARA BOTÕES DE TABELA -->
+    <!-- Removido: table-buttons-professional-colors.css (arquivo não existe) -->
+
+    <!-- CSS CORREÇÃO PARA BOTÕES DE AÇÃO EM MOBILE (TELAS ABAIXO DE 660px) -->
+    <!-- Removido: action-buttons-mobile-fix.css (arquivo não existe) -->
+
+    <!-- CSS OCULTAÇÃO RESPONSIVA DE CAMPOS MENOS IMPORTANTES -->
+    <link rel="stylesheet" href="/css/responsive-field-hiding.css?v=1.0.1" />
+
+    <!-- CSS MODAL DE DETALHES DE VENDA PROFISSIONAL -->
+    <link rel="stylesheet" href="/css/venda-details-modal.css?v=1.0.1" />
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Carregando Sistema...</h2>
+            <p>Inicializando módulos</p>
+        </div>
+    </div>
+
+    <!-- Sistema de Login Unificado -->
+    <!-- O login agora é gerenciado apenas pela página login.html -->
+    <!-- Este modal foi removido para evitar duplicação -->
+
+    <!-- Offline Indicator -->
+    <div id="offline-indicator" class="offline-indicator hidden">
+        <i class="fas fa-wifi-slash"></i>
+        <span>Modo Offline - Dados salvos localmente</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-store"></i>
+                    <span>Sistema Vendas</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active" data-page="dashboard">
+                        <a href="#dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="clientes">
+                        <a href="#clientes">
+                            <i class="fas fa-user-group"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="produtos">
+                        <a href="#produtos">
+                            <i class="fas fa-boxes-stacked"></i>
+                            <span>Produtos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="vendas">
+                        <a href="#vendas">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Vendas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="orcamentos">
+                        <a href="#orcamentos">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Orçamentos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-page="relatorios">
+                        <a href="#relatorios">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Relatórios</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <!-- Informações do usuário (visível quando logado) -->
+                <div class="user-info" id="user-info" style="display: none;">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-name">Usuário</span>
+                        <span class="user-role" id="user-role">Administrador</span>
+                    </div>
+                </div>
+
+                <!-- Botão de logout (visível quando logado) -->
+                <button class="logout-btn" id="logout-btn" style="display: none;">
+                    <span>Sair</span>
+                </button>
+
+                <!-- Seção de login (visível apenas quando NÃO logado) -->
+                <div class="login-section" id="login-section">
+                    <div class="login-container">
+                        <h3>🔐 Login do Sistema</h3>
+                        <form id="login-form" class="login-form">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Senha:</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Entrar
+                                </button>
+                            </div>
+                            <div id="login-error" class="error-message" style="display: none;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTIFICAÇÃO DE ESTOQUE BAIXO -->
+        <div class="estoque-notification" id="estoque-notification" style="display: none;">
+            <!-- Notificação será carregada dinamicamente -->
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="main-content">
+            <!-- Header Superior -->
+            <div class="top-header">
+                <div class="header-left">
+                    <button id="sidebar-toggle" class="sidebar-toggle" title="Abrir/Fechar Menu"
+                        aria-label="Abrir ou fechar menu de navegação" aria-expanded="false">
+                        <span class="hamburger-line"></span>
+                    </button>
+                    <h1>Sistema de Vendas</h1>
+                </div>
+
+                <div class="header-right">
+                    <div class="status-indicators">
+                        <span class="status-badge online">
+                            <i class="fas fa-circle"></i>
+                            Online
+                        </span>
+                        <span class="status-badge cache">
+                            <i class="fas fa-database"></i>
+                            Cache: 0 itens
+                        </span>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-sync-alt"></i>
+                            Sincronizar
+                        </button>
+                        <button id="header-logout-btn" class="btn btn-danger" style="display: none;">
+                            Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo das Páginas -->
+            <div class="page-container">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="dashboard-page page active">
+                    <div class="dashboard-grid">
+                        <!-- Cards de Estatísticas - LAYOUT DA IMAGEM -->
+                        <div class="dashboard-header">
+                            <h2>📊 Dashboard do Sistema</h2>
+                            <button class="btn-refresh" id="refresh-dashboard" title="Atualizar dados">
+                                <i class="fas fa-sync-alt"></i>
+                                Atualizar Dados
+                            </button>
+                        </div>
+
+                        <!-- ALERTAS DE ESTOQUE BAIXO -->
+                        <div class="estoque-alerts" id="estoque-alerts">
+                            <!-- Alerta será carregado dinamicamente -->
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-group"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-clientes">0</h3>
+                                    <p>Total de Clientes</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-boxes-stacked"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-produtos">0</h3>
+                                    <p>Total de Produtos</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="total-vendas">0</h3>
+                                    <p>Total de Vendas</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-ativos">0</h3>
+                                    <p>Orçamentos Ativos</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-aprovados">0</h3>
+                                    <p>Orçamentos Aprovados</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-convertidos">0</h3>
+                                    <p>Convertidos em Vendas</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 id="orcamentos-expirados">0</h3>
+                                    <p>Orçamentos Expirados</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resumo Financeiro - LAYOUT DA IMAGEM -->
+                        <div class="financial-summary">
+                            <h3>Resumo Financeiro</h3>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="label">Total de Vendas:</span>
+                                    <span class="value" id="valor-total-vendas">R$ 0,00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total Pago:</span>
+                                    <span class="value success" id="valor-total-pago">R$ 0,00</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="label">Total Devido:</span>
+                                    <span class="value danger" id="valor-total-devido">R$ 0,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Atividade Recente - LAYOUT DA IMAGEM -->
+                        <div class="recent-activity">
+                            <h3>Atividade Recente</h3>
+                            <div class="activity-list" id="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p>Carregando atividades...</p>
+                                        <span class="activity-time">Agora</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ações Rápidas - LAYOUT DA IMAGEM -->
+                        <div class="quick-actions">
+                            <h3>Ações Rápidas</h3>
+                            <div class="actions-grid">
+                                <button class="action-btn" data-action="nova-venda">
+                                    <i class="fas fa-cart-plus"></i>
+                                    Nova Venda
+                                </button>
+                                <button class="action-btn" data-action="novo-cliente">
+                                    <i class="fas fa-user-plus"></i>
+                                    Novo Cliente
+                                </button>
+                                <button class="action-btn" data-action="novo-produto">
+                                    <i class="fas fa-box-open"></i>
+                                    Novo Produto
+                                </button>
+                                <button class="action-btn" data-action="novo-orcamento">
+                                    <i class="fas fa-file-circle-plus"></i>
+                                    Novo Orçamento
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Páginas do Sistema -->
+                <div id="clientes-page" class="page">
+                    <div class="page-content" id="clientes-content">
+                        <!-- Conteúdo será carregado pelo módulo ClientesPage -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando módulo de Clientes...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="produtos-page" class="page">
+                    <div class="page-content" id="produtos-content">
+                        <!-- Conteúdo será carregado pelo módulo ProdutosPage -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando módulo de Produtos...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vendas-page" class="page">
+                    <div class="page-content" id="vendas-content">
+                        <!-- Conteúdo será carregado pelo módulo VendasPage -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando módulo de Vendas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="orcamentos-page" class="page">
+                    <div class="page-content" id="orcamentos-content">
+                        <!-- Conteúdo será carregado pelo módulo OrcamentosPage -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando módulo de Orçamentos...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="relatorios-page" class="page">
+                    <div class="page-content" id="relatorios-content">
+                        <!-- Conteúdo será carregado pelo módulo RelatóriosPage -->
+                        <div class="loading-placeholder">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Carregando módulo de Relatórios...</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-container" class="modal-container hidden">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script de Verificação de Ícones -->
+    <!-- Removido: icon-checker.js (arquivo de desenvolvimento) -->
+
+    <!-- JavaScript Modular - NOVA VERSÃO -->
+    <!-- Chart.js para gráficos -->
+    <script src="/js/libs/chart.js"></script>
+
+    <!-- Sistema Modular -->
+    <script src="/js/modules/config.js"></script>
+    <script src="/js/modules/auth-manager.js"></script>
+    <script src="/js/modules/ui-manager.js"></script>
+    <script src="/js/modules/data-manager.js"></script>
+    <script src="/js/modules/routing-manager.js"></script>
+    <script src="/js/modules/index.js"></script>
+    <script src="/js/app-modular.js"></script>
+
+    <!-- Scripts Legacy (serão migrados para módulos) -->
+    <script src="/js/database.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/utils/event-manager.js"></script>
+
+    <!-- JavaScript das Páginas -->
+    <script src="/js/pages/dashboard.js"></script>
+    <script src="/js/pages/clientes.js"></script>
+    <script src="/js/pages/produtos.js"></script>
+    <script src="/js/pages/vendas.js"></script>
+    <script src="/js/pages/orcamentos.js"></script>
+    <script src="/js/pages/relatorios.js"></script>
+
+    <!-- Script de Limpeza de Cache -->
+    <!-- Removido: clear-cache.js (arquivo de desenvolvimento) -->
+
+    <!-- Padronização de Ícones do Sistema -->
+    <!-- Removido: icon-standardization.js (consolidado em icons-unified.css) -->
+    <script src="/js/pages/relatorios-com-dados-reais.js"></script>
+    <script src="/js/pages/relatorios-simples-global.js"></script>
+    <script src="/js/pages/relatorios-responsive.js"></script>
+
+    <!-- JavaScript Principal -->
+    <script src="/js/app.js"></script>
+
+    <!-- Sistema de Autenticação (Legacy) -->
+    <script src="/js/auth.js"></script>
+
+    <!-- Sistema de Inicialização -->
+    <script>
+        console.log('🚀 Sistema de Vendas carregando...');
+
+        // Função para configurar botões de login quando disponíveis
+        function setupLoginButtons() {
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', () => window.location.href = '/login');
+            }
+        }
+
+        // Função para configurar botão de refresh
+        function setupRefreshButton() {
+            const refreshBtn = document.getElementById('refresh-dashboard');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    console.log('🔄 Refresh manual solicitado...');
+                    // Chamar a função do app.js se disponível
+                    if (window.sistemaVendas && window.sistemaVendas.loadDashboardData) {
+                        window.sistemaVendas.loadDashboardData();
+                    } else {
+                        console.log('⚠️ Sistema de vendas não disponível, recarregando página...');
+                        window.location.reload();
+                    }
+                });
+                console.log('✅ Botão de refresh configurado');
+            }
+        }
+
+        // Configurar quando DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('✅ DOM carregado');
+            setupLoginButtons();
+            setupRefreshButton();
+            setupModalSystem();
+            setupDebugSystem();
+
+            // NÃO carregar dados aqui - deixar o app.js fazer isso
+            console.log('⚠️ JavaScript inline carregado - aguardando app.js');
+        });
+
+        // Sistema de Modais Padronizado
+        function setupModalSystem() {
+            console.log('🎭 Configurando sistema de modais...');
+
+            // Configurar botões de ação rápida
+            const actionButtons = document.querySelectorAll('[data-action]');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const action = this.getAttribute('data-action');
+                    openModal(action);
+                });
+            });
+
+            // Configurar fechamento do modal
+            const modalClose = document.getElementById('modal-close');
+            const modalOverlay = document.getElementById('modal-overlay');
+
+            if (modalClose) {
+                modalClose.addEventListener('click', closeModal);
+            }
+
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', closeModal);
+            }
+
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Event listeners para botões de cancelar modais
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('cancel-modal-btn')) {
+                    closeModal();
+                }
+            });
+
+            console.log('✅ Sistema de modais configurado');
+        }
+
+        // Sistema de Debug para Sidebar
+        function setupDebugSystem() {
+            console.log('🔍 Configurando sistema de debug...');
+
+            // Aguardar carregamento do app.js
+            setTimeout(() => {
+                debugSidebarSystem();
+            }, 3000);
+        }
+
+        function debugSidebarSystem() {
+            console.log('🔍 === DEBUG SIDEBAR INICIADO ===');
+
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sistemaVendas = window.sistemaVendas;
+
+            console.log('📋 Sidebar element:', sidebar);
+            console.log('📋 Toggle element:', sidebarToggle);
+            console.log('📋 Sistema Vendas:', sistemaVendas);
+
+            if (sidebar) {
+                console.log('📋 Sidebar classes:', sidebar.className);
+                console.log('📋 Sidebar display:', window.getComputedStyle(sidebar).display);
+                console.log('📋 Sidebar transform:', window.getComputedStyle(sidebar).transform);
+                console.log('📋 Sidebar z-index:', window.getComputedStyle(sidebar).zIndex);
+            }
+
+            if (sidebarToggle) {
+                console.log('📋 Toggle display:', window.getComputedStyle(sidebarToggle).display);
+                console.log('📋 Toggle z-index:', window.getComputedStyle(sidebarToggle).zIndex);
+                console.log('📋 Toggle position:', window.getComputedStyle(sidebarToggle).position);
+            }
+
+            console.log('📱 Largura da tela:', window.innerWidth);
+
+            // Testar se o toggle está funcionando
+            if (sidebarToggle && sidebar) {
+                console.log('🧪 Testando toggle da sidebar...');
+
+                // Verificar se há event listeners
+                const originalClick = sidebarToggle.onclick;
+                console.log('📡 Toggle onclick original:', originalClick);
+
+                // Adicionar listener de teste
+                sidebarToggle.addEventListener('click', function debugTest() {
+                    console.log('🎯 DEBUG: Toggle clicado!');
+                    console.log('📋 Classes antes:', sidebar.className);
+
+                    sidebar.classList.toggle('open');
+
+                    console.log('📋 Classes depois:', sidebar.className);
+                    console.log('📋 Sidebar aberta:', sidebar.classList.contains('open'));
+
+                    // Remover listener de teste
+                    sidebarToggle.removeEventListener('click', debugTest);
+                }, { once: true });
+
+                console.log('✅ Listener de teste adicionado ao toggle');
+            }
+
+            console.log('🔍 === DEBUG SIDEBAR CONCLUÍDO ===');
+        }
+
+        // Abrir modal baseado na ação
+        function openModal(action) {
+            console.log(`🎭 Abrindo modal para: ${action}`);
+
+            const modalContainer = document.getElementById('modal-container');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+
+            if (!modalContainer || !modalTitle || !modalBody) {
+                console.error('❌ Elementos do modal não encontrados');
+                return;
+            }
+
+            // Definir título e conteúdo baseado na ação
+            switch (action) {
+                case 'nova-venda':
+                    modalTitle.textContent = '🛒 Nova Venda';
+                    modalBody.innerHTML = createVendaForm();
+                    break;
+                case 'novo-cliente':
+                    modalTitle.textContent = '👤 Novo Cliente';
+                    modalBody.innerHTML = createClienteForm();
+                    break;
+                case 'novo-produto':
+                    modalTitle.textContent = '📦 Novo Produto';
+                    modalBody.innerHTML = createProdutoForm();
+                    break;
+                case 'novo-orcamento':
+                    modalTitle.textContent = '📋 Novo Orçamento';
+                    modalBody.innerHTML = createOrcamentoForm();
+                    break;
+                default:
+                    console.warn(`⚠️ Ação não reconhecida: ${action}`);
+                    return;
+            }
+
+            // Mostrar modal
+            modalContainer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Focar no primeiro campo
+            setTimeout(() => {
+                const firstInput = modalBody.querySelector('input, select, textarea');
+                if (firstInput) firstInput.focus();
+            }, 100);
+        }
+
+        // Fechar modal
+        function closeModal() {
+            console.log('🎭 Fechando modal');
+
+            const modalContainer = document.getElementById('modal-container');
+            if (modalContainer) {
+                modalContainer.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Criar formulário de Nova Venda
+        function createVendaForm() {
+            return `
+                <form id="venda-form" class="venda-form">
+                    <div class="form-group">
+                        <label for="cliente-venda" class="form-label required">Cliente</label>
+                        <select id="cliente-venda" class="form-input form-select" required>
+                            <option value="">Selecione um cliente</option>
+                            <option value="1">Cliente 1</option>
+                            <option value="2">Cliente 2</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data-venda" class="form-label required">Data da Venda</label>
+                        <input type="date" id="data-venda" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="produtos-venda" class="form-label required">Produtos</label>
+                        <select id="produtos-venda" class="form-input form-select" multiple required>
+                            <option value="1">Produto 1 - R$ 100,00</option>
+                            <option value="2">Produto 2 - R$ 200,00</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantidade-venda" class="form-label">Quantidade</label>
+                        <input type="number" id="quantidade-venda" class="form-input" min="1" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valor-total-venda" class="form-label">Valor Total</label>
+                        <input type="text" id="valor-total-venda" class="form-input" readonly value="R$ 0,00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observacoes-venda" class="form-label">Observações</label>
+                        <textarea id="observacoes-venda" class="form-input form-textarea" placeholder="Observações sobre a venda..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary cancel-modal-btn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Criar Venda</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Criar formulário de Novo Cliente
+        function createClienteForm() {
+            return `
+                <form id="cliente-form" class="cliente-form">
+                    <div class="form-group">
+                        <label for="nome-cliente" class="form-label required">Nome Completo</label>
+                        <input type="text" id="nome-cliente" class="form-input" required 
+                               placeholder="Digite o nome completo do cliente" minlength="2" maxlength="150">
+                        <div class="form-hint">Mínimo 2 caracteres, máximo 150</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefone-cliente" class="form-label required">Telefone</label>
+                        <input type="tel" id="telefone-cliente" class="form-input" required 
+                               placeholder="(11) 99999-9999" pattern="\\([0-9]{2}\\) [0-9]{5}-[0-9]{4}">
+                        <div class="form-hint">Formato: (11) 99999-9999 ou similar</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email-cliente" class="form-label">Email</label>
+                        <input type="email" id="email-cliente" class="form-input" 
+                               placeholder="cliente@email.com">
+                        <div class="form-hint">Email válido (opcional)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="documento-cliente" class="form-label">CPF/CNPJ</label>
+                        <input type="text" id="documento-cliente" class="form-input" 
+                               placeholder="000.000.000-00 ou 00.000.000/0001-00">
+                        <div class="form-hint">CPF (11 dígitos) ou CNPJ (14 dígitos) - opcional</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endereco-cliente" class="form-label">Endereço</label>
+                        <textarea id="endereco-cliente" class="form-input form-textarea" 
+                                  placeholder="Rua, número, bairro, cidade, CEP"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary cancel-modal-btn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Salvar Cliente</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Criar formulário de Novo Produto
+        function createProdutoForm() {
+            return `
+                <form id="produto-form" class="produto-form">
+                    <div class="form-group">
+                        <label for="nome-produto">Nome do Produto *</label>
+                        <input type="text" id="nome-produto" required placeholder="Nome do produto">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoria-produto">Categoria</label>
+                            <select id="categoria-produto">
+                                <option value="">Selecione uma categoria</option>
+                                <option value="eletronicos">Eletrônicos</option>
+                                <option value="roupas">Roupas</option>
+                                <option value="casa">Casa e Jardim</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="codigo-produto">Código</label>
+                            <input type="text" id="codigo-produto" placeholder="Código do produto">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preco-produto">Preço *</label>
+                            <input type="number" id="preco-produto" step="0.01" min="0" required placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label for="estoque-produto">Estoque</label>
+                            <input type="number" id="estoque-produto" min="0" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricao-produto">Descrição</label>
+                        <textarea id="descricao-produto" placeholder="Descrição detalhada do produto..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary cancel-modal-btn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Criar Produto</button>
+                    </div>
+                </form>
+            `;
+        }
+
+        // Criar formulário de Novo Orçamento
+        function createOrcamentoForm() {
+            return `
+                <form id="orcamento-form" class="orcamento-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cliente-orcamento">Cliente *</label>
+                            <select id="cliente-orcamento" required>
+                                <option value="">Selecione um cliente</option>
+                                <option value="1">Cliente 1</option>
+                                <option value="2">Cliente 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="validade-orcamento">Validade *</label>
+                            <input type="date" id="validade-orcamento" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="produtos-orcamento">Produtos *</label>
+                        <select id="produtos-orcamento" multiple required>
+                            <option value="1">Produto 1 - R$ 100,00</option>
+                            <option value="2">Produto 2 - R$ 200,00</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantidade-orcamento">Quantidade</label>
+                            <input type="number" id="quantidade-orcamento" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor-orcamento">Valor Total</label>
+                            <input type="text" id="valor-orcamento" readonly value="R$ 0,00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="observacoes-orcamento">Observações</label>
+                        <textarea id="observacoes-orcamento" placeholder="Observações sobre o orçamento..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary cancel-modal-btn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Criar Orçamento</button>
+                    </div>
+                </form>
+            `;
+        }
+    </script>
+
+    <!-- Service Worker -->
+    <script src="/js/service-worker.js"></script>
+
+    <style>
+        /* Estilos para o sistema de login */
+        .login-section {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .error-message {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+
+    <!-- Scripts de Inicialização Modular -->
+    <!-- DESABILITADO TEMPORARIAMENTE PARA PARAR LOOP INFINITO -->
+    <!--
+    <script>
+        // Sistema de Inicialização Modular
+        (function () {
+            const VERSION = 'v2.0.0-modular';
+            console.log('🚀 Sistema Modular - Versão:', VERSION);
+
+            // Verificar se módulos estão carregados
+            window.addEventListener('modules:loaded', (event) => {
+                console.log('✅ Módulos carregados:', event.detail.modules);
+
+                // Inicializar sistema principal
+                if (window.SistemaVendasModular) {
+                    window.sistemaVendas = new window.SistemaVendasModular();
+                }
+            });
+
+            // Tratamento de erros de módulos
+            window.addEventListener('modules:error', (event) => {
+                console.error('❌ Erro nos módulos:', event.detail.error);
+            });
+
+            console.log('✅ Sistema de inicialização modular configurado');
+        })();
+    </script>
+    -->
+
+    <!-- Módulos Compartilhados -->
+    <!-- DESABILITADO TEMPORARIAMENTE PARA PARAR LOOP INFINITO -->
+    <!-- <script src="/js/shared/ModulesLoader.js"></script> -->
+
+    <!-- Aguardar inicialização dos módulos -->
+    <!-- DESABILITADO TEMPORARIAMENTE PARAR LOOP INFINITO -->
+    <!--
+    <script>
+        // Aguardar inicialização dos módulos compartilhados
+        window.addEventListener('modules:initialized', () => {
+            console.log('🎉 Módulos compartilhados inicializados!');
+
+            // Inicializar aplicação principal
+            if (window.app) {
+                window.app.initialize();
+            }
+        });
+
+        // Tratamento de erros
+        window.addEventListener('modules:error', (event) => {
+            console.error('❌ Erro na inicialização dos módulos:', event.detail.error);
+
+            // Mostrar erro na tela
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.innerHTML = `
+                    <div class="loading-content">
+                        <div class="error-icon">⚠️</div>
+                        <h2>Erro de Inicialização</h2>
+                        <p>Não foi possível carregar os módulos do sistema.</p>
+                        <button onclick="location.reload()" class="btn-primary">Tentar Novamente</button>
+                    </div>
+                `;
+            }
+        });
+    </script>
+    -->
+
+    <!-- Correção da Sincronização do Menu Hambúrguer -->
+    <!-- Removido: hamburger-overlay-sync-fix.js (arquivo não existe) -->
+
+    <!-- Removido: action-buttons-visual-fix.js (arquivo não existe) -->
+
+    <!-- Removido: action-buttons-force-override.js (arquivo não existe) -->
+
+    <!-- Removido: action-buttons-definitive-fix.js (arquivo não existe) -->
+
+    <!-- Removido: table-buttons-professional-colors.css (consolidado em button-enhancements.css) -->
+
+    <!-- JavaScript CORREÇÃO PARA BOTÕES DE AÇÃO EM MOBILE (TELAS ABAIXO DE 660px) -->
+    <!-- Removido: action-buttons-mobile-fix.js (arquivo não existe) -->
+
+    <!-- JavaScript OCULTAÇÃO RESPONSIVA DE CAMPOS MENOS IMPORTANTES -->
+    <script src="/js/responsive-field-hiding.js?v=1.0.1"></script>
+
+    <!-- CSS MODAL DE DETALHES DE VENDA PROFISSIONAL -->
+    <link rel="stylesheet" href="/css/venda-details-modal.css?v=1.0.1" />
+</body>
+
+</html>

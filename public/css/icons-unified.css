@@ -1,0 +1,393 @@
+/* ===== SISTEMA DE ÍCONES UNIFICADO ===== */
+/* Padronização completa de ícones do sistema */
+
+/* ===== ÍCONES PRINCIPAIS DO SISTEMA ===== */
+
+/* 🏪 Logo/Sistema */
+.system-logo i,
+.logo i {
+    content: "\f54e" !important;
+    /* fa-store */
+}
+
+/* 📊 Dashboard */
+.dashboard-icon i,
+[data-page="dashboard"] i,
+.dashboard-nav i,
+.fa-tachometer-alt::before {
+    content: "\f3fd" !important;
+    /* fa-tachometer-alt */
+}
+
+/* 👥 Clientes */
+.clientes-icon i,
+[data-page="clientes"] i,
+.clientes-nav i,
+.cliente-icon i,
+.fa-user-group::before {
+    content: "\f500" !important;
+    /* fa-user-group */
+}
+
+/* 📦 Produtos */
+.produtos-icon i,
+[data-page="produtos"] i,
+.produtos-nav i,
+.produto-icon i,
+.fa-boxes-stacked::before {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* 🛒 Vendas */
+.vendas-icon i,
+[data-page="vendas"] i,
+.vendas-nav i,
+.venda-icon i,
+.fa-shopping-bag::before {
+    content: "\f290" !important;
+    /* fa-shopping-bag */
+}
+
+/* 💰 Orçamentos */
+.orcamentos-icon i,
+[data-page="orcamentos"] i,
+.orcamentos-nav i,
+.orcamento-icon i,
+.fa-file-invoice-dollar::before {
+    content: "\f571" !important;
+    /* fa-file-invoice-dollar */
+}
+
+/* 📈 Relatórios */
+.relatorios-icon i,
+[data-page="relatorios"] i,
+.relatorios-nav i,
+.relatorio-icon i,
+.fa-chart-line::before {
+    content: "\f201" !important;
+    /* fa-chart-line */
+}
+
+/* ===== ÍCONES DOS CARDS DO DASHBOARD ===== */
+
+/* Card 1 - Total de Clientes */
+.stat-card:nth-child(1) .stat-icon i,
+#total-clientes-card .stat-icon i,
+.stat-card[data-stat="clientes"] .stat-icon i {
+    content: "\f500" !important;
+    /* fa-user-group */
+}
+
+/* Card 2 - Total de Produtos */
+.stat-card:nth-child(2) .stat-icon i,
+#total-produtos-card .stat-icon i,
+.stat-card[data-stat="produtos"] .stat-icon i {
+    content: "\f468" !important;
+    /* fa-boxes-stacked */
+}
+
+/* Card 3 - Total de Vendas */
+.stat-card:nth-child(3) .stat-icon i,
+#total-vendas-card .stat-icon i,
+.stat-card[data-stat="vendas"] .stat-icon i {
+    content: "\f290" !important;
+    /* fa-shopping-bag */
+}
+
+/* Card 4 - Total de Orçamentos */
+.stat-card:nth-child(4) .stat-icon i,
+#total-orcamentos-card .stat-icon i,
+.stat-card[data-stat="orcamentos"] .stat-icon i {
+    content: "\f571" !important;
+    /* fa-file-invoice-dollar */
+}
+
+/* ===== ÍCONES DE AÇÕES RÁPIDAS ===== */
+
+/* 🛒 Nova Venda */
+.action-card[data-action="nova-venda"] i,
+.fa-cart-plus::before {
+    content: "\f217" !important;
+    /* fa-cart-plus */
+}
+
+/* 👤 Novo Cliente */
+.action-card[data-action="novo-cliente"] i,
+.fa-user-plus::before {
+    content: "\f234" !important;
+    /* fa-user-plus */
+}
+
+/* 📦 Novo Produto */
+.action-card[data-action="novo-produto"] i,
+.fa-box-open::before {
+    content: "\f49e" !important;
+    /* fa-box-open */
+}
+
+/* 📋 Novo Orçamento */
+.action-card[data-action="novo-orcamento"] i,
+.fa-file-circle-plus::before {
+    content: "\f494" !important;
+    /* fa-file-circle-plus */
+}
+
+/* ===== ÍCONES DE AÇÕES GERAIS ===== */
+
+/* ➕ Adicionar */
+.btn-add i,
+.fa-plus::before {
+    content: "\f067" !important;
+    /* fa-plus */
+}
+
+/* ✏️ Editar */
+.btn-edit i,
+.fa-edit::before {
+    content: "\f044" !important;
+    /* fa-edit */
+}
+
+/* 🗑️ Excluir */
+.btn-delete i,
+.fa-trash::before {
+    content: "\f1f8" !important;
+    /* fa-trash */
+}
+
+/* 👁️ Visualizar */
+.btn-view i,
+.fa-eye::before {
+    content: "\f06e" !important;
+    /* fa-eye */
+}
+
+/* 💾 Salvar */
+.btn-save i,
+.fa-save::before {
+    content: "\f0c7" !important;
+    /* fa-save */
+}
+
+/* ❌ Cancelar */
+.btn-cancel i,
+.fa-times::before {
+    content: "\f00d" !important;
+    /* fa-times */
+}
+
+/* ✅ Confirmar */
+.btn-confirm i,
+.fa-check::before {
+    content: "\f00c" !important;
+    /* fa-check */
+}
+
+/* 📤 Exportar */
+.btn-export i,
+.fa-download::before {
+    content: "\f019" !important;
+    /* fa-download */
+}
+
+/* 📥 Importar */
+.btn-import i,
+.fa-upload::before {
+    content: "\f093" !important;
+    /* fa-upload */
+}
+
+/* 🔍 Pesquisar */
+.btn-search i,
+.fa-search::before {
+    content: "\f002" !important;
+    /* fa-search */
+}
+
+/* 🔄 Atualizar */
+.btn-refresh i,
+.fa-refresh::before {
+    content: "\f021" !important;
+    /* fa-refresh */
+}
+
+/* ===== ÍCONES DE STATUS ===== */
+
+/* ✅ Ativo */
+.status-active i,
+.fa-check-circle::before {
+    content: "\f058" !important;
+    /* fa-check-circle */
+}
+
+/* ❌ Inativo */
+.status-inactive i,
+.fa-times-circle::before {
+    content: "\f057" !important;
+    /* fa-times-circle */
+}
+
+/* ⚠️ Pendente */
+.status-pending i,
+.fa-clock::before {
+    content: "\f017" !important;
+    /* fa-clock */
+}
+
+/* 💰 Pago */
+.status-paid i,
+.fa-dollar-sign::before {
+    content: "\f155" !important;
+    /* fa-dollar-sign */
+}
+
+/* ===== ÍCONES DE NAVEGAÇÃO ===== */
+
+/* ⬅️ Voltar */
+.btn-back i,
+.fa-arrow-left::before {
+    content: "\f060" !important;
+    /* fa-arrow-left */
+}
+
+/* ➡️ Próximo */
+.btn-next i,
+.fa-arrow-right::before {
+    content: "\f061" !important;
+    /* fa-arrow-right */
+}
+
+/* ⬆️ Subir */
+.btn-up i,
+.fa-arrow-up::before {
+    content: "\f062" !important;
+    /* fa-arrow-up */
+}
+
+/* ⬇️ Descer */
+.btn-down i,
+.fa-arrow-down::before {
+    content: "\f063" !important;
+    /* fa-arrow-down */
+}
+
+/* ===== ÍCONES DE MENU ===== */
+
+/* ☰ Menu */
+.btn-menu i,
+.fa-bars::before {
+    content: "\f0c9" !important;
+    /* fa-bars */
+}
+
+/* ✕ Fechar */
+.btn-close i,
+.fa-times::before {
+    content: "\f00d" !important;
+    /* fa-times */
+}
+
+/* ===== ÍCONES DE NOTIFICAÇÃO ===== */
+
+/* 🔔 Notificação */
+.notification-icon i,
+.fa-bell::before {
+    content: "\f0f3" !important;
+    /* fa-bell */
+}
+
+/* 📧 Email */
+.email-icon i,
+.fa-envelope::before {
+    content: "\f0e0" !important;
+    /* fa-envelope */
+}
+
+/* 📱 WhatsApp */
+.whatsapp-icon i,
+.fa-whatsapp::before {
+    content: "\f232" !important;
+    /* fa-whatsapp */
+}
+
+/* ===== ÍCONES DE CONFIGURAÇÃO ===== */
+
+/* ⚙️ Configurações */
+.settings-icon i,
+.fa-cog::before {
+    content: "\f013" !important;
+    /* fa-cog */
+}
+
+/* 👤 Perfil */
+.profile-icon i,
+.fa-user::before {
+    content: "\f007" !important;
+    /* fa-user */
+}
+
+/* 🚪 Sair */
+.logout-icon i,
+.fa-sign-out-alt::before {
+    content: "\f2f5" !important;
+    /* fa-sign-out-alt */
+}
+
+/* ===== ESTILOS BASE DOS ÍCONES ===== */
+
+/* Garantir que todos os ícones tenham o mesmo estilo base */
+[class*="fa-"]::before,
+[class*="fas"]::before,
+[class*="far"]::before,
+[class*="fab"]::before {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    line-height: 1 !important;
+}
+
+/* Ícones em botões */
+.btn i,
+.action-btn i,
+.nav-link i {
+    margin-right: 0.5rem !important;
+    width: 1em !important;
+    text-align: center !important;
+}
+
+/* Ícones na sidebar */
+.sidebar-nav i {
+    width: 1.2em !important;
+    margin-right: 0.75rem !important;
+    text-align: center !important;
+}
+
+/* Ícones nos cards */
+.stat-icon i,
+.action-card i {
+    font-size: 1.5em !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* ===== CORREÇÕES ESPECÍFICAS ===== */
+
+/* Remover ícones duplicados ou conflitantes */
+.page-header .old-icon,
+.page-header .legacy-icon,
+.page-header .previous-icon {
+    display: none !important;
+}
+
+/* Garantir que ícones importantes sejam sempre visíveis */
+.sidebar-nav a i,
+.btn i,
+.stat-icon i,
+.action-card i {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

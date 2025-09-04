@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Clientes</title>
+</head>
+
+<body>
+    <h1>Teste da Página de Clientes</h1>
+    <div id="clientes-content">
+        <div class="page-header">
+            <h2>Gestão de Clientes</h2>
+        </div>
+        <div class="page-content">
+            <div id="clientes-table-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simular a classe ClientesPage
+        class ClientesPage {
+            constructor() {
+                this.clientes = [];
+                this.currentPage = 1;
+                this.itemsPerPage = 10;
+                this.init();
+            }
+
+            async init() {
+                console.log('🚀 Inicializando página de clientes...');
+                await this.loadClientes();
+                this.renderClientesTable();
+            }
+
+            async loadClientes() {
+                try {
+                    console.log('👥 Carregando clientes...');
+                    const response = await fetch('/api/clientes?limit=all');
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result && result.success && Array.isArray(result.data)) {
+                        this.clientes = result.data;
+                        console.log(`✅ ${this.clientes.length} clientes carregados`);
+                    } else {
+                        console.warn('⚠️ Resposta da API não tem sucesso:', result);
+                        this.clientes = [];
+                    }
+                } catch (error) {
+                    console.error('❌ Erro ao carregar clientes:', error);
+                    this.clientes = [];
+                }
+            }
+
+            renderClientesTable() {
+                const tbody = document.getElementById('clientes-table-body');
+                if (!tbody) return;
+
+                if (this.clientes.length === 0) {
+                    tbody.innerHTML = '<p>Nenhum cliente encontrado</p>';
+                    return;
+                }
+
+                const html = this.clientes.map(cliente => `
+                    <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                        <strong>${cliente.nome}</strong><br>
+                        Email: ${cliente.email || 'N/A'}<br>
+                        Telefone: ${cliente.telefone || 'N/A'}<br>
+                        ID: ${cliente.id}
+                    </div>
+                `).join('');
+
+                tbody.innerHTML = html;
+            }
+        }
+
+        // Inicializar quando a página carregar
+        window.addEventListener('load', () => {
+            new ClientesPage();
+        });
+    </script>
+</body>
+
+</html>

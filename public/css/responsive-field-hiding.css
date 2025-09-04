@@ -1,0 +1,184 @@
+/* 🎨 RESPONSIVE FIELD HIDING - CSS VERSION */
+/* Convertido de responsive-field-hiding.js */
+
+/* Campos ocultos em telas médias (≤1024px) */
+@media (max-width: 1024px) {
+
+    th[data-field="email"],
+    td[data-field="email"],
+    th[data-field="telefone"],
+    td[data-field="telefone"],
+    th[data-field="observacoes"],
+    td[data-field="observacoes"] {
+        display: none !important;
+    }
+
+    /* Exceções por página */
+    .page-clientes th[data-field="telefone"],
+    .page-clientes td[data-field="telefone"] {
+        display: table-cell !important;
+    }
+}
+
+/* Campos ocultos em telas pequenas (≤768px) */
+@media (max-width: 768px) {
+
+    th[data-field="endereco"],
+    td[data-field="endereco"],
+    th[data-field="cpf_cnpj"],
+    td[data-field="cpf_cnpj"],
+    th[data-field="data_cadastro"],
+    td[data-field="data_cadastro"],
+    th[data-field="status"],
+    td[data-field="status"] {
+        display: none !important;
+    }
+
+    /* Exceções por página */
+    .page-vendas th[data-field="data_venda"],
+    .page-vendas td[data-field="data_venda"] {
+        display: table-cell !important;
+    }
+}
+
+/* Campos ocultos em telas muito pequenas (≤480px) */
+@media (max-width: 480px) {
+
+    th[data-field="categoria"],
+    td[data-field="categoria"],
+    th[data-field="fornecedor"],
+    td[data-field="fornecedor"] {
+        display: none !important;
+    }
+
+    /* Exceções por página */
+    .page-produtos th[data-field="categoria"],
+    .page-produtos td[data-field="categoria"] {
+        display: table-cell !important;
+    }
+}
+
+/* Campos ocultos em telas extremamente pequenas (≤360px) */
+@media (max-width: 360px) {
+
+    th[data-field="descricao"],
+    td[data-field="descricao"],
+    th[data-field="preco_unitario"],
+    td[data-field="preco_unitario"] {
+        display: none !important;
+    }
+}
+
+/* 🎨 TABLE BUTTONS PROFESSIONAL COLORS - CSS VERSION */
+/* Convertido de table-buttons-professional-colors.js */
+
+/* Botões de visualização */
+.btn-icon.btn-view {
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+.btn-icon.btn-view:hover {
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%) !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Botões de edição */
+.btn-icon.btn-edit {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3) !important;
+}
+
+.btn-icon.btn-edit:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Botões de exclusão */
+.btn-icon.btn-delete {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3) !important;
+}
+
+.btn-icon.btn-delete:hover {
+    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Botões de pagamento */
+.btn-icon.btn-payment {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3) !important;
+}
+
+.btn-icon.btn-payment:hover {
+    background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Botões de conversão */
+.btn-icon.btn-convert {
+    background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3) !important;
+}
+
+.btn-icon.btn-convert:hover {
+    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Estilos base para todos os botões */
+.btn-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Ícones dentro dos botões */
+.btn-icon i {
+    color: #ffffff !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: all 0.2s ease !important;
+    animation: none !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 11 !important;
+}

@@ -1,0 +1,81 @@
+/* ===== DESIGN SYSTEM - HEADERS PROFISSIONAIS ===== */
+
+:root {
+    /* ===== CORES DO DESIGN SYSTEM - BASEADAS NA PÁGINA DE LOGIN ===== */
+    --header-primary: #2563EB;
+    /* Azul da página de login */
+    --header-secondary: #10B981;
+    /* Verde da página de login */
+    --header-accent: #F59E0B;
+    /* Laranja da página de login */
+    --header-success: #10B981;
+    /* Verde */
+    --header-warning: #F59E0B;
+    /* Laranja */
+    --header-danger: #EF4444;
+    /* Vermelho */
+    --header-info: #3B82F6;
+    /* Azul claro */
+
+    /* ===== CORES DE TEXTO ===== */
+    --header-text-primary: #ffffff;
+    --header-text-secondary: rgba(255, 255, 255, 0.9);
+    --header-text-muted: rgba(255, 255, 255, 0.7);
+    --header-text-disabled: rgba(255, 255, 255, 0.5);
+
+    /* ===== ESPAÇAMENTOS ===== */
+    --header-padding-x: 3rem;
+    --header-padding-y: 2rem;
+    --header-padding: var(--header-padding-y) var(--header-padding-x);
+    --header-margin: 0 0 2rem 0;
+    --header-gap: 1rem;
+    --header-border-radius: 0 0 1.5rem 1.5rem;
+
+    /* ===== TIPOGRAFIA ===== */
+    --header-title-size: 2.5rem;
+    --header-title-weight: 700;
+    --header-title-line-height: 1.2;
+
+    --header-subtitle-size: 1.1rem;
+    --header-subtitle-weight: 400;
+    --header-subtitle-line-height: 1.4;
+
+    --header-breadcrumb-size: 0.9rem;
+    --header-breadcrumb-weight: 500;
+
+    --header-action-size: 0.95rem;
+    --header-action-weight: 600;
+
+    /* ===== SOMBRAS ===== */
+    --header-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --header-shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    /* ===== ANIMAÇÕES ===== */
+    --header-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --header-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ===== Z-INDEX ===== */
+    --header-z-index: 100;
+    --header-overlay-z-index: 99;
+}
+
+/* ===== BREAKPOINTS ===== */
+@media (max-width: 768px) {
+    :root {
+        --header-padding-x: 1.5rem;
+        --header-padding-y: 1.5rem;
+        --header-title-size: 2rem;
+        --header-subtitle-size: 1rem;
+        --header-gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --header-padding-x: 1rem;
+        --header-padding-y: 1.25rem;
+        --header-title-size: 1.75rem;
+        --header-subtitle-size: 0.95rem;
+        --header-gap: 0.5rem;
+    }
+}

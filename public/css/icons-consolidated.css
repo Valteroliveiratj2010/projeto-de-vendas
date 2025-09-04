@@ -1,0 +1,144 @@
+/* ===== SISTEMA DE ÍCONES CONSOLIDADO ===== */
+/* Arquivo único com todas as definições de ícones do sistema */
+/* Versão: 1.0.0 - Consolidado em 2025-09-04T17:37:44.124Z */
+
+/* ===== FONT AWESOME ESSENCIAL ===== */
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("../webfonts/fa-solid-900.woff2") format("woff2");
+}
+
+.fa,
+.fas {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.fa::before,
+.fas::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+/* ===== ÍCONES PRINCIPAIS DO SISTEMA ===== */
+
+/* 🏪 Sistema */
+.fa-store::before { content: "\f54e"; }
+
+/* 📊 Dashboard */
+.fa-tachometer-alt::before { content: "\f3fd"; }
+
+/* 👥 Clientes */
+.fa-users::before { content: "\f0c0"; }
+.fa-user-group::before { content: "\f500"; }
+
+/* 📦 Produtos */
+.fa-boxes-stacked::before { content: "\f468"; }
+.fa-box-open::before { content: "\f49e"; }
+
+/* 🛒 Vendas */
+.fa-shopping-cart::before { content: "\f07a"; }
+.fa-shopping-bag::before { content: "\f290"; }
+.fa-cart-plus::before { content: "\f217"; }
+
+/* 💰 Orçamentos */
+.fa-file-invoice::before { content: "\f570"; }
+.fa-file-invoice-dollar::before { content: "\f571"; }
+.fa-file-circle-plus::before { content: "\f494"; }
+
+/* 📈 Relatórios */
+.fa-chart-line::before { content: "\f201"; }
+.fa-chart-bar::before { content: "\f080"; }
+
+/* 👤 Usuários */
+.fa-user::before { content: "\f007"; }
+.fa-user-plus::before { content: "\f234"; }
+
+/* 🔧 Ações */
+.fa-plus::before { content: "\f067"; }
+.fa-minus::before { content: "\f068"; }
+.fa-edit::before { content: "\f044"; }
+.fa-trash::before { content: "\f1f8"; }
+.fa-eye::before { content: "\f06e"; }
+.fa-save::before { content: "\f0c7"; }
+.fa-times::before { content: "\f00d"; }
+.fa-check::before { content: "\f00c"; }
+.fa-search::before { content: "\f002"; }
+.fa-sync-alt::before { content: "\f2f1"; }
+
+/* 📈 Status */
+.fa-check-circle::before { content: "\f058"; }
+.fa-times-circle::before { content: "\f057"; }
+.fa-exclamation-triangle::before { content: "\f071"; }
+.fa-exclamation-circle::before { content: "\f06a"; }
+.fa-info-circle::before { content: "\f05a"; }
+.fa-spinner::before { content: "\f110"; }
+
+/* ⏰ Tempo */
+.fa-clock::before { content: "\f017"; }
+.fa-calendar::before { content: "\f133"; }
+.fa-calendar-plus::before { content: "\f271"; }
+
+/* 💰 Financeiro */
+.fa-dollar-sign::before { content: "\f155"; }
+.fa-money-bill-wave::before { content: "\f53a"; }
+.fa-credit-card::before { content: "\f09d"; }
+.fa-qrcode::before { content: "\f029"; }
+.fa-university::before { content: "\f19c"; }
+.fa-money-check::before { content: "\f53c"; }
+
+/* 📁 Arquivos */
+.fa-download::before { content: "\f019"; }
+.fa-upload::before { content: "\f093"; }
+.fa-file::before { content: "\f15b"; }
+
+/* 🔄 Navegação */
+.fa-arrow-left::before { content: "\f060"; }
+.fa-arrow-right::before { content: "\f061"; }
+.fa-arrow-up::before { content: "\f062"; }
+.fa-arrow-down::before { content: "\f063"; }
+.fa-bars::before { content: "\f0c9"; }
+
+/* 🔔 Notificações */
+.fa-bell::before { content: "\f0f3"; }
+.fa-envelope::before { content: "\f0e0"; }
+
+/* ⚙️ Configurações */
+.fa-cog::before { content: "\f013"; }
+.fa-filter::before { content: "\f0b0"; }
+
+/* ⭐ Outros */
+.fa-star::before { content: "\f005"; }
+.fa-exchange-alt::before { content: "\f362"; }
+.fa-database::before { content: "\f1c0"; }
+.fa-wifi::before { content: "\f1eb"; }
+.fa-wifi-slash::before { content: "\f6ac"; }
+.fa-sign-in-alt::before { content: "\f090"; }
+.fa-sign-out-alt::before { content: "\f2f5"; }
+.fa-circle::before { content: "\f111"; }
+
+/* ===== ANIMAÇÕES ===== */
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+}
+
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    .fa, .fas {
+        font-size: 0.9em;
+    }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+.fa, .fas {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

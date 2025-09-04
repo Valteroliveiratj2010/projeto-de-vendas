@@ -1,0 +1,280 @@
+/* ===== MODAIS CORRIGIDOS ===== */
+
+/* Overlay do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal principal */
+.modal {
+    background: white;
+    border-radius: 32px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow: hidden;
+    position: relative;
+    animation: slideIn 0.4s ease-out;
+    z-index: 1001;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Corpo do modal */
+.modal-body {
+    padding: 30px;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Modal hidden */
+.modal-container.hidden {
+    display: none !important;
+}
+
+/* Modal header */
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Modal close button */
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+/* Responsividade para modais */
+@media (max-width: 768px) {
+    .modal {
+        max-width: 95vw;
+        max-height: 95vh;
+        margin: 10px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-header {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        max-width: 98vw;
+        max-height: 98vh;
+        margin: 5px;
+        border-radius: 15px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-close {
+        width: 28px;
+        height: 28px;
+        font-size: 20px;
+    }
+}
+
+/* ===== MODAIS DE FORMULÁRIO COM ESPECIFICIDADE MÁXIMA ===== */
+html body .form-modal .modal,
+html body .modal-overlay .form-modal .modal {
+    max-width: 500px !important;
+    overflow: visible !important;
+}
+
+html body .form-modal .modal-body,
+html body .modal-overlay .form-modal .modal-body {
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+html body .form-modal .form-card,
+html body .modal-overlay .form-modal .form-card {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+html body .form-modal .form-header,
+html body .modal-overlay .form-modal .form-header {
+    padding: 30px 30px 20px !important;
+    border-bottom: none !important;
+    overflow: visible !important;
+}
+
+html body .form-modal .form-actions,
+html body .modal-overlay .form-modal .form-actions {
+    padding: 20px 30px 30px !important;
+    margin: 0 !important;
+    border-top: 1px solid #e2e8f0 !important;
+    overflow: visible !important;
+}
+
+/* ===== RESPONSIVIDADE DOS MODAIS ===== */
+@media (max-width: 768px) {
+    html body .modal-overlay,
+    html body .modal-overlay .modal-overlay {
+        padding: 15px !important;
+    }
+    
+    html body .modal,
+    html body .modal-overlay .modal {
+        max-height: 95vh !important;
+    }
+    
+    html body .modal-header,
+    html body .modal-body,
+    html body .modal-footer,
+    html body .modal-overlay .modal-header,
+    html body .modal-overlay .modal-body,
+    html body .modal-overlay .modal-footer {
+        padding: 20px !important;
+    }
+    
+    html body .form-modal .form-actions,
+    html body .modal-overlay .form-modal .form-actions {
+        padding: 20px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    html body .modal-overlay,
+    html body .modal-overlay .modal-overlay {
+        padding: 10px !important;
+    }
+    
+    html body .modal,
+    html body .modal-overlay .modal {
+        border-radius: 15px !important;
+    }
+    
+    html body .modal-header,
+    html body .modal-body,
+    html body .modal-footer,
+    html body .modal-overlay .modal-header,
+    html body .modal-overlay .modal-body,
+    html body .modal-overlay .modal-footer {
+        padding: 15px !important;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estados especiais */
+.modal-overlay.closing {
+    animation: fadeOut 0.3s ease-in forwards;
+}
+
+.modal.closing {
+    animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+}
+
+/* Scrollbar personalizada para modais */
+.modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+} 

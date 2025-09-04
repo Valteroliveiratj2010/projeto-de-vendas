@@ -83,7 +83,7 @@ class OrcamentosPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
+                            <i class="fas fa-file-invoice"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-orcamentos-stat">0</h3>
@@ -192,7 +192,7 @@ class OrcamentosPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-file-invoice-dollar"></i>
+                            <i class="fas fa-file-invoice"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-orcamentos-stat">0</h3>
@@ -300,27 +300,24 @@ class OrcamentosPage {
     }
 
     async loadOrcamentos() {
-        if (this.isLoading) return;
-
         try {
             this.isLoading = true;
             this.showLoading();
 
             console.log('📋 Carregando orçamentos...');
-            const response = await window.api.get('/api/orcamentos');
+
+            // Usar RequestManager para otimizar chamadas
+            const response = await window.requestManager.manageRequest('GET-/api/orcamentos', async () => {
+                return window.api.get('/api/orcamentos');
+            }, {
+                debounceTime: 1000,
+                cacheTTL: 30 * 1000
+            });
 
             if (response.data && response.data.success) {
                 this.orcamentos = response.data.data || [];
                 this.filteredOrcamentos = [...this.orcamentos];
-
                 console.log(`✅ ${this.orcamentos.length} orçamentos carregados`);
-                console.log('📋 Dados dos orçamentos:', this.orcamentos.map(o => ({
-                    id: o.id,
-                    status: o.status,
-                    total: o.total,
-                    tipo_total: typeof o.total
-                })));
-
                 this.updateStats();
                 this.renderOrcamentosTable();
                 this.renderPagination();

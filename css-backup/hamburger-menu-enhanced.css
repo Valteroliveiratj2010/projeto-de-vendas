@@ -1,0 +1,477 @@
+/* ===== MENU HAMBÚRGUER ELEGANTE E PROFISSIONAL ===== */
+
+/* ===== VARIÁVEIS ESPECÍFICAS ===== */
+:root {
+  --hamburger-size: 50px;
+  --hamburger-size-mobile: 45px;
+  --hamburger-size-small: 40px;
+  --hamburger-line-height: 3px;
+  --hamburger-line-spacing: 6px;
+  --hamburger-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --hamburger-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --hamburger-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.16);
+  --hamburger-background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  --hamburger-background-hover: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  --hamburger-background-active: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+/* ===== BOTÃO HAMBÚRGUER BASE ===== */
+.sidebar-toggle {
+  display: none !important; /* Oculto por padrão no desktop */
+  position: fixed !important;
+  top: 20px !important;
+  left: 20px !important;
+  z-index: 1000 !important;
+  width: var(--hamburger-size) !important;
+  height: var(--hamburger-size) !important;
+  background: var(--hamburger-background) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all var(--hamburger-transition) !important;
+  box-shadow: var(--hamburger-shadow) !important;
+  overflow: hidden !important;
+  outline: none !important;
+}
+
+/* ===== LINHAS DO HAMBÚRGUER ===== */
+.sidebar-toggle::before,
+.sidebar-toggle::after,
+.sidebar-toggle .hamburger-line {
+  content: '' !important;
+  position: absolute !important;
+  left: 50% !important;
+  width: 24px !important;
+  height: var(--hamburger-line-height) !important;
+  background: white !important;
+  border-radius: 2px !important;
+  transition: all var(--hamburger-transition) !important;
+  transform: translateX(-50%) !important;
+}
+
+/* ===== LINHA SUPERIOR ===== */
+.sidebar-toggle::before {
+  top: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+}
+
+/* ===== LINHA DO MEIO ===== */
+.sidebar-toggle .hamburger-line {
+  top: 50% !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+}
+
+/* ===== LINHA INFERIOR ===== */
+.sidebar-toggle::after {
+  bottom: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+}
+
+/* ===== ESTADOS DE HOVER ===== */
+.sidebar-toggle:hover {
+  background: var(--hamburger-background-hover) !important;
+  box-shadow: var(--hamburger-shadow-hover) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+}
+
+/* ===== ESTADOS DE ACTIVE/CLICK ===== */
+.sidebar-toggle:active {
+  background: var(--hamburger-background-active) !important;
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== ESTADO QUANDO SIDEBAR ESTÁ ABERTA ===== */
+.sidebar.open + .main-content .sidebar-toggle,
+.sidebar.open ~ .main-content .sidebar-toggle {
+  background: var(--hamburger-background-active) !important;
+}
+
+/* ===== ANIMAÇÃO DAS LINHAS QUANDO SIDEBAR ESTÁ ABERTA ===== */
+.sidebar.open + .main-content .sidebar-toggle::before,
+.sidebar.open ~ .main-content .sidebar-toggle::before {
+  top: 50% !important;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg) !important;
+}
+
+.sidebar.open + .main-content .sidebar-toggle .hamburger-line,
+.sidebar.open ~ .main-content .sidebar-toggle .hamburger-line {
+  opacity: 0 !important;
+  transform: translateX(-50%) translateY(-50%) scale(0) !important;
+}
+
+.sidebar.open + .main-content .sidebar-toggle::after,
+.sidebar.open ~ .main-content .sidebar-toggle::after {
+  bottom: 50% !important;
+  transform: translateX(-50%) translateY(50%) rotate(-45deg) !important;
+}
+
+/* ===== EFEITO DE ONDA NO CLIQUE ===== */
+.sidebar-toggle::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  transform: translate(-50%, -50%) scale(0) !important;
+  transition: transform 0.4s ease-out !important;
+  pointer-events: none !important;
+}
+
+.sidebar-toggle:active::after {
+  transform: translate(-50%, -50%) scale(1) !important;
+  opacity: 0 !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* ===== TABLET (768px - 1024px) ===== */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .sidebar-toggle {
+    display: block !important;
+    top: 20px !important;
+    left: 20px !important;
+    width: var(--hamburger-size) !important;
+    height: var(--hamburger-size) !important;
+  }
+  
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    width: 24px !important;
+    height: var(--hamburger-line-height) !important;
+  }
+}
+
+/* ===== MOBILE GRANDE (481px - 768px) ===== */
+@media (max-width: 768px) and (min-width: 481px) {
+  .sidebar-toggle {
+    display: block !important;
+    top: 75px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO DE ESTOQUE (60px + 15px) */
+    left: 15px !important;
+    width: var(--hamburger-size-mobile) !important;
+    height: var(--hamburger-size-mobile) !important;
+  }
+  
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    width: 22px !important;
+    height: var(--hamburger-line-height) !important;
+  }
+  
+  .sidebar-toggle::before {
+    top: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+  }
+  
+  .sidebar-toggle::after {
+    bottom: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+  }
+}
+
+/* ===== MOBILE (320px - 480px) ===== */
+@media (max-width: 480px) and (min-width: 321px) {
+  .sidebar-toggle {
+    display: block !important;
+    top: 70px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO DE ESTOQUE (60px + 10px) */
+    left: 10px !important;
+    width: var(--hamburger-size-small) !important;
+    height: var(--hamburger-size-small) !important;
+  }
+  
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    width: 20px !important;
+    height: var(--hamburger-line-height) !important;
+  }
+  
+  .sidebar-toggle::before {
+    top: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+  }
+  
+  .sidebar-toggle::after {
+    bottom: calc(50% - var(--hamburger-line-spacing) - var(--hamburger-line-height) / 2) !important;
+  }
+}
+
+/* ===== MOBILE PEQUENO (< 320px) ===== */
+@media (max-width: 320px) {
+  .sidebar-toggle {
+    display: block !important;
+    top: 68px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO DE ESTOQUE (60px + 8px) */
+    left: 8px !important;
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    width: 18px !important;
+    height: 2px !important;
+  }
+  
+  .sidebar-toggle::before {
+    top: calc(50% - 5px - 1px) !important;
+  }
+  
+  .sidebar-toggle::after {
+    bottom: calc(50% - 5px - 1px) !important;
+  }
+}
+
+/* ===== ORIENTAÇÃO LANDSCAPE ===== */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .sidebar-toggle {
+    top: 10px !important;
+  }
+}
+
+/* ===== POSICIONAMENTO COM NOTIFICAÇÃO DE ESTOQUE ===== */
+/* ✅ GARANTIR QUE O MENU HAMBÚRGUER SEMPRE SEJA VISÍVEL */
+
+/* ===== QUANDO HÁ NOTIFICAÇÃO DE ESTOQUE ===== */
+.estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle,
+.estoque-notification:not([style*="visibility: hidden"]) ~ .main-content .sidebar-toggle,
+.estoque-notification:not([style*="opacity: 0"]) ~ .main-content .sidebar-toggle {
+  /* ✅ POSICIONAMENTO AJUSTADO PARA NOTIFICAÇÃO ATIVA */
+  top: 75px !important; /* Base para mobile grande */
+}
+
+/* ===== RESPONSIVIDADE COM NOTIFICAÇÃO ===== */
+@media (max-width: 768px) and (min-width: 481px) {
+  .estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="visibility: hidden"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="opacity: 0"]) ~ .main-content .sidebar-toggle {
+    top: 75px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO */
+  }
+}
+
+@media (max-width: 480px) and (min-width: 321px) {
+  .estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="visibility: hidden"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="opacity: 0"]) ~ .main-content .sidebar-toggle {
+    top: 70px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO */
+  }
+}
+
+@media (max-width: 320px) {
+  .estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="visibility: hidden"]) ~ .main-content .sidebar-toggle,
+  .estoque-notification:not([style*="opacity: 0"]) ~ .main-content .sidebar-toggle {
+    top: 68px !important; /* ✅ POSICIONADO ABAIXO DA NOTIFICAÇÃO */
+  }
+}
+
+/* ===== GARANTIR VISIBILIDADE E ACESSIBILIDADE ===== */
+.sidebar-toggle {
+  /* ✅ SEMPRE VISÍVEL E ACESSÍVEL */
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 1001 !important; /* ✅ ACIMA DA NOTIFICAÇÃO DE ESTOQUE (9999) */
+}
+
+/* ===== ESTADO DE NOTIFICAÇÃO ATIVA ===== */
+.estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle {
+  /* ✅ DESTAQUE VISUAL QUANDO NOTIFICAÇÃO ESTÁ ATIVA */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+}
+
+/* ===== HOVER COM NOTIFICAÇÃO ATIVA ===== */
+.estoque-notification:not([style*="display: none"]) ~ .main-content .sidebar-toggle:hover {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+}
+
+/* ===== ALTA DENSIDADE DE PIXEL ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    height: 2px !important;
+  }
+}
+
+/* ===== PREFERÊNCIAS DE REDUÇÃO DE MOVIMENTO ===== */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-toggle,
+  .sidebar-toggle::before,
+  .sidebar-toggle::after,
+  .sidebar-toggle .hamburger-line {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .sidebar-toggle:hover {
+    transform: none !important;
+  }
+  
+  .sidebar-toggle:active {
+    transform: none !important;
+  }
+}
+
+/* ===== ESTADOS DE FOCUS PARA ACESSIBILIDADE ===== */
+.sidebar-toggle:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5) !important;
+  outline-offset: 2px !important;
+  box-shadow: var(--hamburger-shadow), 0 0 0 4px rgba(37, 99, 235, 0.3) !important;
+}
+
+.sidebar-toggle:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: var(--hamburger-shadow) !important;
+}
+
+/* ===== ANIMAÇÃO DE ENTRADA ===== */
+@keyframes hamburgerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.sidebar-toggle {
+  animation: hamburgerSlideIn 0.4s ease-out !important;
+}
+
+/* ===== EFEITO DE GLOW NO HOVER ===== */
+.sidebar-toggle:hover::before,
+.sidebar-toggle:hover::after,
+.sidebar-toggle:hover .hamburger-line {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ===== ESTADO DE CARREGAMENTO ===== */
+.sidebar-toggle.loading {
+  pointer-events: none !important;
+}
+
+.sidebar-toggle.loading::before,
+.sidebar-toggle.loading::after,
+.sidebar-toggle.loading .hamburger-line {
+  animation: hamburgerPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes hamburgerPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ===== TOOLTIP ELEGANTE ===== */
+.sidebar-toggle[title]:hover::after {
+  content: attr(title) !important;
+  position: absolute !important;
+  top: -40px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  z-index: 1001 !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  animation: tooltipFadeIn 0.2s ease-out forwards !important;
+}
+
+.sidebar-toggle[title]:hover::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -8px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border: 4px solid transparent !important;
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+  z-index: 1001 !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  animation: tooltipFadeIn 0.2s ease-out forwards !important;
+}
+
+@keyframes tooltipFadeIn {
+  to {
+    opacity: 1 !important;
+  }
+}
+
+/* ===== ESTADO DE ERRO ===== */
+.sidebar-toggle.error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  animation: hamburgerShake 0.5s ease-in-out !important;
+}
+
+@keyframes hamburgerShake {
+  0%, 100% {
+    transform: translateX(0) !important;
+  }
+  25% {
+    transform: translateX(-2px) !important;
+  }
+  75% {
+    transform: translateX(2px) !important;
+  }
+}
+
+/* ===== ESTADO DE SUCESSO ===== */
+.sidebar-toggle.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  animation: hamburgerBounce 0.6s ease-out !important;
+}
+
+@keyframes hamburgerBounce {
+  0% {
+    transform: scale(1) !important;
+  }
+  50% {
+    transform: scale(1.1) !important;
+  }
+  100% {
+    transform: scale(1) !important;
+  }
+}
+
+/* ===== ESTADO DESABILITADO ===== */
+.sidebar-toggle:disabled,
+.sidebar-toggle.disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.sidebar-toggle:disabled:hover,
+.sidebar-toggle.disabled:hover {
+  transform: none !important;
+  box-shadow: var(--hamburger-shadow) !important;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  .sidebar-toggle {
+    --hamburger-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --hamburger-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ===== IMPRESSÃO ===== */
+@media print {
+  .sidebar-toggle {
+    display: none !important;
+  }
+} 

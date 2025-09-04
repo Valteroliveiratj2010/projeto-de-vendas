@@ -6,13 +6,13 @@ async function cleanupAllCharts() {
     console.log('🧹 Limpando todos os charts existentes...');
     const chartIds = [
         'tendencia-vendas-chart',
-        'vendas-periodo-chart', 
+        'vendas-periodo-chart',
         'vendas-status-chart',
         'orcamentos-status-chart',
         'valores-distribuicao-chart',
         'pagamentos-forma-chart'
     ];
-    
+
     chartIds.forEach(id => {
         const canvas = document.getElementById(id);
         if (canvas) {
@@ -23,24 +23,24 @@ async function cleanupAllCharts() {
             }
         }
     });
-    
+
     // Aguardar um pouco para garantir que os charts foram destruídos
     await new Promise(resolve => setTimeout(resolve, 200));
 }
 
 // Função global para criar relatórios
-window.createRelatoriosSimples = async function() {
+window.createRelatoriosSimples = async function () {
     console.log('📊 Criando relatórios simples...');
-    
+
     // Limpar charts existentes primeiro
     await cleanupAllCharts();
-    
+
     const pageContainer = document.getElementById('relatorios-content');
     if (!pageContainer) {
         console.error('❌ Container não encontrado!');
         return;
     }
-    
+
     // Renderizar página
     pageContainer.innerHTML = `
         <div class="page-header">
@@ -103,10 +103,10 @@ window.createRelatoriosSimples = async function() {
             </div>
         </div>
     `;
-    
+
     // Configurar event listeners
     setupEventListeners();
-    
+
     // Aguardar DOM e criar gráficos com dados reais
     setTimeout(async () => {
         await createChartsWithRealData();
@@ -123,7 +123,7 @@ function setupEventListeners() {
             await createChartsWithRealData(periodo);
         });
     }
-    
+
     // Botão de atualizar
     const refreshBtn = document.getElementById('refresh-relatorios-btn');
     if (refreshBtn) {
@@ -137,28 +137,28 @@ function setupEventListeners() {
 
 async function createChartsWithRealData(periodo = 30) {
     console.log('📊 Carregando dados reais e criando gráficos...');
-    
+
     try {
         // 1. Gráfico de Tendência de Vendas
         await createTendenciaChart(periodo);
-        
+
         // 2. Gráfico de Vendas por Período
         await createVendasPeriodoChart(periodo);
-        
+
         // 3. Gráfico de Status das Vendas
         await createVendasStatusChart(periodo);
-        
+
         // 4. Gráfico de Status dos Orçamentos
         await createOrcamentosStatusChart(periodo);
-        
+
         // 5. Gráfico de Distribuição de Valores
         await createValoresDistribuicaoChart(periodo);
-        
+
         // 6. Gráfico de Formas de Pagamento
         await createPagamentosFormaChart(periodo);
-        
+
         console.log('🎉 Todos os gráficos criados com dados reais!');
-        
+
     } catch (error) {
         console.error('❌ Erro ao criar gráficos com dados reais:', error);
         // Fallback para dados mock
@@ -168,28 +168,28 @@ async function createChartsWithRealData(periodo = 30) {
 
 async function createTendenciaChart(periodo) {
     console.log('📈 Criando gráfico de tendência de vendas...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/tendencia-vendas?periodo=${periodo}`);
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('tendencia-vendas-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => {
                 const date = new Date(item.data);
                 return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
             });
             const valores = data.map(item => parseFloat(item.valor_total));
-            
+
             new Chart(canvas, {
                 type: 'line',
                 data: {
@@ -212,7 +212,7 @@ async function createTendenciaChart(periodo) {
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function(value) {
+                                callback: function (value) {
                                     return `R$ ${value.toLocaleString('pt-BR')}`;
                                 }
                             }
@@ -233,28 +233,28 @@ async function createTendenciaChart(periodo) {
 
 async function createVendasPeriodoChart(periodo) {
     console.log('📊 Criando gráfico de vendas por período...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/vendas-periodo?periodo=${periodo}`);
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('vendas-periodo-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => {
                 const date = new Date(item.data);
                 return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
             });
             const quantidades = data.map(item => parseInt(item.quantidade));
-            
+
             new Chart(canvas, {
                 type: 'bar',
                 data: {
@@ -288,26 +288,26 @@ async function createVendasPeriodoChart(periodo) {
 
 async function createVendasStatusChart(periodo) {
     console.log('📋 Criando gráfico de status das vendas...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/vendas-status?periodo=${periodo}`);
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('vendas-status-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => item.status);
             const quantidades = data.map(item => parseInt(item.quantidade));
             const cores = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
-            
+
             new Chart(canvas, {
                 type: 'doughnut',
                 data: {
@@ -326,7 +326,7 @@ async function createVendasStatusChart(periodo) {
                         legend: { position: 'bottom' },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = ((context.parsed / total) * 100).toFixed(1);
                                     return `${context.label}: ${context.parsed} (${percentage}%)`;
@@ -349,26 +349,26 @@ async function createVendasStatusChart(periodo) {
 
 async function createOrcamentosStatusChart(periodo) {
     console.log('📝 Criando gráfico de status dos orçamentos...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/orcamentos-status?periodo=${periodo}`);
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('orcamentos-status-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => item.status);
             const quantidades = data.map(item => parseInt(item.quantidade));
             const cores = ['#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#f59e0b'];
-            
+
             new Chart(canvas, {
                 type: 'pie',
                 data: {
@@ -384,7 +384,7 @@ async function createOrcamentosStatusChart(periodo) {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { 
+                        legend: {
                             position: 'bottom',
                             labels: {
                                 padding: 20,
@@ -393,7 +393,7 @@ async function createOrcamentosStatusChart(periodo) {
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = ((context.parsed / total) * 100).toFixed(1);
                                     return `${context.label}: ${context.parsed} (${percentage}%)`;
@@ -416,25 +416,30 @@ async function createOrcamentosStatusChart(periodo) {
 
 async function createValoresDistribuicaoChart(periodo) {
     console.log('💰 Criando gráfico de distribuição de valores...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/valores-distribuicao?periodo=${periodo}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('valores-distribuicao-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => item.faixa_valor);
             const quantidades = data.map(item => parseInt(item.quantidade));
-            
+
             new Chart(canvas, {
                 type: 'bar',
                 data: {
@@ -451,23 +456,23 @@ async function createValoresDistribuicaoChart(periodo) {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return `${context.label}: ${context.parsed} vendas`;
                                 }
                             }
                         }
                     },
-                    scales: { 
-                        y: { 
+                    scales: {
+                        y: {
                             beginAtZero: true,
                             ticks: {
                                 stepSize: 1
                             }
-                        } 
+                        }
                     }
                 }
             });
@@ -484,26 +489,31 @@ async function createValoresDistribuicaoChart(periodo) {
 
 async function createPagamentosFormaChart(periodo) {
     console.log('💳 Criando gráfico de formas de pagamento...');
-    
+
     try {
         const response = await fetch(`/api/relatorios/graficos/pagamentos-forma?periodo=${periodo}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
         const result = await response.json();
-        
+
         if (result.success && result.data.length > 0) {
             const canvas = document.getElementById('pagamentos-forma-chart');
             if (!canvas) return;
-            
+
             // Destruir gráfico existente
             const existingChart = Chart.getChart(canvas);
             if (existingChart) {
                 existingChart.destroy();
             }
-            
+
             const data = result.data;
             const labels = data.map(item => item.forma_pagamento);
             const valores = data.map(item => parseFloat(item.valor_total));
             const cores = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
-            
+
             new Chart(canvas, {
                 type: 'doughnut',
                 data: {
@@ -522,7 +532,7 @@ async function createPagamentosFormaChart(periodo) {
                         legend: { position: 'bottom' },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                     const percentage = ((context.parsed / total) * 100).toFixed(1);
                                     return `${context.label}: R$ ${context.parsed.toLocaleString('pt-BR')} (${percentage}%)`;
@@ -569,7 +579,7 @@ function createMockTendenciaChart() {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            callback: function(value) {
+                            callback: function (value) {
                                 return `R$ ${value.toLocaleString('pt-BR')}`;
                             }
                         }
@@ -622,7 +632,7 @@ function createMockVendasStatusChart() {
                     legend: { position: 'bottom' },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = ((context.parsed / total) * 100).toFixed(1);
                                 return `${context.label}: ${context.parsed} (${percentage}%)`;
@@ -651,7 +661,7 @@ function createMockOrcamentosStatusChart() {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { 
+                    legend: {
                         position: 'bottom',
                         labels: {
                             padding: 20,
@@ -660,7 +670,7 @@ function createMockOrcamentosStatusChart() {
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = ((context.parsed / total) * 100).toFixed(1);
                                 return `${context.label}: ${context.parsed} (${percentage}%)`;
@@ -692,23 +702,23 @@ function createMockValoresDistribuicaoChart() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { 
+                plugins: {
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `${context.label}: ${context.parsed} vendas`;
                             }
                         }
                     }
                 },
-                scales: { 
-                    y: { 
+                scales: {
+                    y: {
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1
                         }
-                    } 
+                    }
                 }
             }
         });
@@ -734,7 +744,7 @@ function createMockPagamentosFormaChart() {
                     legend: { position: 'bottom' },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = ((context.parsed / total) * 100).toFixed(1);
                                 return `${context.label}: ${context.parsed} (${percentage}%)`;

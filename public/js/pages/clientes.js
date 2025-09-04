@@ -1,10 +1,12 @@
 /**
  * Página de Clientes - Sistema de Vendas
  * Gerencia cadastro, edição e visualização de clientes
+ * Versão: 2.0.1 - Corrigido método updateStats
  */
 
 class ClientesPage {
     constructor() {
+        console.log('🏗️ Construtor ClientesPage chamado');
         this.clientes = [];
         this.currentPage = 1;
         this.itemsPerPage = 10;
@@ -39,11 +41,16 @@ class ClientesPage {
      * Renderiza a estrutura HTML da página
      */
     renderPage() {
+        console.log('🎨 Renderizando página de clientes...');
         const pageContainer = document.getElementById('clientes-content');
+        console.log('🔍 Container clientes-content encontrado:', !!pageContainer);
+
         if (!pageContainer) {
             console.error('Container de clientes não encontrado!');
             return;
         }
+
+        console.log('📝 Substituindo conteúdo do container...');
 
         pageContainer.innerHTML = `
             <div class="page-header">
@@ -83,7 +90,7 @@ class ClientesPage {
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-user-group"></i>
+                            <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-content">
                             <h3 id="total-clientes-stat">0</h3>
@@ -138,6 +145,7 @@ class ClientesPage {
                 <div id="clientes-pagination" class="pagination-container"></div>
             </div>
         `;
+        console.log('✅ Página renderizada com sucesso');
     }
 
     /**
@@ -171,23 +179,35 @@ class ClientesPage {
      */
     async loadClientes() {
         try {
-            this.showLoading();
+            console.log('👥 Carregando clientes...');
+            console.log('🔍 Container clientes-content:', document.getElementById('clientes-content'));
+            console.log('🔍 Container clientes-table-body:', document.getElementById('clientes-table-body'));
 
-            const response = await window.api.get('/api/clientes');
-            const data = response.data;
+            // Abordagem simplificada - fazer requisição direta
+            const response = await fetch('/api/clientes?limit=all');
 
-            if (data.success) {
-                this.clientes = data.data;
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log('📦 Resultado da API:', result);
+
+            if (result && result.success && Array.isArray(result.data)) {
+                this.clientes = result.data;
+                console.log(`✅ ${this.clientes.length} clientes carregados`);
+                console.log('📋 Primeiros 3 clientes:', this.clientes.slice(0, 3));
+
+                this.updateStats();
                 this.renderClientesTable();
                 this.renderPagination();
             } else {
-                throw new Error(data.error || 'Erro ao carregar clientes');
+                console.warn('⚠️ Resposta da API não tem sucesso:', result);
+                this.clientes = [];
             }
-
         } catch (error) {
             console.error('❌ Erro ao carregar clientes:', error);
-            this.showError('Erro ao carregar clientes', error.message);
-            this.showEmptyState();
+            this.clientes = [];
         }
     }
 
@@ -357,6 +377,40 @@ class ClientesPage {
                 this.goToPage(page);
             });
         });
+    }
+
+    /**
+     * Atualiza estatísticas da página
+     */
+    updateStats() {
+        console.log('📊 Atualizando estatísticas...');
+
+        // Total de clientes
+        const totalClientesStat = document.getElementById('total-clientes-stat');
+        if (totalClientesStat) {
+            totalClientesStat.textContent = this.clientes.length;
+        }
+
+        // Clientes VIP (assumindo que clientes com email são VIP)
+        const clientesVipStat = document.getElementById('clientes-vip-stat');
+        if (clientesVipStat) {
+            const vipCount = this.clientes.filter(cliente => cliente.email && cliente.email.trim() !== '').length;
+            clientesVipStat.textContent = vipCount;
+        }
+
+        // Novos clientes este mês
+        const novosClientesStat = document.getElementById('novos-clientes-stat');
+        if (novosClientesStat) {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const novosCount = this.clientes.filter(cliente => {
+                const clienteDate = new Date(cliente.created_at);
+                return clienteDate.getMonth() === currentMonth && clienteDate.getFullYear() === currentYear;
+            }).length;
+            novosClientesStat.textContent = novosCount;
+        }
+
+        console.log('✅ Estatísticas atualizadas');
     }
 
     /**
@@ -585,8 +639,20 @@ class ClientesPage {
         try {
             console.log('📤 Enviando dados do cliente:', clienteData);
 
-            const response = await window.api.post('/api/clientes', clienteData);
-            const data = response.data;
+            const response = await fetch('/api/clientes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(clienteData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
 
             if (data.success) {
                 this.showSuccess('Cliente criado com sucesso!');
@@ -601,26 +667,7 @@ class ClientesPage {
 
         } catch (error) {
             console.error('❌ Erro ao criar cliente:', error);
-            console.error('❌ Resposta completa:', error.response);
-
-            // Tratar erros de validação específicos
-            if (error.response && error.response.status === 400) {
-                const errorData = error.response.data;
-                console.error('❌ Dados do erro 400:', errorData);
-
-                if (errorData.errors && Array.isArray(errorData.errors)) {
-                    // Erro de validação com detalhes
-                    const errorMessages = errorData.errors.map(err => err.msg).join(', ');
-                    this.showError('Erro de validação', errorMessages);
-                } else if (errorData.error) {
-                    // Erro específico (ex: documento duplicado)
-                    this.showError('Erro ao criar cliente', errorData.error);
-                } else {
-                    this.showError('Erro ao criar cliente', 'Dados inválidos enviados');
-                }
-            } else {
-                this.showError('Erro ao criar cliente', error.message || 'Erro desconhecido');
-            }
+            this.showError('Erro ao criar cliente', error.message || 'Erro desconhecido');
             throw error;
         }
     }
@@ -630,8 +677,20 @@ class ClientesPage {
      */
     async updateCliente(id, clienteData) {
         try {
-            const response = await window.api.put(`/api/clientes/${id}`, clienteData);
-            const data = response.data;
+            const response = await fetch(`/api/clientes/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(clienteData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
 
             if (data.success) {
                 this.showSuccess('Cliente atualizado com sucesso!');
@@ -730,12 +789,17 @@ class ClientesPage {
 
         // Buscar informações do cliente antes de excluir
         try {
-            const clienteResponse = await window.api.get(`/api/clientes/${id}`);
-            if (!clienteResponse.data.success) {
+            const clienteResponse = await fetch(`/api/clientes/${id}`);
+            if (!clienteResponse.ok) {
                 throw new Error('Erro ao buscar dados do cliente');
             }
 
-            const cliente = clienteResponse.data.data;
+            const clienteData = await clienteResponse.json();
+            if (!clienteData.success) {
+                throw new Error('Erro ao buscar dados do cliente');
+            }
+
+            const cliente = clienteData.data;
 
             // Verificar se cliente tem vendas ou orçamentos
             let message = 'Tem certeza que deseja excluir este cliente?';
@@ -779,8 +843,16 @@ class ClientesPage {
         if (!confirmed) return;
 
         try {
-            const response = await window.api.delete(`/api/clientes/${id}`);
-            const data = response.data;
+            const response = await fetch(`/api/clientes/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
 
             if (data.success) {
                 // Mostrar resumo da exclusão se disponível

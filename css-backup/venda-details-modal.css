@@ -1,0 +1,2382 @@
+/* ===== MODAL DE DETALHES DE VENDA PROFISSIONAL ===== */
+
+.venda-details-modal {
+    max-width: 100%;
+    margin: 0;
+}
+
+/* Header da Venda */
+.venda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.venda-title h3 {
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.venda-cliente {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.venda-status-info {
+    text-align: right;
+}
+
+.venda-status-info .status-badge {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.venda-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.total-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.total-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Tabs de Navegação - CORREÇÃO FORÇADA DOS ÍCONES */
+.venda-tabs {
+    display: flex !important;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    gap: 0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #333333 !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    color: #1e40af !important;
+    background-color: #f1f5f9;
+}
+
+.tab-btn.active {
+    color: #1e40af !important;
+    border-bottom-color: #1e40af !important;
+    background-color: #f1f5f9;
+}
+
+/* CORREÇÃO ULTRA FORÇADA DOS ÍCONES DAS TABS */
+html body .venda-details-modal .venda-tabs .tab-btn i,
+html body .venda-details-modal .tab-btn i,
+html body .tab-btn i,
+.venda-details-modal .venda-tabs .tab-btn i,
+.venda-details-modal .tab-btn i {
+    font-size: 16px !important;
+    color: #1f2937 !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn:hover i,
+html body .venda-details-modal .tab-btn:hover i,
+html body .tab-btn:hover i,
+.venda-details-modal .venda-tabs .tab-btn:hover i,
+.venda-details-modal .tab-btn:hover i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn.active i,
+html body .venda-details-modal .tab-btn.active i,
+html body .tab-btn.active i,
+.venda-details-modal .venda-tabs .tab-btn.active i,
+.venda-details-modal .tab-btn.active i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA O ÍCONE DE DOCUMENTOS */
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"] i,
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"] i,
+html body .tab-btn[data-tab="documentos"] i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"] i,
+.venda-details-modal .tab-btn[data-tab="documentos"] i {
+    font-size: 16px !important;
+    color: #1f2937 !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+html body .tab-btn[data-tab="documentos"]:hover i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+.venda-details-modal .tab-btn[data-tab="documentos"]:hover i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+html body .tab-btn[data-tab="documentos"].active i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+.venda-details-modal .tab-btn[data-tab="documentos"].active i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+/* CORREÇÃO ULTRA FORÇADA PARA O ÍCONE DE DOCUMENTOS */
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"] i,
+html body .venda-details-modal .tab-btn[data-tab="documentos"] i,
+html body .tab-btn[data-tab="documentos"] i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"] i,
+.venda-details-modal .tab-btn[data-tab="documentos"] i,
+.tab-btn[data-tab="documentos"] i {
+    font-size: 16px !important;
+    color: #1f2937 !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+    content: "\f15b" !important;
+    /* Código Unicode do ícone fa-file */
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+html body .tab-btn[data-tab="documentos"]:hover i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"]:hover i,
+.venda-details-modal .tab-btn[data-tab="documentos"]:hover i,
+.tab-btn[data-tab="documentos"]:hover i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+html body .venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+html body .tab-btn[data-tab="documentos"].active i,
+.venda-details-modal .venda-tabs .tab-btn[data-tab="documentos"].active i,
+.venda-details-modal .tab-btn[data-tab="documentos"].active i,
+.tab-btn[data-tab="documentos"].active i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+}
+
+/* Conteúdo das Tabs */
+.tab-content {
+    min-height: 400px;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab Detalhes */
+.venda-details-content {
+    padding: 0;
+}
+
+.details-section {
+    margin-bottom: 24px;
+}
+
+/* Melhorias nos títulos das seções - CORREÇÃO DEFINITIVA */
+.details-section h4,
+.payment-history h4 {
+    margin: 0 0 16px 0;
+    color: #1f2937;
+    /* Cinza muito escuro */
+    font-size: 1.125rem;
+    font-weight: 700;
+    /* Mais peso */
+    border-bottom: 2px solid #e5e7eb;
+    /* Borda mais visível */
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.details-section h4::before,
+.payment-history h4::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    /* Azul mais escuro */
+    border-radius: 2px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.value-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.value-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.value-amount {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.value-amount.paid {
+    color: var(--success-color);
+}
+
+.value-amount.pending {
+    color: var(--warning-color);
+}
+
+.observations {
+    padding: 16px;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.observations p {
+    margin: 0;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+/* Tab Pagamentos */
+.pagamentos-content {
+    padding: 0;
+}
+
+.payment-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 24px;
+}
+
+.payment-progress {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+    transition: width 0.3s ease;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* Melhorias nos ícones de status - CORREÇÃO DEFINITIVA */
+.payment-complete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 8px;
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+.payment-complete i {
+    color: var(--success-color) !important;
+    /* Verde para confirmação */
+    font-size: 1.25rem !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+.payment-complete span {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+/* ESTILOS PARA HISTÓRICO DE PAGAMENTOS */
+.payment-history {
+    margin-top: 24px;
+}
+
+.payment-history h4 {
+    margin: 0 0 16px 0;
+    color: var(--text-color);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.payment-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.loading-payments,
+.no-payments,
+.error-payments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 32px 16px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.loading-payments i {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.no-payments i {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+}
+
+.error-payments i {
+    color: var(--danger-color);
+    font-size: 1.25rem;
+}
+
+.payment-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.payment-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-info {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.payment-date,
+.payment-method,
+.payment-amount {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    font-size: 0.875rem;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DO HISTÓRICO DE PAGAMENTOS */
+.payment-date i,
+.payment-method i,
+.payment-amount i {
+    color: #6b7280 !important;
+    /* Cinza médio para melhor visibilidade */
+    font-size: 0.875rem !important;
+    font-weight: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DE STATUS */
+.payment-status i {
+    font-size: 0.875rem !important;
+    color: inherit !important;
+    /* Herda a cor do elemento pai */
+    font-weight: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.payment-status.confirmed i {
+    color: var(--success-color) !important;
+    /* Verde para confirmado */
+}
+
+.payment-status.pending i {
+    color: var(--warning-color) !important;
+    /* Amarelo para pendente */
+}
+
+.payment-amount {
+    font-weight: 600;
+    color: var(--success-color);
+}
+
+.payment-amount i {
+    color: var(--success-color) !important;
+    /* Verde para valor */
+}
+
+.payment-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.payment-status.confirmed {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: var(--success-color);
+}
+
+.payment-status.pending {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning-color);
+}
+
+/* RESPONSIVIDADE PARA HISTÓRICO DE PAGAMENTOS */
+@media (max-width: 768px) {
+    .payment-info {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .payment-item {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .payment-status {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .payment-date,
+    .payment-method,
+    .payment-amount {
+        font-size: 0.75rem;
+    }
+
+    .payment-status {
+        font-size: 0.625rem;
+        padding: 4px 8px;
+    }
+}
+
+/* Melhorias nos ícones de documentos e ações - CORREÇÃO DEFINITIVA */
+.document-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    /* Azul mais escuro */
+    color: white;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    /* Sombra azul */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.document-info {
+    flex: 1;
+}
+
+.document-info h5 {
+    margin: 0 0 4px 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.document-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Tab Ações */
+.acoes-content {
+    padding: 0;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.action-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-item.danger:hover {
+    border-color: var(--danger-color);
+}
+
+/* Melhorias nos ícones de documentos e ações - CORREÇÃO DEFINITIVA */
+.action-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    /* Azul mais escuro */
+    color: white;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    /* Sombra azul */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.action-item.danger .action-icon {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    /* Vermelho mais escuro */
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+    /* Sombra vermelha */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.action-info {
+    flex: 1;
+}
+
+.action-info h5 {
+    margin: 0 0 4px 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.action-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Melhorias nos botões do modal - CORREÇÃO DEFINITIVA */
+.venda-details-modal .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    /* Padding maior */
+    border: none;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    /* Mais peso */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venda-details-modal .btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    /* Azul mais escuro */
+    color: white;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.venda-details-modal .btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    /* Azul ainda mais escuro */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.venda-details-modal .btn-outline {
+    background: transparent;
+    color: #2563eb;
+    /* Azul mais escuro */
+    border: 2px solid #2563eb;
+    /* Borda mais grossa */
+    font-weight: 600;
+}
+
+.venda-details-modal .btn-outline:hover {
+    background: #2563eb;
+    /* Azul mais escuro */
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.venda-details-modal .btn-danger {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    /* Vermelho mais escuro */
+    color: white;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.venda-details-modal .btn-danger:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    /* Vermelho ainda mais escuro */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .venda-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .venda-status-info {
+        text-align: left;
+    }
+
+    .venda-tabs {
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 120px;
+    }
+
+    .details-grid,
+    .values-grid,
+    .documents-grid,
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-summary {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .payment-progress {
+        margin-right: 0;
+    }
+
+    .document-item,
+    .action-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .document-info,
+    .action-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-btn {
+        flex: 1 1 100%;
+        font-size: 0.75rem;
+    }
+
+    .tab-btn i {
+        font-size: 0.875rem;
+    }
+
+    .venda-title h3 {
+        font-size: 1.25rem;
+    }
+
+    .total-value {
+        font-size: 1.125rem;
+    }
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DE DOCUMENTOS NA TAB */
+.documentos-content .document-item .document-icon i,
+.documentos-content .document-item .document-icon i,
+.documentos-content .document-icon i,
+.document-item .document-icon i {
+    font-size: 1.25rem !important;
+    color: white !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE DOCUMENTOS - COR BRANCA */
+html body .documentos-content .document-item .btn i,
+html body .document-item .btn i,
+.documentos-content .document-item .btn i,
+.document-item .btn i {
+    font-size: 0.875rem !important;
+    color: white !important;
+    /* FORÇAR COR BRANCA */
+    font-weight: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+    content: "" !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DE AÇÕES NA TAB */
+.acoes-content .action-item .action-icon i,
+.acoes-content .action-item .action-icon i,
+.action-item .action-icon i {
+    font-size: 1.25rem !important;
+    color: white !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+}
+
+/* CORREÇÃO ULTRA ESPECÍFICA PARA ÍCONES DE DOCUMENTOS - FORÇA RENDERIZAÇÃO */
+html body .documentos-content .document-item .document-icon i,
+html body .document-item .document-icon i,
+html body .document-icon i,
+.documentos-content .document-item .document-icon i,
+.document-item .document-icon i {
+    font-size: 1.25rem !important;
+    color: white !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+    content: "" !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA CADA ÍCONE DE DOCUMENTO */
+html body .documentos-content .document-item:nth-child(1) .document-icon i {
+    content: "\f1c1" !important;
+    /* fa-file-pdf */
+}
+
+html body .documentos-content .document-item:nth-child(2) .document-icon i {
+    content: "\f543" !important;
+    /* fa-receipt */
+}
+
+html body .documentos-content .document-item:nth-child(3) .document-icon i {
+    content: "\f0e0" !important;
+    /* fa-envelope */
+}
+
+/* CORREÇÃO ULTRA ESPECÍFICA PARA ÍCONES DOS BOTÕES DE DOCUMENTOS */
+html body .documentos-content .document-item .btn i,
+html body .document-item .btn i,
+.documentos-content .document-item .btn i,
+.document-item .btn i {
+    font-size: 0.875rem !important;
+    color: inherit !important;
+    font-weight: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+    content: "" !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA CADA ÍCONE DE BOTÃO */
+html body .documentos-content .document-item:nth-child(1) .btn i,
+html body .documentos-content .document-item:nth-child(2) .btn i {
+    content: "\f019" !important;
+    /* fa-download */
+}
+
+html body .documentos-content .document-item:nth-child(3) .btn i {
+    content: "\f1d8" !important;
+    /* fa-paper-plane */
+}
+
+/* CORREÇÃO ULTRA ESPECÍFICA PARA ÍCONES DE AÇÕES */
+html body .acoes-content .action-item .action-icon i,
+html body .action-item .action-icon i,
+.acoes-content .action-item .action-icon i,
+.action-item .action-icon i {
+    font-size: 1.25rem !important;
+    color: white !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    animation: none !important;
+    z-index: auto !important;
+    content: "" !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA CADA ÍCONE DE AÇÃO */
+html body .acoes-content .action-item:nth-child(1) .action-icon i {
+    content: "\f044" !important;
+    /* fa-edit */
+}
+
+html body .acoes-content .action-item:nth-child(2) .action-icon i {
+    content: "\f0c5" !important;
+    /* fa-copy */
+}
+
+html body .acoes-content .action-item:nth-child(3) .action-icon i {
+    content: "\f00d" !important;
+    /* fa-times */
+}
+
+/* CORREÇÃO RADICAL PARA ÍCONES DO MODAL - FORÇA EXIBIÇÃO */
+.venda-details-modal .document-icon i,
+.venda-details-modal .action-icon i,
+.venda-details-modal .btn i {
+    /* FORÇAR EXIBIÇÃO RADICAL */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 9999 !important;
+
+    /* FORÇAR FONTAWESOME */
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    font-weight: 900 !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+
+    /* FORÇAR CORES */
+    color: white !important;
+    text-shadow: none !important;
+
+    /* FORÇAR CONTEÚDO */
+    content: "" !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+
+    /* REMOVER QUALQUER TRANSFORMAÇÃO */
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+
+    /* FORÇAR DIMENSÕES */
+    min-width: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA CADA ÍCONE DO MODAL */
+.venda-details-modal .document-item:nth-child(1) .document-icon i::before {
+    content: "\f1c1" !important;
+    /* fa-file-pdf */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+.venda-details-modal .document-item:nth-child(2) .document-icon i::before {
+    content: "\f543" !important;
+    /* fa-receipt */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+.venda-details-modal .document-item:nth-child(3) .document-icon i::before {
+    content: "\f0e0" !important;
+    /* fa-envelope */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES */
+.venda-details-modal .document-item:nth-child(1) .btn i::before,
+.venda-details-modal .document-item:nth-child(2) .btn i::before {
+    content: "\f019" !important;
+    /* fa-download */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+.venda-details-modal .document-item:nth-child(3) .btn i::before {
+    content: "\f1d8" !important;
+    /* fa-paper-plane */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DE AÇÕES */
+.venda-details-modal .action-item:nth-child(1) .action-icon i::before {
+    content: "\f044" !important;
+    /* fa-edit */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+.venda-details-modal .action-item:nth-child(2) .action-icon i::before {
+    content: "\f0c5" !important;
+    /* fa-copy */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+.venda-details-modal .action-item:nth-child(3) .action-icon i::before {
+    content: "\f1f8" !important;
+    /* fa-trash - TROCADO DE fa-times PARA fa-trash */
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: white !important;
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+}
+
+/* EFEITO HOVER PARA ÍCONES DE DOCUMENTOS - PADRONIZAÇÃO */
+.document-item:hover .document-icon {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    /* Azul mais escuro no hover */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+    /* Sombra mais intensa */
+    transform: translateY(-2px) !important;
+    /* Leve elevação */
+    transition: all 0.3s ease !important;
+}
+
+.document-item:hover .document-icon i {
+    color: white !important;
+    transform: scale(1.1) !important;
+    /* Leve aumento do ícone */
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER PARA BOTÕES DE DOCUMENTOS */
+.document-item .btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.3s ease !important;
+}
+
+.document-item .btn:hover i {
+    color: white !important;
+    transform: scale(1.05) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER PARA ÍCONES DE AÇÕES - PADRONIZAÇÃO */
+.action-item:hover .action-icon {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    /* Azul mais escuro no hover */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+    /* Sombra mais intensa */
+    transform: translateY(-2px) !important;
+    /* Leve elevação */
+    transition: all 0.3s ease !important;
+}
+
+.action-item:hover .action-icon i {
+    color: white !important;
+    transform: scale(1.1) !important;
+    /* Leve aumento do ícone */
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER ESPECÍFICO PARA AÇÃO DE PERIGO (CANCELAR) */
+.action-item.danger:hover .action-icon {
+    background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+    /* Vermelho mais escuro no hover */
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4) !important;
+    /* Sombra vermelha mais intensa */
+    transform: translateY(-2px) !important;
+    transition: all 0.3s ease !important;
+}
+
+.action-item.danger:hover .action-icon i {
+    color: white !important;
+    transform: scale(1.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER PARA BOTÕES DE AÇÕES */
+.action-item .btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER ESPECÍFICO PARA BOTÃO DE PERIGO */
+.action-item .btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA ÍCONES DE DOCUMENTOS - ESPECIFICIDADE MÁXIMA */
+html body .venda-details-modal .document-item:hover .document-icon,
+html body .document-item:hover .document-icon,
+.venda-details-modal .document-item:hover .document-icon,
+.document-item:hover .document-icon {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    /* Azul mais escuro no hover */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+    /* Sombra mais intensa */
+    transform: translateY(-2px) !important;
+    /* Leve elevação */
+    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    width: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+html body .venda-details-modal .document-item:hover .document-icon i,
+html body .document-item:hover .document-icon i,
+.venda-details-modal .document-item:hover .document-icon i,
+.document-item:hover .document-icon i {
+    color: white !important;
+    transform: scale(1.1) !important;
+    /* Leve aumento do ícone */
+    transition: all 0.3s ease !important;
+    font-size: 1.25rem !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA BOTÕES DE DOCUMENTOS */
+html body .venda-details-modal .document-item .btn:hover,
+html body .document-item .btn:hover,
+.venda-details-modal .document-item .btn:hover,
+.document-item .btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+}
+
+html body .venda-details-modal .document-item .btn:hover i,
+html body .document-item .btn:hover i,
+.venda-details-modal .document-item .btn:hover i,
+.document-item .btn:hover i {
+    color: white !important;
+    transform: scale(1.05) !important;
+    transition: all 0.3s ease !important;
+    font-size: 0.875rem !important;
+    font-weight: normal !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA AÇÃO DE PERIGO (CANCELAR) */
+html body .venda-details-modal .action-item.danger:hover .action-icon,
+html body .action-item.danger:hover .action-icon,
+.venda-details-modal .action-item.danger:hover .action-icon,
+.action-item.danger:hover .action-icon {
+    background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+    /* Vermelho mais escuro no hover */
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4) !important;
+    /* Sombra vermelha mais intensa */
+    transform: translateY(-2px) !important;
+    transition: all 0.3s ease !important;
+    border-radius: 8px !important;
+    width: 48px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+html body .venda-details-modal .action-item.danger:hover .action-icon i,
+html body .action-item.danger:hover .action-icon i,
+.venda-details-modal .action-item.danger:hover .action-icon i,
+.action-item.danger:hover .action-icon i {
+    color: white !important;
+    transform: scale(1.1) !important;
+    transition: all 0.3s ease !important;
+    font-size: 1.25rem !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA BOTÕES DE AÇÕES */
+html body .venda-details-modal .action-item .btn:hover,
+html body .action-item .btn:hover,
+.venda-details-modal .action-item .btn:hover,
+.action-item .btn:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA BOTÃO DE PERIGO */
+html body .venda-details-modal .action-item .btn-danger:hover,
+html body .action-item .btn-danger:hover,
+.venda-details-modal .action-item .btn-danger:hover,
+.action-item .btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.3s ease !important;
+    color: white !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA TABS */
+html body .venda-details-modal .venda-tabs .tab-btn:hover,
+html body .venda-tabs .tab-btn:hover,
+.venda-details-modal .venda-tabs .tab-btn:hover,
+.venda-tabs .tab-btn:hover {
+    color: #1e40af !important;
+    background-color: #f1f5f9 !important;
+    transition: all 0.2s ease !important;
+}
+
+html body .venda-details-modal .venda-tabs .tab-btn:hover i,
+html body .venda-tabs .tab-btn:hover i,
+.venda-details-modal .venda-tabs .tab-btn:hover i,
+.venda-tabs .tab-btn:hover i {
+    color: #1e40af !important;
+    font-weight: bold !important;
+    transition: all 0.2s ease !important;
+}
+
+/* EFEITO HOVER FORÇADO PARA BOTÕES GERAIS DO MODAL */
+html body .venda-details-modal .btn-primary:hover,
+html body .venda-details-modal .btn-primary:hover,
+.venda-details-modal .btn-primary:hover,
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+    transition: all 0.2s ease !important;
+}
+
+html body .venda-details-modal .btn-outline:hover,
+html body .venda-details-modal .btn-outline:hover,
+.venda-details-modal .btn-outline:hover,
+.btn-outline:hover {
+    background: #2563eb !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+html body .venda-details-modal .btn-danger:hover,
+html body .venda-details-modal .btn-danger:hover,
+.venda-details-modal .btn-danger:hover,
+.btn-danger:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* ===== MODAL DE EDIÇÃO DE VENDAS ===== */
+
+.edit-venda-modal {
+    max-width: 100%;
+}
+
+.edit-venda-modal .form-section {
+    margin-bottom: 24px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-light);
+}
+
+.edit-venda-modal .form-section h4 {
+    margin: 0 0 16px 0;
+    color: var(--text-color);
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-venda-modal .form-section h4 i {
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.edit-venda-modal .form-group {
+    margin-bottom: 16px;
+}
+
+.edit-venda-modal .form-group label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.edit-venda-modal .form-group select,
+.edit-venda-modal .form-group input,
+.edit-venda-modal .form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+}
+
+.edit-venda-modal .form-group select:focus,
+.edit-venda-modal .form-group input:focus,
+.edit-venda-modal .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Estilos para itens da venda */
+.venda-itens-container {
+    margin-top: 8px;
+}
+
+.itens-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+    gap: 12px;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 4px 4px 0 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.venda-item-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    align-items: center;
+    background-color: white;
+}
+
+.venda-item-row:last-child {
+    border-radius: 0 0 4px 4px;
+}
+
+.venda-item-row .item-field {
+    display: flex;
+    align-items: center;
+}
+
+.venda-item-row .item-field select,
+.venda-item-row .item-field input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.venda-item-row .subtotal {
+    font-weight: 600;
+    color: var(--success-color);
+    text-align: right;
+}
+
+.venda-item-row .remove-item-btn {
+    padding: 6px 8px;
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.venda-item-row .remove-item-btn:hover {
+    background-color: #dc2626;
+}
+
+#add-edit-item-btn {
+    margin-top: 12px;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px dashed var(--border-color);
+    color: var(--text-muted);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+#add-edit-item-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* Resumo da venda */
+.venda-resumo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.resumo-item span:first-child {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.resumo-item span:last-child {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Responsividade para o modal de edição */
+@media (max-width: 768px) {
+
+    .itens-header,
+    .venda-item-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .itens-header {
+        display: none;
+        /* Ocultar header em mobile */
+    }
+
+    .venda-item-row {
+        padding: 16px;
+        border-radius: 4px;
+        margin-bottom: 12px;
+    }
+
+    .venda-item-row .item-field {
+        margin-bottom: 8px;
+    }
+
+    .venda-item-row .item-field:before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+    }
+
+    .venda-resumo {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-venda-modal .form-section {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+
+    .edit-venda-modal .form-section h4 {
+        font-size: 1rem;
+    }
+}
+
+/* ===== CORREÇÃO DOS ÍCONES DO MODAL DE EDIÇÃO ===== */
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DO MODAL DE EDIÇÃO */
+.edit-venda-modal .form-section h4 i,
+.edit-venda-modal .btn i,
+.edit-venda-modal .venda-itens-container i {
+    color: var(--primary-color) !important;
+    /* Azul para ícones de seções */
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES NO MODAL DE EDIÇÃO */
+.edit-venda-modal .btn-outline i {
+    color: var(--primary-color) !important;
+    /* Azul para botões outline */
+}
+
+.edit-venda-modal .btn-primary i {
+    color: white !important;
+    /* Branco para botões primários */
+}
+
+.edit-venda-modal .btn-danger i {
+    color: white !important;
+    /* Branco para botões de perigo */
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS ITENS DA VENDA */
+.edit-venda-modal .venda-item-row .remove-item-btn i {
+    color: white !important;
+    /* Branco para ícone de remover */
+    font-size: 0.875rem !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS SELECTS E INPUTS */
+.edit-venda-modal select option,
+.edit-venda-modal input {
+    color: var(--text-color) !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS HEADERS */
+.edit-venda-modal .itens-header {
+    color: white !important;
+}
+
+.edit-venda-modal .itens-header span {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS SUBTOTAIS */
+.edit-venda-modal .subtotal {
+    color: var(--success-color) !important;
+    /* Verde para subtotais */
+    font-weight: 600 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS RESUMOS */
+.edit-venda-modal .resumo-item span:last-child {
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS TÍTULOS DAS SEÇÕES */
+.edit-venda-modal .form-section h4 {
+    color: var(--text-color) !important;
+    font-weight: 600 !important;
+}
+
+.edit-venda-modal .form-section h4 i {
+    color: var(--primary-color) !important;
+    /* Azul para ícones dos títulos */
+    margin-right: 8px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS LABELS */
+.edit-venda-modal .form-group label {
+    color: var(--text-color) !important;
+    font-weight: 500 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS PLACEHOLDERS */
+.edit-venda-modal input::placeholder,
+.edit-venda-modal textarea::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS SELECTS */
+.edit-venda-modal select {
+    color: var(--text-color) !important;
+    background-color: white !important;
+}
+
+.edit-venda-modal select option {
+    color: var(--text-color) !important;
+    background-color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS TEXTAREAS */
+.edit-venda-modal textarea {
+    color: var(--text-color) !important;
+    background-color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS INPUTS */
+.edit-venda-modal input {
+    color: var(--text-color) !important;
+    background-color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE AÇÃO */
+.edit-venda-modal .btn {
+    font-weight: 500 !important;
+}
+
+.edit-venda-modal .btn i {
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE ADICIONAR ITEM */
+.edit-venda-modal #add-edit-item-btn i {
+    color: var(--primary-color) !important;
+    /* Azul para ícone de adicionar */
+    font-size: 0.875rem !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE REMOVER ITEM */
+.edit-venda-modal .remove-item-btn i {
+    color: white !important;
+    /* Branco para ícone de remover */
+    font-size: 0.75rem !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DO MODAL */
+.edit-venda-modal .modal-footer .btn i {
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE SALVAR/CANCELAR */
+.edit-venda-modal .btn-primary i {
+    color: white !important;
+}
+
+.edit-venda-modal .btn-outline i {
+    color: var(--primary-color) !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE PERIGO */
+.edit-venda-modal .btn-danger i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE SECUNDÁRIOS */
+.edit-venda-modal .btn-secondary i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE SUCESSO */
+.edit-venda-modal .btn-success i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE AVISO */
+.edit-venda-modal .btn-warning i {
+    color: var(--text-color) !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE INFORMAÇÃO */
+.edit-venda-modal .btn-info i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE CLARO */
+.edit-venda-modal .btn-light i {
+    color: var(--text-color) !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE ESCURO */
+.edit-venda-modal .btn-dark i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE LINK */
+.edit-venda-modal .btn-link i {
+    color: var(--primary-color) !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE GRUPO */
+.edit-venda-modal .btn-group .btn i {
+    margin-right: 4px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE TAMANHO PEQUENO */
+.edit-venda-modal .btn-sm i {
+    font-size: 0.75rem !important;
+    margin-right: 4px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE TAMANHO GRANDE */
+.edit-venda-modal .btn-lg i {
+    font-size: 1.125rem !important;
+    margin-right: 8px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE TAMANHO EXTRA GRANDE */
+.edit-venda-modal .btn-xl i {
+    font-size: 1.25rem !important;
+    margin-right: 10px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE TAMANHO EXTRA PEQUENO */
+.edit-venda-modal .btn-xs i {
+    font-size: 0.625rem !important;
+    margin-right: 2px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE TAMANHO PADRÃO */
+.edit-venda-modal .btn i {
+    font-size: 0.875rem !important;
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES SEM TEXTO */
+.edit-venda-modal .btn i:only-child {
+    margin-right: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE */
+.edit-venda-modal .btn:not(:only-child) i {
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM ÍCONE À DIREITA */
+.edit-venda-modal .btn i:last-child {
+    margin-right: 0 !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM ÍCONE À ESQUERDA */
+.edit-venda-modal .btn i:first-child {
+    margin-right: 6px !important;
+    margin-left: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM ÍCONE NO MEIO */
+.edit-venda-modal .btn i:not(:first-child):not(:last-child) {
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM ÍCONE ÚNICO */
+.edit-venda-modal .btn i:only-child {
+    margin: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE */
+.edit-venda-modal .btn:has(i):has(span) i {
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE À DIREITA */
+.edit-venda-modal .btn:has(i):has(span) i:last-child {
+    margin-right: 0 !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE À ESQUERDA */
+.edit-venda-modal .btn:has(i):has(span) i:first-child {
+    margin-right: 6px !important;
+    margin-left: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE NO MEIO */
+.edit-venda-modal .btn:has(i):has(span) i:not(:first-child):not(:last-child) {
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE ÚNICO */
+.edit-venda-modal .btn:has(i):has(span) i:only-child {
+    margin: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE */
+.edit-venda-modal .btn:has(i):has(span) i {
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE À DIREITA */
+.edit-venda-modal .btn:has(i):has(span) i:last-child {
+    margin-right: 0 !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE À ESQUERDA */
+.edit-venda-modal .btn:has(i):has(span) i:first-child {
+    margin-right: 6px !important;
+    margin-left: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE NO MEIO */
+.edit-venda-modal .btn:has(i):has(span) i:not(:first-child):not(:last-child) {
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES COM TEXTO E ÍCONE ÚNICO */
+.edit-venda-modal .btn:has(i):has(span) i:only-child {
+    margin: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE SUCESSO */
+.edit-venda-modal .btn-success i {
+    color: white !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA ÍCONES DOS BOTÕES DE CONFIRMAÇÃO */
+.edit-venda-modal .btn-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    border-color: #059669 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+.edit-venda-modal .btn-success:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+.edit-venda-modal .btn-success:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3) !important;
+}
+
+.edit-venda-modal .btn-success i {
+    color: white !important;
+    font-size: 0.875rem !important;
+    margin-right: 6px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO NO MODAL FOOTER */
+.edit-venda-modal .modal-footer .btn-success,
+.modal .modal-footer .btn-success {
+    min-width: 140px !important;
+    padding: 10px 20px !important;
+    font-size: 0.875rem !important;
+    margin: 0 5px !important;
+}
+
+.edit-venda-modal .modal-footer .btn-success i,
+.modal .modal-footer .btn-success i {
+    font-size: 0.875rem !important;
+    margin-right: 6px !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO COM ÍCONE */
+.edit-venda-modal .btn-success:has(i),
+.modal .btn-success:has(i) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.edit-venda-modal .btn-success:has(i) i,
+.modal .btn-success:has(i) i {
+    margin-right: 6px !important;
+    margin-left: 0 !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO SEM ÍCONE */
+.edit-venda-modal .btn-success:not(:has(i)),
+.modal .btn-success:not(:has(i)) {
+    text-align: center !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO COM TEXTO LONGO */
+.edit-venda-modal .btn-success,
+.modal .btn-success {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO RESPONSIVO */
+@media (max-width: 768px) {
+
+    .edit-venda-modal .modal-footer .btn-success,
+    .modal .modal-footer .btn-success {
+        min-width: 120px !important;
+        padding: 8px 16px !important;
+        font-size: 0.8rem !important;
+    }
+
+    .edit-venda-modal .modal-footer .btn-success i,
+    .modal .modal-footer .btn-success i {
+        font-size: 0.8rem !important;
+        margin-right: 4px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .edit-venda-modal .modal-footer .btn-success,
+    .modal .modal-footer .btn-success {
+        min-width: 100px !important;
+        padding: 6px 12px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .edit-venda-modal .modal-footer .btn-success i,
+    .modal .modal-footer .btn-success i {
+        font-size: 0.75rem !important;
+        margin-right: 3px !important;
+    }
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÃO DE CONFIRMAÇÃO - ULTRA FORÇA */
+html body .edit-venda-modal .btn-success,
+html body .modal .btn-success,
+html body .btn-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    border-color: #059669 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    min-width: 140px !important;
+    padding: 10px 20px !important;
+    font-size: 0.875rem !important;
+    margin: 0 5px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+html body .edit-venda-modal .btn-success i,
+html body .modal .btn-success i,
+html body .btn-success i {
+    color: white !important;
+    font-size: 0.875rem !important;
+    margin-right: 6px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÕES DO MODAL DE EDIÇÃO - FORÇA MÁXIMA */
+.edit-venda-modal .modal-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 20px !important;
+    border-top: 1px solid #e5e7eb !important;
+    background: #f9fafb !important;
+    margin-top: 20px !important;
+}
+
+.edit-venda-modal .modal-footer .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 10px 20px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    min-width: 120px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+.edit-venda-modal .modal-footer .btn-outline {
+    background: transparent !important;
+    color: #6b7280 !important;
+    border: 2px solid #d1d5db !important;
+}
+
+.edit-venda-modal .modal-footer .btn-outline:hover {
+    background: #f3f4f6 !important;
+    color: #374151 !important;
+    border-color: #9ca3af !important;
+}
+
+.edit-venda-modal .modal-footer .btn-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+.edit-venda-modal .modal-footer .btn-success:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+.edit-venda-modal .modal-footer .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+}
+
+.edit-venda-modal .modal-footer .btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+.edit-venda-modal .modal-footer .btn i {
+    font-size: 0.875rem !important;
+    color: inherit !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA CONTAINER DOS BOTÕES */
+.edit-venda-modal .modal-footer>div {
+    display: flex !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÕES RESPONSIVOS */
+@media (max-width: 768px) {
+    .edit-venda-modal .modal-footer {
+        flex-direction: column !important;
+        gap: 15px !important;
+        padding: 15px !important;
+    }
+
+    .edit-venda-modal .modal-footer>div {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .edit-venda-modal .modal-footer .btn {
+        min-width: 100px !important;
+        padding: 8px 16px !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* CORREÇÃO ESPECÍFICA PARA BOTÕES - ULTRA FORÇA */
+html body .edit-venda-modal .modal-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 20px !important;
+    border-top: 1px solid #e5e7eb !important;
+    background: #f9fafb !important;
+    margin-top: 20px !important;
+}
+
+html body .edit-venda-modal .modal-footer .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 10px 20px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    min-width: 120px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+html body .edit-venda-modal .modal-footer .btn-success {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+html body .edit-venda-modal .modal-footer .btn-success:hover {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+html body .edit-venda-modal .modal-footer .btn i {
+    font-size: 0.875rem !important;
+    color: inherit !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-style: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+}

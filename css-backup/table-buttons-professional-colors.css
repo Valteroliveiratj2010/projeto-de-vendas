@@ -1,0 +1,307 @@
+/* ===== CORES ESPECÍFICAS PARA BOTÕES DE TABELA ===== */
+/* CSS com especificidade máxima para garantir persistência das cores dos botões de tabela */
+
+/* ===== BOTÕES DE TABELA - CORES PROFISSIONAIS ===== */
+
+/* Botão Visualizar nas Tabelas */
+html body .btn-icon.btn-view,
+html body * .btn-icon.btn-view,
+html body .data-table .btn-icon.btn-view,
+html body .table-container .btn-icon.btn-view,
+html body [data-page] .btn-icon.btn-view {
+    background: #3b82f6 !important;
+    background-color: #3b82f6 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+html body .btn-icon.btn-view:hover,
+html body * .btn-icon.btn-view:hover,
+html body .data-table .btn-icon.btn-view:hover,
+html body .table-container .btn-icon.btn-view:hover,
+html body [data-page] .btn-icon.btn-view:hover {
+    background: #2563eb !important;
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Botão Editar nas Tabelas */
+html body .btn-icon.btn-edit,
+html body * .btn-icon.btn-edit,
+html body .data-table .btn-icon.btn-edit,
+html body .table-container .btn-icon.btn-edit,
+html body [data-page] .btn-icon.btn-edit {
+    background: #f59e0b !important;
+    background-color: #f59e0b !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+html body .btn-icon.btn-edit:hover,
+html body * .btn-icon.btn-edit:hover,
+html body .data-table .btn-icon.btn-edit:hover,
+html body .table-container .btn-icon.btn-edit:hover,
+html body [data-page] .btn-icon.btn-edit:hover {
+    background: #d97706 !important;
+    background-color: #d97706 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Botão Excluir nas Tabelas */
+html body .btn-icon.btn-delete,
+html body * .btn-icon.btn-delete,
+html body .data-table .btn-icon.btn-delete,
+html body .table-container .btn-icon.btn-delete,
+html body [data-page] .btn-icon.btn-delete {
+    background: #ef4444 !important;
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+html body .btn-icon.btn-delete:hover,
+html body * .btn-icon.btn-delete:hover,
+html body .data-table .btn-icon.btn-delete:hover,
+html body .table-container .btn-icon.btn-delete:hover,
+html body [data-page] .btn-icon.btn-delete:hover {
+    background: #dc2626 !important;
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Botão Pagamento nas Tabelas */
+html body .btn-icon.btn-payment,
+html body * .btn-icon.btn-payment,
+html body .data-table .btn-icon.btn-payment,
+html body .table-container .btn-icon.btn-payment,
+html body [data-page] .btn-icon.btn-payment {
+    background: #10b981 !important;
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+html body .btn-icon.btn-payment:hover,
+html body * .btn-icon.btn-payment:hover,
+html body .data-table .btn-icon.btn-payment:hover,
+html body .table-container .btn-icon.btn-payment:hover,
+html body [data-page] .btn-icon.btn-payment:hover {
+    background: #059669 !important;
+    background-color: #059669 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Botão Conversão nas Tabelas */
+html body .btn-icon.btn-convert,
+html body * .btn-icon.btn-convert,
+html body .data-table .btn-icon.btn-convert,
+html body .table-container .btn-icon.btn-convert,
+html body [data-page] .btn-icon.btn-convert {
+    background: #8b5cf6 !important;
+    background-color: #8b5cf6 !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(139, 92, 246, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    margin: 2px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+html body .btn-icon.btn-convert:hover,
+html body * .btn-icon.btn-convert:hover,
+html body .data-table .btn-icon.btn-convert:hover,
+html body .table-container .btn-icon.btn-convert:hover,
+html body [data-page] .btn-icon.btn-convert:hover {
+    background: #7c3aed !important;
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* ===== SOBRESCRITA MÁXIMA PARA ÍCONES DOS BOTÕES DE TABELA ===== */
+html body .btn-icon.btn-view i,
+html body .btn-icon.btn-edit i,
+html body .btn-icon.btn-delete i,
+html body .btn-icon.btn-payment i,
+html body .btn-icon.btn-convert i,
+html body * .btn-icon.btn-view i,
+html body * .btn-icon.btn-edit i,
+html body * .btn-icon.btn-delete i,
+html body * .btn-icon.btn-payment i,
+html body * .btn-icon.btn-convert i,
+html body .data-table .btn-icon i,
+html body .table-container .btn-icon i,
+html body [data-page] .btn-icon i {
+    color: #ffffff !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    position: static !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    transition: all 0.2s ease !important;
+    animation: none !important;
+    z-index: 11 !important;
+}
+
+/* ===== RESPONSIVIDADE PARA BOTÕES DE TABELA ===== */
+@media (max-width: 768px) {
+
+    html body .btn-icon.btn-view,
+    html body .btn-icon.btn-edit,
+    html body .btn-icon.btn-delete,
+    html body .btn-icon.btn-payment,
+    html body .btn-icon.btn-convert,
+    html body * .btn-icon.btn-view,
+    html body * .btn-icon.btn-edit,
+    html body * .btn-icon.btn-delete,
+    html body * .btn-icon.btn-payment,
+    html body * .btn-icon.btn-convert,
+    html body .data-table .btn-icon,
+    html body .table-container .btn-icon,
+    html body [data-page] .btn-icon {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    html body .btn-icon.btn-view i,
+    html body .btn-icon.btn-edit i,
+    html body .btn-icon.btn-delete i,
+    html body .btn-icon.btn-payment i,
+    html body .btn-icon.btn-convert i,
+    html body * .btn-icon.btn-view i,
+    html body * .btn-icon.btn-edit i,
+    html body * .btn-icon.btn-delete i,
+    html body * .btn-icon.btn-payment i,
+    html body * .btn-icon.btn-convert i,
+    html body .data-table .btn-icon i,
+    html body .table-container .btn-icon i,
+    html body [data-page] .btn-icon i {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    html body .btn-icon.btn-view,
+    html body .btn-icon.btn-edit,
+    html body .btn-icon.btn-delete,
+    html body .btn-icon.btn-payment,
+    html body .btn-icon.btn-convert,
+    html body * .btn-icon.btn-view,
+    html body * .btn-icon.btn-edit,
+    html body * .btn-icon.btn-delete,
+    html body * .btn-icon.btn-payment,
+    html body * .btn-icon.btn-convert,
+    html body .data-table .btn-icon,
+    html body .table-container .btn-icon,
+    html body [data-page] .btn-icon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    html body .btn-icon.btn-view i,
+    html body .btn-icon.btn-edit i,
+    html body .btn-icon.btn-delete i,
+    html body .btn-icon.btn-payment i,
+    html body .btn-icon.btn-convert i,
+    html body * .btn-icon.btn-view i,
+    html body * .btn-icon.btn-edit i,
+    html body * .btn-icon.btn-delete i,
+    html body * .btn-icon.btn-payment i,
+    html body * .btn-icon.btn-convert i,
+    html body .data-table .btn-icon i,
+    html body .table-container .btn-icon i,
+    html body [data-page] .btn-icon i {
+        font-size: 11px !important;
+    }
+}

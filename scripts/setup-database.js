@@ -1,6 +1,6 @@
-const { pool } = require('../config/database');
+const { pool, testConnection } = require('../config/database');
 
-// SQL para criar as tabelas do sistema
+// SQL para criar as tabelas do sistema - MELHORADO
 const createTablesSQL = `
 -- Tabela de clientes
 CREATE TABLE IF NOT EXISTS clientes (
@@ -103,7 +103,7 @@ CREATE INDEX IF NOT EXISTS idx_clientes_documento ON clientes(documento);
 CREATE INDEX IF NOT EXISTS idx_produtos_nome ON produtos(nome);
 `;
 
-// SQL para inserir dados de exemplo
+// SQL para inserir dados de exemplo - MELHORADO
 const insertSampleDataSQL = `
 -- Inserir clientes de exemplo
 INSERT INTO clientes (nome, telefone, email, endereco, documento) VALUES
@@ -122,24 +122,55 @@ INSERT INTO produtos (nome, descricao, preco, estoque) VALUES
 ON CONFLICT (id) DO NOTHING;
 `;
 
-// Função para criar as tabelas
+// Função para criar as tabelas - MELHORADA
 async function createTables() {
   try {
     console.log('🗄️ Criando tabelas do banco de dados...');
-    
+
     // Criar tabelas
     await pool.query(createTablesSQL);
     console.log('✅ Tabelas criadas com sucesso!');
-    
+
     // Inserir dados de exemplo
     console.log('📝 Inserindo dados de exemplo...');
     await pool.query(insertSampleDataSQL);
     console.log('✅ Dados de exemplo inseridos com sucesso!');
-    
-    console.log('🎉 Banco de dados configurado com sucesso!');
-    
+
+    return true;
   } catch (error) {
-    console.error('❌ Erro ao configurar banco de dados:', error);
+    console.error('❌ Erro ao criar tabelas:', error.message);
+    return false;
+  }
+}
+
+// Função principal - MELHORADA
+async function main() {
+  try {
+    console.log('🚀 Iniciando configuração do banco de dados...');
+
+    // Testar conexão
+    const connected = await testConnection();
+    if (!connected) {
+      console.error('❌ Não foi possível conectar ao banco de dados');
+      console.log('💡 Verifique se:');
+      console.log('   1. O PostgreSQL está rodando');
+      console.log('   2. As credenciais no arquivo .env estão corretas');
+      console.log('   3. O banco de dados existe');
+      process.exit(1);
+    }
+
+    // Criar tabelas
+    const tablesCreated = await createTables();
+    if (!tablesCreated) {
+      console.error('❌ Falha ao criar tabelas');
+      process.exit(1);
+    }
+
+    console.log('🎉 Configuração do banco de dados concluída com sucesso!');
+    console.log('✨ O sistema está pronto para uso!');
+
+  } catch (error) {
+    console.error('❌ Erro durante configuração:', error);
     process.exit(1);
   } finally {
     await pool.end();
@@ -148,7 +179,7 @@ async function createTables() {
 
 // Executar se chamado diretamente
 if (require.main === module) {
-  createTables();
+  main();
 }
 
-module.exports = { createTables }; 
+module.exports = { createTables, main }; 

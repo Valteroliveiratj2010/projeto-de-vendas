@@ -1,0 +1,262 @@
+/* ===== MARGENS PADRONIZADAS PARA TODAS AS PÁGINAS ===== */
+/* Baseado na página de Produtos como referência */
+
+/* ===== PADRÃO GERAL PARA TODAS AS PÁGINAS ===== */
+.page {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.page-content {
+  padding: var(--spacing-6) !important;
+  margin: 0 !important;
+}
+
+/* ===== PÁGINA DE PRODUTOS (REFERÊNCIA) ===== */
+#produtos-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#produtos-page .page-header {
+  margin: var(--spacing-8) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#produtos-page .filters-section {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#produtos-page .stats-row {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#produtos-page .table-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#produtos-page .pagination-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+/* ===== PÁGINA DE CLIENTES ===== */
+#clientes-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#clientes-page .page-header {
+  margin: var(--spacing-8) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#clientes-page .filters-section {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#clientes-page .stats-row {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#clientes-page .table-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#clientes-page .pagination-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+/* ===== PÁGINA DE VENDAS ===== */
+#vendas-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#vendas-page .page-header {
+  margin: var(--spacing-8) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#vendas-page .filters-section {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#vendas-page .stats-row {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#vendas-page .table-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#vendas-page .pagination-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+/* ===== PÁGINA DE ORÇAMENTOS ===== */
+#orcamentos-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#orcamentos-page .page-header {
+  margin: var(--spacing-8) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#orcamentos-page .filters-section {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#orcamentos-page .stats-row {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#orcamentos-page .table-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#orcamentos-page .pagination-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+/* ===== PÁGINA DE RELATÓRIOS ===== */
+#relatorios-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#relatorios-page .page-header {
+  margin: var(--spacing-8) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#relatorios-page .filters-section {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#relatorios-page .stats-row {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#relatorios-page .charts-container {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#relatorios-page .chart-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+#relatorios-page .chart-card {
+  background: var(--color-white);
+  padding: var(--spacing-6);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow);
+}
+
+#relatorios-page .chart-card h3 {
+  margin: 0 0 var(--spacing-4) 0;
+  color: var(--color-gray-900);
+  font-size: var(--font-size-lg);
+}
+
+/* ===== PÁGINA DE DASHBOARD ===== */
+#dashboard-page .page-content {
+  padding: var(--spacing-6) !important;
+}
+
+#dashboard-page .dashboard-header {
+  margin: var(--spacing-6) var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-6) 0 !important;
+}
+
+#dashboard-page .estoque-alerts {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#dashboard-page .stats-grid {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#dashboard-page .financial-summary {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#dashboard-page .recent-activity {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+#dashboard-page .quick-actions {
+  margin: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6) !important;
+  padding: var(--spacing-4) 0 !important;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .page-content {
+    padding: var(--spacing-4) !important;
+  }
+  
+  .page-header,
+  .dashboard-header {
+    margin: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-4) !important;
+  }
+  
+  .filters-section,
+  .stats-row,
+  .table-container,
+  .pagination-container,
+  .charts-container,
+  .estoque-alerts,
+  .stats-grid,
+  .financial-summary,
+  .recent-activity,
+  .quick-actions {
+    margin: 0 var(--spacing-4) var(--spacing-4) var(--spacing-4) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-content {
+    padding: var(--spacing-3) !important;
+  }
+  
+  .page-header,
+  .dashboard-header {
+    margin: var(--spacing-3) var(--spacing-3) var(--spacing-3) var(--spacing-3) !important;
+  }
+  
+  .filters-section,
+  .stats-row,
+  .table-container,
+  .pagination-container,
+  .charts-container,
+  .estoque-alerts,
+  .stats-grid,
+  .financial-summary,
+  .recent-activity,
+  .quick-actions {
+    margin: 0 var(--spacing-3) var(--spacing-3) var(--spacing-3) !important;
+  }
+} 

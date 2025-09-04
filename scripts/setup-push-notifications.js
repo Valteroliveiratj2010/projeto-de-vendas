@@ -13,11 +13,11 @@ console.log('================================================\n');
 async function setupPushNotifications() {
     try {
         console.log('🔍 Verificando configurações atuais...\n');
-        
+
         // Verificar arquivo .env
         const envPath = path.join(__dirname, '..', '.env');
         let envExists = false;
-        
+
         try {
             await fs.access(envPath);
             envExists = true;
@@ -25,10 +25,10 @@ async function setupPushNotifications() {
         } catch {
             console.log('❌ Arquivo .env não encontrado');
         }
-        
+
         // Verificar dependências
         console.log('\n📦 Verificando dependências...');
-        
+
         try {
             require('web-push');
             console.log('✅ web-push instalado');
@@ -37,7 +37,7 @@ async function setupPushNotifications() {
             console.log('🔧 Execute: npm install web-push');
             return false;
         }
-        
+
         // Verificar diretório de dados
         const dataDir = path.join(__dirname, '..', 'data');
         try {
@@ -48,7 +48,7 @@ async function setupPushNotifications() {
             await fs.mkdir(dataDir, { recursive: true });
             console.log('✅ Diretório de dados criado');
         }
-        
+
         // Verificar arquivo de assinaturas
         const subscriptionsFile = path.join(dataDir, 'push-subscriptions.json');
         try {
@@ -59,7 +59,7 @@ async function setupPushNotifications() {
         } catch {
             console.log('📝 Arquivo de assinaturas não encontrado, será criado automaticamente');
         }
-        
+
         // Verificar arquivo de chaves VAPID
         const vapidKeysFile = path.join(dataDir, 'vapid-keys.json');
         try {
@@ -71,43 +71,43 @@ async function setupPushNotifications() {
         } catch {
             console.log('🔑 Chaves VAPID não encontradas, serão geradas automaticamente');
         }
-        
+
         console.log('\n✅ Sistema de notificações push configurado!');
-        
+
         // Testar serviço
         console.log('\n🧪 Testando serviço...');
-        
+
         try {
             const PushNotificationService = require('../utils/push-service');
             const pushService = new PushNotificationService();
-            
+
             // Aguardar inicialização
             await new Promise(resolve => setTimeout(resolve, 3000));
-            
+
             const testResult = await pushService.testService();
-            
+
             if (testResult.success) {
                 console.log('✅ Serviço de notificações push funcionando perfeitamente!');
-                
+
                 const status = pushService.getStatus();
                 console.log(`📊 Estatísticas:`);
                 console.log(`   - Assinaturas: ${status.subscriptionsCount}`);
                 console.log(`   - Ativas: ${status.stats.active}`);
                 console.log(`   - Inativas: ${status.stats.inactive}`);
-                
+
                 return true;
             } else {
                 console.log('❌ Erro no serviço:');
                 console.log(`   ${testResult.message}`);
                 return false;
             }
-            
+
         } catch (error) {
             console.log('❌ Erro ao testar serviço:');
             console.log(`   ${error.message}`);
             return false;
         }
-        
+
     } catch (error) {
         console.error('❌ Erro durante a configuração:', error.message);
         return false;
@@ -145,13 +145,13 @@ TWILIO_PHONE_NUMBER=seu_numero_whatsapp
 # Configurações de Notificações Push
 # (Não são necessárias no .env - são geradas automaticamente)
 `;
-        
+
         const envPath = path.join(__dirname, '..', '.env');
         await fs.writeFile(envPath, envTemplate);
-        
+
         console.log('✅ Arquivo .env criado com sucesso!');
         console.log('📝 As notificações push não precisam de configuração manual');
-        
+
     } catch (error) {
         console.error('❌ Erro ao criar arquivo .env:', error.message);
     }
@@ -161,16 +161,16 @@ async function showSystemInfo() {
     try {
         console.log('\n📋 INFORMAÇÕES DO SISTEMA');
         console.log('============================');
-        
+
         // Verificar Node.js
         console.log(`Node.js: ${process.version}`);
-        
+
         // Verificar sistema operacional
         console.log(`Sistema: ${process.platform} ${process.arch}`);
-        
+
         // Verificar diretório atual
         console.log(`Diretório: ${process.cwd()}`);
-        
+
         // Verificar arquivos importantes
         const files = [
             'package.json',
@@ -178,7 +178,7 @@ async function showSystemInfo() {
             'utils/push-service.js',
             'routes/push-notifications.js'
         ];
-        
+
         console.log('\n📁 Arquivos do sistema:');
         for (const file of files) {
             try {
@@ -188,7 +188,7 @@ async function showSystemInfo() {
                 console.log(`   ❌ ${file}`);
             }
         }
-        
+
         // Verificar diretório de dados
         const dataDir = path.join(__dirname, '..', 'data');
         try {
@@ -203,7 +203,7 @@ async function showSystemInfo() {
         } catch {
             console.log('\n📂 Diretório de dados: Não encontrado');
         }
-        
+
     } catch (error) {
         console.error('❌ Erro ao obter informações do sistema:', error.message);
     }
@@ -212,17 +212,17 @@ async function showSystemInfo() {
 // Menu principal
 async function main() {
     const args = process.argv.slice(2);
-    
+
     if (args.includes('--create-env')) {
         await createEnvTemplate();
         return;
     }
-    
+
     if (args.includes('--info')) {
         await showSystemInfo();
         return;
     }
-    
+
     if (args.includes('--help')) {
         console.log(`
 🔔 CONFIGURADOR DO SISTEMA DE NOTIFICAÇÕES PUSH
@@ -245,24 +245,24 @@ Exemplos:
         `);
         return;
     }
-    
+
     // Executar configuração padrão
     const success = await setupPushNotifications();
-    
+
     if (success) {
         console.log('\n🎯 Próximos passos:');
-        console.log('1. Acesse: http://localhost:3000/test-push-notifications.html');
-        console.log('2. Teste o sistema de notificações push');
+        console.log('1. Configure as variáveis de notificações no .env');
+        console.log('2. Teste o sistema de notificações push via API');
         console.log('3. Configure notificações automáticas no seu sistema');
         console.log('4. Use as APIs de notificações push');
-        
+
         console.log('\n📚 RECURSOS DISPONÍVEIS:');
         console.log('• Notificações automáticas de vendas, orçamentos e pagamentos');
         console.log('• Notificações personalizadas');
         console.log('• Envio em massa para todas as assinaturas');
         console.log('• Gerenciamento de assinaturas');
         console.log('• Templates profissionais');
-        
+
     } else {
         console.log('\n🔧 Para resolver:');
         console.log('1. Verifique se todas as dependências estão instaladas');

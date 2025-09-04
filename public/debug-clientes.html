@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Clientes</title>
+</head>
+
+<body>
+    <h1>Debug - Página de Clientes</h1>
+    <div id="debug-info"></div>
+    <div id="clientes-content">
+        <div class="page-header">
+            <h2>Gestão de Clientes</h2>
+        </div>
+        <div class="page-content">
+            <div id="clientes-table-body"></div>
+        </div>
+    </div>
+
+    <!-- Carregar scripts necessários -->
+    <script src="/js/request-manager.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/pages/clientes.js"></script>
+
+    <script>
+        // Função de debug
+        function debugInfo() {
+            const debugDiv = document.getElementById('debug-info');
+            const info = {
+                'window.ClientesPage': !!window.ClientesPage,
+                'window.requestManager': !!window.requestManager,
+                'window.api': !!window.api,
+                'window.clientesPageInstance': !!window.clientesPageInstance,
+                'typeof ClientesPage': typeof ClientesPage
+            };
+
+            debugDiv.innerHTML = '<pre>' + JSON.stringify(info, null, 2) + '</pre>';
+        }
+
+        // Testar carregamento
+        async function testClientes() {
+            console.log('🧪 Testando carregamento de clientes...');
+
+            try {
+                // Teste 1: Verificar se a classe existe
+                if (!window.ClientesPage) {
+                    throw new Error('Classe ClientesPage não encontrada');
+                }
+
+                console.log('✅ Classe ClientesPage encontrada');
+
+                // Teste 2: Criar instância
+                const clientesPage = new window.ClientesPage();
+                console.log('✅ Instância criada:', clientesPage);
+
+                // Teste 3: Testar carregamento direto
+                console.log('🔄 Testando carregamento direto...');
+                const response = await fetch('/api/clientes?limit=all');
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                console.log('Result:', result);
+
+                if (result && result.success && Array.isArray(result.data)) {
+                    console.log(`✅ ${result.data.length} clientes carregados`);
+
+                    // Renderizar dados
+                    const tbody = document.getElementById('clientes-table-body');
+                    if (tbody) {
+                        tbody.innerHTML = result.data.map(cliente => `
+                            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                                <strong>${cliente.nome}</strong><br>
+                                Email: ${cliente.email || 'N/A'}<br>
+                                Telefone: ${cliente.telefone || 'N/A'}<br>
+                                ID: ${cliente.id}
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    throw new Error('Estrutura de resposta inválida');
+                }
+
+            } catch (error) {
+                console.error('❌ Erro no teste:', error);
+                document.getElementById('debug-info').innerHTML += '<p style="color: red;">Erro: ' + error.message + '</p>';
+            }
+        }
+
+        // Executar quando página carregar
+        window.addEventListener('load', () => {
+            console.log('🚀 Página carregada, iniciando debug...');
+            debugInfo();
+            testClientes();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Problemas de Carregamento Duplo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .debug-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .debug-title {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .debug-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Debug - Problemas de Carregamento Duplo</h1>
+
+    <div class="debug-section">
+        <h2 class="debug-title">📊 Verificação de Instâncias</h2>
+        <div id="instances-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="debug-title">💾 Verificação de LocalStorage</h2>
+        <div id="localstorage-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="debug-title">📜 Verificação de Scripts</h2>
+        <div id="scripts-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="debug-title">🚀 Verificação de Sistemas</h2>
+        <div id="systems-debug"></div>
+    </div>
+
+    <div class="debug-section">
+        <h2 class="debug-title">🔧 Ações de Correção</h2>
+        <button onclick="clearAllCaches()">Limpar Todos os Caches</button>
+        <button onclick="clearLocalStorage()">Limpar LocalStorage</button>
+        <button onclick="unregisterServiceWorkers()">Desregistrar Service Workers</button>
+        <button onclick="reloadPage()">Recarregar Página</button>
+    </div>
+
+    <script>
+        // Função para adicionar item de debug
+        function addDebugItem(containerId, message, type = 'info') {
+            const container = document.getElementById(containerId);
+            const item = document.createElement('div');
+            item.className = `debug-item ${type}`;
+            item.innerHTML = message;
+            container.appendChild(item);
+        }
+
+        // Verificar instâncias
+        function checkInstances() {
+            const instances = [
+                { name: 'window.dashboardPage', value: window.dashboardPage },
+                { name: 'window.DashboardPage', value: window.DashboardPage },
+                { name: 'window.clientesPageInstance', value: window.clientesPageInstance },
+                { name: 'window.ClientesPage', value: window.ClientesPage },
+                { name: 'window.sistemaVendas', value: window.sistemaVendas }
+            ];
+
+            instances.forEach(instance => {
+                const exists = instance.value ? 'EXISTE' : 'NÃO EXISTE';
+                const type = instance.value ? 'success' : 'warning';
+                addDebugItem('instances-debug',
+                    `<strong>${instance.name}:</strong> ${exists}`, type);
+            });
+        }
+
+        // Verificar localStorage
+        function checkLocalStorage() {
+            const authToken = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+
+            addDebugItem('localstorage-debug',
+                `<strong>authToken:</strong> ${authToken ? 'EXISTE' : 'NÃO EXISTE'}`,
+                authToken ? 'success' : 'warning');
+
+            addDebugItem('localstorage-debug',
+                `<strong>userData:</strong> ${userData ? 'EXISTE' : 'NÃO EXISTE'}`,
+                userData ? 'success' : 'warning');
+        }
+
+        // Verificar scripts
+        function checkScripts() {
+            const scripts = document.querySelectorAll('script[src]');
+            const dashboardScripts = Array.from(scripts).filter(script =>
+                script.src.includes('dashboard')
+            );
+
+            addDebugItem('scripts-debug',
+                `<strong>Total de scripts:</strong> ${scripts.length}`, 'info');
+
+            addDebugItem('scripts-debug',
+                `<strong>Scripts de dashboard:</strong> ${dashboardScripts.length}`,
+                dashboardScripts.length > 1 ? 'error' : 'success');
+
+            dashboardScripts.forEach((script, index) => {
+                addDebugItem('scripts-debug',
+                    `${index + 1}. ${script.src}`, 'info');
+            });
+        }
+
+        // Verificar sistemas
+        function checkSystems() {
+            addDebugItem('systems-debug',
+                `<strong>window.sistemaVendas:</strong> ${window.sistemaVendas ? 'EXISTE' : 'NÃO EXISTE'}`,
+                window.sistemaVendas ? 'success' : 'warning');
+
+            addDebugItem('systems-debug',
+                `<strong>window.checkAuthStatus:</strong> ${window.checkAuthStatus ? 'EXISTE' : 'NÃO EXISTE'}`,
+                window.checkAuthStatus ? 'success' : 'warning');
+        }
+
+        // Funções de correção
+        function clearAllCaches() {
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    return Promise.all(
+                        cacheNames.map(cacheName => {
+                            console.log('🗑️ Removendo cache:', cacheName);
+                            return caches.delete(cacheName);
+                        })
+                    );
+                }).then(() => {
+                    alert('✅ Todos os caches foram limpos!');
+                    location.reload();
+                });
+            } else {
+                alert('❌ Cache API não disponível');
+            }
+        }
+
+        function clearLocalStorage() {
+            localStorage.clear();
+            alert('✅ LocalStorage limpo!');
+            location.reload();
+        }
+
+        function unregisterServiceWorkers() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    return Promise.all(
+                        registrations.map(registration => registration.unregister())
+                    );
+                }).then(() => {
+                    alert('✅ Service Workers desregistrados!');
+                    location.reload();
+                });
+            } else {
+                alert('❌ Service Worker não disponível');
+            }
+        }
+
+        function reloadPage() {
+            location.reload();
+        }
+
+        // Executar verificações quando a página carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                checkInstances();
+                checkLocalStorage();
+                checkScripts();
+                checkSystems();
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

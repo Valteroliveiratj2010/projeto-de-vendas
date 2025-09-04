@@ -1,0 +1,761 @@
+/* ===== FONT AWESOME LOCAL - ESSENCIAL ===== */
+/* Definições essenciais do Font Awesome para resolver problema de CSP */
+
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("../webfonts/fa-solid-900.woff2") format("woff2");
+}
+
+.fa,
+.fas {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.fa::before,
+.fas::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+/* ===== ÍCONES ESSENCIAIS DO SISTEMA ===== */
+
+/* 🏪 Sistema */
+.fa-store::before {
+    content: "\f54e";
+}
+
+/* 📊 Dashboard */
+.fa-tachometer-alt::before {
+    content: "\f3fd";
+}
+
+/* 👥 Clientes */
+.fa-user-group::before {
+    content: "\f500";
+}
+
+/* 📦 Produtos */
+.fa-boxes-stacked::before {
+    content: "\f468";
+}
+
+/* 🛒 Vendas */
+.fa-shopping-bag::before {
+    content: "\f290";
+}
+
+.fa-shopping-cart::before {
+    content: "\f07a";
+}
+
+/* 💰 Orçamentos */
+.fa-file-invoice-dollar::before {
+    content: "\f571";
+}
+
+/* 📈 Relatórios */
+.fa-chart-line::before {
+    content: "\f201";
+}
+
+/* ⚡ Ações Rápidas */
+.fa-cart-plus::before {
+    content: "\f217";
+}
+
+.fa-user-plus::before {
+    content: "\f234";
+}
+
+.fa-box-open::before {
+    content: "\f49e";
+}
+
+.fa-file-circle-plus::before {
+    content: "\f494";
+}
+
+/* 🔧 Ações Gerais */
+.fa-edit::before {
+    content: "\f044";
+}
+
+.fa-trash::before {
+    content: "\f1f8";
+}
+
+.fa-eye::before {
+    content: "\f06e";
+}
+
+.fa-save::before {
+    content: "\f0c7";
+}
+
+.fa-plus::before {
+    content: "\f067";
+}
+
+.fa-minus::before {
+    content: "\f068";
+}
+
+.fa-times::before {
+    content: "\f00d";
+}
+
+.fa-check::before {
+    content: "\f00c";
+}
+
+.fa-search::before {
+    content: "\f002";
+}
+
+.fa-refresh::before {
+    content: "\f021";
+}
+
+.fa-clock::before {
+    content: "\f017";
+}
+
+.fa-calendar::before {
+    content: "\f133";
+}
+
+.fa-user::before {
+    content: "\f007";
+}
+
+.fa-cog::before {
+    content: "\f013";
+}
+
+.fa-home::before {
+    content: "\f015";
+}
+
+.fa-sign-out-alt::before {
+    content: "\f2f5";
+}
+
+.fa-sign-in-alt::before {
+    content: "\f090";
+}
+
+.fa-lock::before {
+    content: "\f023";
+}
+
+.fa-unlock::before {
+    content: "\f09c";
+}
+
+.fa-wifi::before {
+    content: "\f1eb";
+}
+
+.fa-wifi-slash::before {
+    content: "\f6ac";
+}
+
+.fa-database::before {
+    content: "\f1c0";
+}
+
+.fa-sync::before {
+    content: "\f021";
+}
+
+.fa-download::before {
+    content: "\f019";
+}
+
+.fa-upload::before {
+    content: "\f093";
+}
+
+.fa-print::before {
+    content: "\f02f";
+}
+
+.fa-envelope::before {
+    content: "\f0e0";
+}
+
+.fa-phone::before {
+    content: "\f095";
+}
+
+.fa-map-marker::before {
+    content: "\f041";
+}
+
+.fa-globe::before {
+    content: "\f0ac";
+}
+
+.fa-link::before {
+    content: "\f0c1";
+}
+
+.fa-external-link-alt::before {
+    content: "\f35d";
+}
+
+.fa-copy::before {
+    content: "\f0c5";
+}
+
+.fa-paste::before {
+    content: "\f0ea";
+}
+
+.fa-cut::before {
+    content: "\f0c4";
+}
+
+.fa-undo::before {
+    content: "\f0e2";
+}
+
+.fa-redo::before {
+    content: "\f01e";
+}
+
+.fa-arrow-left::before {
+    content: "\f060";
+}
+
+.fa-arrow-right::before {
+    content: "\f061";
+}
+
+.fa-arrow-up::before {
+    content: "\f062";
+}
+
+.fa-arrow-down::before {
+    content: "\f063";
+}
+
+.fa-chevron-left::before {
+    content: "\f053";
+}
+
+.fa-chevron-right::before {
+    content: "\f054";
+}
+
+.fa-chevron-up::before {
+    content: "\f077";
+}
+
+.fa-chevron-down::before {
+    content: "\f078";
+}
+
+.fa-caret-left::before {
+    content: "\f0d9";
+}
+
+.fa-caret-right::before {
+    content: "\f0da";
+}
+
+.fa-caret-up::before {
+    content: "\f0d8";
+}
+
+.fa-caret-down::before {
+    content: "\f0d7";
+}
+
+.fa-sort::before {
+    content: "\f0dc";
+}
+
+.fa-sort-up::before {
+    content: "\f0de";
+}
+
+.fa-sort-down::before {
+    content: "\f0dd";
+}
+
+.fa-filter::before {
+    content: "\f0b0";
+}
+
+.fa-list::before {
+    content: "\f03a";
+}
+
+.fa-th::before {
+    content: "\f00a";
+}
+
+.fa-th-large::before {
+    content: "\f009";
+}
+
+.fa-bars::before {
+    content: "\f0c9";
+}
+
+.fa-navicon::before {
+    content: "\f0c9";
+}
+
+.fa-reorder::before {
+    content: "\f0c9";
+}
+
+.fa-close::before {
+    content: "\f00d";
+}
+
+.fa-remove::before {
+    content: "\f00d";
+}
+
+.fa-times::before {
+    content: "\f00d";
+}
+
+.fa-check-circle::before {
+    content: "\f058";
+}
+
+.fa-exclamation-triangle::before {
+    content: "\f071";
+}
+
+.fa-info-circle::before {
+    content: "\f05a";
+}
+
+.fa-question-circle::before {
+    content: "\f059";
+}
+
+.fa-exclamation-circle::before {
+    content: "\f06a";
+}
+
+.fa-ban::before {
+    content: "\f05e";
+}
+
+.fa-spinner::before {
+    content: "\f110";
+}
+
+.fa-circle::before {
+    content: "\f111";
+}
+
+.fa-circle-o::before {
+    content: "\f10c";
+}
+
+.fa-square::before {
+    content: "\f0c8";
+}
+
+.fa-square-o::before {
+    content: "\f096";
+}
+
+.fa-star::before {
+    content: "\f005";
+}
+
+.fa-star-o::before {
+    content: "\f006";
+}
+
+.fa-heart::before {
+    content: "\f004";
+}
+
+.fa-heart-o::before {
+    content: "\f08a";
+}
+
+.fa-thumbs-up::before {
+    content: "\f164";
+}
+
+.fa-thumbs-down::before {
+    content: "\f165";
+}
+
+.fa-thumbs-o-up::before {
+    content: "\f087";
+}
+
+.fa-thumbs-o-down::before {
+    content: "\f088";
+}
+
+.fa-comment::before {
+    content: "\f075";
+}
+
+.fa-comments::before {
+    content: "\f086";
+}
+
+.fa-comment-o::before {
+    content: "\f0e5";
+}
+
+.fa-comments-o::before {
+    content: "\f0e6";
+}
+
+.fa-bell::before {
+    content: "\f0f3";
+}
+
+.fa-bell-o::before {
+    content: "\f0a2";
+}
+
+.fa-bell-slash::before {
+    content: "\f1f6";
+}
+
+.fa-bell-slash-o::before {
+    content: "\f1f7";
+}
+
+.fa-bookmark::before {
+    content: "\f02e";
+}
+
+.fa-bookmark-o::before {
+    content: "\f097";
+}
+
+.fa-tag::before {
+    content: "\f02b";
+}
+
+.fa-tags::before {
+    content: "\f02c";
+}
+
+.fa-share::before {
+    content: "\f064";
+}
+
+.fa-share-alt::before {
+    content: "\f1e0";
+}
+
+.fa-share-square::before {
+    content: "\f14d";
+}
+
+.fa-share-square-o::before {
+    content: "\f045";
+}
+
+.fa-download::before {
+    content: "\f019";
+}
+
+.fa-upload::before {
+    content: "\f093";
+}
+
+.fa-cloud-download::before {
+    content: "\f381";
+}
+
+.fa-cloud-upload::before {
+    content: "\f382";
+}
+
+.fa-file::before {
+    content: "\f15b";
+}
+
+.fa-file-o::before {
+    content: "\f016";
+}
+
+.fa-file-text::before {
+    content: "\f15c";
+}
+
+.fa-file-text-o::before {
+    content: "\f0f6";
+}
+
+.fa-file-pdf-o::before {
+    content: "\f1c1";
+}
+
+.fa-file-word-o::before {
+    content: "\f1c2";
+}
+
+.fa-file-excel-o::before {
+    content: "\f1c3";
+}
+
+.fa-file-powerpoint-o::before {
+    content: "\f1c4";
+}
+
+.fa-file-image-o::before {
+    content: "\f1c5";
+}
+
+.fa-file-archive-o::before {
+    content: "\f1c6";
+}
+
+.fa-file-audio-o::before {
+    content: "\f1c7";
+}
+
+.fa-file-video-o::before {
+    content: "\f1c8";
+}
+
+.fa-file-code-o::before {
+    content: "\f1c9";
+}
+
+.fa-folder::before {
+    content: "\f07b";
+}
+
+.fa-folder-o::before {
+    content: "\f114";
+}
+
+.fa-folder-open::before {
+    content: "\f07c";
+}
+
+.fa-folder-open-o::before {
+    content: "\f115";
+}
+
+.fa-cog::before {
+    content: "\f013";
+}
+
+.fa-cogs::before {
+    content: "\f085";
+}
+
+.fa-gear::before {
+    content: "\f013";
+}
+
+.fa-gears::before {
+    content: "\f085";
+}
+
+.fa-wrench::before {
+    content: "\f0ad";
+}
+
+.fa-tools::before {
+    content: "\f7d9";
+}
+
+.fa-magic::before {
+    content: "\f0d0";
+}
+
+.fa-puzzle-piece::before {
+    content: "\f12e";
+}
+
+.fa-lightbulb-o::before {
+    content: "\f0eb";
+}
+
+.fa-gift::before {
+    content: "\f06b";
+}
+
+.fa-birthday-cake::before {
+    content: "\f1fd";
+}
+
+.fa-calendar-check-o::before {
+    content: "\f274";
+}
+
+.fa-calendar-minus-o::before {
+    content: "\f272";
+}
+
+.fa-calendar-plus-o::before {
+    content: "\f271";
+}
+
+.fa-calendar-times-o::before {
+    content: "\f273";
+}
+
+.fa-clock-o::before {
+    content: "\f017";
+}
+
+.fa-hourglass::before {
+    content: "\f254";
+}
+
+.fa-hourglass-1::before {
+    content: "\f251";
+}
+
+.fa-hourglass-2::before {
+    content: "\f252";
+}
+
+.fa-hourglass-3::before {
+    content: "\f253";
+}
+
+.fa-hourglass-end::before {
+    content: "\f253";
+}
+
+.fa-hourglass-half::before {
+    content: "\f252";
+}
+
+.fa-hourglass-o::before {
+    content: "\f250";
+}
+
+.fa-hourglass-start::before {
+    content: "\f251";
+}
+
+.fa-stopwatch::before {
+    content: "\f2f2";
+}
+
+.fa-tachometer::before {
+    content: "\f0e4";
+}
+
+.fa-tachometer-alt::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-fast::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-slow::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-average::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-fastest::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-slowest::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-1::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-2::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-3::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-4::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-5::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-6::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-7::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-8::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-9::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-10::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-11::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-12::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-13::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-14::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-15::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-16::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-17::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-18::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-19::before {
+    content: "\f3fd";
+}
+
+.fa-tachometer-20::before {
+    content: "\f3fd";
+}

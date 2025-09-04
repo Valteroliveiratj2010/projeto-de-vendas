@@ -1,0 +1,285 @@
+/* ===== OCULTAÇÃO RESPONSIVA DE CAMPOS MENOS IMPORTANTES ===== */
+
+/* Campos a serem ocultados em telas menores */
+
+/* ===== TELAS MÉDIAS (abaixo de 1024px) ===== */
+@media (max-width: 1024px) {
+
+    /* Ocultar email em tabelas */
+    html body .data-table th[data-field="email"],
+    html body .data-table td[data-field="email"],
+    html body .table-container th[data-field="email"],
+    html body .table-container td[data-field="email"],
+    html body table th[data-field="email"],
+    html body table td[data-field="email"] {
+        display: none !important;
+    }
+
+    /* Ocultar telefone em algumas tabelas */
+    html body .data-table th[data-field="telefone"],
+    html body .data-table td[data-field="telefone"],
+    html body .table-container th[data-field="telefone"],
+    html body .table-container td[data-field="telefone"],
+    html body table th[data-field="telefone"],
+    html body table td[data-field="telefone"] {
+        display: none !important;
+    }
+
+    /* Ocultar observações em tabelas */
+    html body .data-table th[data-field="observacoes"],
+    html body .data-table td[data-field="observacoes"],
+    html body .table-container th[data-field="observacoes"],
+    html body .table-container td[data-field="observacoes"],
+    html body table th[data-field="observacoes"],
+    html body table td[data-field="observacoes"] {
+        display: none !important;
+    }
+}
+
+/* ===== TELAS PEQUENAS (abaixo de 768px) ===== */
+@media (max-width: 768px) {
+
+    /* Ocultar campos adicionais */
+    html body .data-table th[data-field="endereco"],
+    html body .data-table td[data-field="endereco"],
+    html body .table-container th[data-field="endereco"],
+    html body .table-container td[data-field="endereco"],
+    html body table th[data-field="endereco"],
+    html body table td[data-field="endereco"] {
+        display: none !important;
+    }
+
+    /* Ocultar CPF/CNPJ */
+    html body .data-table th[data-field="cpf_cnpj"],
+    html body .data-table td[data-field="cpf_cnpj"],
+    html body .table-container th[data-field="cpf_cnpj"],
+    html body .table-container td[data-field="cpf_cnpj"],
+    html body table th[data-field="cpf_cnpj"],
+    html body table td[data-field="cpf_cnpj"] {
+        display: none !important;
+    }
+
+    /* Ocultar data de cadastro */
+    html body .data-table th[data-field="data_cadastro"],
+    html body .data-table td[data-field="data_cadastro"],
+    html body .table-container th[data-field="data_cadastro"],
+    html body .table-container td[data-field="data_cadastro"],
+    html body table th[data-field="data_cadastro"],
+    html body table td[data-field="data_cadastro"] {
+        display: none !important;
+    }
+
+    /* Ocultar status em algumas tabelas */
+    html body .data-table th[data-field="status"],
+    html body .data-table td[data-field="status"],
+    html body .table-container th[data-field="status"],
+    html body .table-container td[data-field="status"],
+    html body table th[data-field="status"],
+    html body table td[data-field="status"] {
+        display: none !important;
+    }
+}
+
+/* ===== TELAS MUITO PEQUENAS (abaixo de 480px) ===== */
+@media (max-width: 480px) {
+
+    /* Ocultar mais campos em telas muito pequenas */
+    html body .data-table th[data-field="categoria"],
+    html body .data-table td[data-field="categoria"],
+    html body .table-container th[data-field="categoria"],
+    html body .table-container td[data-field="categoria"],
+    html body table th[data-field="categoria"],
+    html body table td[data-field="categoria"] {
+        display: none !important;
+    }
+
+    /* Ocultar fornecedor */
+    html body .data-table th[data-field="fornecedor"],
+    html body .data-table td[data-field="fornecedor"],
+    html body .table-container th[data-field="fornecedor"],
+    html body .table-container td[data-field="fornecedor"],
+    html body table th[data-field="fornecedor"],
+    html body table td[data-field="fornecedor"] {
+        display: none !important;
+    }
+
+    /* Ocultar data de venda (manter apenas em vendas) */
+    html body .data-table:not([data-table="vendas"]) th[data-field="data_venda"],
+    html body .data-table:not([data-table="vendas"]) td[data-field="data_venda"],
+    html body .table-container:not([data-table="vendas"]) th[data-field="data_venda"],
+    html body .table-container:not([data-table="vendas"]) td[data-field="data_venda"],
+    html body table:not([data-table="vendas"]) th[data-field="data_venda"],
+    html body table:not([data-table="vendas"]) td[data-field="data_venda"] {
+        display: none !important;
+    }
+}
+
+/* ===== TELAS EXTREMAMENTE PEQUENAS (abaixo de 360px) ===== */
+@media (max-width: 360px) {
+
+    /* Ocultar campos menos críticos */
+    html body .data-table th[data-field="descricao"],
+    html body .data-table td[data-field="descricao"],
+    html body .table-container th[data-field="descricao"],
+    html body .table-container td[data-field="descricao"],
+    html body table th[data-field="descricao"],
+    html body table td[data-field="descricao"] {
+        display: none !important;
+    }
+
+    /* Ocultar preço unitário (manter apenas total) */
+    html body .data-table th[data-field="preco_unitario"],
+    html body .data-table td[data-field="preco_unitario"],
+    html body .table-container th[data-field="preco_unitario"],
+    html body .table-container td[data-field="preco_unitario"],
+    html body table th[data-field="preco_unitario"],
+    html body table td[data-field="preco_unitario"] {
+        display: none !important;
+    }
+}
+
+/* ===== CAMPOS SEMPRE VISÍVEIS (NUNCA OCULTAR) ===== */
+/* Estes campos devem sempre estar visíveis independente do tamanho da tela */
+
+/* ID/Número */
+html body .data-table th[data-field="id"],
+html body .data-table td[data-field="id"],
+html body .table-container th[data-field="id"],
+html body .table-container td[data-field="id"],
+html body table th[data-field="id"],
+html body table td[data-field="id"] {
+    display: table-cell !important;
+}
+
+/* Nome */
+html body .data-table th[data-field="nome"],
+html body .data-table td[data-field="nome"],
+html body .table-container th[data-field="nome"],
+html body .table-container td[data-field="nome"],
+html body table th[data-field="nome"],
+html body table td[data-field="nome"] {
+    display: table-cell !important;
+}
+
+/* Nome do Cliente */
+html body .data-table th[data-field="cliente_nome"],
+html body .data-table td[data-field="cliente_nome"],
+html body .table-container th[data-field="cliente_nome"],
+html body .table-container td[data-field="cliente_nome"],
+html body table th[data-field="cliente_nome"],
+html body table td[data-field="cliente_nome"] {
+    display: table-cell !important;
+}
+
+/* Total */
+html body .data-table th[data-field="total"],
+html body .data-table td[data-field="total"],
+html body .table-container th[data-field="total"],
+html body .table-container td[data-field="total"],
+html body table th[data-field="total"],
+html body table td[data-field="total"] {
+    display: table-cell !important;
+}
+
+/* Preço */
+html body .data-table th[data-field="preco"],
+html body .data-table td[data-field="preco"],
+html body .table-container th[data-field="preco"],
+html body .table-container td[data-field="preco"],
+html body table th[data-field="preco"],
+html body table td[data-field="preco"] {
+    display: table-cell !important;
+}
+
+/* Quantidade */
+html body .data-table th[data-field="quantidade"],
+html body .data-table td[data-field="quantidade"],
+html body .table-container th[data-field="quantidade"],
+html body .table-container td[data-field="quantidade"],
+html body table th[data-field="quantidade"],
+html body table td[data-field="quantidade"] {
+    display: table-cell !important;
+}
+
+/* Estoque */
+html body .data-table th[data-field="estoque"],
+html body .data-table td[data-field="estoque"],
+html body .table-container th[data-field="estoque"],
+html body .table-container td[data-field="estoque"],
+html body table th[data-field="estoque"],
+html body table td[data-field="estoque"] {
+    display: table-cell !important;
+}
+
+/* Ações (botões) */
+html body .data-table th[data-field="acoes"],
+html body .data-table td[data-field="acoes"],
+html body .table-container th[data-field="acoes"],
+html body .table-container td[data-field="acoes"],
+html body table th[data-field="acoes"],
+html body table td[data-field="acoes"] {
+    display: table-cell !important;
+}
+
+/* ===== AJUSTES ESPECÍFICOS POR PÁGINA ===== */
+
+/* Página de Clientes */
+html body[data-page="clientes"] .data-table th[data-field="telefone"],
+html body[data-page="clientes"] .data-table td[data-field="telefone"] {
+    display: table-cell !important;
+    /* Manter telefone visível em clientes */
+}
+
+/* Página de Produtos */
+html body[data-page="produtos"] .data-table th[data-field="categoria"],
+html body[data-page="produtos"] .data-table td[data-field="categoria"] {
+    display: table-cell !important;
+    /* Manter categoria visível em produtos */
+}
+
+/* Página de Vendas */
+html body[data-page="vendas"] .data-table th[data-field="data_venda"],
+html body[data-page="vendas"] .data-table td[data-field="data_venda"] {
+    display: table-cell !important;
+    /* Manter data de venda visível em vendas */
+}
+
+/* ===== INDICADOR VISUAL DE CAMPOS OCULTOS ===== */
+/* Adicionar tooltip ou indicador quando campos estão ocultos */
+
+@media (max-width: 1024px) {
+
+    html body .data-table::before,
+    html body .table-container::before {
+        content: "Alguns campos foram ocultados para melhor visualização em telas menores";
+        display: block;
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 8px 12px;
+        font-size: 12px;
+        text-align: center;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        border: 1px solid #e5e7eb;
+    }
+}
+
+@media (max-width: 768px) {
+
+    html body .data-table::before,
+    html body .table-container::before {
+        content: "Visualização otimizada para mobile - campos menos importantes ocultados";
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    html body .data-table::before,
+    html body .table-container::before {
+        content: "Visualização compacta - apenas campos essenciais";
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}

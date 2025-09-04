@@ -172,25 +172,31 @@ class ProdutosPage {
     }
 
     async loadProdutos() {
-        if (this.isLoading) return;
-
         try {
             this.isLoading = true;
             this.showLoading();
 
             console.log('📦 Carregando produtos...');
-            const response = await window.api.get('/api/produtos');
 
-            if (response.data && response.data.success) {
-                this.produtos = response.data.data || [];
+            // Abordagem simplificada - fazer requisição direta
+            const response = await fetch('/api/produtos');
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+
+            // Validar estrutura da resposta
+            if (result && result.success && Array.isArray(result.data)) {
+                this.produtos = result.data;
                 this.filteredProdutos = [...this.produtos];
-
                 console.log(`✅ ${this.produtos.length} produtos carregados`);
                 this.updateStats();
                 this.renderProdutosTable();
                 this.renderPagination();
             } else {
-                throw new Error(response.data?.error || 'Erro ao carregar produtos');
+                throw new Error('Estrutura de resposta inválida');
             }
 
         } catch (error) {

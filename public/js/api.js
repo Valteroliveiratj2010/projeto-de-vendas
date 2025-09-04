@@ -5,7 +5,7 @@
 
 class API {
     constructor() {
-        this.baseURL = '';
+        this.baseURL = window.location.origin;
         this.timeout = 10000; // 10 segundos
         this.init();
     }
@@ -15,10 +15,10 @@ class API {
      */
     init() {
         console.log('🚀 Inicializando módulo de API...');
-        
+
         // Configurar interceptors se necessário
         this.setupInterceptors();
-        
+
         console.log('✅ Módulo de API inicializado!');
     }
 
@@ -34,12 +34,12 @@ class API {
                 config.headers = config.headers || {};
                 config.headers.Authorization = `Bearer ${token}`;
             }
-            
+
             // Adicionar timestamp para cache busting
             if (config.method === 'GET') {
                 config.url += (config.url.includes('?') ? '&' : '?') + `_t=${Date.now()}`;
             }
-            
+
             return config;
         });
 
@@ -48,7 +48,7 @@ class API {
             return response;
         }, (error) => {
             console.error('❌ Erro na API:', error);
-            
+
             // Tratar erros específicos
             if (error.status === 401) {
                 // Token expirado ou inválido
@@ -61,7 +61,7 @@ class API {
                 // Sem conexão
                 this.showError('Sem Conexão', 'Verifique sua conexão com a internet.');
             }
-            
+
             throw error;
         });
     }
@@ -87,7 +87,7 @@ class API {
      */
     applyRequestInterceptors(config) {
         if (!this.requestInterceptors) return config;
-        
+
         let finalConfig = config;
         this.requestInterceptors.forEach(interceptor => {
             try {
@@ -98,7 +98,7 @@ class API {
                 }
             }
         });
-        
+
         return finalConfig;
     }
 
@@ -107,7 +107,7 @@ class API {
      */
     applyResponseInterceptors(response) {
         if (!this.responseInterceptors) return response;
-        
+
         let finalResponse = response;
         this.responseInterceptors.forEach(interceptor => {
             try {
@@ -118,32 +118,57 @@ class API {
                 }
             }
         });
-        
+
         return finalResponse;
     }
 
     /**
-     * Faz uma requisição HTTP
+     * Faz uma requisição HTTP com debounce e cache
      */
     async request(config) {
         try {
             // Aplicar interceptors de requisição
             config = this.applyRequestInterceptors(config);
-            
+
+            // Construir URL completa
+            const fullUrl = config.url.startsWith('http') ? config.url : `${this.baseURL}${config.url}`;
+
+            // Usar RequestManager se disponível
+            if (window.requestManager) {
+                console.log(`🔄 Requisição via RequestManager: ${fullUrl}`);
+                const result = await window.requestManager.request(fullUrl, {
+                    method: config.method || 'GET',
+                    headers: config.headers || {},
+                    body: config.body,
+                    forceRefresh: config.forceRefresh || false
+                });
+
+                // CORREÇÃO: Garantir estrutura de resposta consistente
+                return {
+                    data: result,
+                    status: 200,
+                    statusText: 'OK',
+                    headers: {}
+                };
+            }
+
+            // Fallback para requisição tradicional
+            console.log(`🔄 Requisição tradicional: ${fullUrl}`);
+
             // Configurar timeout
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-            
+
             // Fazer requisição
-            const response = await fetch(config.url, {
+            const response = await fetch(fullUrl, {
                 method: config.method || 'GET',
                 headers: config.headers || {},
                 body: config.body,
                 signal: controller.signal
             });
-            
+
             clearTimeout(timeoutId);
-            
+
             // Verificar se a resposta é ok
             if (!response.ok) {
                 // Tentar capturar dados de erro da resposta
@@ -158,7 +183,7 @@ class API {
                 } catch (parseError) {
                     console.warn('❌ Erro ao parsear dados de erro:', parseError);
                 }
-                
+
                 throw {
                     status: response.status,
                     statusText: response.statusText,
@@ -169,17 +194,17 @@ class API {
                     }
                 };
             }
-            
+
             // Processar resposta
             let data;
             const contentType = response.headers.get('content-type');
-            
+
             if (contentType && contentType.includes('application/json')) {
                 data = await response.json();
             } else {
                 data = await response.text();
             }
-            
+
             // Aplicar interceptors de resposta
             const finalResponse = this.applyResponseInterceptors({
                 data,
@@ -187,9 +212,9 @@ class API {
                 statusText: response.statusText,
                 headers: response.headers
             });
-            
+
             return finalResponse;
-            
+
         } catch (error) {
             if (error.name === 'AbortError') {
                 throw {
@@ -261,7 +286,7 @@ class API {
     async upload(url, file, config = {}) {
         const formData = new FormData();
         formData.append('file', file);
-        
+
         return this.request({
             method: 'POST',
             url,
@@ -283,7 +308,7 @@ class API {
                 url,
                 ...config
             });
-            
+
             // Criar link para download
             const blob = new Blob([response.data]);
             const downloadUrl = window.URL.createObjectURL(blob);
@@ -294,9 +319,9 @@ class API {
             link.click();
             document.body.removeChild(link);
             window.URL.revokeObjectURL(downloadUrl);
-            
+
             return { success: true };
-            
+
         } catch (error) {
             console.error('❌ Erro no download:', error);
             throw error;
