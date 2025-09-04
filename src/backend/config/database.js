@@ -8,15 +8,14 @@ const pool = new Pool({
   database: process.env.DB_NAME || 'sistema_vendas',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'sua_senha_aqui',
-  // SSL só para produção (Render), não para desenvolvimento local
-  ...(process.env.NODE_ENV === 'production' && {
-    ssl: {
-      rejectUnauthorized: false
-    }
-  }),
+  // SSL obrigatório para produção (Render)
+  ssl: process.env.NODE_ENV === 'production' ? {
+    rejectUnauthorized: false,
+    require: true
+  } : false,
   max: 20, // Máximo de conexões no pool
   idleTimeoutMillis: 30000, // Tempo limite para conexões ociosas
-  connectionTimeoutMillis: 5000, // Aumentado para 5 segundos
+  connectionTimeoutMillis: 10000, // Aumentado para 10 segundos
   statement_timeout: 30000, // Timeout para queries
   query_timeout: 30000, // Timeout para queries
 });
