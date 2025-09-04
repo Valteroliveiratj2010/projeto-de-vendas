@@ -1,6 +1,11 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+// Função para detectar se está no Render
+function isRenderEnvironment() {
+  return process.env.DB_HOST && process.env.DB_HOST.includes('render.com');
+}
+
 // Configuração da conexão com o banco PostgreSQL - MELHORADA
 const pool = new Pool({
   host: process.env.DB_HOST || 'localhost',
@@ -8,8 +13,8 @@ const pool = new Pool({
   database: process.env.DB_NAME || 'sistema_vendas',
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'sua_senha_aqui',
-  // SSL obrigatório para produção (Render)
-  ssl: process.env.NODE_ENV === 'production' ? {
+  // SSL obrigatório para Render ou produção
+  ssl: (process.env.NODE_ENV === 'production' || isRenderEnvironment()) ? {
     rejectUnauthorized: false,
     require: true
   } : false,
@@ -26,7 +31,8 @@ console.log('🔧 Configuração do banco:', {
   port: process.env.DB_PORT || 5432,
   database: process.env.DB_NAME || 'sistema_vendas',
   user: process.env.DB_USER || 'postgres',
-  ssl: process.env.NODE_ENV === 'production' ? 'Sim (produção)' : 'Não (desenvolvimento)'
+  ssl: (process.env.NODE_ENV === 'production' || isRenderEnvironment()) ? 'Sim (produção/Render)' : 'Não (desenvolvimento)',
+  isRender: isRenderEnvironment()
 });
 
 // Teste de conexão - MELHORADO

@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "db:setup": "node scripts/setup-database.js",
     "db:setup:prod": "NODE_ENV=production node scripts/setup-database.js",
+    "db:setup:render": "node scripts/setup-render-database.js",
     "db:fix": "node scripts/add-missing-columns.js",
     "db:migrate": "node scripts/migrate-database.js",
     "db:test": "node scripts/test-database.js",
@@ -30,8 +31,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
-    "setup": "npm run db:setup && npm run css:optimize",
-    "setup:prod": "NODE_ENV=production npm run db:setup && npm run css:optimize",
+    "setup": "node scripts/setup-intelligent.js",
+    "setup:prod": "NODE_ENV=production node scripts/setup-intelligent.js",
+    "setup:render": "node scripts/setup-intelligent.js",
     "postinstall": "npm run setup"
   },
   "keywords": [
