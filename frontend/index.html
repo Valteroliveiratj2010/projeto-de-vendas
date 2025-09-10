@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' http://localhost:* ws://localhost:* http://127.0.0.1:* https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;">
+    <title>Sistema de Vendas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=20250909123024">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar fixa à esquerda -->
+        <div class="bg-gray-800 text-white w-64 min-h-screen fixed left-0 top-0 overflow-y-auto">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-center mb-8">Sistema de Vendas</h1>
+                
+                <nav class="space-y-2">
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="dashboard">
+                        <i class="fas fa-tachometer-alt w-5 h-5 mr-3 text-blue-600"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="clientes">
+                        <i class="fas fa-users w-5 h-5 mr-3 text-blue-600"></i>
+                        Clientes
+                    </a>
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="produtos">
+                        <i class="fas fa-box w-5 h-5 mr-3 text-green-600"></i>
+                        Produtos
+                    </a>
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="vendas">
+                        <i class="fas fa-shopping-cart w-5 h-5 mr-3 text-yellow-600"></i>
+                        Vendas
+                    </a>
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="orcamentos">
+                        <i class="fas fa-file-invoice-dollar w-5 h-5 mr-3 text-indigo-600"></i>
+                        Orçamentos
+                    </a>
+                    <a href="#" 
+                       class="nav-link flex items-center px-4 py-3 rounded-lg transition-colors duration-200 " 
+                       data-page="graficos">
+                        <i class="fas fa-chart-bar w-5 h-5 mr-3 text-purple-600"></i>
+                        Gráficos
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="flex-1 ml-64">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800" id="page-title">Dashboard</h2>
+                        <p class="text-sm text-gray-600" id="page-subtitle">Visão geral do sistema</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500" id="current-date"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Conteúdo da página -->
+            <main class="p-6">
+                <div id="content">
+                    <!-- Conteúdo será carregado dinamicamente aqui -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js?v=20250909123024"></script>
+    <script src="js/dashboard.js?v=20250909123024"></script>
+    <script src="js/clientes.js?v=20250909123024"></script>
+    <script src="js/produtos.js?v=20250909123024"></script>
+    <script src="js/vendas.js?v=20250909123024"></script>
+    <script src="js/orcamentos.js?v=20250909123024"></script>
+    <script src="js/graficos.js?v=20250909123024"></script>
+</body>
+</html>
