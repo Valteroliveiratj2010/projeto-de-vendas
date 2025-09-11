@@ -1,4 +1,4 @@
-/* Reset e configurações básicas */
+ï»¿/* Reset e configuraï¿½ï¿½es bï¿½sicas */
 * {
     margin: 0;
     padding: 0;
@@ -67,7 +67,7 @@ body {
     padding: 1.5rem;
 }
 
-/* Título da sidebar - CORRIGIDO */
+/* Tï¿½tulo da sidebar - CORRIGIDO */
 .text-2xl {
     font-size: 1.5rem;
 }
@@ -84,7 +84,7 @@ body {
     margin-bottom: 2rem;
 }
 
-/* Navegação da sidebar - CORRIGIDA */
+/* Navegaï¿½ï¿½o da sidebar - CORRIGIDA */
 .space-y-2 > * + * {
     margin-top: 0.5rem;
 }
@@ -110,7 +110,7 @@ body {
     color: #1e40af;
 }
 
-/* Ícones SVG - CORRIGIDOS */
+/* ï¿½cones SVG - CORRIGIDOS */
 .w-5 {
     width: 1.25rem;
 }
@@ -123,7 +123,7 @@ body {
     margin-right: 0.75rem;
 }
 
-/* Conteúdo principal */
+/* Conteï¿½do principal */
 .flex-1 {
     flex: 1 1 0%;
 }
@@ -132,7 +132,7 @@ body {
     margin-left: 16rem;
 }
 
-/* Header do conteúdo */
+/* Header do conteï¿½do */
 .bg-white {
     background-color: #f3f4f6;
 }
@@ -153,7 +153,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-/* Título da página */
+/* Tï¿½tulo da pï¿½gina */
 .text-xl {
     font-size: 1.25rem;
 }
@@ -166,7 +166,7 @@ body {
     color: #1f2937;
 }
 
-/* Botões */
+/* Botï¿½es */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -198,7 +198,7 @@ body {
     background-color: #4b5563;
 }
 
-/* Ícones dos botões */
+/* ï¿½cones dos botï¿½es */
 .w-4 {
     width: 1rem;
 }
@@ -234,7 +234,7 @@ body {
     background-color: #f9fafb;
 }
 
-/* Formulários */
+/* Formulï¿½rios */
 .form-group {
     margin-bottom: 1rem;
 }
@@ -361,7 +361,7 @@ body {
     margin-left: 0.75rem;
 }
 
-/* Utilitários */
+/* Utilitï¿½rios */
 .justify-between {
     justify-content: space-between;
 }
@@ -399,13 +399,13 @@ body {
     }
 }
 
-/* Estilos para gráficos */
+/* Estilos para grï¿½ficos */
 canvas {
     max-width: 100%;
     height: auto;
 }
 
-/* Melhorar espaçamento dos elementos */
+/* Melhorar espaï¿½amento dos elementos */
 .grid {
     display: grid;
 }
@@ -519,7 +519,7 @@ canvas {
     height: 2rem;
 }
 
-/* Botões de filtro para gráficos */
+/* Botï¿½es de filtro para grï¿½ficos */
 .px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -598,12 +598,12 @@ canvas {
     background-color: #fde68a;
 }
 
-/* Altura dos gráficos */
+/* Altura dos grï¿½ficos */
 .h-64 {
     height: 16rem;
 }
 
-/* Responsividade para gráficos */
+/* Responsividade para grï¿½ficos */
 @media (max-width: 1024px) {
     .lg\:grid-cols-2 {
         grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -622,9 +622,9 @@ canvas {
     }
 }
 
-/* CORREÇÕES ESPECÍFICAS PARA PROBLEMAS VISUAIS */
+/* CORREï¿½ï¿½ES ESPECï¿½FICAS PARA PROBLEMAS VISUAIS */
 
-/* Corrigir problemas de layout do formulário */
+/* Corrigir problemas de layout do formulï¿½rio */
 .relative {
     position: relative;
 }
@@ -700,7 +700,7 @@ canvas {
     color: #166534;
 }
 
-/* Ações da tabela */
+/* Aï¿½ï¿½es da tabela */
 .space-x-2 > * + * {
     margin-left: 0.5rem;
 }
@@ -721,7 +721,7 @@ canvas {
     color: #991b1b;
 }
 
-/* Notificações */
+/* Notificaï¿½ï¿½es */
 .fixed {
     position: fixed;
 }
@@ -778,7 +778,7 @@ canvas {
     margin-right: 0.5rem;
 }
 
-/* CORREÇÃO ESPECÍFICA: Remover logo gigante da sidebar */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Remover logo gigante da sidebar */
 .bg-gray-800 i {
     max-width: 1.25rem;
     max-height: 1.25rem;
@@ -786,13 +786,13 @@ canvas {
     height: 1.25rem;
 }
 
-/* CORREÇÃO ESPECÍFICA: Garantir que a sidebar tenha altura controlada */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Garantir que a sidebar tenha altura controlada */
 .bg-gray-800 {
     max-height: 100vh;
     overflow-y: auto;
 }
 
-/* CORREÇÃO ESPECÍFICA: Melhorar espaçamento dos elementos da sidebar */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Melhorar espaï¿½amento dos elementos da sidebar */
 .bg-gray-800 .p-6 {
     padding: 1.5rem;
     height: auto;
@@ -808,13 +808,13 @@ canvas {
     margin-top: 0;
 }
 
-/* CORREÇÃO ESPECÍFICA: Garantir que os elementos não transbordem */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Garantir que os elementos nï¿½o transbordem */
 .bg-gray-800 * {
     max-width: 100%;
     box-sizing: border-box;
 }
 
-/* CORREÇÃO ESPECÍFICA: Melhorar layout da tabela */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Melhorar layout da tabela */
 .table td {
     vertical-align: middle;
 }
@@ -823,7 +823,7 @@ canvas {
     padding: 0.75rem;
 }
 
-/* CORREÇÃO ESPECÍFICA: Melhorar layout do formulário */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Melhorar layout do formulï¿½rio */
 .form-group {
     margin-bottom: 1rem;
 }
@@ -832,13 +832,13 @@ canvas {
     margin-bottom: 0;
 }
 
-/* CORREÇÃO ESPECÍFICA: Garantir que os botões tenham tamanho adequado */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Garantir que os botï¿½es tenham tamanho adequado */
 .btn {
     min-height: 2.5rem;
     white-space: nowrap;
 }
 
-/* CORREÇÃO ESPECÍFICA: Melhorar responsividade */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Melhorar responsividade */
 @media (max-width: 1024px) {
     .ml-64 {
         margin-left: 0;
@@ -885,7 +885,7 @@ canvas {
 }
 
 
-/* Estilos específicos para ícones Font Awesome */
+/* Estilos especï¿½ficos para ï¿½cones Font Awesome */
 .nav-link i {
     width: 1.25rem;
     height: 1.25rem;
@@ -905,7 +905,7 @@ canvas {
     font-size: 1.25rem;
 }
 
-/* Garantir que os ícones Font Awesome tenham tamanho consistente */
+/* Garantir que os ï¿½cones Font Awesome tenham tamanho consistente */
 .fas, .far, .fab {
     font-size: 1.25rem;
     width: 1.25rem;
@@ -913,7 +913,7 @@ canvas {
     line-height: 1;
 }
 
-/* Responsividade para ícones */
+/* Responsividade para ï¿½cones */
 @media (max-width: 640px) {
     .nav-link i {
         width: 1rem;
@@ -928,7 +928,7 @@ canvas {
     }
 }
 
-/* Estilos específicos para ícones Font Awesome */
+/* Estilos especï¿½ficos para ï¿½cones Font Awesome */
 .nav-link i {
     width: 1.25rem;
     height: 1.25rem;
@@ -948,7 +948,7 @@ canvas {
     font-size: 1.25rem;
 }
 
-/* Garantir que os ícones Font Awesome tenham tamanho consistente */
+/* Garantir que os ï¿½cones Font Awesome tenham tamanho consistente */
 .fas, .far, .fab {
     font-size: 1.25rem;
     width: 1.25rem;
@@ -956,7 +956,7 @@ canvas {
     line-height: 1;
 }
 
-/* Responsividade para ícones */
+/* Responsividade para ï¿½cones */
 @media (max-width: 640px) {
     .nav-link i {
         width: 1rem;
@@ -971,7 +971,7 @@ canvas {
     }
 }
 
-/* Estilos específicos para ícones dos cards de KPIs */
+/* Estilos especï¿½ficos para ï¿½cones dos cards de KPIs */
 .bg-blue-500 i, .bg-green-500 i, .bg-yellow-500 i, .bg-purple-500 i, .bg-orange-500 i,
 .bg-gradient-to-r i {
     width: 2rem;
@@ -983,7 +983,7 @@ canvas {
     justify-content: center;
 }
 
-/* Garantir que os ícones dos cards tenham tamanho consistente */
+/* Garantir que os ï¿½cones dos cards tenham tamanho consistente */
 .w-8.h-8 {
     width: 2rem;
     height: 2rem;
@@ -994,7 +994,7 @@ canvas {
     line-height: 1;
 }
 
-/* Responsividade para ícones dos cards */
+/* Responsividade para ï¿½cones dos cards */
 @media (max-width: 768px) {
     .bg-blue-500 i, .bg-green-500 i, .bg-yellow-500 i, .bg-purple-500 i, .bg-orange-500 i,
     .bg-gradient-to-r i {
@@ -1014,7 +1014,7 @@ canvas {
 }
 
 
-/* Estilos específicos para ícones dos títulos das páginas */
+/* Estilos especï¿½ficos para ï¿½cones dos tï¿½tulos das pï¿½ginas */
 #page-title i {
     font-size: 1.25rem;
     width: 1.25rem;
@@ -1026,7 +1026,7 @@ canvas {
     margin-right: 0.5rem;
 }
 
-/* Cores específicas para cada página no título */
+/* Cores especï¿½ficas para cada pï¿½gina no tï¿½tulo */
 #page-title .text-blue-600 {
     color: #2563eb;
 }
@@ -1047,7 +1047,7 @@ canvas {
     color: #4f46e5;
 }
 
-/* Responsividade para ícones dos títulos */
+/* Responsividade para ï¿½cones dos tï¿½tulos */
 @media (max-width: 768px) {
     #page-title i {
         font-size: 1rem;
@@ -1057,14 +1057,14 @@ canvas {
     }
 }
 
-/* CORREÇÃO ESPECÍFICA: Garantir fundo branco na sidebar */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Garantir fundo branco na sidebar */
 .bg-gray-800 {
     background-color: #ffffff !important;
     color: #374151 !important;
 }
 
 
-/* CORREÇÃO ESPECÍFICA: Melhorar legibilidade do estado ativo da sidebar */
+/* CORREï¿½ï¿½O ESPECï¿½FICA: Melhorar legibilidade do estado ativo da sidebar */
 .nav-link.active {
     background-color: #f0f9ff !important;
     color: #1e40af !important;

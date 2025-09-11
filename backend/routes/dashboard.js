@@ -1,32 +1,34 @@
-/**
+Ôªø/**
  * Rotas do Dashboard
- * Endpoint para estatÌsticas e mÈtricas do sistema
+ * Endpoint para estat√≠sticas e m√©tricas do sistema
  */
 
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
+const { pool } = require('../config/db');
 
 /**
  * GET /dashboard
- * Retorna estatÌsticas gerais do sistema
+ * Retorna estat√≠sticas gerais do sistema
  */
 router.get('/', async (req, res) => {
   try {
-    // Total de vendas por mÍs
-    const vendasPorMes = await db.query(`
+    console.log('=== CARREGANDO DADOS DO DASHBOARD ===');
+    
+    // Total de vendas por m√™s
+    const vendasPorMes = await pool.query(`
       SELECT
-        DATE_FORMAT(data, '%Y-%m') as mes,
+        TO_CHAR(data, 'YYYY-MM') as mes,
         COUNT(*) as total_vendas,
         SUM(valor_total) as valor_total
       FROM vendas
-      WHERE data >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
-      GROUP BY DATE_FORMAT(data, '%Y-%m')
+      WHERE data >= CURRENT_DATE - INTERVAL '12 months'
+      GROUP BY TO_CHAR(data, 'YYYY-MM')
       ORDER BY mes DESC
     `);
 
     // Quantidade de vendas por forma de pagamento
-    const vendasPorPagamento = await db.query(`
+    const vendasPorPagamento = await pool.query(`
       SELECT
         forma_pagamento,
         COUNT(*) as quantidade,
@@ -38,7 +40,7 @@ router.get('/', async (req, res) => {
     `);
 
     // Produtos mais vendidos
-    const produtosMaisVendidos = await db.query(`
+    const produtosMaisVendidos = await pool.query(`
       SELECT
         p.id,
         p.nome,
@@ -54,7 +56,7 @@ router.get('/', async (req, res) => {
     `);
 
     // Clientes com mais compras
-    const clientesMaisCompras = await db.query(`
+    const clientesMaisCompras = await pool.query(`
       SELECT
         c.id,
         c.nome,
@@ -68,19 +70,19 @@ router.get('/', async (req, res) => {
       LIMIT 10
     `);
 
-    // EstatÌsticas gerais
-    const estatisticasGerais = await db.query(`
+    // Estat√≠sticas gerais
+    const estatisticasGerais = await pool.query(`
       SELECT
         (SELECT COUNT(*) FROM clientes) as total_clientes,
         (SELECT COUNT(*) FROM produtos) as total_produtos,
         (SELECT COUNT(*) FROM vendas) as total_vendas,
         (SELECT COUNT(*) FROM orcamentos) as total_orcamentos,
-        (SELECT SUM(valor_total) FROM vendas) as faturamento_total,
-        (SELECT AVG(valor_total) FROM vendas) as ticket_medio
+        (SELECT COALESCE(SUM(valor_total), 0) FROM vendas) as faturamento_total,
+        (SELECT COALESCE(AVG(valor_total), 0) FROM vendas) as ticket_medio
     `);
 
     // Produtos em estoque baixo
-    const produtosEstoqueBaixo = await db.query(`
+    const produtosEstoqueBaixo = await pool.query(`
       SELECT
         id,
         nome,
@@ -93,7 +95,7 @@ router.get('/', async (req, res) => {
     `);
 
     // Vendas recentes
-    const vendasRecentes = await db.query(`
+    const vendasRecentes = await pool.query(`
       SELECT
         v.id,
         v.data,
@@ -107,25 +109,31 @@ router.get('/', async (req, res) => {
       LIMIT 10
     `);
 
-    // Resposta com todas as estatÌsticas
+    console.log('‚úÖ Estat√≠sticas gerais:', estatisticasGerais.rows[0]);
+    console.log('‚úÖ Vendas por m√™s:', vendasPorMes.rows.length);
+    console.log('‚úÖ Produtos mais vendidos:', produtosMaisVendidos.rows.length);
+    console.log('‚úÖ Produtos estoque baixo:', produtosEstoqueBaixo.rows.length);
+    console.log('‚úÖ Vendas recentes:', vendasRecentes.rows.length);
+
+    // Resposta com todas as estat√≠sticas
     const dashboard = {
-      estatisticas_gerais: estatisticasGerais[0],
-      vendas_por_mes: vendasPorMes,
-      vendas_por_pagamento: vendasPorPagamento,
-      produtos_mais_vendidos: produtosMaisVendidos,
-      clientes_mais_compras: clientesMaisCompras,
-      produtos_estoque_baixo: produtosEstoqueBaixo,
-      vendas_recentes: vendasRecentes,
+      estatisticas_gerais: estatisticasGerais.rows[0],
+      vendas_por_mes: vendasPorMes.rows,
+      vendas_por_pagamento: vendasPorPagamento.rows,
+      produtos_mais_vendidos: produtosMaisVendidos.rows,
+      clientes_mais_compras: clientesMaisCompras.rows,
+      produtos_estoque_baixo: produtosEstoqueBaixo.rows,
+      vendas_recentes: vendasRecentes.rows,
       timestamp: new Date().toISOString()
     };
 
     res.json(dashboard);
 
   } catch (error) {
-    console.error('? Erro ao buscar dados do dashboard:', error);
+    console.error('‚ùå Erro ao buscar dados do dashboard:', error);
     res.status(500).json({
       error: 'Erro interno do servidor',
-      message: 'N„o foi possÌvel carregar as estatÌsticas do dashboard',
+      message: 'N√£o foi poss√≠vel carregar as estat√≠sticas do dashboard',
       timestamp: new Date().toISOString()
     });
   }
@@ -133,28 +141,28 @@ router.get('/', async (req, res) => {
 
 /**
  * GET /dashboard/vendas-mensais
- * Retorna apenas vendas por mÍs
+ * Retorna apenas vendas por m√™s
  */
 router.get('/vendas-mensais', async (req, res) => {
   try {
-    const vendasMensais = await db.query(`
+    const vendasMensais = await pool.query(`
       SELECT
-        DATE_FORMAT(data, '%Y-%m') as mes,
+        TO_CHAR(data, 'YYYY-MM') as mes,
         COUNT(*) as total_vendas,
         SUM(valor_total) as valor_total
       FROM vendas
-      WHERE data >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
-      GROUP BY DATE_FORMAT(data, '%Y-%m')
+      WHERE data >= CURRENT_DATE - INTERVAL '12 months'
+      GROUP BY TO_CHAR(data, 'YYYY-MM')
       ORDER BY mes DESC
     `);
 
-    res.json(vendasMensais);
+    res.json(vendasMensais.rows);
 
   } catch (error) {
-    console.error('? Erro ao buscar vendas mensais:', error);
+    console.error('‚ùå Erro ao buscar vendas mensais:', error);
     res.status(500).json({
       error: 'Erro interno do servidor',
-      message: 'N„o foi possÌvel carregar vendas mensais'
+      message: 'N√£o foi poss√≠vel carregar vendas mensais'
     });
   }
 });
@@ -165,7 +173,7 @@ router.get('/vendas-mensais', async (req, res) => {
  */
 router.get('/produtos-populares', async (req, res) => {
   try {
-    const produtosPopulares = await db.query(`
+    const produtosPopulares = await pool.query(`
       SELECT
         p.id,
         p.nome,
@@ -180,13 +188,13 @@ router.get('/produtos-populares', async (req, res) => {
       LIMIT 20
     `);
 
-    res.json(produtosPopulares);
+    res.json(produtosPopulares.rows);
 
   } catch (error) {
-    console.error('? Erro ao buscar produtos populares:', error);
+    console.error('‚ùå Erro ao buscar produtos populares:', error);
     res.status(500).json({
       error: 'Erro interno do servidor',
-      message: 'N„o foi possÌvel carregar produtos populares'
+      message: 'N√£o foi poss√≠vel carregar produtos populares'
     });
   }
 });
@@ -197,7 +205,7 @@ router.get('/produtos-populares', async (req, res) => {
  */
 router.get('/clientes-top', async (req, res) => {
   try {
-    const clientesTop = await db.query(`
+    const clientesTop = await pool.query(`
       SELECT
         c.id,
         c.nome,
@@ -212,13 +220,13 @@ router.get('/clientes-top', async (req, res) => {
       LIMIT 20
     `);
 
-    res.json(clientesTop);
+    res.json(clientesTop.rows);
 
   } catch (error) {
-    console.error('? Erro ao buscar clientes top:', error);
+    console.error('‚ùå Erro ao buscar clientes top:', error);
     res.status(500).json({
       error: 'Erro interno do servidor',
-      message: 'N„o foi possÌvel carregar clientes top'
+      message: 'N√£o foi poss√≠vel carregar clientes top'
     });
   }
 });

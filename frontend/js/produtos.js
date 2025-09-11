@@ -1,7 +1,7 @@
 ﻿// Gerenciador de Produtos
 class ProdutosManager {
     constructor() {
-        this.apiUrl = 'http://localhost:3000/produtos';
+        this.apiUrl = 'http://localhost:3000/api/produtos';
         this.produtos = [];
         this.currentProduto = null;
         this.isEditMode = false;
@@ -362,6 +362,8 @@ function initProdutosPage() {
     produtosManager = new ProdutosManager();
     produtosManager.init();
 }
+
+
 
 
 

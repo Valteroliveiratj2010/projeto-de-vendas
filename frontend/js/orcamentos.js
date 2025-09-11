@@ -1,7 +1,7 @@
 ﻿// Gerenciador de Orçamentos
 class OrcamentosManager {
     constructor() {
-        this.apiUrl = "http://localhost:3000/orcamentos";
+        this.apiUrl = "http://localhost:3000/api/orcamentos";
         this.orcamentos = [];
         this.currentOrcamento = null;
         this.isEditMode = false;
@@ -33,7 +33,7 @@ class OrcamentosManager {
 
     async loadProdutos() {
         try {
-            const response = await fetch("http://localhost:3000/produtos");
+            const response = await fetch("http://localhost:3000/api/produtos");
             if (!response.ok) {
                 throw new Error(`Erro HTTP: ${response.status}`);
             }
@@ -46,7 +46,7 @@ class OrcamentosManager {
 
     async loadClientes() {
         try {
-            const response = await fetch("http://localhost:3000/clientes");
+            const response = await fetch("http://localhost:3000/api/clientes");
             if (!response.ok) {
                 throw new Error(`Erro HTTP: ${response.status}`);
             }
@@ -505,3 +505,4 @@ function initOrcamentosPage() {
     orcamentosManager = new OrcamentosManager();
     orcamentosManager.init();
 }
+

@@ -1,7 +1,7 @@
 ﻿// Gerenciador de Clientes
 class ClientesManager {
     constructor() {
-        this.apiUrl = 'http://localhost:3000/clientes';
+        this.apiUrl = 'http://localhost:3000/api/clientes';
         this.clientes = [];
         this.currentCliente = null;
         this.isEditMode = false;
@@ -265,7 +265,7 @@ class ClientesManager {
             this.clientes = this.clientes.filter(c => c.id !== id);
             this.renderClientesTable();
             this.setupEventListeners();
-            this.showSuccess('Cliente excluído com sucesso!');
+            this.showSuccess('Cliente excluàdo com sucesso!');
 
         } catch (error) {
             console.error('Erro ao excluir cliente:', error);
@@ -283,7 +283,7 @@ class ClientesManager {
         this.showNotification(message, 'error');
     }
 
-    // Mostrar notificação
+    // Mostrar notificaàào
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
@@ -312,14 +312,16 @@ class ClientesManager {
     }
 }
 
-// Instância global do gerenciador de clientes
+// Instància global do gerenciador de clientes
 let clientesManager;
 
-// Função para inicializar página de clientes
+// Funàào para inicializar página de clientes
 function initClientesPage() {
     clientesManager = new ClientesManager();
     clientesManager.init();
 }
+
+
 
 
 

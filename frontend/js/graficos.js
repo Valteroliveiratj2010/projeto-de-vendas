@@ -28,13 +28,17 @@ class GraficosManager {
     // Carregar dados de vendas
     async loadVendas() {
         try {
-            const response = await fetch("http://localhost:3000/vendas");
-            if (response.ok) {
-                this.vendas = await response.json();
-                console.log("Vendas carregadas:", this.vendas.length);
-            } else {
-                console.error("Erro ao carregar vendas:", response.status);
+            const response = await fetch("/api/vendas");
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
             }
+            const text = await response.text();
+            if (text) {
+                this.vendas = JSON.parse(text);
+            } else {
+                this.vendas = [];
+            }
+            console.log("Vendas carregadas:", this.vendas.length);
         } catch (error) {
             console.error("Erro ao carregar vendas:", error);
             this.vendas = [];
@@ -44,13 +48,17 @@ class GraficosManager {
     // Carregar dados de produtos
     async loadProdutos() {
         try {
-            const response = await fetch("http://localhost:3000/produtos");
-            if (response.ok) {
-                this.produtos = await response.json();
-                console.log("Produtos carregados:", this.produtos.length);
-            } else {
-                console.error("Erro ao carregar produtos:", response.status);
+            const response = await fetch("/api/produtos");
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
             }
+            const text = await response.text();
+            if (text) {
+                this.produtos = JSON.parse(text);
+            } else {
+                this.produtos = [];
+            }
+            console.log("Produtos carregados:", this.produtos.length);
         } catch (error) {
             console.error("Erro ao carregar produtos:", error);
             this.produtos = [];
@@ -60,13 +68,17 @@ class GraficosManager {
     // Carregar dados de clientes
     async loadClientes() {
         try {
-            const response = await fetch("http://localhost:3000/clientes");
-            if (response.ok) {
-                this.clientes = await response.json();
-                console.log("Clientes carregados:", this.clientes.length);
-            } else {
-                console.error("Erro ao carregar clientes:", response.status);
+            const response = await fetch("/api/clientes");
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
             }
+            const text = await response.text();
+            if (text) {
+                this.clientes = JSON.parse(text);
+            } else {
+                this.clientes = [];
+            }
+            console.log("Clientes carregados:", this.clientes.length);
         } catch (error) {
             console.error("Erro ao carregar clientes:", error);
             this.clientes = [];
@@ -303,6 +315,25 @@ let graficosManager;
 
 // Função para inicializar página de gráficos
 function initGraficosPage() {
-    graficosManager = new GraficosManager();
-    graficosManager.init();
+    // Carrega o Chart.js dinamicamente
+    if (typeof Chart === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = () => {
+            graficosManager = new GraficosManager();
+            graficosManager.init();
+        };
+        document.head.appendChild(script);
+    } else {
+        graficosManager = new GraficosManager();
+        graficosManager.init();
+    }
 }
+
+// Inicializa o gerenciador de gráficos quando a página é carregada
+document.addEventListener("DOMContentLoaded", () => {
+    // Apenas inicializa se estiver na página de gráficos
+    if (document.getElementById("graficos-page")) {
+        initGraficosPage();
+    }
+});
