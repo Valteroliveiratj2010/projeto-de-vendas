@@ -5,7 +5,7 @@ const { pool } = require('../config/db');
 // POST /orcamentos - Criar novo orçamento
 router.post('/', async (req, res) => {
   try {
-    const { cliente_id, valor_total, validade } = req.body;
+    const { cliente_id, valor_total, status = 'Pendente' } = req.body;
     
     if (!cliente_id || !valor_total) {
       return res.status(400).json({ error: 'Cliente e valor total são obrigatórios' });
@@ -24,12 +24,12 @@ router.post('/', async (req, res) => {
     }
 
     const query = `
-      INSERT INTO orcamentos (cliente_id, valor_total, validade) 
-      VALUES ($1, $2, $3) 
+      INSERT INTO orcamentos (cliente_id, valor_total, data, status) 
+      VALUES ($1, $2, CURRENT_DATE, $3) 
       RETURNING *
     `;
     
-    const result = await pool.query(query, [cliente_id, valor_total, validade]);
+    const result = await pool.query(query, [cliente_id, valor_total, status]);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Erro ao criar orçamento:', error);
@@ -83,7 +83,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { cliente_id, valor_total, status, validade } = req.body;
+    const { cliente_id, valor_total, status } = req.body;
     
     if (!cliente_id || !valor_total) {
       return res.status(400).json({ error: 'Cliente e valor total são obrigatórios' });
@@ -103,12 +103,12 @@ router.put('/:id', async (req, res) => {
 
     const query = `
       UPDATE orcamentos 
-      SET cliente_id = $1, valor_total = $2, status = $3, validade = $4, updated_at = NOW()
-      WHERE id = $5 
+      SET cliente_id = $1, valor_total = $2, status = $3, updated_at = NOW()
+      WHERE id = $4 
       RETURNING *
     `;
     
-    const result = await pool.query(query, [cliente_id, valor_total, status, validade, id]);
+    const result = await pool.query(query, [cliente_id, valor_total, status, id]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Orçamento não encontrado' });
